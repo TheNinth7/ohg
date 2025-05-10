@@ -10,6 +10,7 @@ import Toybox.Graphics;
  * is then wrapped in a `Bitmap` to produce a `Drawable` that can be used as 
  * the status icon in `BaseMenuItem`.
  */
+/*
 class OnOffStatusDrawable extends Bitmap {
     
     private var _bufferedBitmap as BufferedBitmap;
@@ -97,14 +98,15 @@ class OnOffStatusDrawable extends Bitmap {
         dc.fillCircle( xCenter, toggleCenter, radius * INNER_CIRCLE_FACTOR );
     }
 }
-
-/* Simpler version showing ON and OFF as text
+*/
+// Simpler version showing ON and OFF as text
 class OnOffStatusDrawable extends Text {
     public function initialize( isEnabled as Boolean ) {
         Text.initialize( {
             :text => getStatusText( isEnabled ),
+            :color => Graphics.COLOR_DK_GRAY,
             :font => Graphics.FONT_SMALL,
-            :justification => Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+            :justification => Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
         } );
     }
     public function setEnabled( isEnabled as Boolean ) as Void {
@@ -114,4 +116,3 @@ class OnOffStatusDrawable extends Text {
         return isEnabled ? "ON" : "OFF";
     }
 }
-*/

@@ -9,6 +9,7 @@ import Toybox.WatchUi;
  * This wrapper class adds those methods to enable compatibility with older devices,
  * allowing `OnOffStatusDrawable` to function correctly.
  */
+ /*
 (:exclForCiq400Plus)
 class OnOffBufferedBitmap extends BufferedBitmap {
     private var _height as Number;
@@ -25,3 +26,4 @@ class OnOffBufferedBitmap extends BufferedBitmap {
         return _width;
     }
 }
+*/
