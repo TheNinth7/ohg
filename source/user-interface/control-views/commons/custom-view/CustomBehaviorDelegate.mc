@@ -35,7 +35,7 @@ class CustomBehaviorDelegate extends BehaviorDelegate {
         // Logger.debug "CustomBehaviorDelegate.onTap" );
 
         // Only do this if the view is a CustomView
-        var currentView = WatchUi.getCurrentView()[0];
+        var currentView = ViewHandler.getCurrentView()[0];
         if( currentView instanceof CustomView ) {
             var touchAreas = currentView.getTouchAreas();
             var coordinates = clickEvent.getCoordinates();

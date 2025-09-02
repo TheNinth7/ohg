@@ -121,7 +121,7 @@ class SwitchToHomepageTask extends BaseSitemapProcessorTask {
     
     public function invoke() as Void {
         // Logger.debug( "SwitchToHomepageTask.invoke" );
-        WatchUi.switchToView( 
+        ViewHandler.switchToView( 
             _homepageMenu, 
             HomepageMenuDelegate.get(), 
             WatchUi.SLIDE_BLINK 
@@ -186,7 +186,7 @@ class RefreshUiTask extends BaseSitemapProcessorTask {
             // If the structure is not valid anymore or an error view
             // view is shown, we reset the view to the homepage
             if( ( ! homepage.structureRemainsValid() 
-                    && ! ( WatchUi.getCurrentView()[0] instanceof HomepageMenu ) )
+                    && ! ( ViewHandler.getCurrentView()[0] instanceof HomepageMenu ) )
                 || ErrorView.isShowing() )
                 {
                 // Logger.debug( "SitemapRequest.onReceive: resetting to homepage" );

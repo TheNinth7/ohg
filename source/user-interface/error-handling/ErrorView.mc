@@ -37,7 +37,7 @@ import Toybox.System;
 
     // Returns the error view if is shown, or otherwise null
     private static function get() as ErrorView? {
-        var view = WatchUi.getCurrentView()[0];
+        var view = ViewHandler.getCurrentView()[0];
         if( view instanceof ErrorView ) {
             return view;
         } else {
@@ -47,7 +47,7 @@ import Toybox.System;
 
     // Determins whether an error view is currently showing
     public static function isShowing() as Boolean {
-        return WatchUi.getCurrentView()[0] instanceof ErrorView;
+        return ViewHandler.getCurrentView()[0] instanceof ErrorView;
     }
 
     /*

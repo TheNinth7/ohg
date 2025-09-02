@@ -15,12 +15,14 @@ project.typecheck = 3
 
 # Each device should be assigned one of the following three
 # variables, depending on their CIQ version
-# < CIQ 4.0.0
-# >= CIQ 4.0.0
-# >= CIQ 5.1.0
-annotCiqPre400=exclForCiqPre400
-annotCiq400Plus=exclForCiq400Plus
-annotCiq510Plus=exclForCiq510Plus;exclForCiq400Plus
+# < CIQ 3.4.0  => annotCiqPre340
+# >= CIQ 3.4.0 => annotCiq340Plus
+# >= CIQ 4.0.0 => annotCiq400Plus
+# >= CIQ 5.1.0 => annotCiq510Plus
+annotCiqPre340=exclForCiqPre340;exclForCiqPre400
+annotCiq340Plus=exclForCiqPre400;exclForCiq340Plus
+annotCiq400Plus=exclForCiq340Plus;exclForCiq400Plus
+annotCiq510Plus=$(annotCiq400Plus);exclForCiq510Plus
 
 # Either one of these should be assigned, depending
 # whether the device is primarily button-controlled
@@ -98,7 +100,7 @@ base.sourcePath = $(srcDefault)
 
 # Fenix 6 Pro series
 fenix6pro.resourcePath=$(resBaseCiq34Plus);$(resLauncherIcons)/40x40
-fenix6pro.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound)
+fenix6pro.excludeAnnotations = $(annotCiq340Plus);$(annotButton);$(annotScreenRound)
 fenix6pro.sourcePath = $(srcFenix6Pro)
 fenix6spro.resourcePath=$(fenix6pro.resourcePath)
 fenix6spro.excludeAnnotations = $(fenix6pro.excludeAnnotations)
@@ -190,9 +192,19 @@ vivoactive6.excludeAnnotations = $(venu3.excludeAnnotations)
 # directory with a drawables.xml that overrides the default
 # logo width
 
+# Touch devices with CIQ level < 3.4.0
 edge1030.resourcePath=$(resBasePreCiq34);resources/edge;$(resLauncherIcons)/36x36
-edge1030.excludeAnnotations = $(annotCiqPre400);$(annotTouch);$(annotScreenRectangular)
+edge1030.excludeAnnotations = $(annotCiqPre340);$(annotTouch);$(annotScreenRectangular)
 edge1030.sourcePath = $(srcEdgeTouch)
+edge1030bontrager.resourcePath = $(edge1030.resourcePath)
+edge1030bontrager.excludeAnnotations = $(edge1030.excludeAnnotations)
+edge1030bontrager.sourcePath = $(edge1030.sourcePath)
+edge1030plus.resourcePath = $(edge1030.resourcePath)
+edge1030plus.excludeAnnotations = $(edge1030.excludeAnnotations)
+edge1030plus.sourcePath = $(edge1030.sourcePath)
+edge830.resourcePath=$(resBasePreCiq34);resources/edge;$(resLauncherIcons)/35x35
+edge830.excludeAnnotations = $(edge1030.excludeAnnotations)
+edge830.sourcePath = $(edge1030.sourcePath)
 
 # Touch devices with CIQ level between 4.0.0 and 5.0.0
 edgeexplore2.resourcePath=$(resBaseCiq34Plus);resources/edge;$(resLauncherIcons)/36x36
