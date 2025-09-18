@@ -1,5 +1,0 @@
-<drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
-    <bitmap id="iconWarning" filename="../base/cancel-hint.svg" />
-    <bitmap id="iconCheckHint" scaleY="9%" filename="../base/check-hint.svg" />
-    <bitmap id="iconCancelHint" scaleY="8%" filename="../base/cancel-hint.svg" />
-</drawables>

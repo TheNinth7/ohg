@@ -1,6 +1,7 @@
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <bitmap id="logoOpenhabText" scaleX="40%" filename="openhab-text-light.svg" dithering="none" />
 
+    <bitmap id="iconWarning" personality="system_icon_light__warning" />
     <bitmap id="iconDownToSettings" scaleY="15%" filename="down-to-settings.svg" dithering="none" />
     <bitmap id="chevronUpGreen" scaleX="10%" filename="chevron-up-green.svg" dithering="none" />
     <bitmap id="chevronUpGrey" scaleX="10%" filename="chevron-up-grey.svg" dithering="none" />
@@ -13,5 +14,7 @@
     <bitmap id="iconCancel" scaleX="15%" filename="cancel.svg" dithering="none" />
     <bitmap id="iconStop" scaleY="15%" filename="stop-orange.svg" dithering="none" />
 
+    <bitmap id="iconCheckHint" scaleY="9%" personality="system_icon_positive__check" />
+    <bitmap id="iconCancelHint" scaleY="8%" personality="system_icon_destructive__cancel" />
     <bitmap id="iconStopHint" scaleY="7%" filename="stop-hint-orange.svg" dithering="none" />
 </drawables>
