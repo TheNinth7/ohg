@@ -86,7 +86,7 @@ base.sourcePath = $(srcDefault)
 
 # WATCHES
 
-# Fenix 6 Pro series
+# Fenix 6 Pro
 fenix6pro.resourcePath=$(resBase);$(resLauncherIcons)/40x40
 fenix6pro.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound)
 fenix6pro.sourcePath = $(srcFenix6Pro)
@@ -120,6 +120,9 @@ fenix8solar51mm.resourcePath=$(resBase);$(resLauncherIcons)/40x40
 fenixe.resourcePath=$(resBase);$(resLauncherIcons)/60x60
 marq2.resourcePath=$(resBase);$(resLauncherIcons)/60x60
 marq2aviator.resourcePath=$(resBase);$(resLauncherIcons)/60x60
+descentg2.resourcePath=$(resBase);$(resLauncherIcons)/60x60
+descentmk343mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60
+descentmk351mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60
 
 # For Forerunner devices, the sourcePath must also be set,
 # as they have different button positions defined in Constants.

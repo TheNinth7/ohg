@@ -21,6 +21,9 @@
         -->
         <iq:products>
             <iq:product id="d2mach1"/>
+            <iq:product id="descentg2"/>
+            <iq:product id="descentmk343mm"/>
+            <iq:product id="descentmk351mm"/>
             <iq:product id="edge1040"/>
             <iq:product id="edge1050"/>
             <iq:product id="edge540"/>
