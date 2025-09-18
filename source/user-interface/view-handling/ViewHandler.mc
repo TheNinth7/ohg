@@ -2,71 +2,44 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 /*
- * The `ViewHandler` must be used throughout the app for switching views, 
- * pushing/popping them from the stack and accessing the currently displayed
- * view. 
- * This allows the app to keep track of the view stack itself, enabling the
- * popToBottomAndSwitch function that returns to the root view and replaces it
- * with a given view.
- * Also it allows us to implement our own getCurrentView, since that API function
- * is not available on devices prior to CIQ 3.4.
+ * The `ViewHandler` must be used throughout the app for switching views 
+ * or pushing/popping them from the stack.
+ *
+ * Its main purpose is to track how many views are currently on the stack, 
+ * so that in case of an update or error, all views can be popped and 
+ * replaced with the homepage or an error view.
  */
-typedef ViewDelegateTuple as [View,InputDelegates or Null];
-
 class ViewHandler {
-
-    // Our own view stack
-    private static var _viewStack as Array<ViewDelegateTuple> = [];
-
-    // OHApp registers the initial view with this method.
-    public static function registerInitialView( view as [View] or ViewDelegateTuple ) as Void {
-        _viewStack.add( 
-            view.size() == 1
-            ? [view[0], null]
-            : view 
-        );
-    }
-    
-    // Returns the current view
-    public static function getCurrentView() as ViewDelegateTuple {
-        return _viewStack[_viewStack.size() - 1];
-    }
+    // Counter for views above the base view.
+    // 0 = only the base view is on the stack.
+    // 1 = two views are on the stack, and so on.
+    private static var _stackSize as Number = 0;
 
     // Push/pop a view on/from the stack
-    public static function pushView( view as View, delegate as InputDelegates or Null, transition as SlideType ) as Void {
+    public static function pushView( view as Views, delegate as InputDelegates or Null, transition as SlideType ) as Void {
         WatchUi.pushView( view, delegate, transition );
-        _viewStack.add( [view, delegate] );
+        _stackSize++;
         // Logger.debug( "ViewHandler.pushView: new stack size=" + _stackSize );
     }
     public static function popView( transition as SlideType ) as Void {
         // Logger.debug( "ViewHandler.popView: previous stack size=" + _stackSize );
-        if( _viewStack.size() < 2 ) {
+        if( _stackSize < 1 ) {
             throw new GeneralException( "ViewHandler.popView called on zero view stack size" );
         }
-        _viewStack = _viewStack.slice( null, -1 );
+        _stackSize--;
         WatchUi.popView( transition );
         // Logger.debug( "ViewHandler.popView: new stack size=" + _stackSize );
     }
 
     // Removes all views from the stack except the base view,
     // and replaces the base view with the provided view.
-    public static function popToBottomAndSwitch( view as View, delegate as InputDelegates or Null ) as Void {
+    public static function popToBottomAndSwitch( view as Views, delegate as InputDelegates or Null ) as Void {
         // Logger.debug( "ViewHandler.popToBottomAndSwitch: previous stack size=" + _stackSize );
-        for( var i = _viewStack.size() - 1; i > 0; i-- ) {
+        while( _stackSize > 0 ) {
             WatchUi.popView( WatchUi.SLIDE_IMMEDIATE );
+            _stackSize--;
         }
-        _viewStack = [[view, delegate]];
         // Logger.debug( "ViewHandler.popToBottomAndSwitch: new stack size=" + _stackSize );
         WatchUi.switchToView( view, delegate, WatchUi.SLIDE_BLINK );
     }
-
-     // Switch to a new view
-    public static function switchToView( 
-        view as WatchUi.Views, 
-        delegate as WatchUi.InputDelegates or Null, 
-        transition as WatchUi.SlideType
-    ) as Void {
-        WatchUi.switchToView( view, delegate, transition );
-        _viewStack[_viewStack.size() - 1] = [view, delegate];
-   }
 }

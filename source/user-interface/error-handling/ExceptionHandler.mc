@@ -72,7 +72,7 @@ public class ExceptionHandler {
             
             // If there is no view yet, the exception is stored
             // as startup exception, otherwise the toast will be shown
-            if( ViewHandler.getCurrentView()[0] == null ) {
+            if( WatchUi.getCurrentView()[0] == null ) {
                 // Logger.debug( "ExceptionHandler: storing non-fatal startup exception" );
                 _startupException = [ex, false];
             } else {
@@ -93,7 +93,7 @@ public class ExceptionHandler {
             * If no view is currently active, the exception is stored as a startup exception.
             * Otherwise, the full-screen error view is shown immediately.
             */
-            if( ViewHandler.getCurrentView()[0] == null ) {
+            if( WatchUi.getCurrentView()[0] == null ) {
                 // Logger.debug( "ExceptionHandler: storing fatal startup exception" );
                 _startupException = [ex, true];
             } else {

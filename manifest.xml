@@ -21,11 +21,6 @@
         -->
         <iq:products>
             <iq:product id="d2mach1"/>
-            <iq:product id="descentg2"/>
-            <iq:product id="descentmk2"/>
-            <iq:product id="descentmk2s"/>
-            <iq:product id="descentmk343mm"/>
-            <iq:product id="descentmk351mm"/>
             <iq:product id="edge1030"/>
             <iq:product id="edge1030bontrager"/>
             <iq:product id="edge1030plus"/>
@@ -36,7 +31,6 @@
             <iq:product id="edge830"/>
             <iq:product id="edge840"/>
             <iq:product id="edgeexplore2"/>
-            <iq:product id="edgemtb"/>
             <iq:product id="enduro3"/>
             <iq:product id="epix2"/>
             <iq:product id="epix2pro42mm"/>

@@ -44,8 +44,6 @@ class OHApp extends Application.AppBase {
     // Initializes the widget view
     (:typecheck(disableGlanceCheck))
     public function getInitialView() as [Views] or [Views, InputDelegates] {
-        var initialView;
-
         try {
             // First we initialize the menu from storage
             var menu = HomepageMenu.createFromStorage();
@@ -64,21 +62,19 @@ class OHApp extends Application.AppBase {
 
             if( errorView != null ) {
                 // If there is an error view, display it
-                initialView = [errorView];
+                return [errorView];
             } else if( hasMenu ) {
                 // If there is HomepageMenu, display it
-                initialView = [ menu as View, HomepageMenuDelegate.get() ];
+                return [ menu as View, HomepageMenuDelegate.get() ];
             } else {
                 // Otherwise show the loading view
-                initialView = [ new LoadingView() ];
+                return [ new LoadingView() ];
             }
         } catch( ex ) {
             // Any exceptions occuring in this function are 
             // also displayed as error view
-            initialView = [ ErrorView.createOrUpdate( ex ) ];
+            return [ ErrorView.createOrUpdate( ex ) ];
         }
-        ViewHandler.registerInitialView( initialView );
-        return initialView;
     }
 
     
