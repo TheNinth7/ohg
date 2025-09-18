@@ -11,7 +11,7 @@ import Toybox.WatchUi;
  * Also it allows us to implement our own getCurrentView, since that API function
  * is not available on devices prior to CIQ 3.4.
  */
-typedef ViewDelegateTuple as [View or Null, InputDelegates or Null];
+typedef ViewDelegateTuple as [View,InputDelegates or Null];
 
 class ViewHandler {
 
@@ -29,9 +29,7 @@ class ViewHandler {
     
     // Returns the current view
     public static function getCurrentView() as ViewDelegateTuple {
-        return _viewStack.size() > 0
-               ? _viewStack[_viewStack.size() - 1]
-               : [null, null];
+        return _viewStack[_viewStack.size() - 1];
     }
 
     // Push/pop a view on/from the stack

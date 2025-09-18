@@ -77,7 +77,7 @@ class OHApp extends Application.AppBase {
             // also displayed as error view
             initialView = [ ErrorView.createOrUpdate( ex ) ];
         }
-        //ViewHandler.registerInitialView( initialView );
+        ViewHandler.registerInitialView( initialView );
         return initialView;
     }
 
@@ -101,4 +101,5 @@ class OHApp extends Application.AppBase {
         // Logger.debug( "OHApp.onSettingsChanged" );
         Storage.clearValues();
     }
+
 }
