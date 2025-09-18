@@ -5,7 +5,7 @@ import Toybox.Graphics;
 * `GlanceConstants` uses a single implementation for all Edge devices.
 */
 (:glance)
-class GlanceConstants extends GlanceDefaultConstants {
+class EdgeGlanceDefaultConstants extends GlanceDefaultConstants {
     protected function initialize() { GlanceDefaultConstants.initialize(); }
     
     // Edge devices need larger fonts

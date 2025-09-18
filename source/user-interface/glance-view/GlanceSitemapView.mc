@@ -36,7 +36,7 @@ class GlanceSitemapView extends WatchUi.GlanceView {
         }
         try {
             // Display either the homepage label or if not a default
-            _textArea.setColor( Graphics.COLOR_WHITE );
+            _textArea.setColor( GlanceConstants.UI_FONT_COLOR );
             var label = SitemapStore.getLabel();
             if( label != null ) {
                 _textArea.setText( label );
