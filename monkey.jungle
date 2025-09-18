@@ -170,6 +170,11 @@ venu3.resourcePath=$(resBase);$(resLauncherIcons)/70x70
 venu3.excludeAnnotations = $(annotCiq510Plus);$(annotTouch);$(annotScreenRound)
 venu3s.resourcePath=$(resBase);$(resLauncherIcons)/70x70
 venu3s.excludeAnnotations = $(venu3.excludeAnnotations)
+venu441mm.resourcePath=$(resBase);$(resLauncherIcons)/54x54
+venu441mm.excludeAnnotations = $(venu3.excludeAnnotations)
+venu445mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65
+venu445mm.excludeAnnotations = $(venu3.excludeAnnotations)
+
 venux1.resourcePath=$(resBase);$(resLauncherIcons)/65x65
 venux1.excludeAnnotations = $(venu3.excludeAnnotations)
 venux1.sourcePath = $(srcVenux1)
