@@ -41,7 +41,7 @@ class SitemapElement {
         var remoteDisplayState = null;
         var bracket = fullLabel.find( " [" ) as Number?;
         if( bracket != null ) {
-            label = fullLabel.substring( 0, bracket ) as String?;
+            label = fullLabel.substring( null, bracket ) as String?;
             if( label == null ) {
                 throw new JsonParsingException( "Label '" + label + "' does not have label before the [state]" );
             }

@@ -42,9 +42,9 @@ class ColorParser {
             case "gray": return 0x808080;
             case "gold": return 0xffd700;
         }
-        var leadChar = colorString.substring( 0, 1);
+        var leadChar = colorString.substring( null, 1);
         if( leadChar != null && leadChar.equals( "#" ) ) {
-            colorString = colorString.substring( 1, colorString.length() );
+            colorString = colorString.substring( 1, null );
             if( colorString != null ) {
                 var colorNumber = ( colorString ).toNumberWithBase( 0x10 );
                 if( colorNumber != null ) {
