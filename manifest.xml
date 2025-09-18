@@ -11,7 +11,7 @@
         official stable id="260c0edf-bca9-4aae-84c4-395d9623453b"
         official beta id="2f31d272-fa8f-4dc7-94b8-aed752209f7a"
     -->
-    <iq:application id="2f31d272-fa8f-4dc7-94b8-aed752209f7a" type="widget" name="@Strings.AppName" entry="OHApp" launcherIcon="@Drawables.logoLauncher" minApiLevel="3.3.0">
+    <iq:application id="2f31d272-fa8f-4dc7-94b8-aed752209f7a" type="widget" name="@Strings.AppName" entry="OHApp" launcherIcon="@Drawables.logoLauncher" minApiLevel="3.4.0">
         <!--
             Use the following from the Visual Studio Code comand palette to edit
             the build targets:
@@ -21,14 +21,9 @@
         -->
         <iq:products>
             <iq:product id="d2mach1"/>
-            <iq:product id="edge1030"/>
-            <iq:product id="edge1030bontrager"/>
-            <iq:product id="edge1030plus"/>
             <iq:product id="edge1040"/>
             <iq:product id="edge1050"/>
-            <iq:product id="edge530"/>
             <iq:product id="edge540"/>
-            <iq:product id="edge830"/>
             <iq:product id="edge840"/>
             <iq:product id="edgeexplore2"/>
             <iq:product id="enduro3"/>
