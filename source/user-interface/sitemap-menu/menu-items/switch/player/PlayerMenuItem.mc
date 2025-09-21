@@ -28,7 +28,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     private var _sitemapSwitch as SitemapSwitch;
 
     // The Drawable for the state
-    private var _stateDrawable as StateText;
+    private var _stateDrawable as PlayPauseStateDrawable;
 
     // Constructor
     // Initializes the BaseCommandRequest used for changing the state,
@@ -43,7 +43,9 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
         _commandRequest = BaseCommandRequest.get( self );
 
         // The state shown in the menu item
-        _stateDrawable = new StateText( sitemapSwitch.getDisplayState() );
+        _stateDrawable = new PlayPauseStateDrawable( 
+            sitemapSwitch.getSwitchItem().getState().equals( SwitchItem.ITEM_STATE_PLAY ) 
+        );
         
         BaseWidgetMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
@@ -129,8 +131,10 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
         _sitemapSwitch = sitemapWidget;
         
         // Update the state drawable
-        _stateDrawable.setText( sitemapWidget.getDisplayState() );
-        
+        _stateDrawable.setPlaying( 
+            _sitemapSwitch.getSwitchItem().getState().equals( SwitchItem.ITEM_STATE_PLAY ) 
+        );
+
         // If the view is currently open, we update it as well      
         if( _playerView != null ) {
             _playerView.updateWidget( sitemapWidget );

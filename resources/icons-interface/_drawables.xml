@@ -13,10 +13,12 @@
     <bitmap id="iconCheck" scaleX="15%" filename="check.svg" dithering="none" />
     <bitmap id="iconCancel" scaleX="15%" filename="cancel.svg" dithering="none" />
     <bitmap id="iconStop" scaleY="15%" filename="stop.svg" dithering="none" />
-    <bitmap id="iconPlayButton" scaleY="25%" filename="play-hint.svg" dithering="none" />
-    <bitmap id="iconPauseButton" scaleY="25%" filename="pause-hint.svg" dithering="none" />
-    <bitmap id="iconPlayTouch" scaleY="30%" filename="play.svg" dithering="none" />
-    <bitmap id="iconPauseTouch" scaleY="30%" filename="pause.svg" dithering="none" />
+    <bitmap id="iconPlayButton" scaleY="25%" filename="play-button.svg" dithering="none" />
+    <bitmap id="iconPauseButton" scaleY="25%" filename="pause-button.svg" dithering="none" />
+    <bitmap id="iconPlayTouch" scaleY="30%" filename="play-touch.svg" dithering="none" />
+    <bitmap id="iconPauseTouch" scaleY="30%" filename="pause-touch.svg" dithering="none" />
+    <bitmap id="iconPlayMenuItem" scaleY="5%" filename="play-menuitem.svg" dithering="none" />
+    <bitmap id="iconPauseMenuItem" scaleY="5%" filename="pause-menuitem.svg" dithering="none" />
     <bitmap id="iconNext" scaleY="30%" filename="next.svg" dithering="none" />
     <bitmap id="iconPrevious" scaleY="30%" filename="previous.svg" dithering="none" />
 

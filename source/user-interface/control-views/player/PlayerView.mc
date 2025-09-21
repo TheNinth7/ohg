@@ -22,6 +22,7 @@ class PlayerView extends CustomView {
     private var _playPauseIcon as PlayPauseBitmap?;
 
     // Also the input hint adapts based on the state
+    (:exclForTouch)
     private var _playPauseHint as InputHint?;
 
     // Constructor
@@ -31,6 +32,7 @@ class PlayerView extends CustomView {
     }
 
     // Returns the input hint type to be shown for a specific state
+    (:exclForTouch)
     private function getInputHintType ( currentState as String ) as BaseInputHint.Type {
         return currentState.equals( SwitchItem.ITEM_STATE_PLAY )
             ? BaseInputHint.HINT_TYPE_PAUSE
@@ -130,6 +132,20 @@ class PlayerView extends CustomView {
         } ) );
     }
 
+    // Updates the input hint
+    // Implementation is needed for button-based devices only
+    (:exclForTouch)
+    private function updateInputHint( sitemapSwitch as SitemapSwitch ) as Void {
+        // Update the play/pause hint
+        if( _playPauseHint != null ) {
+            _playPauseHint.setType( 
+                getInputHintType( _sitemapSwitch.getSwitchItem().getState() ) 
+            );
+        }
+    }
+    (:exclForButton)
+    private function updateInputHint( sitemapSwitch as SitemapSwitch ) as Void {}
+
     // This function is called when an updated sitemap is received.
     // In this case it is not necessary to call WatchUi.requestUpdate(),
     // since this is done by the update algorithm
@@ -147,10 +163,6 @@ class PlayerView extends CustomView {
         }
 
         // Update the play/pause hint
-        if( _playPauseHint != null ) {
-            _playPauseHint.setType( 
-                getInputHintType( _sitemapSwitch.getSwitchItem().getState() ) 
-            );
-        }
+        updateInputHint( _sitemapSwitch );
     }
 }
