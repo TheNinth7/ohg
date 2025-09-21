@@ -389,9 +389,9 @@ As a result, `Selection` is treated as a **synonym for `Switch`**, and both beha
 The widget supports four usage variants:
 
 1. **Toggle Switch** – for binary items (`ON`/`OFF`) and `Dimmer` items.
-2. **Rollershutter Control** – a full-screen view for `Rollershutter` items with `UP`, `DOWN`, and `STOP` buttons.
-3. **Player Control** – a full-screen view for `Player` items with `PLAY`/`PAUSE`, `NEXT`, and `PREVIOUS` buttons.
-4. **Generic Switch** – for items with custom or multiple commands, defined via `mappings` or item metadata.
+1. **Rollershutter Control** – a full-screen view for `Rollershutter` items with `UP`, `DOWN`, and `STOP` buttons.
+1. **Player Control** – a full-screen view for `Player` items with `PLAY`/`PAUSE`, `NEXT`, and `PREVIOUS` buttons.
+1. **Generic Switch** – for items with custom or multiple commands, defined via `mappings` or item metadata.
 
 ##### Toggle Switch
 
