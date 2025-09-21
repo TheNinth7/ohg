@@ -34,7 +34,15 @@ class InputHintIcon extends Bitmap {
         // The icon is drawn next to the vertical input hint
         // with a little bit of spacing (one linewidth accounts
         // for the line, the second is spacing)
-        locX = Constants.UI_SCREEN_WIDTH - lineWidth*2 - width;
+        // + positive position is shown on the right side of the screen
+        // - negative position is shown on the left side of the screen
+        if( position >= 0 ) {
+            locX = Constants.UI_SCREEN_WIDTH - lineWidth*2 - width;
+        } else {
+            locX = lineWidth*2;
+            position = position * -1;
+        }
+        
         locY = ( position - height/2 ).toNumber();
 
         // If a touch area identifier was provided,

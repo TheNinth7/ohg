@@ -69,8 +69,10 @@ srcVenux1=$(srcBase);source-constants/venux1
 srcEdgeBase=$(srcBase);source-constants/edge/widget/base;source-constants/edge/glance/base;source-constants/edge/glance/default-device
 # For Edge touch devices (such as Explore 2/1040/1050)
 srcEdgeTouch=$(srcEdgeBase);source-constants/edge/widget/touch
-# For Edge button devices (such as 540/840)
-srcEdgeButton=$(srcEdgeBase);source-constants/edge/widget/button
+# For 540/840 Edge button devices
+srcEdgeButtonX40=$(srcEdgeBase);source-constants/edge/widget/button-x40
+# For 540/840 Edge button devices
+srcEdgeButtonX50=$(srcEdgeBase);source-constants/edge/widget/button-x50
 
 # DEVICES
 # The following section assembles the excludeAnnotations,
@@ -196,20 +198,20 @@ edgeexplore2.sourcePath = $(srcEdgeTouch)
 # Button-based, CIQ >= 5.1.0
 edge540.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/35x35
 edge540.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular)
-edge540.sourcePath = $(srcEdgeButton)
+edge540.sourcePath = $(srcEdgeButtonX40)
 edge840.resourcePath=$(edge540.resourcePath)
 edge840.excludeAnnotations = $(edge540.excludeAnnotations)
-edge840.sourcePath = $(srcEdgeButton)
+edge840.sourcePath = $(srcEdgeButtonX40)
 edgemtb.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/36x36
 edgemtb.excludeAnnotations = $(edge540.excludeAnnotations)
 # For the Edge MTB a special source string is assembled to use a different glance constants class (the Edge MTB needs different font coloring)
-edgemtb.sourcePath = $(srcBase);source-constants/edge/widget/base;source-constants/edge/widget/button;source-constants/edge/glance/base;source-constants/edge/glance/mtb
+edgemtb.sourcePath = $(srcBase);source-constants/edge/widget/base;source-constants/edge/widget/button-x40;source-constants/edge/glance/base;source-constants/edge/glance/mtb
 edge550.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/56x56
 edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular)
-edge550.sourcePath = $(srcEdgeButton)
+edge550.sourcePath = $(srcEdgeButtonX50)
 edge850.resourcePath=$(edge550.resourcePath)
 edge850.excludeAnnotations = $(edge550.excludeAnnotations)
-edge850.sourcePath = $(srcEdgeButton)
+edge850.sourcePath = $(srcEdgeButtonX50)
 
 
 # Touch-based, CIQ >= 5.1.0

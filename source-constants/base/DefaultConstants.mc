@@ -52,9 +52,13 @@ class DefaultConstants {
     (:exclForScreenRectangular)
     public static const UI_INPUT_HINT_POSITIONS as Array<Number> = [30, 330, 180, 210];
     (:exclForScreenRound)
+    // + positive position indicates y coordinate on the right side of the screen
+    // - negative position indicates y coordinate on the left side of the screen
     public static const UI_INPUT_HINT_POSITIONS as Array<Number> = [
         ( UI_SCREEN_HEIGHT * 0.125 ).toNumber(), 
         ( UI_SCREEN_HEIGHT * 0.675 ).toNumber(), 
+        -( UI_SCREEN_HEIGHT * 0.4 ).toNumber(), 
+        -( UI_SCREEN_HEIGHT * 0.7 ).toNumber() 
     ];
 
     // Height of menu title and footer

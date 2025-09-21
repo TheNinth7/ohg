@@ -31,11 +31,20 @@ class InputHint extends BaseInputHint {
         BaseInputHint.initialize( key, type, touchId );
         
         // prepare the coordinates
-        // the _condition from the Constants
+        // the _position from the Constants
         // identifies the middle of the vertical line
-        _x = ( Constants.UI_SCREEN_WIDTH - LINE_WIDTH/2 ).toNumber();
-        _yStart = ( _position - HEIGHT/2 ).toNumber();
-        _yEnd = ( _position + HEIGHT/2 ).toNumber();
+        // + positive position is shown on the right side of the screen
+        // - negative position is shown on the left side of the screen
+        var position = _position;
+        if( position >= 0 ) {
+            _x = ( Constants.UI_SCREEN_WIDTH - LINE_WIDTH/2 ).toNumber();
+        } else {
+            _x = ( LINE_WIDTH/2 ).toNumber();
+            position = position * -1;
+        }
+        
+        _yStart = ( position - HEIGHT/2 ).toNumber();
+        _yEnd = ( position + HEIGHT/2 ).toNumber();
     }
 
     // Draw the line
