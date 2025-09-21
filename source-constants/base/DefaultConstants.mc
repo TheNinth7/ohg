@@ -47,8 +47,10 @@ class DefaultConstants {
     // Corresponds to CustomView.InputHints enumeration
     // 0=ENTER
     // 1=BACK
+    // 2=UP
+    // 3=DOWN
     (:exclForScreenRectangular)
-    public static const UI_INPUT_HINT_POSITIONS as Array<Number> = [30, 330];
+    public static const UI_INPUT_HINT_POSITIONS as Array<Number> = [30, 330, 180, 210];
     (:exclForScreenRound)
     public static const UI_INPUT_HINT_POSITIONS as Array<Number> = [
         ( UI_SCREEN_HEIGHT * 0.125 ).toNumber(), 

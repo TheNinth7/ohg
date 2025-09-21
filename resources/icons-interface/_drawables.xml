@@ -12,9 +12,19 @@
 
     <bitmap id="iconCheck" scaleX="15%" filename="check.svg" dithering="none" />
     <bitmap id="iconCancel" scaleX="15%" filename="cancel.svg" dithering="none" />
-    <bitmap id="iconStop" scaleY="15%" filename="stop-orange.svg" dithering="none" />
+    <bitmap id="iconStop" scaleY="15%" filename="stop.svg" dithering="none" />
+    <bitmap id="iconPlayButton" scaleY="25%" filename="play-hint.svg" dithering="none" />
+    <bitmap id="iconPauseButton" scaleY="25%" filename="pause-hint.svg" dithering="none" />
+    <bitmap id="iconPlayTouch" scaleY="30%" filename="play.svg" dithering="none" />
+    <bitmap id="iconPauseTouch" scaleY="30%" filename="pause.svg" dithering="none" />
+    <bitmap id="iconNext" scaleY="30%" filename="next.svg" dithering="none" />
+    <bitmap id="iconPrevious" scaleY="30%" filename="previous.svg" dithering="none" />
 
     <bitmap id="iconCheckHint" scaleY="9%" personality="system_icon_positive__check" />
     <bitmap id="iconCancelHint" scaleY="8%" personality="system_icon_destructive__cancel" />
-    <bitmap id="iconStopHint" scaleY="7%" filename="stop-hint-orange.svg" dithering="none" />
+    <bitmap id="iconStopHint" scaleY="7%" filename="stop-hint.svg" dithering="none" />
+    <bitmap id="iconPlayHint" scaleY="7%" filename="play-hint.svg" dithering="none" />
+    <bitmap id="iconPauseHint" scaleY="7%" filename="pause-hint.svg" dithering="none" />
+    <bitmap id="iconNextHint" scaleY="7%" filename="next-hint.svg" dithering="none" />
+    <bitmap id="iconPreviousHint" scaleY="7%" filename="previous-hint.svg" dithering="none" />
 </drawables>

@@ -17,20 +17,33 @@ class BaseInputHint extends Drawable {
     // device-specific
     enum Key {
         HINT_KEY_ENTER,
-        HINT_KEY_BACK
+        HINT_KEY_BACK,
+        HINT_KEY_UP,
+        HINT_KEY_DOWN
     }
     // Enum for type of input hint
     // NEUTRAL = white
-    // POSITIVE = green, with check icon
-    // DESTRUCTIVE = red, with cancel icon
+    // CHECK = green check icon
+    // CANCEL = red cancel cross
+    // STOP = orange stop symbol
+    // PREVIOUS = previous track for player
+    // NEXT = next track for player
     enum Type {
         HINT_TYPE_NEUTRAL,
         HINT_TYPE_CHECK,
         HINT_TYPE_CANCEL,
         HINT_TYPE_STOP,
+        HINT_TYPE_PLAY,
+        HINT_TYPE_PAUSE,
+        HINT_TYPE_PREVIOUS,
+        HINT_TYPE_NEXT
     }
     // Association of Type with colors
     private const UI_INPUT_HINT_COLORS as Array<ColorType> = [
+        Constants.UI_COLOR_TEXT,
+        Constants.UI_COLOR_TEXT,
+        Constants.UI_COLOR_TEXT,
+        Constants.UI_COLOR_TEXT,
         Constants.UI_COLOR_TEXT,
         Constants.UI_COLOR_TEXT,
         Constants.UI_COLOR_TEXT,
@@ -41,7 +54,11 @@ class BaseInputHint extends Drawable {
         null,
         Rez.Drawables.iconCheckHint,
         Rez.Drawables.iconCancelHint,
-        Rez.Drawables.iconStopHint
+        Rez.Drawables.iconStopHint,
+        Rez.Drawables.iconPlayHint,
+        Rez.Drawables.iconPauseHint,
+        Rez.Drawables.iconPreviousHint,
+        Rez.Drawables.iconNextHint
     ];
 
     // Default line width
@@ -51,12 +68,14 @@ class BaseInputHint extends Drawable {
     protected var _position as Number; // The position (angle for round, y coordinate for rectangular)
     protected var _color as ColorType;
     private var _icon as InputHintIcon?;
+    private var _touchId as Symbol?;
 
     // Initialize the members above
     protected function initialize( key as Key, type as Type, touchId as Symbol? ) {
         Drawable.initialize( {} );
         _position = Constants.UI_INPUT_HINT_POSITIONS[key];
         _color = UI_INPUT_HINT_COLORS[type];
+        _touchId = touchId;
         
         // For the icon we initialize the InputHintIcon, for which
         // again there are two versions for round and rectangular screen
@@ -81,6 +100,15 @@ class BaseInputHint extends Drawable {
             return _icon.getTouchArea();
         } else {
             return null;
+        }
+    }
+
+    // Changes the type of the input hint
+    public function setType( type as Type ) as Void {
+        _color = UI_INPUT_HINT_COLORS[type];
+        var iconRez = UI_INPUT_HINT_ICONS[type];
+        if( iconRez != null ) {
+            _icon = new InputHintIcon( iconRez, _touchId, _position, LINE_WIDTH );
         }
     }
 } 

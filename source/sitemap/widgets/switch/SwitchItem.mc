@@ -23,6 +23,13 @@ class SwitchItem extends Item {
     public static const ITEM_STATE_OPEN = "OPEN";
     public static const ITEM_STATE_CLOSED = "CLOSED";
 
+    // Strings representing the play/pause states
+    // and the next/previous commands
+    public static const ITEM_STATE_PLAY = "PLAY";
+    public static const ITEM_STATE_PAUSE = "PAUSE";
+    public static const ITEM_COMMAND_NEXT = "NEXT";
+    public static const ITEM_COMMAND_PREVIOUS = "PREVIOUS";
+
     private var _commandDescriptions as CommandDescriptions?;
     private var _stateDescriptions as StateDescriptions?;
 

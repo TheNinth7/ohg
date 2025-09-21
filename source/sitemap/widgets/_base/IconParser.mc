@@ -255,6 +255,28 @@ class IconParser {
                 case "lowbattery": return Rez.Drawables.menuBatteryLevel00;
 
                 case "radiator": return Rez.Drawables.menuRadiator;
+
+                case "mediacontrol": return Rez.Drawables.menuMediaControl;
+
+                case "player": return Rez.Drawables.menuPlayer;
+
+                case "soundvolume": {
+                    var numericItemState = itemState.toNumber();
+                    
+                    if( numericItemState == null ) {
+                        return Rez.Drawables.menuSoundVolume10;
+                    } else {
+                        if( numericItemState >= 100 ) {
+                            return Rez.Drawables.menuSoundVolume10;
+                        } else if( numericItemState >= 70 ) {
+                            return Rez.Drawables.menuSoundVolume07;
+                        } else if( numericItemState >= 40 ) {
+                            return Rez.Drawables.menuSoundVolume04;
+                        } else {
+                            return Rez.Drawables.menuSoundVolume00;
+                        }
+                    }
+                }
             }
         }
         return null;

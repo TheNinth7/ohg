@@ -53,6 +53,10 @@
     <bitmap id="menuLight09" scaleY="12%" filename="light-09.svg" dithering="none"/>
     <bitmap id="menuLight10" scaleY="12%" filename="light-10.svg" dithering="none"/>
 
+    <bitmap id="menuMediaControl" scaleY="12%" filename="mediacontrol.svg" dithering="none"/>
+
+    <bitmap id="menuPlayer" scaleY="10%" filename="player.svg" dithering="none"/>
+
     <bitmap id="menuPowerOutlet" scaleY="12%" filename="poweroutlet.svg" dithering="none"/>
     <bitmap id="menuPowerOutletOff" scaleY="12%" filename="poweroutlet-off.svg" dithering="none"/>
     <bitmap id="menuPowerOutletOn" scaleY="12%" filename="poweroutlet-on.svg" dithering="none"/>
@@ -75,6 +79,11 @@
     <bitmap id="menuScreenOn" scaleY="11%" filename="screen-on.svg" dithering="none"/>
 
     <bitmap id="menuSettings" scaleY="10%" filename="settings.svg" dithering="none" />
+
+    <bitmap id="menuSoundVolume00" scaleY="12%" filename="soundvolume-00.svg" dithering="none"/>
+    <bitmap id="menuSoundVolume04" scaleY="12%" filename="soundvolume-04.svg" dithering="none"/>
+    <bitmap id="menuSoundVolume07" scaleY="12%" filename="soundvolume-07.svg" dithering="none"/>
+    <bitmap id="menuSoundVolume10" scaleY="12%" filename="soundvolume-10.svg" dithering="none"/>
 
     <bitmap id="menuTemperature" scaleY="12%" filename="temperature.svg" dithering="none"/>
 

@@ -80,7 +80,11 @@ class CustomView extends View {
     // Type defines the color and icon
     // Set touchId to associate the input hint icon with a touch behavior
     (:exclForTouch)
-    public function addInputHint( key as BaseInputHint.Key, type as BaseInputHint.Type, touchId as Symbol ) as Void {
+    public function addInputHint( 
+        key as BaseInputHint.Key, 
+        type as BaseInputHint.Type, 
+        touchId as Symbol 
+    ) as InputHint {
         var inputHint = new InputHint( 
             key,
             type,
@@ -93,5 +97,6 @@ class CustomView extends View {
         if( touchArea != null ) {
             addTouchArea( touchArea );
         }
+        return inputHint;
     }
 }

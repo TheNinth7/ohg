@@ -31,6 +31,8 @@ class MenuItemFactory {
             return new NumericMenuItem( sitemapWidget as SitemapNumeric, parent, processingMode );
         } else if( RollershutterMenuItem.isMyType( sitemapWidget ) ) {
             return new RollershutterMenuItem( sitemapWidget as SitemapSwitch, parent, processingMode );
+        } else if( PlayerMenuItem.isMyType( sitemapWidget ) ) {
+            return new PlayerMenuItem( sitemapWidget as SitemapSwitch, parent, processingMode );
         } else if( GenericSwitchMenuItem.isMyType( sitemapWidget ) ) {
             return new GenericSwitchMenuItem( sitemapWidget as SitemapSwitch, parent, processingMode );
        } else {
