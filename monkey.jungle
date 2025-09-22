@@ -119,6 +119,7 @@ fenix843mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60
 fenix847mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65
 fenix8solar47mm.resourcePath=$(resBase);$(resLauncherIcons)/40x40
 fenix8solar51mm.resourcePath=$(resBase);$(resLauncherIcons)/40x40
+fenix8pro47mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65
 fenixe.resourcePath=$(resBase);$(resLauncherIcons)/60x60
 marq2.resourcePath=$(resBase);$(resLauncherIcons)/60x60
 marq2aviator.resourcePath=$(resBase);$(resLauncherIcons)/60x60
