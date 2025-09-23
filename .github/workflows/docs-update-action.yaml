@@ -14,4 +14,4 @@ jobs:
         with:
           token: ${{ secrets.DOCS_REPO_ACCESS_TOKEN }}
           repository: openhab/openhab-docs
-          event-type: update-garmin-docs-event
+          event-type: update-openhab-garmin-docs-event
