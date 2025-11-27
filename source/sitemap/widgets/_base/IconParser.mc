@@ -277,6 +277,8 @@ class IconParser {
                         }
                     }
                 }
+
+                case "motion": return Rez.Drawables.menuMotion;
             }
         }
         return null;

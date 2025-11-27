@@ -55,6 +55,8 @@
 
     <bitmap id="menuMediaControl" scaleY="12%" filename="mediacontrol.svg" dithering="none"/>
 
+    <bitmap id="menuMotion" scaleY="10%" filename="motion.svg" dithering="none"/>
+
     <bitmap id="menuPlayer" scaleY="9%" filename="player.svg" dithering="none"/>
 
     <bitmap id="menuPowerOutlet" scaleY="12%" filename="poweroutlet.svg" dithering="none"/>
