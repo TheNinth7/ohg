@@ -118,12 +118,12 @@ In the Connect IQ SDK, resources define:
 **Folder breakdown:**
 
 - `/resources/base`: Contains resources shared across all device types.
-  - `/resources/base/drawables.xml`: Defines image assets used in the app (referenced as `Drawable` elements).
   - `/resources/base/settings.xml`: Specifies the app’s configuration settings, including default values, types, and user-facing descriptions.
   - `/resources/base/string.xml`: Contains static string values such as the app name and version number.
 - `/resources/edge`: Contains resources specific to Garmin Edge devices. Some `Drawable` elements are overridden here to account for different sizing requirements.
-- `/resources/launcher-icons`: Contains one subdirectory per launcher icon size. Each subdirectory includes a resource definition for that specific size. The correct icon is selected via the resource path in the `monkey.jungle` build file, depending on the target device.
-- `/resources/svg`: Contains the original SVG files used to generate `Drawable` resources.
+- `/resources/icons-interface`: Contains the `_drawables.xml` file defining the icons used in the app’s user interface, primarily for navigation, along with their corresponding SVG files.
+- `/resources/icons-launcher`: Contains one subdirectory per launcher icon size. Each subdirectory includes a resource definition for that specific size. The correct icon is selected via the resource path in the `monkey.jungle` build file, depending on the target device.
+- `/resources/icons-interface`: Contains the `_drawables.xml` file defining the openHAB icons that can be assigned to widgets, along with their corresponding SVG files.
 
 **Further reading:**
 
