@@ -24,7 +24,7 @@ class NativeCommandRequest extends BaseCommandRequest {
         );
         //setOption( :responseType, Communications.HTTP_RESPONSE_CONTENT_TYPE_TEXT_PLAIN );
         setHeader( "Content-Type", Communications.REQUEST_CONTENT_TYPE_JSON );
-        setHeader( "X-Openhab-Source", "org.openhab.ui.garmin" );
+        setHeader( "X-Openhab-Source", "org.openhab.app.garmin" );
     }
 
     // Sending a command
