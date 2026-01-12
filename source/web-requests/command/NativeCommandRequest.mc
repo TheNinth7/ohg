@@ -5,13 +5,10 @@ import Toybox.WatchUi;
 
 /*
     Command request for sending commands to the 
-    native REST API of openHAB. 
-    At the time of writing this native REST API is still under 
-    development. While there currently is a REST API for sending
-    commands to items, it requires the command to be send as RAW 
-    content of the request, which is not supported by the Garmin SDK. 
-    Therefore openHAB will be enhanced with a request accepting JSON 
-    as payload.
+    native REST API of openHAB.
+    openHAB 5.0 and newer accept JSON-wrapped command as payload.
+    openHAB versions older than 5.0 only support receiving the command as RAW content, 
+    which is not suppored by the Garmin SDK.
 */
 class NativeCommandRequest extends BaseCommandRequest {
 
@@ -27,6 +24,7 @@ class NativeCommandRequest extends BaseCommandRequest {
         );
         //setOption( :responseType, Communications.HTTP_RESPONSE_CONTENT_TYPE_TEXT_PLAIN );
         setHeader( "Content-Type", Communications.REQUEST_CONTENT_TYPE_JSON );
+        setHeader( "X-Openhab-Source", "org.openhab.ui.garmin" );
     }
 
     // Sending a command
