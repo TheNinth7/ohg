@@ -86,13 +86,14 @@ class SwitchViewIfVisibleTask extends BaseSitemapProcessorTask {
     // Perform the switch if the menu is visible
     public function invoke() as Void {
         // ... If this menu is the current view ...
-        if( _pageMenu.equals( WatchUi.getCurrentView()[0] ) ) {
+        var currentView = WatchUi.getCurrentView()[0] as View;
+        if( _pageMenu.equals( currentView ) ) {
             // Logger.debug( "SwitchViewIfVisibleTask.invoke: switching the view!" );
             
             // ... we do the switch to itself
             WatchUi.switchToView(
-                WatchUi.getCurrentView()[0] as View,
-                WatchUi.getCurrentView()[1] as InputDelegate,
+                currentView,
+                WatchUi.getCurrentView()[1] as InputDelegate?,
                 WatchUi.SLIDE_IMMEDIATE
             );
         }            
