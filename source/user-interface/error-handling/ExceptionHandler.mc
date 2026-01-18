@@ -35,6 +35,11 @@ public class ExceptionHandler {
     */
     private static var _startupException as [Exception, Boolean]?;
     
+    /*
+    * Used for handling communication and general errors happening during background processing.
+    * There may still be some places in the code where this is used for user interface exceptions, but
+    * those instances should all be migrated to handleUserInterfaceException.
+    */
     public static function handleException( ex as Exception ) as Void {
         // Logger.debug( "ExceptionHandler: exception" );
         Logger.debugException( ex );
@@ -62,7 +67,6 @@ public class ExceptionHandler {
         *
         * In all other cases, a full-screen error view is displayed instead.
         */
-
         if( ex instanceof CommunicationBaseException 
             &&  ( !ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP )
                 || ( isSitemapFresh && !ex.isFatal() ) )
@@ -101,6 +105,38 @@ public class ExceptionHandler {
             }
         }
     }
+
+
+    /*
+    * Used for handling errors coming from user interface interactions.
+    */
+    public static function handleUserInterfaceException( ex as Exception ) as Void {
+        // Logger.debug( "ExceptionHandler: exception" );
+        Logger.debugException( ex );
+
+        // While this should not happen, we check if we are in the startup phase,
+        // and if yes, ignore the exception
+        if( WatchUi.getCurrentView()[0] != null ) {
+            // NonFatalUserInterfaceException is used for non-fatal UI exceptions, for which
+            // we will show a toast notification
+            if( ex instanceof NonFatalUserInterfaceException ) {
+                ToastHandler.showWarning( ex.getToastMessage() );
+            } else {
+                // In case of a fatal UI error we stop doing sitemap requests
+                SitemapRequest.get().stop();
+                
+                // If the exception is not already a FatalUserInterfaceException, we wrap
+                // it in one
+                if( ! ( ex instanceof FatalUserInterfaceException ) ) {
+                    ex = new FatalUserInterfaceException( ex );
+                }
+                
+                // Show the error view
+                ErrorView.showOrUpdate( ex );
+            }
+        }
+    }
+
 
     /*
     * This function must be called by views initially loaded by `OHApp`, 

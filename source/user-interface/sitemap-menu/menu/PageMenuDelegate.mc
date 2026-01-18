@@ -32,14 +32,19 @@ class PageMenuDelegate extends WatchUi.Menu2InputDelegate {
         try {
             ( item as BaseSitemapMenuItem ).onSelect();
         } catch( ex ) {
-            // Logger.debug( "PageMenuDelegate: exception" );
-            ExceptionHandler.handleException( ex );
+            // Logger.debug( "PageMenuDelegate.onSelect: exception" );
+            ExceptionHandler.handleUserInterfaceException( ex );
         }
     }
 
     // Override onBack() to use our own popView() implementation
     public function onBack() as Void {
         // Logger.debug( "PageMenuDelegate.onBack" );
-        ViewHandler.popView( WatchUi.SLIDE_RIGHT );
+        try {
+            ViewHandler.popView( WatchUi.SLIDE_RIGHT );
+        } catch( ex ) {
+            // Logger.debug( "PageMenuDelegate.onBack: exception" );
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
     }
 }

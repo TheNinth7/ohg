@@ -24,7 +24,7 @@ class ViewHandler {
     public static function popView( transition as SlideType ) as Void {
         // Logger.debug( "ViewHandler.popView: previous stack size=" + _stackSize );
         if( _stackSize < 1 ) {
-            throw new GeneralException( "ViewHandler.popView called on zero view stack size" );
+            throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_POP_VIEW_ON_EMPTY_STACK );
         }
         _stackSize--;
         WatchUi.popView( transition );
