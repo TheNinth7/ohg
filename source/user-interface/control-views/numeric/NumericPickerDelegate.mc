@@ -81,7 +81,7 @@ class NumericPickerDelegate extends CustomPickerDelegate {
     private function updateState( state as Object ) as Void {
         // Logger.debug "NumericPickerDelegate.updateState=" + state );
         if( ! ( state instanceof Number ) ) {
-            throw new GeneralException( "NumericPickerDelegate: invalid state type" );
+            throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_STATE_TYPE );
         }
         // Update only if releaseOnly is false
         if( ! _menuItem.getSitemapNumeric().isReleaseOnly() ) {

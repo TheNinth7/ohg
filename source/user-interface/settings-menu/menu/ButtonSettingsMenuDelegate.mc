@@ -32,13 +32,21 @@ class ButtonSettingsMenuDelegate extends BaseSettingsMenuDelegate {
     * which menu item should be focused in the homepage menu.
     */
     public function onNextPage() as Boolean {
-        SettingsMenuHandler.hideSettings( WatchUi.SLIDE_UP );
+        try {
+            SettingsMenuHandler.hideSettings( WatchUi.SLIDE_UP );
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
         return true;
     }
 
     // Same as above, but for leaving the settings menu by scrolling up
     public function onPreviousPage() as Boolean {
-        SettingsMenuHandler.hideSettings( WatchUi.SLIDE_DOWN );
+        try {
+            SettingsMenuHandler.hideSettings( WatchUi.SLIDE_DOWN );
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
         return true;
     }
 
@@ -57,10 +65,14 @@ class ButtonSettingsMenuDelegate extends BaseSettingsMenuDelegate {
     */
     (:exclForCiq510Plus)
     public function onWrap( key as Key ) as Boolean {
-        if( key == KEY_DOWN ) {
-            onNextPage();
-        } else if( key == KEY_UP ) {
-            onPreviousPage();
+        try {
+            if( key == KEY_DOWN ) {
+                onNextPage();
+            } else if( key == KEY_UP ) {
+                onPreviousPage();
+            }
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
         }
         // Returning false indicates to the system that
         // it should not scroll to the opposite end

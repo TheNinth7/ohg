@@ -8,7 +8,9 @@ class NonFatalUserInterfaceException extends Exception {
 
     // Supported error codes
     enum ErrorCode {
-        EX_POP_VIEW_ON_EMPTY_STACK
+        EX_POP_VIEW_ON_EMPTY_STACK, // UI-00
+        EX_INVALID_STATE_TYPE,      // UI-01
+        EX_INVALID_COMMAND          // UI-02
     }    
 
     // The error code of this instance
