@@ -116,14 +116,26 @@ class CustomPickerDelegate extends CustomBehaviorDelegate {
     // and touch events
     private function onUpInternal() as Boolean {
         getFactory().up();
-        onUp( getCurrentValue() );
-        WatchUi.requestUpdate();
+        try{
+            onUp( getCurrentValue() );
+            WatchUi.requestUpdate();
+        } catch( ex ) {
+            // If an exception occurs, we undo the change
+            getFactory().down();
+            throw ex;
+        }
         return false;
     }
     private function onDownInternal() as Boolean {
         getFactory().down();
-        onDown( getCurrentValue() );
-        WatchUi.requestUpdate();
+        try{
+            onDown( getCurrentValue() );
+            WatchUi.requestUpdate();
+        } catch( ex ) {
+            // If an exception occurs, we undo the change
+            getFactory().up();
+            throw ex;
+        }
         return false;
     }
 }

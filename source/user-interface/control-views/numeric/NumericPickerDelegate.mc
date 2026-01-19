@@ -80,6 +80,7 @@ class NumericPickerDelegate extends CustomPickerDelegate {
     }
     private function updateState( state as Object ) as Void {
         // Logger.debug "NumericPickerDelegate.updateState=" + state );
+        throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_STATE_TYPE );
         if( ! ( state instanceof Number ) ) {
             throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_STATE_TYPE );
         }
