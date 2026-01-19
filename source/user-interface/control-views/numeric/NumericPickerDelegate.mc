@@ -84,8 +84,8 @@ class NumericPickerDelegate extends CustomPickerDelegate {
             throw new GeneralException( "NumericPickerDelegate: invalid state type" );
         }
         // Update only if releaseOnly is false
-        // if( ! _menuItem.getSitemapNumeric().isReleaseOnly() ) {
+        if( ! _menuItem.getSitemapNumeric().isReleaseOnly() ) {
             _menuItem.updateState( state );
-        // }
+        }
     }     
 }
