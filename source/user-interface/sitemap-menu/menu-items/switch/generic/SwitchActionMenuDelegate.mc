@@ -21,12 +21,17 @@ class SwitchActionMenuDelegate extends ActionMenuDelegate {
     // on select, send the command
     public function onSelect( item as ActionMenuItem ) as Void {
         // Logger.debu "SwitchActionMenuDelegate.onSelect" );
-        // The action menu items have the command as Id
-        var command = item.getId();
-        if( command instanceof String ) {
-            _menuItem.sendCommand( command );
-        } else {
-            throw new GeneralException( "SwitchActionMenuDelegate: invalid command" );
+        try {
+            // The action menu items have the command as Id
+            var command = item.getId();
+            if( command instanceof String ) {
+                _menuItem.sendCommand( command );
+            } else {
+                throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_COMMAND );
+            }
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
         }
+
     }
 }
