@@ -34,8 +34,12 @@ class RollershutterDelegate extends CustomBehaviorDelegate {
     // This delegate function covers both the back key
     // and the swipe right gesture
     public function onBack() as Boolean {
-        _menuItem.onReturn();
-        ViewHandler.popView( WatchUi.SLIDE_RIGHT );
+        try {
+            _menuItem.onReturn();
+            ViewHandler.popView( WatchUi.SLIDE_RIGHT );
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
         return true;
     }
 
@@ -49,16 +53,21 @@ class RollershutterDelegate extends CustomBehaviorDelegate {
     // React to key presses
     public function onKey( keyEvent as KeyEvent ) as Boolean {
         // Logger.debug( "CustomPickerDelegate.onKey: start" );
-        var key = keyEvent.getKey();
-        if( key == KEY_ENTER ) {
-            return onStop();
-        } else if( key == KEY_UP ) {
-            return onUp();
-        } else if( key == KEY_DOWN ) {
-            return onDown();
+        try {
+            var key = keyEvent.getKey();
+            if( key == KEY_ENTER ) {
+                return onStop();
+            } else if( key == KEY_UP ) {
+                return onUp();
+            } else if( key == KEY_DOWN ) {
+                return onDown();
+            }
+            // Logger.debug( "CustomPickerDelegate.onKey: end" );
+            return false;
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+            return true;
         }
-        // Logger.debug( "CustomPickerDelegate.onKey: end" );
-        return false;
     }
 
     // Internal function called by the key/touch delegates

@@ -34,24 +34,32 @@ class PlayerDelegate extends CustomBehaviorDelegate {
     // This delegate function covers both the back key
     // and the swipe right gesture
     public function onBack() as Boolean {
-        _menuItem.onReturn();
-        ViewHandler.popView( WatchUi.SLIDE_RIGHT );
+        try {
+            _menuItem.onReturn();
+            ViewHandler.popView( WatchUi.SLIDE_RIGHT );
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
         return true;
     }
 
     // React to key presses
     public function onKey( keyEvent as KeyEvent ) as Boolean {
         // Logger.debug( "PlayerDelegate.onKey: start" );
-        var key = keyEvent.getKey();
-        if( key == KEY_ENTER ) {
-            return onPlayPause();
-        } else if( key == KEY_UP ) {
-            return onPrevious();
-        } else if( key == KEY_DOWN ) {
-            return onNext();
+        try {
+            var key = keyEvent.getKey();
+            if( key == KEY_ENTER ) {
+                return onPlayPause();
+            } else if( key == KEY_UP ) {
+                return onPrevious();
+            } else if( key == KEY_DOWN ) {
+                return onNext();
+            }
+            return false;
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+            return true;
         }
-        // Logger.debug( "PlayerDelegate.onKey: end" );
-        return false;
     }
 
     // Internal function called by the key/touch delegates

@@ -33,20 +33,24 @@ class CustomBehaviorDelegate extends BehaviorDelegate {
     // been tapped and then calls onTapArea() with its identifier
     public function onTap( clickEvent as ClickEvent ) as Boolean {
         // Logger.debug "CustomBehaviorDelegate.onTap" );
-
-        // Only do this if the view is a CustomView
-        var currentView = WatchUi.getCurrentView()[0];
-        if( currentView instanceof CustomView ) {
-            var touchAreas = currentView.getTouchAreas();
-            var coordinates = clickEvent.getCoordinates();
-            for( var i = touchAreas.size() - 1; i >= 0; i-- ) {
-                var touchArea = touchAreas[i];
-                if( touchArea.contains( coordinates ) ) {
-                    return onAreaTap( touchArea.getId(), clickEvent );
+        try {
+            // Only do this if the view is a CustomView
+            var currentView = WatchUi.getCurrentView()[0];
+            if( currentView instanceof CustomView ) {
+                var touchAreas = currentView.getTouchAreas();
+                var coordinates = clickEvent.getCoordinates();
+                for( var i = touchAreas.size() - 1; i >= 0; i-- ) {
+                    var touchArea = touchAreas[i];
+                    if( touchArea.contains( coordinates ) ) {
+                        return onAreaTap( touchArea.getId(), clickEvent );
+                    }
                 }
             }
+            return false;
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+            return true;
         }
-        return false;
     }
 
     // Subclasses should override this and implement
