@@ -45,14 +45,25 @@ public class ExceptionHandler {
         Logger.debugException( ex );
 
         var isSitemapFresh = SitemapStore.isSitemapFresh();
+        
+        // Check if empty responses shall be suppressed
+        // If reading the configuration value leads to an error, we show that error instead of
+        // the one this function was called with
+        var suppressEmptyResponseExceptions = false;
+        try {
+            suppressEmptyResponseExceptions = AppSettings.suppressEmptyResponseExceptions();
+        } catch( ex1 ) {
+            ex = ex1;
+        }
+
         // If 
         // - the setting to suppress empty response errors is enabled
         // - and this exception is classified as such
         // - and the state is still within the expiry time, 
         // we do nothing further
-        if( AppSettings.suppressEmptyResponseExceptions()
-            && ex instanceof CommunicationBaseException
+        if( ex instanceof CommunicationBaseException
             && ex.suppressAsEmptyResponse()
+            && suppressEmptyResponseExceptions
             && isSitemapFresh ) {
                 // Logger.debug( "ExceptionHandler: Suppressing empty response" );
                 return;
