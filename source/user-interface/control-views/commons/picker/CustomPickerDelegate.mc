@@ -46,38 +46,53 @@ class CustomPickerDelegate extends CustomBehaviorDelegate {
     // React to key presses
     public function onKey( keyEvent as KeyEvent ) as Boolean {
         // Logger.debug( "CustomPickerDelegate.onKey: start" );
-        var key = keyEvent.getKey();
-        if( key == KEY_ENTER ) {
-            return onAccept( getCurrentValue() );
-        } else if( key == KEY_UP ) {
-            return onUpInternal();
-        } else if( key == KEY_DOWN ) {
-            return onDownInternal();
+        try {
+            var key = keyEvent.getKey();
+            if( key == KEY_ENTER ) {
+                return onAccept( getCurrentValue() );
+            } else if( key == KEY_UP ) {
+                return onUpInternal();
+            } else if( key == KEY_DOWN ) {
+                return onDownInternal();
+            }
+            // Logger.debug( "CustomPickerDelegate.onKey: end" );
+            return false;
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+            return true;
         }
-        // Logger.debug( "CustomPickerDelegate.onKey: end" );
-        return false;
     }
 
     // onBack covers both swipe right
     // and the back key
     public function onBack() as Boolean {
-        return onCancel();
+        try {
+            return onCancel();
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+            return true;
+        }
     }
 
     // Here we react to the touch areas defined
     // in CustomPicker
     public function onAreaTap( area as Symbol, clickEvent as ClickEvent ) as Boolean {
         // Logger.debug "CustomPickerDelegate.onAreaTap" );
-        if( area == :touchUp ) {
-            return onUpInternal();
-        } else if( area == :touchDown ) {
-            return onDownInternal();
-        } else if( area == :touchCheck ) {
-            return onAccept( getCurrentValue() );
-        } else if( area == :touchCancel ) {
-            return onCancel();
+        try {
+            if( area == :touchUp ) {
+                return onUpInternal();
+            } else if( area == :touchDown ) {
+                return onDownInternal();
+            } else if( area == :touchCheck ) {
+                return onAccept( getCurrentValue() );
+            } else if( area == :touchCancel ) {
+                return onCancel();
+            }
+            return false;
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+            return true;
         }
-        return false;
     }
 
     // To simplify handling, we do not need the
