@@ -35,12 +35,20 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     */
     (:exclForTouch)
     public function onNextPage() as Boolean {
-        SettingsMenuHandler.showSettings( WatchUi.SLIDE_UP );
+        try {
+            SettingsMenuHandler.showSettings( WatchUi.SLIDE_UP );
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
         return true;
     }
     (:exclForTouch)
     public function onPreviousPage() as Boolean {
-        SettingsMenuHandler.showSettings( WatchUi.SLIDE_DOWN );
+        try {
+            SettingsMenuHandler.showSettings( WatchUi.SLIDE_DOWN );
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
         return true;
     }
     // Button-based devices may also have touch screens. 
@@ -60,10 +68,16 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     */
     (:exclForCiq510Plus :exclForTouch)
     public function onWrap( key as Key ) as Boolean {
-        if( key == KEY_DOWN ) {
-            onNextPage();
-        } else if( key == KEY_UP ) {
-            onPreviousPage();
+        // Logger.debug( "HomepageMenuDelegate.onWrap" );
+        try {
+            if( key == KEY_DOWN ) {
+                onNextPage();
+            } else if( key == KEY_UP ) {
+                onPreviousPage();
+            }
+        } catch( ex ) {
+            // Logger.debug( "PageMenuDelegate.onWrap: exception" );
+            ExceptionHandler.handleUserInterfaceException( ex );
         }
         return false;
     }
@@ -74,6 +88,11 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     // standard popView()
     public function onBack() as Void {
         // Logger.debug( "HomepageMenuDelegate.onBack" );
-        WatchUi.popView( WatchUi.SLIDE_RIGHT );
+        try {
+            WatchUi.popView( WatchUi.SLIDE_RIGHT );
+        } catch( ex ) {
+            // Logger.debug( "PageMenuDelegate.onBack: exception" );
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
     }
 }
