@@ -41,7 +41,7 @@ class NumericPickerDelegate extends CustomPickerDelegate {
         // Logger.debug "NumericPickerDelegate.onAccept" );
         if( _menuItem.getSitemapNumeric().isReleaseOnly() ) {
             if( ! ( newState instanceof Number ) ) {
-                throw new GeneralException( "NumericPickerDelegate: invalid value selected" );    
+                throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_STATE_TYPE );
             }
             // Logger.debug "NumericPickerDelegate.onAccept: new state=" + newState.toString() );
             _menuItem.updateState( newState );
