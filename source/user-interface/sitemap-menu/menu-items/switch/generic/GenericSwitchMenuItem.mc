@@ -45,6 +45,85 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
         );
     }
 
+    
+    // showCommandSelection shows a menu that allows the user to choose a command.
+    // There are two implementations:
+    // - ActionMenu on devices that support it
+    // - CustomMenu on devices where ActionMenu is not available (e.g. Edge devices)
+    
+    // ActionMenu implementation
+    (:exclForFullMenu)
+    private function showCommandSelection( commandDescriptions as CommandDescriptions, hasState as Boolean, itemState as String ) as Void {
+        // Instantiate the menu
+        var menu = new ActionMenu( null );
+        
+        // Add all commands
+        for( var i = 0; i < commandDescriptions.size(); i++ ) {
+            var commandDescription = commandDescriptions.getCommandDescription( i );
+            var command = commandDescription.getCommand();
+            // We exclude the current state
+            if( ! ( hasState && command.equals( itemState ) ) ) {
+                menu.addItem( new ActionMenuItem(
+                    { :label => commandDescription.getLabel() },
+                    command
+                ) );
+            }
+        }
+        
+        // Show the menu
+        WatchUi.showActionMenu( menu, new SwitchActionMenuDelegate( self ) );
+    }
+
+    // CustomMenu implementation
+    (:exclForActionMenu)
+    private function showCommandSelection( commandDescriptions as CommandDescriptions, hasState as Boolean, itemState as String ) as Void {
+        // Instantiate the menu
+        var menu = new CommandMenu( _sitemapSwitch.getLabel() );
+
+        // Add all commands
+        for( var i = 0; i < commandDescriptions.size(); i++ ) {
+            var commandDescription = commandDescriptions.getCommandDescription( i );
+            var command = commandDescription.getCommand();
+            // We exclude the current state
+            if( ! ( hasState && command.equals( itemState ) ) ) {
+                menu.addItem( new CommandMenuItem(
+                    commandDescription.getLabel(),
+                    command
+                ) );
+            }
+        }
+
+        // Show the menu
+        ViewHandler.pushView( menu, new CommandMenuDelegate( self ), WatchUi.SLIDE_LEFT );
+    }
+
+    /* 
+    // Menu2 implementation, not used since CustomMenu aligns better visually with the rest of the menu structure
+    (:exclForActionMenu)
+    private function showCommandSelection( commandDescriptions as CommandDescriptions, hasState as Boolean, itemState as String ) as Void {
+        // Instantiate the menu
+        var menu = new Menu2( { :title => _sitemapSwitch.getLabel() } );
+
+        // Add all commands
+        for( var i = 0; i < commandDescriptions.size(); i++ ) {
+            var commandDescription = commandDescriptions.getCommandDescription( i );
+            var command = commandDescription.getCommand();
+            // We exclude the current state
+            if( ! ( hasState && command.equals( itemState ) ) ) {
+                menu.addItem( new MenuItem(
+                    commandDescription.getLabel(),
+                    null,
+                    command,
+                    {}
+                ) );
+            }
+        }
+
+        // Show the menu
+        ViewHandler.pushView( menu, new CommandMenuDelegate( self ), WatchUi.SLIDE_LEFT );
+    }
+    */
+
     // Called by the superclass if the state changes
     // Updates the member and Drawable
     // This is called by update() of the superclass, and thus
@@ -79,21 +158,11 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
             }
         }
         
-        // For all other cases, we show the action menu
-        var actionMenu = new ActionMenu( null );
-        // Add items
-        for( var i = 0; i < commandDescriptions.size(); i++ ) {
-            var commandDescription = commandDescriptions.getCommandDescription( i );
-            // We exclude the current state
-            var command = commandDescription.getCommand();
-            if( ! ( hasState && command.equals( itemState ) ) ) {
-                actionMenu.addItem( new ActionMenuItem(
-                    { :label => commandDescription.getLabel() },
-                    command
-                ) );
-            }
-        }
-        WatchUi.showActionMenu( actionMenu, new SwitchActionMenuDelegate( self ) );
+        // For all other cases, show a menu that allows the user to select a command.
+        // On most devices, an ActionMenu is used. On Edge devices, where ActionMenu
+        // is not available, Menu2 is used instead.
+        showCommandSelection( commandDescriptions, hasState, itemState );
+
         // Returning null tells the super class to not
         // send any command and instead wait for the
         // action menu delegate to trigger the sending
