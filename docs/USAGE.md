@@ -705,7 +705,7 @@ When this option is enabled in the [Settings](#configuration), toast notificatio
 
 However, if these errors persist for more than 10 seconds, they will be treated as fatal, and a full-screen error view will be shown.
 
-### Communication Error Codes (Prefix: S:/C:)
+### Communication Error Codes (Prefix: `S:`/`C:`)
 
 To save space, communication errors shown in toast notifications follow this format:
 
@@ -730,7 +730,7 @@ The following error codes are used for common communication issues and those wit
 - `INVRES` – The response was invalid (error code `-400`).
 - `EMRES` – The response was empty.
 
-### User Interface Error Codes (Prefix UI:)
+### User Interface Error Codes (Prefix `UI:`)
 
 All error codes with the `UI:` prefix currently indicate an internal programming error in the user interface. These errors are not caused by incorrect user interaction or configuration.
 
