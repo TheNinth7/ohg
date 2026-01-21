@@ -9,9 +9,9 @@ class NonFatalUserInterfaceException extends Exception {
 
     // Supported error codes
     enum ErrorCode {
-        EX_POP_VIEW_ON_EMPTY_STACK, // UI-00
-        EX_INVALID_STATE_TYPE,      // UI-01
-        EX_INVALID_COMMAND          // UI-02
+        EX_POP_VIEW_ON_EMPTY_STACK, // UI:00
+        EX_INVALID_STATE_TYPE,      // UI:01
+        EX_INVALID_COMMAND          // UI:02
     }    
 
     // The error code of this instance
@@ -25,6 +25,6 @@ class NonFatalUserInterfaceException extends Exception {
 
     // Maps error codes to toast messages
     public function getToastMessage() as String {
-        return "UI-" + _errorCode.format( "%02u");
+        return "UI:" + _errorCode.format( "%02u");
     }
 }
