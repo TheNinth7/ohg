@@ -12,7 +12,8 @@ class NumericPickable extends CustomPickable {
         // into our type check there.
         // https://github.com/openhab/openhab-garmin/issues/209
         // Therefore we ensure conversion to a Number here:
-        value = value.toNumber();
+        // UPDATE: the source is reading from JSON, so this has been moved to JsonObjectAdapter
+        // value = value.toNumber();
         
         // Initialize the parent class
         CustomPickable.initialize( value, value.toString() + unit );
