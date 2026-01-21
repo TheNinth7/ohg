@@ -734,7 +734,7 @@ The following error codes are used for common communication issues and those wit
 
 All error codes with the `UI:` prefix currently indicate an internal programming error in the user interface. These errors are not caused by incorrect user interaction or configuration.
 
-If you encounter a **UI:** error code, please report it to the developer, as it helps identify and fix issues in the application. Including the exact error code and the circumstances under which it occurred is especially helpful. Reports can be submitted in [the forum](https://community.openhab.org/t/announcing-openhab-for-garmin/163891) or by creating an issue on [GitHub](https://github.com/openhab/openhab-garmin/issues).
+If you encounter a **UI:** error code, please report it to the development team, as it helps identify and fix issues in the application. Including the exact error code and the circumstances under which it occurred is especially helpful. Reports can be submitted in [the forum](https://community.openhab.org/t/announcing-openhab-for-garmin/163891) or by creating an issue on [GitHub](https://github.com/openhab/openhab-garmin/issues).
 
 ### Common Issues
 
