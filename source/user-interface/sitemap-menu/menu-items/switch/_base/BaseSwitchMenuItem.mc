@@ -126,6 +126,13 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
         // updated label
         BaseWidgetMenuItem.updateWidget( sitemapWidget );
         _sitemapSwitch = sitemapWidget as SitemapSwitch;
+        var updatedItemName = _sitemapSwitch.getSwitchItem().getName();
+        // If the item has changed, we update the name and also
+        // need to create a new command request
+        if( ! _itemName.equals( updatedItemName ) ) {
+            _itemName = updatedItemName;
+            _commandRequest = BaseCommandRequest.get( self );
+        }
         updateItemState( _sitemapSwitch.getSwitchItem().getState() );
     }
 }

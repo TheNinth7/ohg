@@ -117,10 +117,15 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     // sitemap polling
     public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
         BaseWidgetMenuItem.updateWidget( sitemapWidget );
+        var previousItemName = _sitemapNumeric.getNumericItem().getName();
         if( ! ( sitemapWidget instanceof SitemapNumeric ) ) {
             throw new GeneralException( "Sitemap element '" + sitemapWidget.getLabel() + "' was passed into NumericMenuItem but is of a different type" );
         }
         _sitemapNumeric = sitemapWidget;
         _stateText.setText( sitemapWidget.getDisplayState() );
+        // If the item has changed, we need to create a new command request
+        if( ! _sitemapNumeric.getNumericItem().getName().equals( previousItemName ) ) {
+            _commandRequest = BaseCommandRequest.get( self );
+        }
     }
 }

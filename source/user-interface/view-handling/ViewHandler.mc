@@ -42,4 +42,39 @@ class ViewHandler {
         // Logger.debug( "ViewHandler.popToBottomAndSwitch: new stack size=" + _stackSize );
         WatchUi.switchToView( view, delegate, WatchUi.SLIDE_BLINK );
     }
+    /*
+    public function getCurrentViewSafe() as [ WatchUi.View or Null, WatchUi.InputDelegates or Null ] {
+        
+        var cwArray = WatchUi.getCurrentView();
+        if( ! (cwArray instanceof Array ) ) {
+            throw new GeneralException( "cwArray not an Array" );
+        } 
+        if( cwArray.size() != 2 ) {
+            throw new GeneralException( "cwArray.size = " + cwArray.size() );
+        }
+        
+        var view = cwArray[0];
+        if( view != null && ! ( view instanceof WatchUi.View ) ) {
+            throw new GeneralException( "cwArray[0] not a View" );
+        } 
+
+        var delegate = cwArray[1];
+        if( delegate != null && 
+                ! ( delegate instanceof WatchUi.InputDelegate 
+                    || delegate instanceof WatchUi.BehaviorDelegate
+                    || delegate instanceof WatchUi.ConfirmationDelegate
+                    || delegate instanceof WatchUi.MenuInputDelegate
+                    || delegate instanceof WatchUi.NumberPickerDelegate
+                    || delegate instanceof WatchUi.PickerDelegate
+                    || delegate instanceof WatchUi.TextPickerDelegate
+                    || delegate instanceof WatchUi.WatchFaceDelegate
+                    || delegate instanceof WatchUi.Menu2InputDelegate
+                    || delegate instanceof WatchUi.ViewLoopDelegate ) 
+        ) {
+            throw new GeneralException( "cwArray[1] not an input delegate" );
+        }
+
+        return cwArray;
+    }
+    */
 }
