@@ -48,8 +48,13 @@ class NumericPickerFactory extends CustomPickerFactory {
             : ( minValue + Math.round( ( maxValue-minValue ) / ( 2*step ) ) * step ).toNumber();
 
         for( var i = minValue; i <= maxValue; i += step ) {
+            // If the index for the current value has not been set yet,
+            // and we have surpassed it, we set the current index ...
             if( _currentIndex == -1 && currentValue <= i ) {
                 _currentIndex = _pickables.size();
+                // ... and if the current value does not align with the indexed
+                // steps, we create a "non-conforming" element. This also covers
+                // the case where the current value is lower than the minValue
                 if( i != currentValue ) {
                     _nonConforming = new NumericPickable( currentValue, unit );
                     _pickables.add( _nonConforming );
@@ -57,18 +62,15 @@ class NumericPickerFactory extends CustomPickerFactory {
             }
             _pickables.add( new NumericPickable( i, unit ) );
         }
-        
-        // This code can be enabled to add maxValue as a separate step,
-        // even if it doesn't align exactly with the defined step intervals.
-        // NOTE: If enabled, the loop condition above must be changed to
-        // `i < maxValue` to avoid adding maxValue twice
-        // when it already falls on a step boundary.
-        /*
-        _drawables.add( new SliderPickerDrawable( maxValue, unit ) );
+
+        // If at the end of the loop _currentIndex is still not set
+        // the current value is above the maxValue. In this case
+        // we add a "non-conforming" element on top
         if( _currentIndex == -1 ) {
-            _currentIndex = _drawables.size()-1;
+            _currentIndex = _pickables.size();
+            _nonConforming = new NumericPickable( currentValue, unit );
+            _pickables.add( _nonConforming );
         }
-        */
     }
 
     // Implementation of the functions used by CustomPicker
