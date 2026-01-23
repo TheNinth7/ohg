@@ -29,8 +29,8 @@
     <bitmap id="menuGaragedoor09" scaleY="10%" filename="garagedoor-09.svg" dithering="none"/>
     <bitmap id="menuGaragedoor10" scaleY="10%" filename="garagedoor-10.svg" dithering="none"/>
 
-    <bitmap id="menuHeatingOff" scaleY="11%" filename="heating-off.svg" dithering="none"/>
-    <bitmap id="menuHeatingOn" scaleY="11%" filename="heating-on.svg" dithering="none"/>
+    <bitmap id="menuHeatingOff" scaleY="10%" filename="heating-off.svg" dithering="none"/>
+    <bitmap id="menuHeatingOn" scaleY="10%" filename="heating-on.svg" dithering="none"/>
 
     <bitmap id="menuHumidity00" scaleY="10%" filename="humidity-00.svg" dithering="none"/>
     <bitmap id="menuHumidity01" scaleY="10%" filename="humidity-01.svg" dithering="none"/>
