@@ -49,7 +49,7 @@ class ViewHandler {
     // types and throws specific, catchable errors when they do not match the
     // declared contract.
     public static function getCurrentViewSafe() as [ WatchUi.View or Null, WatchUi.InputDelegates or Null ] {
-        var cwArray = ViewHandler.getCurrentViewSafe() as Object;
+        var cwArray = WatchUi.getCurrentView() as Object;
 
         if( ! (cwArray instanceof Array ) ) {
             throw new GeneralException( "cwArray not an Array" );
