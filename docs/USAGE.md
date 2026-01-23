@@ -635,6 +635,7 @@ Currently supported icons are:
 - `door`
 - `frontdoor`
 - `garagedoor`
+- `heating`
 - `humidity`
 - `light`
 - `lightbulb`

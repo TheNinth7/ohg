@@ -279,6 +279,15 @@ class IconParser {
                 }
 
                 case "motion": return Rez.Drawables.menuMotion;
+
+                case "heating": {
+                    if( itemState.equals( SwitchItem.ITEM_STATE_OFF ) ) {
+                        return Rez.Drawables.menuHeatingOff;
+                    } else {
+                        return Rez.Drawables.menuHeatingOn;
+                    }
+                }
+
             }
         }
         return null;
