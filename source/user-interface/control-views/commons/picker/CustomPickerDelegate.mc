@@ -98,7 +98,7 @@ class CustomPickerDelegate extends CustomBehaviorDelegate {
     private var _factory as CustomPickerFactory?;
     private function getFactory() as CustomPickerFactory {
         if( _factory == null ) {
-            var view = WatchUi.getCurrentView()[0];
+            var view = ViewHandler.getCurrentViewSafe()[0];
             if( view instanceof CustomPicker ) {
                 _factory = view.getFactory();
             } else {

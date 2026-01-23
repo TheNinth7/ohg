@@ -42,10 +42,15 @@ class ViewHandler {
         // Logger.debug( "ViewHandler.popToBottomAndSwitch: new stack size=" + _stackSize );
         WatchUi.switchToView( view, delegate, WatchUi.SLIDE_BLINK );
     }
-    /*
-    public function getCurrentViewSafe() as [ WatchUi.View or Null, WatchUi.InputDelegates or Null ] {
-        
-        var cwArray = WatchUi.getCurrentView();
+
+    // In the ERA viewer, we encountered several crashes caused by Invalid Value or
+    // Unexpected Type errors, apparently originating from getCurrentView() calls.
+    // To address this, we introduced a safe accessor that validates the expected
+    // types and throws specific, catchable errors when they do not match the
+    // declared contract.
+    public static function getCurrentViewSafe() as [ WatchUi.View or Null, WatchUi.InputDelegates or Null ] {
+        var cwArray = ViewHandler.getCurrentViewSafe() as Object;
+
         if( ! (cwArray instanceof Array ) ) {
             throw new GeneralException( "cwArray not an Array" );
         } 
@@ -60,11 +65,11 @@ class ViewHandler {
 
         var delegate = cwArray[1];
         if( delegate != null && 
-                ! ( delegate instanceof WatchUi.InputDelegate 
-                    || delegate instanceof WatchUi.BehaviorDelegate
+                ! ( delegate instanceof WatchUi.BehaviorDelegate
+                    || delegate instanceof WatchUi.InputDelegate
                     || delegate instanceof WatchUi.ConfirmationDelegate
                     || delegate instanceof WatchUi.MenuInputDelegate
-                    || delegate instanceof WatchUi.NumberPickerDelegate
+                    // || delegate instanceof WatchUi.NumberPickerDelegate
                     || delegate instanceof WatchUi.PickerDelegate
                     || delegate instanceof WatchUi.TextPickerDelegate
                     || delegate instanceof WatchUi.WatchFaceDelegate
@@ -74,7 +79,6 @@ class ViewHandler {
             throw new GeneralException( "cwArray[1] not an input delegate" );
         }
 
-        return cwArray;
+        return cwArray as [ WatchUi.View or Null, WatchUi.InputDelegates or Null ];
     }
-    */
 }

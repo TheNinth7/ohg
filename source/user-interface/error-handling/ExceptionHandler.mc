@@ -87,7 +87,7 @@ public class ExceptionHandler {
             
             // If there is no view yet, the exception is stored
             // as startup exception, otherwise the toast will be shown
-            if( WatchUi.getCurrentView()[0] == null ) {
+            if( ViewHandler.getCurrentViewSafe()[0] == null ) {
                 // Logger.debug( "ExceptionHandler: storing non-fatal startup exception" );
                 _startupException = [ex, false];
             } else {
@@ -108,7 +108,7 @@ public class ExceptionHandler {
             * If no view is currently active, the exception is stored as a startup exception.
             * Otherwise, the full-screen error view is shown immediately.
             */
-            if( WatchUi.getCurrentView()[0] == null ) {
+            if( ViewHandler.getCurrentViewSafe()[0] == null ) {
                 // Logger.debug( "ExceptionHandler: storing fatal startup exception" );
                 _startupException = [ex, true];
             } else {
@@ -127,7 +127,7 @@ public class ExceptionHandler {
 
         // While this should not happen, we check if we are in the startup phase,
         // and if yes, ignore the exception
-        if( WatchUi.getCurrentView()[0] != null ) {
+        if( ViewHandler.getCurrentViewSafe()[0] != null ) {
             // NonFatalUserInterfaceException is used for non-fatal UI exceptions, for which
             // we will show a toast notification
             if( ex instanceof NonFatalUserInterfaceException ) {

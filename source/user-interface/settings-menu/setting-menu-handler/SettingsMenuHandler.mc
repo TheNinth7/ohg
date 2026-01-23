@@ -39,7 +39,7 @@ class SettingsMenuHandler {
         _isShowingSettings = true;
 
         // Ensure that we were called from the HomepageMenu
-        if( ! ( WatchUi.getCurrentView()[0] instanceof HomepageMenu ) ) {
+        if( ! ( ViewHandler.getCurrentViewSafe()[0] instanceof HomepageMenu ) ) {
             throw new GeneralException( "showSettings can only be called from a HomepageMenu" );
         }
 
