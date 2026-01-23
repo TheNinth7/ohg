@@ -2,7 +2,7 @@
     <properties>
         <property id="url_0" type="string"></property>
         <property id="sitemap_0" type="string"></property>
-        <property id="restapi_0" type="boolean">false</property>
+        <property id="restapi_0" type="boolean">true</property>
         <property id="webhook_0" type="string"></property>
         <property id="user_0" type="string"></property>
         <property id="password_0" type="string"></property>
