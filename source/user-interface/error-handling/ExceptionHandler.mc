@@ -46,27 +46,44 @@ public class ExceptionHandler {
 
         var isSitemapFresh = SitemapStore.isSitemapFresh();
         
-        // Check if empty responses shall be suppressed
-        // If reading the configuration value leads to an error, we show that error instead of
-        // the one this function was called with
-        var suppressEmptyResponseExceptions = false;
-        try {
-            suppressEmptyResponseExceptions = AppSettings.suppressEmptyResponseExceptions();
-        } catch( ex1 ) {
-            ex = ex1;
-        }
-
+        // Supress emtpy responses
         // If 
         // - the setting to suppress empty response errors is enabled
         // - and this exception is classified as such
         // - and the state is still within the expiry time, 
         // we do nothing further
+        // Reading the configuration may lead to an error, in which case we
+        // process this exception with the remainder of this function
+        try {
+            if( ex instanceof CommunicationBaseException
+                && ex.suppressAsEmptyResponse()
+                && AppSettings.suppressEmptyResponseExceptions()
+                && isSitemapFresh 
+            ) {
+                    // Logger.debug( "ExceptionHandler: Suppressing empty response" );
+                    return;
+            }
+        } catch( ex1 ) {
+            ex = ex1;
+        }
+
+        // Communication exceptions from sitemap requests trigger
+        // updates to the connectivity state.
         if( ex instanceof CommunicationBaseException
-            && ex.suppressAsEmptyResponse()
-            && suppressEmptyResponseExceptions
-            && isSitemapFresh ) {
-                // Logger.debug( "ExceptionHandler: Suppressing empty response" );
+            && ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP ) )
+        {
+            // If the exception indicates that the phone is not connected,
+            // a WiFi availability check is triggered.
+            // All other errors imply that a phone connection exists and
+            // this is confirmed to the `ConnectivityHandler`.
+            if( ex instanceof CommunicationException
+                && ex.isNoPhone() )
+            {
+                ConnectivityHandler.get().checkWifiConnection();
                 return;
+            } else {
+                ConnectivityHandler.get().confirmPhoneConnection();
+            }
         }
 
         /*
@@ -80,9 +97,9 @@ public class ExceptionHandler {
         */
         if( ex instanceof CommunicationBaseException 
             &&  ( !ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP )
-                || ( isSitemapFresh && !ex.isFatal() ) )
+                  || ( isSitemapFresh && !ex.isFatal() ) )
             && ToastHandler.useToasts() ) 
-            {
+        {
             // Logger.debug( "ExceptionHandler: non-fatal error: " + ex.getToastMessage().toUpper() );
             
             // If there is no view yet, the exception is stored
@@ -150,11 +167,11 @@ public class ExceptionHandler {
 
 
     /*
-    * This function must be called by views initially loaded by `OHApp`, 
-    * such as `LoadingView` and `HomepageMenu`.
+    * This function must be called by views by `OHApp` in getInitialView().
     *
     * Depending on the type of exception that occurred during startup, 
-    * it will display either a toast notification or a full-screen error view.
+    * it will display either a toast notification or return a full-screen 
+    * error view.
     */
     public static function consumeStartupException( useToast as Boolean ) as ErrorView? {
         if( _startupException != null ) {

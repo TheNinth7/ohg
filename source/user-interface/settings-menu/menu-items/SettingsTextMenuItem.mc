@@ -70,4 +70,16 @@ class SettingsTextMenuItem extends BaseMenuItem {
         ( _labelTextArea as TextArea ).draw( dc );
         ( _subLabelTextArea as TextArea ).draw( dc );
     }
+
+    // Set the sub label
+    public function setSubLabel( subLabel as String or ResourceId or Null ) as Void {
+        if( subLabel instanceof String ) {
+            _subLabel = subLabel;
+            if( _subLabelTextArea != null ) {
+                _subLabelTextArea.setText( _subLabel );
+            }
+        } else {
+            _subLabel = "";
+        }
+    }
 }

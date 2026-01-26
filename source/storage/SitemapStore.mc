@@ -44,10 +44,9 @@ class SitemapStore  {
         return _title;
     }
 
-    // Return the sitemap currently stored in Storage
+    // Return the sitemap currently stored in Memory
     (:typecheck(disableGlanceCheck))
-    public static function getSitemapFromStorage() as SitemapHomepage? {
-        _json = Storage.getValue( STORAGE_JSON ) as StoredJson?;
+    public static function getSitemapFromMemory() as SitemapHomepage? {
         if( _json != null ) {
             return new SitemapHomepage( 
                 new JsonAdapter( _json[0] ), 
@@ -58,9 +57,16 @@ class SitemapStore  {
         return null;
     }
 
+    // Return the sitemap currently stored in Storage
+    (:typecheck(disableGlanceCheck))
+    public static function getSitemapFromStorage() as SitemapHomepage? {
+        _json = Storage.getValue( STORAGE_JSON ) as StoredJson?;
+        return getSitemapFromMemory();
+    }
+
     // Returns true if the currently held JSON's age is 
     // within the expiry the expiry time, false if it is older. 
-    // Throws an exception there is no JSON
+    // Returns false if there is no JSON.
     public static function isSitemapFresh() as Boolean {
         if( _json != null ) {
             var dataAge = 

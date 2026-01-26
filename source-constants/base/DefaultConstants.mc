@@ -39,6 +39,9 @@ class DefaultConstants {
     // 0xB71C1C darker red;
     // 0xD32F2F brighter red;
 
+    // For messages related to WiFi, a blue that fits with openHAB orange
+    public static const UI_COLOR_WIFI as ColorType = 0x1F6AE1;
+
     // Foreground and background colors
     public static const UI_COLOR_TEXT as ColorType = Graphics.COLOR_WHITE;
     public static const UI_COLOR_BACKGROUND as ColorType = Graphics.COLOR_BLACK;

@@ -26,5 +26,8 @@ class SettingsMenu extends BaseMenu {
             "Server",
             AppSettings.getUrl()
         ) );
+
+        // Add entry for connectivity mode
+        addItem( new SettingsConnectivityMenuItem() );
     }
 }

@@ -175,6 +175,12 @@ class SitemapRequest extends BaseRequest {
                 // false in conditions where no error is raised but the response
                 // shall be ignored
                 if( checkResponseCode( responseCode, SOURCE ) ) {
+                    
+                    // Any positive result indicates that the phone connection is working.
+                    // Note that the exception handler also performs this confirmation
+                    // for all errors except no-phone errors.
+                    ConnectivityHandler.get().confirmPhoneConnection();
+                    
                     // The JSON is processed by processIncomingJson()
                     processIncomingJson( 
                         new SitemapJsonIncoming( 

@@ -25,14 +25,12 @@ class CommunicationException extends CommunicationBaseException {
         var errorMsg;
         // For some errors we return specific messages,
         // for all others a generic one
-        if( _responseCode == Communications.BLE_CONNECTION_UNAVAILABLE 
-            || _responseCode == Communications.BLE_HOST_TIMEOUT 
-        ) {
+        if( isNoPhone() ) {
             return "No phone\n(" + _responseCode + ")";
-        
+
         } else if ( _responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE ) {
             errorMsg = "Invalid response\n(" + _responseCode + ")";
-        
+
         } else if ( 
             _responseCode == Communications.NETWORK_RESPONSE_TOO_LARGE
             || _responseCode == Communications.NETWORK_RESPONSE_OUT_OF_MEMORY
@@ -51,14 +49,10 @@ class CommunicationException extends CommunicationBaseException {
         var errorMsg;
         // For some errors we return specific toast messages,
         // for all others a generic one
-        if( _responseCode == Communications.BLE_CONNECTION_UNAVAILABLE 
-            || _responseCode == Communications.BLE_HOST_TIMEOUT 
-        ) {
+        if( isNoPhone() ) {
             return "No phone";
-        
         } else if ( _responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE ) {
             errorMsg = "INVRES";
-        
         } else {
             errorMsg = _responseCode.toString();
         }
@@ -77,11 +71,19 @@ class CommunicationException extends CommunicationBaseException {
             || _responseCode == 404; 
     }
 
+    // True if the exception indicates that no phone is present
+    public function isNoPhone() as Boolean {
+        return 
+             _responseCode == Communications.BLE_CONNECTION_UNAVAILABLE 
+            || _responseCode == Communications.BLE_HOST_TIMEOUT; 
+    }
+
     // A -400 response code is one way an empty response from myopenhab.org 
     // may present itself. So in this case, this function returns true, allowing 
     // the error to be suppressed if the corresponding settings option is enabled.
     public function suppressAsEmptyResponse() as Boolean {
         return 
-            _responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE;
+            _responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE
+            && isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP );
     }
 }
