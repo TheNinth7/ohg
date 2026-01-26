@@ -85,21 +85,22 @@ import Toybox.Communications;
                         // ... we update the state.
                         setState( WIFI_CONNECTION );
 
-                        // Check if error or WiFi check view is displayed
-                        var replaceView = 
-                            ErrorView.isShowing() 
-                            || ViewHandler.getCurrentViewSafe()[0] instanceof WifiCheckView;
-
-                        // Only if e HomepageMenu is available ...
+                        // Only if a HomepageMenu is available ...
                         if( HomepageMenu.exists() ) {
                             var menu = HomepageMenu.get();
+
+                            // Check if error or WiFi check view is displayed
+                            var currentView = ViewHandler.getCurrentViewSafe()[0];
+                            var isMenuView = ErrorView.isShowing() 
+                                            || currentView instanceof WifiCheckView;
+                            var isMenuViewOrNull = isMenuView || currentView == null;
 
                             // ... we invalidate the values if the sitemap is not fresh ...
                             if( ! SitemapStore.isSitemapFresh() ) {
                                 var sitemap = SitemapStore.getSitemapFromMemory();
                                 if( sitemap != null ) {
                                     menu.update( sitemap );
-                                    if( ! replaceView ) {
+                                    if( ! isMenuView ) {
                                         WatchUi.requestUpdate();
                                     }
                                 } else {
@@ -108,7 +109,7 @@ import Toybox.Communications;
                             }
 
                             // ... and if it is not shown, then show it
-                            if( replaceView ) {
+                            if( isMenuViewOrNull ) {
                                 ViewHandler.popToBottomAndSwitch( menu, HomepageMenuDelegate.get() );
                             }
                         } else {
@@ -152,6 +153,11 @@ import Toybox.Communications;
         } else {
             return null;
         }
+    }
+
+    // Returns the state
+    public function getState() as State {
+        return _state;
     }
 
     // Returns a textual description of the current state

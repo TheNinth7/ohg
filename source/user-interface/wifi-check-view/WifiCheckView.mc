@@ -10,6 +10,10 @@ import Toybox.System;
  */
 class WifiCheckView extends WatchUi.View {
 
+    // Indicate to onUpdate() that this is the first execution
+    private var _first as Boolean = true;
+    
+    // Drawable for the message
     private var _textArea as TextArea;
 
     // Constructor, creates the TextArea drawable.
@@ -65,5 +69,11 @@ class WifiCheckView extends WatchUi.View {
         dc.clear();
 
         _textArea.draw( dc );
+
+        // See `WifiCheckTimer` for details
+        if( _first == true ) {
+            new WifiCheckTimer();
+            _first = false;
+        }
     }
 }
