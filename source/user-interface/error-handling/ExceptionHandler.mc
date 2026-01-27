@@ -79,7 +79,7 @@ public class ExceptionHandler {
             if( ex instanceof CommunicationException
                 && ex.isNoPhone() )
             {
-                ConnectivityHandler.get().checkWifiConnection();
+                ConnectivityHandler.get().tryWifiConnection();
                 return;
             } else {
                 ConnectivityHandler.get().confirmPhoneConnection();

@@ -55,17 +55,45 @@ class BaseCommandRequest extends BaseRequest {
     private var _requestCounter as Number = 0;
 
     // Constructor
-    protected function initialize( item as CommandRequestDelegate, url as String, method as Communications.HttpRequestMethod ) {
+    protected function initialize( 
+        item as CommandRequestDelegate, 
+        url as String, 
+        method as Communications.HttpRequestMethod 
+    ) {
         BaseRequest.initialize( method );
         _weakItem = item.weak();
         _url = url;
     }
 
-    // The actual function for sending commands needs to be implemented
-    // by the subclasses, and calls makeWebRequest with the options
-    // required by the subclass
-    function sendCommand( cmd as String ) as Void {
-        throw new AbstractMethodException( "BaseCommandRequest.sendCommand" );
+    // Implemented by subclasses to provide the parameters for the web request.
+    public function assembleParameters( cmd as String ) as Dictionary<String, Object> {
+        throw new AbstractMethodException( "BaseCommandRequest.assembleParameters" );
+    }
+
+    // Implemented by subclasses to provide the parameters for the web request.
+    public function sendCommand( cmd as String ) as Void {
+        if( ! ConnectivityHandler.get().isOnWiFiConnection() ) {
+            makeWebRequest( assembleParameters( cmd ) as Dictionary<Object, Object> );
+        } else {
+            var item = _weakItem.get() as CommandRequestDelegate?;
+
+            if( item != null ) {
+                
+                WifiSyncDelegate.get().setCommand( [ item.getItemName(), cmd ] );
+
+                if( Communications has :startSync2 ) {
+                    Communications.startSync2( { :message => "Sending command via WiFi ..." } );
+                } else {
+                    Communications.startSync();
+                }
+            } else {
+                ExceptionHandler.handleException(
+                    new GeneralException( "sendCommand: item reference is no longer valid" )
+                );
+            }
+
+            
+        }
     }
 
     // Triggers the web request
@@ -91,6 +119,7 @@ class BaseCommandRequest extends BaseRequest {
                 cancelAllRequests();
                 _requestCounter = 0;
             }
+
             _requestCounter++;
             Communications.makeWebRequest( _url, parameters, getBaseOptions(), method( :onReceive ) );
         } catch( ex ) {
@@ -108,7 +137,7 @@ class BaseCommandRequest extends BaseRequest {
         
         if( item == null ) {
             ExceptionHandler.handleException(
-                new GeneralException( "Item reference is no longer valid" )
+                new GeneralException( "onReceive: item reference is no longer valid" )
             );
         } else {
             try {

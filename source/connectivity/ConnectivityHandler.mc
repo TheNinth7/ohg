@@ -47,14 +47,10 @@ import Toybox.Communications;
     // The current state
     private var _state as State = PHONE_CONNECTION;
     
-    // This is called by `SitemapRequest`, indicates that no phone 
-    // connection is available and triggers a check of WiFi availability.
-    public function checkWifiConnection() as Void {
-        if( _state == PHONE_CONNECTION ) {
-            setState( WIFI_CHECK_PENDING );
-        }
-        Communications.checkWifiConnection( method( :connectionStatusCallback ) );
-    }
+    // Only needed to be declared private to prevent other classes
+    // from instantiating this singleton
+    private function initialize() {}
+
 
     // This is called by `SitemapRequest` and indicates that phone
     // connection is currently available
@@ -62,10 +58,73 @@ import Toybox.Communications;
         setState( PHONE_CONNECTION );
     }
 
+    // Called by `OhApp` during startup to determine whether
+    // any special connectivity handling is required.
+    // Returns a WifiCheckView if a WiFi check is pending,
+    // and throws an OfflineException if there is no connectivity.
+    // In all other cases, it returns null, indicating that `OhApp`
+    // can assume full connectivity.
+    public function ensureConnectivity() as WifiCheckView? {
+        if( _state == WIFI_CHECK_PENDING ) {
+            return new WifiCheckView();
+        } else if (_state == OFFLINE ) {
+            throw new OfflineException();
+        } else {
+            return null;
+        }
+    }
+
+    // Returns the state
+    public function getState() as State {
+        return _state;
+    }
+
+    // Returns a textual description of the current state
+    public function getStateDescription() as String {
+        switch( _state ) {
+            case PHONE_CONNECTION: return "Phone";
+            case WIFI_CHECK_PENDING: return "Checking WiFi availablity ...";
+            case WIFI_CONNECTION: return "WiFi";
+            case OFFLINE: return "Offline";
+            default: return "Invalid";
+        }
+    }
+
+    // True if phone connection is available
+    public function isOnPhoneConnection() as Boolean {
+        return _state == PHONE_CONNECTION;
+    }
+
+    // True if no phone connection is available
+    // but WiFi is
+    public function isOnWiFiConnection() as Boolean {
+        return _state == WIFI_CONNECTION;
+    }
+
+    // Internal functions used to update the connectivity state.
+    // In addition to storing the new state, they trigger a UI update
+    // if the settings menu is currently displayed, since that menu
+    // shows the current connectivity mode.
+    private function setState( state as State ) as Void {
+        _state = state;
+        if( SettingsMenuHandler.isShowingSettings() ) {
+            WatchUi.requestUpdate();
+        }
+    }
+
+    // This is called by `SitemapRequest`, indicates that no phone 
+    // connection is available and triggers a check of WiFi availability.
+    public function tryWifiConnection() as Void {
+        if( _state == PHONE_CONNECTION ) {
+            setState( WIFI_CHECK_PENDING );
+        }
+        Communications.checkWifiConnection( method( :tryWifiConnectionCallback ) );
+    }
+
     // Processes the result of the WiFi availability check.
     // Depending on the outcome, the displayed view is updated
     // and sitemap states are invalidated if necessary.
-    public function connectionStatusCallback( 
+    public function tryWifiConnectionCallback( 
         result as { 
             :wifiAvailable as Lang.Boolean, 
             :errorCode as Communications.WifiConnectionStatus 
@@ -136,49 +195,6 @@ import Toybox.Communications;
             }
         } catch( ex ) {
             ExceptionHandler.handleException( ex );
-        }
-    }
-
-    // Called by `OhApp` during startup to determine whether
-    // any special connectivity handling is required.
-    // Returns a WifiCheckView if a WiFi check is pending,
-    // and throws an OfflineException if there is no connectivity.
-    // In all other cases, it returns null, indicating that `OhApp`
-    // can assume full connectivity.
-    public function ensureConnectivity() as WifiCheckView? {
-        if( _state == WIFI_CHECK_PENDING ) {
-            return new WifiCheckView();
-        } else if (_state == OFFLINE ) {
-            throw new OfflineException();
-        } else {
-            return null;
-        }
-    }
-
-    // Returns the state
-    public function getState() as State {
-        return _state;
-    }
-
-    // Returns a textual description of the current state
-    public function getStateDescription() as String {
-        switch( _state ) {
-            case PHONE_CONNECTION: return "Phone";
-            case WIFI_CHECK_PENDING: return "Checking WiFi availablity ...";
-            case WIFI_CONNECTION: return "WiFi";
-            case OFFLINE: return "Offline";
-            default: return "Invalid";
-        }
-    }
-
-    // Internal functions used to update the connectivity state.
-    // In addition to storing the new state, they trigger a UI update
-    // if the settings menu is currently displayed, since that menu
-    // shows the current connectivity mode.
-    private function setState( state as State ) as Void {
-        _state = state;
-        if( SettingsMenuHandler.isShowingSettings() ) {
-            WatchUi.requestUpdate();
         }
     }
 }

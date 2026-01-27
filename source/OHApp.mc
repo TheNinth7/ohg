@@ -95,6 +95,13 @@ class OHApp extends Application.AppBase {
     }
 
 
+    // Define the sync delegate, which in our case is used
+    // to request a sitemap or send a command via WiFi.
+    (:typecheck(disableGlanceCheck))
+    function getSyncDelegate() as $.Toybox.Communications.SyncDelegate or Null {
+        return WifiSyncDelegate.get();
+    }
+    
     // If there is a new app version or app settings
     // have changed, we clear the storage to avoid
     // using data that may not apply anymore or

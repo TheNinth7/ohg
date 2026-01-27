@@ -28,7 +28,7 @@ class WifiCheckTimer extends Timer.Timer {
         // Execute only if we now have a WiFi connection available,
         // the current view is still a WifiCheckView, and
         // we actually have a HomepageMenu to switch to.
-        if( ConnectivityHandler.get().getState() == ConnectivityHandler.WIFI_CONNECTION 
+        if( ConnectivityHandler.get().isOnWiFiConnection()
             && ViewHandler.getCurrentViewSafe()[0] instanceof WifiCheckView
             && HomepageMenu.exists()
         ) {

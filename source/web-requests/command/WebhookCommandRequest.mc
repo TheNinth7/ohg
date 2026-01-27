@@ -11,7 +11,7 @@ import Toybox.WatchUi;
 class WebhookCommandRequest extends BaseCommandRequest {
 
     // The parameters for the web request
-    private var _parameters as Dictionary = {};
+    private var _parameters as Dictionary<String, Object> = {} as Dictionary<String, Object>;
 
     public function initialize( item as CommandRequestDelegate ) {
         // The custom Webhook uses GET as HTTP method,
@@ -29,13 +29,10 @@ class WebhookCommandRequest extends BaseCommandRequest {
         _parameters["itemName"] = item.getItemName();
     }
 
-    // The command is added to the parameters and then the
-    // request is sent. Handling of the response happens in
-    // the super class, since it is the same for both
-    // command request implementations
-    public function sendCommand( cmd as String ) as Void {
+    // Assemble the parameters for a given command
+    // @param cmd - the command value, e.g. "ON" or "OFF"
+    public function assembleParameters( cmd as String ) as Dictionary<String, Object> {
         _parameters["command"] = cmd;
-        makeWebRequest( _parameters as Dictionary<Object,Object> );
-        _parameters["command"] = null;
+        return _parameters;
     }
 }

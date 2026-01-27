@@ -27,10 +27,9 @@ class NativeCommandRequest extends BaseCommandRequest {
         setHeader( "X-Openhab-Source", "org.openhab.app.garmin" );
     }
 
-    // Sending a command
+    // Assemble the parameters for a given command
     // @param cmd - the command value, e.g. "ON" or "OFF"
-    public function sendCommand( cmd as String ) as Void {
-        makeWebRequest( { "value" => cmd } );
+    public function assembleParameters( cmd as String ) as Dictionary<String, Object> {
+        return { "value" => cmd };
     }
-
 }
