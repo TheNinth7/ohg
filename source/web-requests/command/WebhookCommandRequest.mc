@@ -13,7 +13,7 @@ class WebhookCommandRequest extends BaseCommandRequest {
     // The parameters for the web request
     private var _parameters as Dictionary<String, Object> = {} as Dictionary<String, Object>;
 
-    public function initialize( item as CommandRequestDelegate ) {
+    public function initialize( item as CommandRequestDelegate, syncMode as Boolean ) {
         // The custom Webhook uses GET as HTTP method,
         // and needs an ID provided in the configuration (refering to the Thing),
         // which is part of the URL
@@ -22,7 +22,8 @@ class WebhookCommandRequest extends BaseCommandRequest {
             AppSettings.getUrl() + "webhook/" + AppSettings.getWebhook(),
             // for hard-coding a different test endpoint: 
             // "http://net-nas-1:8080/webhook/" + AppSettings.getWebhook(),
-            Communications.HTTP_REQUEST_METHOD_GET 
+            Communications.HTTP_REQUEST_METHOD_GET,
+            syncMode
         );
         // action and itemName parameters are fixed
         _parameters["action"] = "sendCommand";

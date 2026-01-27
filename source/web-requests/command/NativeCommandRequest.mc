@@ -14,13 +14,14 @@ class NativeCommandRequest extends BaseCommandRequest {
 
      // Constructor
      // @param item - the menu item to be associated with this command
-    public function initialize( item as CommandRequestDelegate ) {
+    public function initialize( item as CommandRequestDelegate, syncMode as Boolean ) {
         BaseCommandRequest.initialize( 
             item, 
             AppSettings.getUrl() + "rest/items/" + item.getItemName(),
             // for hard-coding a different test endpoint: 
             // "http://net-nas-1:8080/rest/items/" + item.getItemName(),
-            Communications.HTTP_REQUEST_METHOD_POST 
+            Communications.HTTP_REQUEST_METHOD_POST,
+            syncMode
         );
         //setOption( :responseType, Communications.HTTP_RESPONSE_CONTENT_TYPE_TEXT_PLAIN );
         setHeader( "Content-Type", Communications.REQUEST_CONTENT_TYPE_JSON );

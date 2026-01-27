@@ -15,6 +15,15 @@ import Toybox.WatchUi;
     - holds the URL for the request
     - provides a function for making the request, to be used by derivates
     - processes the response and calls the event handler of the item
+
+    If the phone connection is not available, a Wifi sync is started with 
+    `SyncDelegate` to send the command. Within the `SyncDelegate`, a separate
+    command request is instantiated that operates in sync mode.
+    
+    In sync mode, sendCommand() follows different logic. The SitemapRequest
+    is neither stopped nor started there, as this is handled by the
+    CommandSyncDelegate. This ensures that the SitemapRequest is not active
+    during Wifi sync and is stopped beforehand.
 */
 
 // Interface to be implemented by menu items that issue commands.
@@ -22,7 +31,7 @@ import Toybox.WatchUi;
 // of the command request with the menu item.
 typedef CommandRequestDelegate as interface {
     function getItemName() as String;
-    function onCommandComplete() as Void;
+    function onCommandComplete( syncMode as Boolean ) as Void;
     function onException( ex as Exception ) as Void;
 };
 
@@ -32,14 +41,20 @@ class BaseCommandRequest extends BaseRequest {
     // or a custom Webhook command request is instantiated.
     // If neither is configured, no command request is created, and items 
     // will only display their current state.
-    public static function get( delegate as CommandRequestDelegate ) as BaseCommandRequest? {
+    public static function get( delegate as CommandRequestDelegate, syncMode as Boolean ) as BaseCommandRequest? {
         if( AppSettings.supportsRestApi() ) {
-            return new NativeCommandRequest( delegate );
+            return new NativeCommandRequest( delegate, syncMode );
         } else if( AppSettings.supportsWebhook() ) {
-            return new WebhookCommandRequest( delegate );
+            return new WebhookCommandRequest( delegate, syncMode );
         }
         return null;
     }
+
+    // We count the currently open requests for this item
+    // If there is more than one, we cancel all requests in the
+    // queue, to avoid BLE_QUEUE_FULL errors.
+    // See makeWebRequest() for details.    
+    private var _requestCounter as Number = 0;
 
     // The URL for the command request
     private var _url as String;
@@ -48,21 +63,20 @@ class BaseCommandRequest extends BaseRequest {
     // memory leaks due to circular references
     private var _weakItem as WeakReference;
 
-    // We count the currently open requests for this item
-    // If there is more than one, we cancel all requests in the
-    // queue, to avoid BLE_QUEUE_FULL errors.
-    // See makeWebRequest() for details.    
-    private var _requestCounter as Number = 0;
+    // True if the command request should operate in Wifi mode
+    private var _syncMode as Boolean;
 
     // Constructor
     protected function initialize( 
         item as CommandRequestDelegate, 
         url as String, 
-        method as Communications.HttpRequestMethod 
+        method as Communications.HttpRequestMethod,
+        syncMode as Boolean
     ) {
         BaseRequest.initialize( method );
         _weakItem = item.weak();
         _url = url;
+        _syncMode = syncMode;
     }
 
     // Implemented by subclasses to provide the parameters for the web request.
@@ -70,39 +84,66 @@ class BaseCommandRequest extends BaseRequest {
         throw new AbstractMethodException( "BaseCommandRequest.assembleParameters" );
     }
 
-    // Implemented by subclasses to provide the parameters for the web request.
+    // Sends the command via phone or Wifi connection
     public function sendCommand( cmd as String ) as Void {
-        if( ! ConnectivityHandler.get().isOnWiFiConnection() ) {
-            makeWebRequest( assembleParameters( cmd ) as Dictionary<Object, Object> );
+        // The command is sent immediately only if we are NOT on a Wi-Fi connection and
+        // NOT in sync mode. A Wi-Fi connection indicates that only Wi-Fi is available,
+        // but the app still needs to switch into Wi-Fi sync mode. Being in sync mode
+        // means that the app has already switched.
+        if( ! ConnectivityHandler.get().isOnWiFiConnection() || _syncMode ) {
+            makeWebRequest( cmd );
         } else {
+            // We are on WiFi connection, so we cannot send the command directly but
+            // need to go into Wifi sync.
+            
             var item = _weakItem.get() as CommandRequestDelegate?;
-
             if( item != null ) {
                 
-                WifiSyncDelegate.get().setCommand( [ item.getItemName(), cmd ] );
+                // First, we pass the information on item and command to the sync delegate
+                CommandSyncDelegate.get().setCommand( [ item.getItemName(), cmd ] );
 
+                Logger.debug( "BaseCommandRequest: starting sync mode ..." );
+                
+                // Then we stop the sitemap request. This avoids sitemap requests to be triggered
+                // in sync mode, since this would delay the mode and confuse the ConnectivityHandler,
+                // which relies on the sitemap request to fail to indicate that phone connection is not
+                // available.
+                SitemapRequest.get().stop();
+
+                // We assume already now that the command is completed. true indicates to the item that
+                // command is done in sync mode. The item therefore does not need to (and should not) update
+                // the state, since that is not displayed when on WiFi. Also the item must not call 
+                // WatchUi.requestUpdate, which would interrupt the display of the sync mode.
+                item.onCommandComplete( true );
+
+                // Newer API versions support displaying a custom message in the sync view
                 if( Communications has :startSync2 ) {
                     Communications.startSync2( { :message => "Sending command via WiFi ..." } );
                 } else {
                     Communications.startSync();
                 }
             } else {
-                ExceptionHandler.handleException(
-                    new GeneralException( "sendCommand: item reference is no longer valid" )
-                );
+                throw new GeneralException( "sendCommand: item reference is no longer valid" );
             }
-
-            
         }
     }
 
     // Triggers the web request
     // @param parameters - options for the web request, as per Communication.makeWebRequest
-    protected function makeWebRequest( parameters as Dictionary<Object, Object>? ) as Void {
+    private function makeWebRequest( cmd as String ) as Void {
         // Logger.debug "BaseCommandRequest: makeWebRequest to " + _url );
         try {
+            // Get the parameters from the subclass
+            var parameters = assembleParameters( cmd ) as Dictionary<Object, Object>;
+
             // Logger.debug( "BaseCommandRequest.makeWebRequest: stopping sitemap request" );
-            SitemapRequest.get().stop();
+            
+            // In sync mode, sendCommand will stop the requests, and they will be started 
+            // after sync mode has been completed by a asynchronous task
+            if( ! _syncMode ) {
+                SitemapRequest.get().stop();
+            }
+            
             // If there is more than one open request for this item,
             // we cancel all requests to avoid -101/BLE_QUEUE_FULL errors.
             // This will also cancel any ongoing sitemap requests, which is acceptable.
@@ -124,7 +165,12 @@ class BaseCommandRequest extends BaseRequest {
             Communications.makeWebRequest( _url, parameters, getBaseOptions(), method( :onReceive ) );
         } catch( ex ) {
             // Logger.debug( "BaseCommandRequest.makeWebRequest: restarting sitemap request after error" );
-            SitemapRequest.get().start();
+
+            // In sync mode, the sitemap request is restarted by a task scheduled by the `SyncDelegate`
+            if( ! _syncMode ) {
+                SitemapRequest.get().start();
+            }
+            
             throw ex;
         }
     }
@@ -143,15 +189,21 @@ class BaseCommandRequest extends BaseRequest {
             try {
                 _requestCounter--;
                 // Logger.debug( "BaseCommandRequest.onReceive: restarting sitemap request" );
-                SitemapRequest.get().start();
+
+                // In Wifi mode, sendCommand will stop the requests, and they will be started 
+                // after sync mode has been completed by a asynchronous task
+                if( ! _syncMode ) {
+                    SitemapRequest.get().start();
+                }
+
                 if( checkResponseCode( responseCode, CommunicationException.EX_SOURCE_COMMAND ) ) {
-                    item.onCommandComplete();
+                    item.onCommandComplete( false );
                 }
             } catch( ex ) {
                 item.onException( ex );
                 // If we are in Wifi sync mode, we only report the exception to the
-                // item (i.e. the WifiSyncDelegate)
-                if( ! ( item instanceof WifiSyncDelegate ) ) {
+                // item (i.e. the CommandSyncDelegate)
+                if( ! _syncMode ) {
                     ExceptionHandler.handleException( ex );
                 }
             }

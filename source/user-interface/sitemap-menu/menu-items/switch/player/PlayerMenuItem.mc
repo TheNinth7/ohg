@@ -40,7 +40,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     ) {
         _sitemapSwitch = sitemapSwitch;
         
-        _commandRequest = BaseCommandRequest.get( self );
+        _commandRequest = BaseCommandRequest.get( self, false );
 
         // The state shown in the menu item
         _stateDrawable = new PlayPauseStateDrawable( 
@@ -64,7 +64,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     }
 
     // Nothing to be done, but needed to fullfil the delegate interface
-    function onCommandComplete() as Void {
+    function onCommandComplete( syncMode as Boolean ) as Void {
     }
 
     // Exceptions from the command request are handed

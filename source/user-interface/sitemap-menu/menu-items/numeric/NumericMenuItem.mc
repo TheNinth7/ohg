@@ -38,7 +38,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
         processingMode as BasePageMenu.ProcessingMode
     ) {
         _sitemapNumeric = sitemapNumeric;
-        _commandRequest = BaseCommandRequest.get( self );
+        _commandRequest = BaseCommandRequest.get( self, false );
 
         // The state shown in the menu item
         //var item = sitemapNumeric.getNumericItem();
@@ -66,7 +66,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     }
 
     // Nothing to be done, but needed to fullfil the delegate interface
-    function onCommandComplete() as Void {
+    function onCommandComplete( syncMode as Boolean ) as Void {
     }
 
     // Exceptions from the command request are handed
@@ -125,7 +125,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
         _stateText.setText( sitemapWidget.getDisplayState() );
         // If the item has changed, we need to create a new command request
         if( ! _sitemapNumeric.getNumericItem().getName().equals( previousItemName ) ) {
-            _commandRequest = BaseCommandRequest.get( self );
+            _commandRequest = BaseCommandRequest.get( self, false );
         }
     }
 }

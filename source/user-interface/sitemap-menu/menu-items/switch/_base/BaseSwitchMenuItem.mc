@@ -43,7 +43,7 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
         
         BaseWidgetMenuItem.initialize( options );
         
-        _commandRequest = BaseCommandRequest.get( self );
+        _commandRequest = BaseCommandRequest.get( self, false );
     }
 
     // Returns the name of the openHAB item associated with this menu item
@@ -64,11 +64,13 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
     // Called by the command request after the command is successfully sent.
     // Triggers `updateItemState()` for the subclass to update the state `Drawable`,
     // and then requests a UI redraw.
-    public function onCommandComplete() as Void {
+    public function onCommandComplete( syncMode as Boolean ) as Void {
         if( _newState != null ) {
-            updateItemState( _newState );
+            if( ! syncMode ) {
+                WatchUi.requestUpdate();
+                updateItemState( _newState );
+            }
             _newState = null;
-            WatchUi.requestUpdate();
         }
     }
 
@@ -97,6 +99,7 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
 
     // Send the command via the command request
     public function sendCommand( command as String ) as Void {
+        Logger.debug( "BaseSwitchMenuItem: sending command ..." );
         _newState = command;
         if( _commandRequest != null ) {
             _commandRequest.sendCommand( command );
@@ -131,7 +134,7 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
         // need to create a new command request
         if( ! _itemName.equals( updatedItemName ) ) {
             _itemName = updatedItemName;
-            _commandRequest = BaseCommandRequest.get( self );
+            _commandRequest = BaseCommandRequest.get( self, false );
         }
         updateItemState( _sitemapSwitch.getSwitchItem().getState() );
     }
