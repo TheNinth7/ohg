@@ -16,14 +16,14 @@ import Toybox.WatchUi;
     - provides a function for making the request, to be used by derivates
     - processes the response and calls the event handler of the item
 
-    If the phone connection is not available, a Wifi sync is started with 
+    If the phone connection is not available, a (Wifi-based) sync is started with 
     `SyncDelegate` to send the command. Within the `SyncDelegate`, a separate
     command request is instantiated that operates in sync mode.
     
     In sync mode, sendCommand() follows different logic. The SitemapRequest
     is neither stopped nor started there, as this is handled by the
     CommandSyncDelegate. This ensures that the SitemapRequest is not active
-    during Wifi sync and is stopped beforehand.
+    during sync and is stopped beforehand.
 */
 
 // Interface to be implemented by menu items that issue commands.
@@ -63,7 +63,7 @@ class BaseCommandRequest extends BaseRequest {
     // memory leaks due to circular references
     private var _weakItem as WeakReference;
 
-    // True if the command request should operate in Wifi mode
+    // True if the command request should operate in sync mode
     private var _syncMode as Boolean;
 
     // Constructor
@@ -85,16 +85,19 @@ class BaseCommandRequest extends BaseRequest {
     }
 
     // Sends the command via phone or Wifi connection
+    // If not on Wifi connection or if in sync mode, the command will be sent immediately
+    // If on Wifi connection, the command will be handed over to the sync delegate and
+    // sync mode will be started.
     public function sendCommand( cmd as String ) as Void {
-        // The command is sent immediately only if we are NOT on a Wi-Fi connection and
-        // NOT in sync mode. A Wi-Fi connection indicates that only Wi-Fi is available,
-        // but the app still needs to switch into Wi-Fi sync mode. Being in sync mode
-        // means that the app has already switched.
+        // Note that isOnWifiConnection()=true indicates only that Wi-Fi is available,
+        // but the app still needs to switch into sync mode to connect to it. If _syncMode
+        // is true, then we are already in sync mode and can send the command.
         if( ! ConnectivityHandler.get().isOnWiFiConnection() || _syncMode ) {
             makeWebRequest( cmd );
         } else {
+
             // We are on WiFi connection, so we cannot send the command directly but
-            // need to go into Wifi sync.
+            // need to go into sync mode.
             
             var item = _weakItem.get() as CommandRequestDelegate?;
             if( item != null ) {
@@ -116,12 +119,19 @@ class BaseCommandRequest extends BaseRequest {
                 // WatchUi.requestUpdate, which would interrupt the display of the sync mode.
                 item.onCommandComplete( true );
 
-                // Newer API versions support displaying a custom message in the sync view
-                if( Communications has :startSync2 ) {
-                    Communications.startSync2( { :message => "Sending command via WiFi ..." } );
-                } else {
-                    Communications.startSync();
+                // Start sync
+                try {
+                    // Newer API versions support displaying a custom message in the sync view
+                    if( Communications has :startSync2 ) {
+                        Communications.startSync2( { :message => "Sending command via WiFi ..." } );
+                    } else {
+                        Communications.startSync();
+                    }
+                } catch( ex ) {
+                    SitemapRequest.get().start();
+                    throw ex;
                 }
+
             } else {
                 throw new GeneralException( "sendCommand: item reference is no longer valid" );
             }
