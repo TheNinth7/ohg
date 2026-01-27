@@ -3,36 +3,34 @@ import Toybox.WatchUi;
 import Toybox.Lang;
 
 /*
- * Timer task that checks the WiFi connection state and, if WiFi is available,
- * replaces the `WifiCheckView` (when shown) with the menu.
+ * Processing the result of a Wi-Fi availability check requires a view to be loaded.
+ * However, if a check is triggered during startup, the result may return before
+ * the WifiCheckView is loaded as the initial view; in that case, processing is
+ * deferred.
  *
- * `WifiCheckView` is used as the initial view when no phone connection is
- * available, so the user can see that WiFi availability is being checked.
+ * This timer task therefore checks whether the initial view has already been
+ * loaded and then processes the deferred result.
  *
- * Unfortunately, by the time the first availability result comes in, it is
- * too late to return a different initial view from `OhApp.getInitialView()`.
- * At the same time, `WifiCheckView` is not yet fully loaded, so it cannot be
- * replaced immediately either.
- *
- * To work around this, `WifiCheckView` starts this timer from its first
- * `onUpdate()` call and processes the initial availability result there.
+ * The timer is started in WifiCheckView.onUpdate(), because the view is only
+ * considered loaded after that.
  */
 class WifiCheckTimer extends Timer.Timer {
-
     public function initialize() {
         Timer.Timer.initialize();
-        Timer.Timer.start( method( :checkWifiState ), 50, false ); 
+        startTimer();
+    }
+
+    private function startTimer() as Void {
+        Timer.Timer.start( method( :checkWifiState ), 0, false );
     }
 
     public function checkWifiState() as Void {
-        // Execute only if we now have a WiFi connection available,
-        // the current view is still a WifiCheckView, and
-        // we actually have a HomepageMenu to switch to.
-        if( ConnectivityHandler.get().isOnWiFiConnection()
-            && ViewHandler.getCurrentViewSafe()[0] instanceof WifiCheckView
-            && HomepageMenu.exists()
-        ) {
-            ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
+        // If there is a view now, we process the deferred result,
+        // otherwise restart the timer
+        if( ViewHandler.getCurrentViewSafe()[0] != null ) {
+            ConnectivityHandler.get().processDeferredResult();
+        } else {
+            startTimer();
         }
     }
 }

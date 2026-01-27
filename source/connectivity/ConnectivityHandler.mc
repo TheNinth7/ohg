@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Communications;
+import Toybox.Time;
 
 /*
  * This singleton class keeps track of the current connectivity state.
@@ -44,8 +45,21 @@ import Toybox.Communications;
         OFFLINE
     }
 
+    // The Dictionary type passed to the callback when checking
+    // for WiFi connection
+    typedef TryWifiResult as { 
+        :wifiAvailable as Lang.Boolean, 
+        :errorCode as Communications.WifiConnectionStatus 
+    };
+
+    // See processDeferredResult
+    private var _deferredResult as TryWifiResult?;
+
     // The current state
     private var _state as State = PHONE_CONNECTION;
+
+    // The timestamp of the last successful Wifi check
+    private var _lastSuccessfullWifiCheck as Moment?;
     
     // Only needed to be declared private to prevent other classes
     // from instantiating this singleton
@@ -90,6 +104,11 @@ import Toybox.Communications;
         }
     }
 
+    // True if no connection is available
+    public function isOffline() as Boolean {
+        return _state == OFFLINE;
+    }
+
     // True if phone connection is available
     public function isOnPhoneConnection() as Boolean {
         return _state == PHONE_CONNECTION;
@@ -99,6 +118,30 @@ import Toybox.Communications;
     // but WiFi is
     public function isOnWiFiConnection() as Boolean {
         return _state == WIFI_CONNECTION;
+    }
+
+    // Returns true if last Wifi check happened within the
+    // state expiry time. While states are not acutally shown
+    // in Wifi mode, we still want to use the same timeframe
+    // to go into offline mode if Wifi connection is lost.
+    public function isWifiCheckFresh() as Boolean {
+        return 
+            _lastSuccessfullWifiCheck == null
+            ||
+            Time.now().compare( _lastSuccessfullWifiCheck ) < Constants.STATE_EXPIRATION_TIME;
+    }
+
+    // If on startup there is no phone connection, the WiFi check
+    // result may be returned before the first view is fully loaded.
+    // In this case, the result is stored here and processing is
+    // deferred to `WifiCheckTimer`, which will repeatedly check
+    // and call processDeferredResult when the view has been fully
+    // loaded.
+    public function processDeferredResult() as Void {
+        if( _deferredResult != null ) {
+            tryWifiConnectionCallback( _deferredResult );
+            _deferredResult = null;
+        }
     }
 
     // Internal functions used to update the connectivity state.
@@ -124,77 +167,69 @@ import Toybox.Communications;
     // Processes the result of the WiFi availability check.
     // Depending on the outcome, the displayed view is updated
     // and sitemap states are invalidated if necessary.
-    public function tryWifiConnectionCallback( 
-        result as { 
-            :wifiAvailable as Lang.Boolean, 
-            :errorCode as Communications.WifiConnectionStatus 
-        } 
-    ) as Void {
-        try {
-            // If since the request was made the state has been changed
-            // back to PHONE_CONNECTION, we ignore the result
-            if( _state != PHONE_CONNECTION ) {
-                
-                // If WiFi is available ...
-                if( result[:wifiAvailable] == true ) {
+    public function tryWifiConnectionCallback( result as TryWifiResult ) as Void {
+        
+        if( ViewHandler.getCurrentViewSafe()[0] == null ) {
+            // If there is no view, we defer the processing of the result
+            // The processing of the deferred result is triggered by `WifiCheckTimer`,
+            // which is triggered in `WifiCheckView.onUpdate`, because only after that
+            // the initial view is loaded (starting it here could lead to unncessary executions
+            // before the initial view was loaded)
+            _deferredResult = result;
+        } else {
+            try {
+                // If since the request was made the state has been changed
+                // back to PHONE_CONNECTION, we ignore the result
+                if( _state != PHONE_CONNECTION ) {
                     
-                    // ... and that was previously unknown ...
-                    if( _state != WIFI_CONNECTION ) {
+                    // If WiFi is available ...
+                    if( result[:wifiAvailable] == true ) {
 
-                        // ... we update the state.
-                        setState( WIFI_CONNECTION );
+                        _lastSuccessfullWifiCheck = Time.now();
+                        
+                        // ... and that was previously unknown ...
+                        if( _state != WIFI_CONNECTION ) {
 
-                        // Only if a HomepageMenu is available ...
-                        if( HomepageMenu.exists() ) {
-                            var menu = HomepageMenu.get();
+                            // ... we update the state.
+                            setState( WIFI_CONNECTION );
 
-                            // Check if error or WiFi check view is displayed
-                            var currentView = ViewHandler.getCurrentViewSafe()[0];
-                            var isMenuView = ErrorView.isShowing() 
-                                            || currentView instanceof WifiCheckView;
-                            var isMenuViewOrNull = isMenuView || currentView == null;
-
-                            // ... we invalidate the values if the sitemap is not fresh ...
-                            if( ! SitemapStore.isSitemapFresh() ) {
-                                var sitemap = SitemapStore.getSitemapFromMemory();
-                                if( sitemap != null ) {
-                                    menu.update( sitemap );
-                                    if( ! isMenuView ) {
-                                        WatchUi.requestUpdate();
+                            // Only if a HomepageMenu is available ...
+                            if( HomepageMenu.exists() ) {
+                                var menu = HomepageMenu.get();
+                                // ... we invalidate the values ...
+                                if( SitemapStore.isSitemapFresh() ) {
+                                    var sitemap = SitemapStore.getSitemapFromMemoryForWifiMode();
+                                    if( sitemap != null ) {
+                                        menu.update( sitemap );
+                                        // The update runs asynchronously, so we add a task that
+                                        // switches to the menu or triggers an UI refresh if it
+                                        // is already shown
+                                        AsyncTaskQueue.get().add( new WifiCheckRefreshUiTask() );
+                                    } else {
+                                        throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
                                     }
-                                } else {
-                                    throw new GeneralException( "Failed to invalidate menu states because no sitemap is loaded in memory." );
+                                } else if( ! HomepageMenu.isSitemapShowing() ) {
+                                    // If the sitemap is not fresh, and the menu is currently not shown, we
+                                    // switch to it immediately.
+                                    ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
                                 }
+                            } else {
+                                // Currently we only throw an exception if there is no sitemap
+                                // data available. This will be changed to do a WiFi sitemap request
+                                throw new GeneralException( "No sitemap in storage, sync via phone first." );
                             }
-
-                            // ... and if it is not shown, then show it
-                            if( isMenuViewOrNull ) {
-                                ViewHandler.popToBottomAndSwitch( menu, HomepageMenuDelegate.get() );
-                            }
-                        } else {
-                            // Currently we only throw an exception if there is no sitemap
-                            // data available. This will be changed to do a WiFi sitemap request
-                            throw new GeneralException( "No sitemap in storage, sync via phone first." );
                         }
-                    }
-                } else {
-                    
-                    // If the state changed to OFFLINE ...
-                    if( _state != OFFLINE ) {
-                        setState( OFFLINE );
-
-                        // ... and the sitemap is not fresh anymore, we show an 
-                        // error. Therefore the error is not shown immediately but
-                        // only at the treshold configured in the Constants (currently
-                        // 10 seconds)
-                        if( ! SitemapStore.isSitemapFresh() ) {
-                            ErrorView.showOrUpdate( new OfflineException() );
+                    } else {
+                        // If the state changed to OFFLINE ...
+                        if( _state != OFFLINE ) {
+                            setState( OFFLINE );
                         }
+                        throw new OfflineException();
                     }
                 }
+            } catch( ex ) {
+                ExceptionHandler.handleException( ex );
             }
-        } catch( ex ) {
-            ExceptionHandler.handleException( ex );
         }
     }
 }

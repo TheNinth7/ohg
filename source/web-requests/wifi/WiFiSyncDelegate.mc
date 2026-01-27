@@ -43,9 +43,11 @@ class WifiSyncDelegate extends SyncDelegate {
 
     public function onCommandComplete() as Void {
         Communications.notifySyncProgress( 100 );
+        Communications.notifySyncComplete( null );
     }
 
     function onException( ex as Exception ) as Void {
+        Communications.notifySyncComplete( ex.getErrorMessage() );
     }
 
     public function isSyncNeeded() as Boolean {
@@ -54,17 +56,19 @@ class WifiSyncDelegate extends SyncDelegate {
 
     public function onStartSync() as Void {
         try {
-            Communications.notifySyncProgress( 10 );
+            Communications.notifySyncProgress( 20 );
             var commandRequest = BaseCommandRequest.get( self );
-            if( commandRequest == null ) {
-                throw new GeneralException( "Neither REST API nor Webhook are supported!" );
+            if( commandRequest != null ) {
+                commandRequest.sendCommand( ensureCommand()[1] );
+            } else {
+                onException( new GeneralException( "WifiSyncDelegate: neither REST API nor Webhook are available" ) );
             }
-            commandRequest.sendCommand( ensureCommand()[1] );
         } catch( ex ) {
             onException( ex );
         }
     }
 
     public function onStopSync() as Void {
+        BaseRequest.cancelAllRequests();
     }
 }

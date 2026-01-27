@@ -88,18 +88,23 @@ public class ExceptionHandler {
 
         /*
         * A toast notification will be shown under the following conditions:
+        * - Only if the current view has indicated to the `ToastHandler` that toasts are allowed.
         * - For all non-sitemap (i.e., command) communication errors.
         * - For sitemap errors that are not fatal in themselves and 
         *   the state is still fresh (within the state expiry time).
-        * - Only if the current view has indicated to the `ToastHandler` that toasts are allowed.
+        * - For the `OfflineException`, if the last successful Wifi check is still fresh.
         *
         * In all other cases, a full-screen error view is displayed instead.
         */
-        if( ex instanceof CommunicationBaseException 
-            &&  ( !ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP )
-                  || ( isSitemapFresh && !ex.isFatal() ) )
-            && ToastHandler.useToasts() ) 
-        {
+        if( ToastHandler.useToasts()
+            &&  ( ( ex instanceof CommunicationBaseException 
+                      &&  ( ! ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP )
+                            || ( isSitemapFresh && !ex.isFatal() ) 
+                          ) 
+                  )
+                  || ( ex instanceof OfflineException && ConnectivityHandler.get().isWifiCheckFresh() )
+                ) 
+        ) {
             // Logger.debug( "ExceptionHandler: non-fatal error: " + ex.getToastMessage().toUpper() );
             
             // If there is no view yet, the exception is stored
@@ -119,7 +124,9 @@ public class ExceptionHandler {
             // would briefly show the menu before the error happens again.
             // Clearing the cache ensures the app goes directly into a loading or
             // error view until valid data is received.
-            SitemapStore.deleteSitemapFromStorage();
+            if( ! ( ex instanceof OfflineException ) ) {
+                SitemapStore.deleteSitemapFromStorage();
+            }
             
             /*
             * If no view is currently active, the exception is stored as a startup exception.

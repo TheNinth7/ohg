@@ -31,6 +31,11 @@ class WifiCheckView extends WatchUi.View {
         } );
     }
 
+    // Determins whether the WifiCheckView is currently showing
+    public static function isShowing() as Boolean {
+        return ViewHandler.getCurrentViewSafe()[0] instanceof WifiCheckView;
+    }
+
     // Sets the size of the TextArea
     public function onLayout( dc as Dc ) {
         // We get the width and height of the drawing context

@@ -26,15 +26,20 @@ class SitemapStore  {
     private static const STORAGE_JSON as String = "sitemapJson";
     private static const STORAGE_LABEL as String = "sitemapLabel";
 
-    // Timer after which a state is considered stale
-    private static const STATE_EXPIRATION_TIME as Number = 10;
-
     // Current JSON/label
     // The JSON is stored together with a numeric timestamp
     typedef StoredJson as [JsonObject, Number];
     private static var _json as StoredJson?;
     private static var _title as String?;
     private static var _estimatedSitemapSize as Number = 0;
+
+    // Deletes the sitemap from Storage to invalidate it in case of a fatal
+    // error during a sitemap request. After such an error, the sitemap should
+    // only be shown again once fresh data has been successfully retrieved.
+    public static function deleteSitemapFromStorage() as Void {
+        Storage.deleteValue( STORAGE_JSON );
+        _json = null;
+    }
 
     // Accessor functions for the label
     public static function getLabel() as String? {
@@ -44,66 +49,50 @@ class SitemapStore  {
         return _title;
     }
 
-    // Return the sitemap currently stored in Memory
+    // Return the sitemap currently stored in memory.
+    // Freshness check is not performed but passed in as parameter,
+    // this allows this function to tbe used in the one below it.
     (:typecheck(disableGlanceCheck))
-    public static function getSitemapFromMemory() as SitemapHomepage? {
+    private static function getSitemapFromMemory( isSitemapFresh as Boolean ) as SitemapHomepage? {
         if( _json != null ) {
             return new SitemapHomepage( 
                 new JsonAdapter( _json[0] ), 
-                isSitemapFresh(), 
+                isSitemapFresh, 
                 false 
             );
         }
         return null;
     }
 
+    // Return the sitemap currently stored in Memory, marked as stale
+    // independent of the actual timestamp of the sitemap.
+    (:typecheck(disableGlanceCheck))
+    public static function getSitemapFromMemoryForWifiMode() as SitemapHomepage? {
+        return getSitemapFromMemory( false );
+    }
+
     // Return the sitemap currently stored in Storage
     (:typecheck(disableGlanceCheck))
     public static function getSitemapFromStorage() as SitemapHomepage? {
         _json = Storage.getValue( STORAGE_JSON ) as StoredJson?;
-        return getSitemapFromMemory();
+        return getSitemapFromMemory( isSitemapFresh() );
     }
 
     // Returns true if the currently held JSON's age is 
     // within the expiry the expiry time, false if it is older. 
     // Returns false if there is no JSON.
+    (:typecheck(disableGlanceCheck))
     public static function isSitemapFresh() as Boolean {
         if( _json != null ) {
             var dataAge = 
                 Time.now().compare( 
                     new Moment( ( _json as StoredJson )[1] ) 
                 );
-            // Logger.debug( "SitemapStore.isSitemapFresh=" + ( dataAge < STATE_EXPIRATION_TIME ) );
-            return dataAge < STATE_EXPIRATION_TIME;
+            // Logger.debug( "SitemapStore.isSitemapFresh=" + ( dataAge < Constants.STATE_EXPIRATION_TIME ) );
+            return dataAge < DefaultConstants.STATE_EXPIRATION_TIME;
         } else {
             return false;
         }
-    }
-
-    // Creates a new sitemap and updates the JSON
-    // as well as the label
-    (:typecheck(disableGlanceCheck))
-    public static function updateSitemapFromJson( 
-        incomingJson as SitemapJsonIncoming
-    ) as SitemapHomepage {
-        _json = incomingJson.getForStorage();
-        _estimatedSitemapSize = incomingJson.estimatedSize;
-        var homepage = new SitemapHomepage( 
-            new JsonAdapter( incomingJson.json ), 
-            true, 
-            true 
-        );
-        _title = homepage.title;
-        return homepage;
-    }
-
-
-    // Deletes the sitemap from Storage to invalidate it in case of a fatal
-    // error during a sitemap request. After such an error, the sitemap should
-    // only be shown again once fresh data has been successfully retrieved.
-    public static function deleteSitemapFromStorage() as Void {
-        Storage.deleteValue( STORAGE_JSON );
-        _json = null;
     }
 
     // Persist the current data to storage
@@ -127,5 +116,22 @@ class SitemapStore  {
             // Logger.debug( "SitemapStore: not persisting, JSON too large" );
             deleteSitemapFromStorage();
         }
+    }
+
+    // Creates a new sitemap and updates the JSON
+    // as well as the label
+    (:typecheck(disableGlanceCheck))
+    public static function updateSitemapFromJson( 
+        incomingJson as SitemapJsonIncoming
+    ) as SitemapHomepage {
+        _json = incomingJson.getForStorage();
+        _estimatedSitemapSize = incomingJson.estimatedSize;
+        var homepage = new SitemapHomepage( 
+            new JsonAdapter( incomingJson.json ), 
+            true, 
+            true 
+        );
+        _title = homepage.title;
+        return homepage;
     }
 }

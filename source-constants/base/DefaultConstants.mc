@@ -12,6 +12,14 @@ import Toybox.System;
 class DefaultConstants {
     protected function initialize() {}
 
+    // Timer in seconds after which a state is considered stale
+    // The app repeatedly polls the sitemap. If no new sitemap has been
+    // received from the state expiration time, it will either go into
+    // Wifi mode or offline mode. Also the Wifi mode will go into offline
+    // mode if for the same amount of time no successful Wifi connection
+    // was possible
+    public static const STATE_EXPIRATION_TIME as Number = 10;
+
     // Height of the screen, used in calculation of other constants
     public static const UI_SCREEN_HEIGHT as Number = System.getDeviceSettings().screenHeight;
     public static const UI_SCREEN_WIDTH as Number = System.getDeviceSettings().screenWidth;

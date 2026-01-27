@@ -97,7 +97,7 @@ class BaseRequest {
     // cancellations were intentional, so no error should be 
     // reported (see checkResponseCode()).
     private static var _cancelMode as Boolean = false;
-    protected static function cancelAllRequests() as Void {
+    public static function cancelAllRequests() as Void {
         _cancelMode = true;
         Communications.cancelAllRequests();
         _cancelMode = false;

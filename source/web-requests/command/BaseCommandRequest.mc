@@ -149,8 +149,12 @@ class BaseCommandRequest extends BaseRequest {
                 }
             } catch( ex ) {
                 item.onException( ex );
-                ExceptionHandler.handleException( ex );
+                // If we are in Wifi sync mode, we only report the exception to the
+                // item (i.e. the WifiSyncDelegate)
+                if( ! ( item instanceof WifiSyncDelegate ) ) {
+                    ExceptionHandler.handleException( ex );
+                }
             }
         }
     }
-}   
+}
