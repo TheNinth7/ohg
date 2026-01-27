@@ -188,8 +188,7 @@ class RefreshUiTask extends BaseSitemapProcessorTask {
             var currentView = ViewHandler.getCurrentViewSafe()[0];
             if( ( ! homepage.structureRemainsValid() 
                     && ! ( currentView instanceof HomepageMenu ) )
-                || ErrorView.isShowing() 
-                || currentView instanceof WifiCheckView )
+                || ! HomepageMenu.isSitemapShowing() )
                 {
                 // Logger.debug( "SitemapRequest.onReceive: resetting to homepage" );
                 ViewHandler.popToBottomAndSwitch( homepage, HomepageMenuDelegate.get() );

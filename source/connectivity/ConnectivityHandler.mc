@@ -59,7 +59,7 @@ import Toybox.Time;
     private var _state as State = PHONE_CONNECTION;
 
     // The timestamp of the last successful Wifi check
-    private var _lastSuccessfullWifiCheck as Moment?;
+    private var _lastSuccessfullConnection as Moment?;
     
     // Only needed to be declared private to prevent other classes
     // from instantiating this singleton
@@ -70,6 +70,7 @@ import Toybox.Time;
     // connection is currently available
     public function confirmPhoneConnection() as Void {
         setState( PHONE_CONNECTION );
+        _lastSuccessfullConnection = Time.now();
     }
 
     // Called by `OhApp` during startup to determine whether
@@ -124,11 +125,10 @@ import Toybox.Time;
     // state expiry time. While states are not acutally shown
     // in Wifi mode, we still want to use the same timeframe
     // to go into offline mode if Wifi connection is lost.
-    public function isWifiCheckFresh() as Boolean {
+    public function hadSuccessfulConnectionWithinLimit() as Boolean {
         return 
-            _lastSuccessfullWifiCheck == null
-            ||
-            Time.now().compare( _lastSuccessfullWifiCheck ) < Constants.STATE_EXPIRATION_TIME;
+            _lastSuccessfullConnection != null
+            && Time.now().compare( _lastSuccessfullConnection ) < Constants.STATE_EXPIRATION_TIME;
     }
 
     // If on startup there is no phone connection, the WiFi check
@@ -180,52 +180,49 @@ import Toybox.Time;
             try {
                 // If since the request was made the state has been changed
                 // back to PHONE_CONNECTION, we ignore the result
-                if( _state != PHONE_CONNECTION ) {
-                    
+                if( _state != PHONE_CONNECTION && result[:wifiAvailable] == true ) {
                     // If WiFi is available ...
-                    if( result[:wifiAvailable] == true ) {
 
-                        _lastSuccessfullWifiCheck = Time.now();
-                        
-                        // ... and that was previously unknown ...
-                        if( _state != WIFI_CONNECTION ) {
+                    _lastSuccessfullConnection = Time.now();
+                    
+                    // ... and that was previously unknown ...
+                    if( _state != WIFI_CONNECTION ) {
 
-                            // ... we update the state.
-                            setState( WIFI_CONNECTION );
+                        // ... we update the state.
+                        setState( WIFI_CONNECTION );
 
-                            // Only if a HomepageMenu is available ...
-                            if( HomepageMenu.exists() ) {
-                                var menu = HomepageMenu.get();
-                                // ... we invalidate the values ...
-                                if( SitemapStore.isSitemapFresh() ) {
-                                    var sitemap = SitemapStore.getSitemapFromMemoryForWifiMode();
-                                    if( sitemap != null ) {
-                                        menu.update( sitemap );
-                                        // The update runs asynchronously, so we add a task that
-                                        // switches to the menu or triggers an UI refresh if it
-                                        // is already shown
-                                        AsyncTaskQueue.get().add( new WifiCheckRefreshUiTask() );
-                                    } else {
-                                        throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
-                                    }
-                                } else if( ! HomepageMenu.isSitemapShowing() ) {
-                                    // If the sitemap is not fresh, and the menu is currently not shown, we
-                                    // switch to it immediately.
-                                    ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
+                        // Only if a HomepageMenu is available ...
+                        if( HomepageMenu.exists() ) {
+                            var menu = HomepageMenu.get();
+                            // ... we invalidate the values ...
+                            if( SitemapStore.isSitemapFresh() ) {
+                                var sitemap = SitemapStore.getSitemapFromMemoryForWifiMode();
+                                if( sitemap != null ) {
+                                    menu.update( sitemap );
+                                    // The update runs asynchronously, so we add a task that
+                                    // switches to the menu or triggers an UI refresh if it
+                                    // is already shown
+                                    AsyncTaskQueue.get().add( new WifiCheckRefreshUiTask() );
+                                } else {
+                                    throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
                                 }
-                            } else {
-                                // Currently we only throw an exception if there is no sitemap
-                                // data available. This will be changed to do a WiFi sitemap request
-                                throw new GeneralException( "No sitemap in storage, sync via phone first." );
+                            } else if( ! HomepageMenu.isSitemapShowing() ) {
+                                // If the sitemap is not fresh, and the menu is currently not shown, we
+                                // switch to it immediately.
+                                ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
                             }
+                        } else {
+                            // Currently we only throw an exception if there is no sitemap
+                            // data available. This will be changed to do a WiFi sitemap request
+                            throw new GeneralException( "No sitemap in storage, sync via phone first." );
                         }
-                    } else {
-                        // If the state changed to OFFLINE ...
-                        if( _state != OFFLINE ) {
-                            setState( OFFLINE );
-                        }
-                        throw new OfflineException();
                     }
+                } else {
+                    // If the state changed to OFFLINE ...
+                    if( _state != OFFLINE ) {
+                        setState( OFFLINE );
+                    }
+                    throw new OfflineException();
                 }
             } catch( ex ) {
                 ExceptionHandler.handleException( ex );

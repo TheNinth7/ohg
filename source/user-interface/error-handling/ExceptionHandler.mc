@@ -102,7 +102,7 @@ public class ExceptionHandler {
                             || ( isSitemapFresh && !ex.isFatal() ) 
                           ) 
                   )
-                  || ( ex instanceof OfflineException && ConnectivityHandler.get().isWifiCheckFresh() )
+                  || ( ex instanceof OfflineException && ConnectivityHandler.get().hadSuccessfulConnectionWithinLimit() )
                 ) 
         ) {
             // Logger.debug( "ExceptionHandler: non-fatal error: " + ex.getToastMessage().toUpper() );
