@@ -3,10 +3,10 @@ import Toybox.Lang;
 /*
  * Asynchronous task to restart the sitemap request after the sync mode has been closed.
  */
- class WifiRestartSitemapRequestTask {
+ class RestartSitemapRequestTask {
 
     public function invoke() as Void {
-        Logger.debug( "WifiRestartSitemapRequestTask: restarting sitemap request" );
+        Logger.debug( "RestartSitemapRequestTask: restarting sitemap request" );
         SitemapRequest.get().start();
     }
 

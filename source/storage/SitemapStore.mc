@@ -49,6 +49,20 @@ class SitemapStore  {
         return _title;
     }
 
+    // Returns the age of the sitemap that is currently in memory
+    (:typecheck(disableGlanceCheck))
+    public static function getSitemapAge() as Duration? {
+        if( _json != null ) {
+            var age = Time.now().subtract( new Moment( _json[1] ) );
+            if( age instanceof Duration ) {
+                return age;
+            } else {
+                throw new GeneralException( "SitemapStore.getSitemapAge: subtract returned invalid result." );
+            }
+        }
+        return null;
+    }
+
     // Return the sitemap currently stored in memory.
     // Freshness check is not performed but passed in as parameter,
     // this allows this function to tbe used in the one below it.

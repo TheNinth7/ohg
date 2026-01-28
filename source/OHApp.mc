@@ -99,6 +99,7 @@ class OHApp extends Application.AppBase {
     // to request a sitemap or send a command via WiFi.
     (:typecheck(disableGlanceCheck))
     function getSyncDelegate() as $.Toybox.Communications.SyncDelegate or Null {
+        Logger.debug( "OHApp: getSyncDelegate" );
         return CommandSyncDelegate.get();
     }
     

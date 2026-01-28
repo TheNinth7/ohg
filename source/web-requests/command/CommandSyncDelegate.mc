@@ -58,7 +58,7 @@ class CommandSyncDelegate extends SyncDelegate {
     // which then is likely closed before the request completes.
     private function beforeSyncEnds() as Void {
         _cmd = null;
-        AsyncTaskQueue.get().add( new WifiRestartSitemapRequestTask() );
+        AsyncTaskQueue.get().add( new RestartSitemapRequestTask() );
     }
 
     // Set the command to be send

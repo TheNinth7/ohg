@@ -49,16 +49,12 @@ public class Logger {
         // to `SitemapRequest.onReceive()` during startup.
         if( ! ( 
                 ex instanceof CommunicationBaseException 
-                ||
-                ex instanceof UnexpectedResponseException
-                ||
-                ex instanceof ConfigException
-                ||
-                ex instanceof JsonParsingException
-                ||
-                ex instanceof OutOfMemoryException
-                ||
-                ex instanceof NonFatalUserInterfaceException
+                || ex instanceof UnexpectedResponseException
+                || ex instanceof ConfigException
+                || ex instanceof JsonParsingException
+                || ex instanceof OutOfMemoryException
+                || ex instanceof NonFatalUserInterfaceException
+                || ex instanceof OfflineException
             ) )
             {
             ex.printStackTrace();

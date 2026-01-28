@@ -132,7 +132,7 @@ class SwitchToHomepageTask extends BaseSitemapProcessorTask {
 
 
 // 1.3)
-// The first step for an update it to update the menu structure ...
+// The first step for an update is to update the menu structure ...
 class UpdateHomepageTask extends BaseSitemapProcessorTask {
 
     // This tasks needs the SitemapHomepage representing the

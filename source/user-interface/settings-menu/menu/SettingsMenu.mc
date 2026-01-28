@@ -29,5 +29,11 @@ class SettingsMenu extends BaseMenu {
 
         // Add entry for connectivity mode
         addItem( new SettingsConnectivityMenuItem() );
+        
+        // Add entry for sitemap age
+        addItem( new SettingsSitemapAgeMenuItem() );
+        
+        // Add entry for Wi-Fi sitemap refresh
+        addItem( new SettingsSitemapRefreshMenuItem() );
     }
 }

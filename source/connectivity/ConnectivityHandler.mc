@@ -98,8 +98,8 @@ import Toybox.Time;
     public function getStateDescription() as String {
         switch( _state ) {
             case PHONE_CONNECTION: return "Phone";
-            case WIFI_CHECK_PENDING: return "Checking WiFi availablity ...";
-            case WIFI_CONNECTION: return "WiFi";
+            case WIFI_CHECK_PENDING: return "Checking Wi-Fi availablity ...";
+            case WIFI_CONNECTION: return "Wi-Fi";
             case OFFLINE: return "Offline";
             default: return "Invalid";
         }
