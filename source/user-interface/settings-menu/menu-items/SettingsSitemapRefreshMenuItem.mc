@@ -15,7 +15,7 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
     */
     public function initialize() {
         BaseSitemapMenuItem.initialize( { 
-            :label => "Sitemap Wi-Fi Refresh" 
+            :label => "Update Sitemap via Wi-Fi" 
             //:actionIcon => ACTION_ICON_COMMAND
         } );
     }

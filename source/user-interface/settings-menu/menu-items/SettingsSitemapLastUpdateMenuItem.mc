@@ -23,23 +23,27 @@ class SettingsSitemapLastUpdatedMenuItem extends SettingsTextMenuItem {
 
     // Returns a formatted version of the current sitemap age
     private function getSitemapTimestamp() as String {
-        var timestamp = SitemapStore.getSitemapTimestamp();
-        if( timestamp != null ) {
-            var today = Gregorian.info( timestamp, Time.FORMAT_MEDIUM );
-            return Lang.format(
-                "$4$ $5$ $6$ $7$ $1$:$2$:$3$",
-                [
-                    TimeFormatting.twoDigits( today.hour ),
-                    TimeFormatting.twoDigits( today.min ),
-                    TimeFormatting.twoDigits( today.sec ),
-                    today.day_of_week,
-                    today.day,
-                    today.month,
-                    today.year
-                ]
-            );
+        if( ConnectivityHandler.get().isOnPhoneConnection() ) {
+            return "Just Now";
         } else {
-            return "n/a";
+            var timestamp = SitemapStore.getSitemapTimestamp();
+            if( timestamp != null ) {
+                var today = Gregorian.info( timestamp, Time.FORMAT_MEDIUM );
+                return Lang.format(
+                    "$4$ $5$ $6$ $7$ $1$:$2$:$3$",
+                    [
+                        TimeFormatting.twoDigits( today.hour ),
+                        TimeFormatting.twoDigits( today.min ),
+                        TimeFormatting.twoDigits( today.sec ),
+                        today.day_of_week,
+                        today.day,
+                        today.month,
+                        today.year
+                    ]
+                );
+            } else {
+                return "Unknown";
+            }
         }
     }
 
