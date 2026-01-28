@@ -2,12 +2,13 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 import Toybox.Time;
+using Toybox.Time.Gregorian;
 
 /*
  * A custom menu item that displays the age of the currently available
  * sitemap data, and provides an option to update it via WiFi.
  */
-class SettingsSitemapAgeMenuItem extends SettingsTextMenuItem {
+class SettingsSitemapLastUpdatedMenuItem extends SettingsTextMenuItem {
 
     /*
     * Constructor.
@@ -15,12 +16,35 @@ class SettingsSitemapAgeMenuItem extends SettingsTextMenuItem {
     */
     public function initialize() {
         SettingsTextMenuItem.initialize( 
-            "Sitemap Age",
-            "Current age: " + getSitemapAge()
+            "Last Sitemap Update",
+            getSitemapTimestamp()
         );
     }
 
     // Returns a formatted version of the current sitemap age
+    private function getSitemapTimestamp() as String {
+        var timestamp = SitemapStore.getSitemapTimestamp();
+        if( timestamp != null ) {
+            var today = Gregorian.info( timestamp, Time.FORMAT_MEDIUM );
+            return Lang.format(
+                "$4$ $5$ $6$ $7$ $1$:$2$:$3$",
+                [
+                    TimeFormatting.twoDigits( today.hour ),
+                    TimeFormatting.twoDigits( today.min ),
+                    TimeFormatting.twoDigits( today.sec ),
+                    today.day_of_week,
+                    today.day,
+                    today.month,
+                    today.year
+                ]
+            );
+        } else {
+            return "n/a";
+        }
+    }
+
+    // Returns a formatted version of the current sitemap age
+    /*
     private function getSitemapAge() as String {
         var duration = SitemapStore.getSitemapAge();
         if( duration != null ) {
@@ -33,13 +57,14 @@ class SettingsSitemapAgeMenuItem extends SettingsTextMenuItem {
             return "n/a";
         }
     }
+    */
 
     /*
     * Called by the superclass to handle drawing.
     * Also updates the sitemap age.
     */
     public function onUpdate( dc as Dc ) as Void {
-        setSubLabel( getSitemapAge() );
+        setSubLabel( getSitemapTimestamp() );
         SettingsTextMenuItem.onUpdate( dc );
     }
 }

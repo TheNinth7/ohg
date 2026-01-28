@@ -15,8 +15,20 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
     */
     public function initialize() {
         BaseSitemapMenuItem.initialize( { 
-            :label => "Sitemap Wi-Fi Refresh",
-            :actionIcon => ACTION_ICON_COMMAND
+            :label => "Sitemap Wi-Fi Refresh" 
+            //:actionIcon => ACTION_ICON_COMMAND
         } );
+    }
+
+    // Called by the base class to render the menu item.
+    public function onUpdate( dc as Dc ) as Void {
+        if( ConnectivityHandler.get().isOnWiFiConnection() ) {
+            BaseSitemapMenuItem.setLabelColor( Constants.UI_COLOR_TEXT );
+            BaseSitemapMenuItem.setActionIcon( ACTION_ICON_COMMAND );
+        } else {
+            BaseSitemapMenuItem.setLabelColor( Graphics.COLOR_LT_GRAY );
+            BaseSitemapMenuItem.setActionIcon( null );
+        }
+        BaseSitemapMenuItem.onUpdate( dc );
     }
 }

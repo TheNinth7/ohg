@@ -50,6 +50,7 @@ class SitemapStore  {
     }
 
     // Returns the age of the sitemap that is currently in memory
+    /*
     (:typecheck(disableGlanceCheck))
     public static function getSitemapAge() as Duration? {
         if( _json != null ) {
@@ -61,6 +62,15 @@ class SitemapStore  {
             }
         }
         return null;
+    }
+    */
+
+    // Returns the age of the sitemap that is currently in memory
+    (:typecheck(disableGlanceCheck))
+    public static function getSitemapTimestamp() as Moment? {
+        return _json != null
+               ? new Moment( _json[1] )
+               : null;
     }
 
     // Return the sitemap currently stored in memory.

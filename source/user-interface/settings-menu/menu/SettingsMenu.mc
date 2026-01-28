@@ -31,7 +31,7 @@ class SettingsMenu extends BaseMenu {
         addItem( new SettingsConnectivityMenuItem() );
         
         // Add entry for sitemap age
-        addItem( new SettingsSitemapAgeMenuItem() );
+        addItem( new SettingsSitemapLastUpdatedMenuItem() );
         
         // Add entry for Wi-Fi sitemap refresh
         addItem( new SettingsSitemapRefreshMenuItem() );

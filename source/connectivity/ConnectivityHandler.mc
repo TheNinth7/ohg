@@ -206,6 +206,8 @@ import Toybox.Time;
                                 } else {
                                     throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
                                 }
+                            } else if( SettingsMenuHandler.isShowingSettings() ) {
+                                WatchUi.requestUpdate();
                             } else if( ! HomepageMenu.isSitemapShowing() ) {
                                 // If the sitemap is not fresh, and the menu is currently not shown, we
                                 // switch to it immediately.

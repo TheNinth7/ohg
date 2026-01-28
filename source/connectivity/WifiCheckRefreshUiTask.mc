@@ -9,7 +9,7 @@ import Toybox.Lang;
 
     public function invoke() as Void {
 
-        if( HomepageMenu.isSitemapShowing() ) {
+        if( HomepageMenu.isSitemapShowing() || SettingsMenuHandler.isShowingSettings() ) {
             WatchUi.requestUpdate();
         } else {
             if( HomepageMenu.exists() ) {
