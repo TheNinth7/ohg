@@ -3,20 +3,31 @@ import Toybox.System;
 import Toybox.Lang;
 
 /*
- * Base class for the input delegate of the settings menu.
+ * Base class for settings menu input delegates.
  *
- * There are two derived delegates: one for button-based devices 
- * and one for touch-based devices.
+ * This class handles selection of menu items and provides common behavior
+ * shared by all device types.
  *
- * Currently, this class contains no logic. However, if shared behavior 
- * such as `onSelect` is needed in the future, it should be implemented here, 
- * as it would apply to both device types.
+ * Two delegates derive from this class:
+ *  - one for button-based devices
+ *  - one for touch-based devices
+ *
+ * The derived delegates implement additional device-specific behavior.
  */
 class BaseSettingsMenuDelegate extends PageMenuDelegate {
     protected function initialize() {
         PageMenuDelegate.initialize();
     }
 
+    // Called when an item is selected
     public function onSelect( item as MenuItem ) as Void {
+        try{
+            // Actionable items are using the base sitemap menu item
+            if( item instanceof BaseSitemapMenuItem ) {
+                item.onSelect();
+            }
+        } catch( ex ) {
+            ExceptionHandler.handleUserInterfaceException( ex );
+        }
     }
 }

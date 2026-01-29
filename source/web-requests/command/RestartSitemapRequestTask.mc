@@ -11,6 +11,6 @@ import Toybox.Lang;
     }
 
     public function handleException( ex as Exception ) as Void{
-        ExceptionHandler.handleException( ex );
+        ExceptionHandler.handleBackgroundException( ex );
     }
 }

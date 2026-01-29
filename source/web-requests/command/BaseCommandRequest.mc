@@ -123,7 +123,7 @@ class BaseCommandRequest extends BaseRequest {
                 try {
                     // Newer API versions support displaying a custom message in the sync view
                     if( Communications has :startSync2 ) {
-                        Communications.startSync2( { :message => "Sending command via WiFi ..." } );
+                        Communications.startSync2( { :message => "Sending command over WiFi ..." } );
                     } else {
                         Communications.startSync();
                     }
@@ -192,7 +192,7 @@ class BaseCommandRequest extends BaseRequest {
         var item = _weakItem.get() as CommandRequestDelegate?;
         
         if( item == null ) {
-            ExceptionHandler.handleException(
+            ExceptionHandler.handleBackgroundException(
                 new GeneralException( "onReceive: item reference is no longer valid" )
             );
         } else {
@@ -214,7 +214,7 @@ class BaseCommandRequest extends BaseRequest {
                 // If we are in Wifi sync mode, we only report the exception to the
                 // item (i.e. the CommandSyncDelegate)
                 if( ! _syncMode ) {
-                    ExceptionHandler.handleException( ex );
+                    ExceptionHandler.handleBackgroundException( ex );
                 }
             }
         }

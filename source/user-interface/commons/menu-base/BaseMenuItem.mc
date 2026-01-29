@@ -43,7 +43,7 @@ class BaseMenuItem extends CustomMenuItem {
 
             onUpdate( dc );
         } catch( ex ) {
-            ExceptionHandler.handleException( ex );
+            ExceptionHandler.handleBackgroundException( ex );
         }
     }
 

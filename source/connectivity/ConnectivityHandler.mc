@@ -227,7 +227,7 @@ import Toybox.Time;
                     throw new OfflineException();
                 }
             } catch( ex ) {
-                ExceptionHandler.handleException( ex );
+                ExceptionHandler.handleBackgroundException( ex );
             }
         }
     }

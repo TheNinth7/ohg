@@ -40,7 +40,7 @@ public class ExceptionHandler {
     * There may still be some places in the code where this is used for user interface exceptions, but
     * those instances should all be migrated to handleUserInterfaceException.
     */
-    public static function handleException( ex as Exception ) as Void {
+    public static function handleBackgroundException( ex as Exception ) as Void {
         // Logger.debug( "ExceptionHandler: exception" );
         Logger.debugException( ex );
 

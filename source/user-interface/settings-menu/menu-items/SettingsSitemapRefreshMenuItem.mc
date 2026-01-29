@@ -20,6 +20,7 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
         } );
     }
 
+<<<<<<< HEAD
     // Called by the base class to render the menu item.
     public function onUpdate( dc as Dc ) as Void {
         if( ConnectivityHandler.get().isOnWiFiConnection() ) {
@@ -30,5 +31,30 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
             BaseSitemapMenuItem.setActionIcon( null );
         }
         BaseSitemapMenuItem.onUpdate( dc );
+=======
+    // Trigger the sitemap sync
+    public function onSelect() as Boolean {
+        
+        SitemapSyncDelegate.requestSync();
+
+        SitemapRequest.get().stop();
+
+
+        // Start sync
+        try {
+            // Newer API versions support displaying a custom message in the sync view
+            if( Communications has :startSync2 ) {
+                Communications.startSync2( { :message => "Sending command over Wi-Fi ..." } );
+            } else {
+                Communications.startSync();
+            }
+        } catch( ex ) {
+            SitemapRequest.get().start();
+            throw ex;
+        }        
+        
+        // True indicates that this function has handled the user input event
+        return true;
+>>>>>>> bae5fad (my local changes)
     }
 }

@@ -149,7 +149,7 @@ class BaseMenu extends CustomMenu {
             // Draw the title
             _title.draw( dc );
         } catch( ex ) {
-            ExceptionHandler.handleException( ex );
+            ExceptionHandler.handleBackgroundException( ex );
         }
     }
 

@@ -136,7 +136,7 @@ class AsyncTaskQueue {
         } catch ( ex ) {
             // Logger.debug( "AsyncTaskQueue: exception during task handling" );
             removeAll();
-            ExceptionHandler.handleException( ex );
+            ExceptionHandler.handleBackgroundException( ex );
         }
     }
     

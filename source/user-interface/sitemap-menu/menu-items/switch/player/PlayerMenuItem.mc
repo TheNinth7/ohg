@@ -70,7 +70,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     // Exceptions from the command request are handed
     // over to the ExceptionHandler
     function onException( ex as Exception ) as Void {
-        ExceptionHandler.handleException( ex );
+        ExceptionHandler.handleBackgroundException( ex );
     }
 
     // Called by the delegate when the view is exited

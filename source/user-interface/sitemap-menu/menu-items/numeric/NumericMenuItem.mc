@@ -72,7 +72,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     // Exceptions from the command request are handed
     // over to the ExceptionHandler
     function onException( ex as Exception ) as Void {
-        ExceptionHandler.handleException( ex );
+        ExceptionHandler.handleBackgroundException( ex );
     }
 
     // When the menu item is selected, the CustomPicker is initialized

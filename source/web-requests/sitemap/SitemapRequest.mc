@@ -111,7 +111,7 @@ class SitemapRequest extends BaseRequest {
             HomepageMenu.clear();
         }
 
-        ExceptionHandler.handleException( ex );
+        ExceptionHandler.handleBackgroundException( ex );
         
         // If an error occurs during processing the sitemap from
         // storage, the request is already schedule and we do 

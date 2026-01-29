@@ -99,8 +99,21 @@ class OHApp extends Application.AppBase {
     // to request a sitemap or send a command via WiFi.
     (:typecheck(disableGlanceCheck))
     function getSyncDelegate() as $.Toybox.Communications.SyncDelegate or Null {
-        Logger.debug( "OHApp: getSyncDelegate" );
-        return CommandSyncDelegate.get();
+        Logger.debug( "OHApp.getSyncDelegate" );
+
+        var csd = CommandSyncDelegate.get();
+        var ssd = SitemapSyncDelegate.get();
+        
+        if( csd.isSyncNeeded() ) {
+            Logger.debug( "OHApp.getSyncDelegate: returning command sync delegate" );
+            return csd;
+        } else if( ssd.isSyncNeeded() ) {
+            Logger.debug( "OHApp.getSyncDelegate: returning sitemap sync delegate" );
+            return ssd;
+        } else {
+            Logger.debug( "OHApp.getSyncDelegate: returning no sync delegate" );
+            return null;
+        }
     }
     
     // If there is a new app version or app settings
