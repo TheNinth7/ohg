@@ -123,7 +123,7 @@ class BaseCommandRequest extends BaseRequest {
                 try {
                     // Newer API versions support displaying a custom message in the sync view
                     if( Communications has :startSync2 ) {
-                        Communications.startSync2( { :message => "Sending command over WiFi ..." } );
+                        Communications.startSync2( { :message => "Sending command over Wi-Fi ..." } );
                     } else {
                         Communications.startSync();
                     }
