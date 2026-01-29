@@ -15,7 +15,7 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
     */
     public function initialize() {
         BaseSitemapMenuItem.initialize( { 
-            :label => "Update Sitemap via Wi-Fi" 
+            :label => "Update Sitemap over Wi-Fi" 
             //:actionIcon => ACTION_ICON_COMMAND
         } );
     }
@@ -31,7 +31,7 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
         try {
             // Newer API versions support displaying a custom message in the sync view
             if( Communications has :startSync2 ) {
-                Communications.startSync2( { :message => "Sending command over Wi-Fi ..." } );
+                Communications.startSync2( { :message => "Updating sitemap over Wi-Fi ..." } );
             } else {
                 Communications.startSync();
             }
