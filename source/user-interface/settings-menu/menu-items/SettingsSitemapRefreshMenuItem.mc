@@ -20,25 +20,12 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
         } );
     }
 
-<<<<<<< HEAD
-    // Called by the base class to render the menu item.
-    public function onUpdate( dc as Dc ) as Void {
-        if( ConnectivityHandler.get().isOnWiFiConnection() ) {
-            BaseSitemapMenuItem.setLabelColor( Constants.UI_COLOR_TEXT );
-            BaseSitemapMenuItem.setActionIcon( ACTION_ICON_COMMAND );
-        } else {
-            BaseSitemapMenuItem.setLabelColor( Graphics.COLOR_LT_GRAY );
-            BaseSitemapMenuItem.setActionIcon( null );
-        }
-        BaseSitemapMenuItem.onUpdate( dc );
-=======
     // Trigger the sitemap sync
     public function onSelect() as Boolean {
         
-        SitemapSyncDelegate.requestSync();
+        SitemapSyncDelegate.get().requestSync();
 
         SitemapRequest.get().stop();
-
 
         // Start sync
         try {
@@ -55,6 +42,17 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
         
         // True indicates that this function has handled the user input event
         return true;
->>>>>>> bae5fad (my local changes)
+    }
+
+    // Called by the base class to render the menu item.
+    public function onUpdate( dc as Dc ) as Void {
+        if( ConnectivityHandler.get().isOnWiFiConnection() ) {
+            BaseSitemapMenuItem.setLabelColor( Constants.UI_COLOR_TEXT );
+            BaseSitemapMenuItem.setActionIcon( ACTION_ICON_COMMAND );
+        } else {
+            BaseSitemapMenuItem.setLabelColor( Graphics.COLOR_LT_GRAY );
+            BaseSitemapMenuItem.setActionIcon( null );
+        }
+        BaseSitemapMenuItem.onUpdate( dc );
     }
 }
