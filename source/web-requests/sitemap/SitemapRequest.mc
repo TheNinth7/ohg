@@ -111,17 +111,21 @@ class SitemapRequest extends BaseRequest {
             HomepageMenu.clear();
         }
 
-        ExceptionHandler.handleBackgroundException( ex );
-        
-        // If an error occurs during processing the sitemap from
-        // storage, the request is already schedule and we do 
-        // not need to to it anymore
-        if( ! _hasPendingRequest ) {
-            triggerNextRequestInternal( 
-                _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
-                    ? _pollingInterval
-                    : SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL 
-            );
+        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+            SitemapSyncDelegate.get().onException( ex );
+        } else {
+            ExceptionHandler.handleBackgroundException( ex );
+            
+            // If an error occurs during processing the sitemap from
+            // storage, the request is already schedule and we do 
+            // not need to to it anymore
+            if( ! _hasPendingRequest ) {
+                triggerNextRequestInternal( 
+                    _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
+                        ? _pollingInterval
+                        : SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL 
+                );
+            }
         }
     }
 
@@ -233,8 +237,9 @@ class SitemapRequest extends BaseRequest {
 
         // If the menu hasn’t been created yet, we're likely in a non-interactive
         // loading or error view. In this state, we prioritize speed over responsiveness
-        // to complete processing as quickly as possible.
-        if( ! HomepageMenu.exists() ) {
+        // to complete processing as quickly as possible. The same applies to
+        // sync mode.
+        if( ! HomepageMenu.exists() || SitemapSyncDelegate.get().isSyncInProgress() ) {
             taskQueue.prioritizeSpeed();
         } else {
             taskQueue.prioritizeResponsiveness();

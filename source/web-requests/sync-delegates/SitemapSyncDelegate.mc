@@ -36,10 +36,6 @@ class SitemapSyncDelegate extends BaseSyncDelegate {
     public function performSync() as Void {
         
         // Start the sync here!
-
-        // What happens in case of errors?!?
-        // Do we need to stop the sync from the exception handler?
-        AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
         
         Logger.debug( "SitemapSyncDelegate: performSync" );
     }

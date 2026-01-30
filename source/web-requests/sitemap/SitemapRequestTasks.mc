@@ -41,6 +41,9 @@ class BaseSitemapProcessorTask {
     protected function initialize() {
     }
     public function handleException( ex as Exception ) as Void {
+        // Note: SitemapRequest.handleException differentiates between
+        // normal mode and sync mode, and in the case of the latter
+        // passes the exception on to the sync delegate
         SitemapRequest.get().handleException( ex );
     }
 }
@@ -151,7 +154,12 @@ class UpdateHomepageTask extends BaseSitemapProcessorTask {
         
         HomepageMenu.get().update( _sitemapHomepage );
 
-        AsyncTaskQueue.get().add( new RefreshUiTask() );
+        // If we are in sync mode we are done and stop the sync
+        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+            SitemapSyncDelegate.get().stopSync();
+        } else {
+            AsyncTaskQueue.get().add( new RefreshUiTask() );
+        }
     }
 }
 
