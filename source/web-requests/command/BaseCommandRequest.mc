@@ -102,35 +102,16 @@ class BaseCommandRequest extends BaseRequest {
             var item = _weakItem.get() as CommandRequestDelegate?;
             if( item != null ) {
                 
-                // First, we pass the information on item and command to the sync delegate
-                CommandSyncDelegate.get().setCommand( [ item.getItemName(), cmd ] );
-
                 Logger.debug( "BaseCommandRequest: starting sync mode ..." );
                 
-                // Then we stop the sitemap request. This avoids sitemap requests to be triggered
-                // in sync mode, since this would delay the mode and confuse the ConnectivityHandler,
-                // which relies on the sitemap request to fail to indicate that phone connection is not
-                // available.
-                SitemapRequest.get().stop();
-
                 // We assume already now that the command is completed. true indicates to the item that
                 // command is done in sync mode. The item therefore does not need to (and should not) update
                 // the state, since that is not displayed when on WiFi. Also the item must not call 
                 // WatchUi.requestUpdate, which would interrupt the display of the sync mode.
                 item.onCommandComplete( true );
 
-                // Start sync
-                try {
-                    // Newer API versions support displaying a custom message in the sync view
-                    if( Communications has :startSync2 ) {
-                        Communications.startSync2( { :message => "Sending command over Wi-Fi ..." } );
-                    } else {
-                        Communications.startSync();
-                    }
-                } catch( ex ) {
-                    SitemapRequest.get().start();
-                    throw ex;
-                }
+                // Now we send the command via the sync delegate
+                CommandSyncDelegate.get().sendCommand( [ item.getItemName(), cmd ] );
 
             } else {
                 throw new GeneralException( "sendCommand: item reference is no longer valid" );

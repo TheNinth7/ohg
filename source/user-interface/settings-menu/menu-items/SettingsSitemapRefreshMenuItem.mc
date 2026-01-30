@@ -23,22 +23,8 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
     // Trigger the sitemap sync
     public function onSelect() as Boolean {
         
-        SitemapSyncDelegate.get().requestSync();
-
-        SitemapRequest.get().stop();
-
-        // Start sync
-        try {
-            // Newer API versions support displaying a custom message in the sync view
-            if( Communications has :startSync2 ) {
-                Communications.startSync2( { :message => "Updating sitemap over Wi-Fi ..." } );
-            } else {
-                Communications.startSync();
-            }
-        } catch( ex ) {
-            SitemapRequest.get().start();
-            throw ex;
-        }        
+        // Request a sitemap update in sync mode from the sync delegate
+        SitemapSyncDelegate.get().requestSitemapUpdate();
         
         // True indicates that this function has handled the user input event
         return true;
