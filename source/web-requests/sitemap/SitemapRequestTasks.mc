@@ -67,6 +67,11 @@ class ProcessIncomingJsonTask extends BaseSitemapProcessorTask {
     public function invoke() as Void {
         // Logger.debug( "ProcessIncomingJsonTask.invoke" );
 
+        // In sync mode, update the progress bar
+        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+            Communications.notifySyncProgress( 60 );
+        }
+        
         var sitemapHomepage = SitemapStore.updateSitemapFromJson( _json );
 
         if( ! HomepageMenu.exists() ) {
@@ -147,6 +152,12 @@ class UpdateHomepageTask extends BaseSitemapProcessorTask {
     }
 
     public function invoke() as Void {
+
+        // In sync mode, update the progress bar
+        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+            Communications.notifySyncProgress( 80 );
+        }
+
         // Logger.debug( "UpdateHomepageTask.invoke" );
         if( ! HomepageMenu.exists() ) {
             throw new GeneralException( "HomepageMenu does not exist" );
@@ -156,7 +167,7 @@ class UpdateHomepageTask extends BaseSitemapProcessorTask {
 
         // If we are in sync mode we are done and stop the sync
         if( SitemapSyncDelegate.get().isSyncInProgress() ) {
-            SitemapSyncDelegate.get().stopSync();
+            AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
         } else {
             AsyncTaskQueue.get().add( new RefreshUiTask() );
         }
