@@ -150,10 +150,11 @@ class SitemapStore  {
     ) as SitemapHomepage {
         _json = incomingJson.getForStorage();
         _estimatedSitemapSize = incomingJson.estimatedSize;
+        var isSyncInProgress = SitemapSyncDelegate.get().isSyncInProgress();
         var homepage = new SitemapHomepage( 
             new JsonAdapter( incomingJson.json ), 
-            true, 
-            true 
+            isSyncInProgress ? false : true, // in sync mode, we mark the sitemap as stale/not fresh because we do not want to display states
+            isSyncInProgress ? false : true  // in sync mode, we use synchronous processing, otherwise asynchronous processing
         );
         _title = homepage.title;
         return homepage;

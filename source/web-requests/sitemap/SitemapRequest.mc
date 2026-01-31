@@ -6,8 +6,11 @@ import Toybox.Application;
 import Toybox.Timer;
 
 /*
- * This class handles web requests for sitemap data and follows the Singleton pattern.
- *
+ * This class handles web requests for sitemap data and follows a mode-keyed Singleton pattern.
+ * One instance is used for normal operation, and a second instance is used during Wi-Fi sync.
+ * During Wi-Fi sync, no phone connection is available, so the normal instance cannot be used.
+ * The user can manually trigger a sitemap update via Wi-Fi from the settings menu.
+ * 
  * Responsibilities:
  * - Constructs the URL for the sitemap request.
  *
@@ -34,12 +37,26 @@ class SitemapRequest extends BaseRequest {
 
     // Singleton instance and accessor
     private static var _instance as SitemapRequest?;
+    private static var _syncInstance as SitemapRequest?;
 
+    // Returns the appropriate Singleton instance based on the current mode.
     public static function get() as SitemapRequest {
-        if( _instance == null ) {
-            _instance = new SitemapRequest();
+        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+            if( _syncInstance == null ) {
+                _syncInstance = new SitemapRequest();
+            }
+            return _syncInstance as SitemapRequest;
+        } else {
+            if( _instance == null ) {
+                _instance = new SitemapRequest();
+            }
+            return _instance as SitemapRequest;
         }
-        return _instance as SitemapRequest;
+    }
+
+    // Removes the sync singleton to conserve memory
+    public static function resetSyncInstance() as Void {
+        _syncInstance = null;
     }
 
     /******* INSTANCE *******/ 
@@ -130,10 +147,12 @@ class SitemapRequest extends BaseRequest {
     }
 
     // Makes the web request
-    public function makeRequest() as Void {
-        // If we are stopped we do not execute any make
-        // requests anymore
-        if( _stopCount <= 0 && ! _hasPendingRequest ) {
+    private function makeRequestInternal( singleRequest as Boolean ) as Void {
+        // We make the request only if
+        // - we are not stopped
+        // - or it is a single request, which does not the timer to be started
+        // - and there is no pending request
+        if( ( _stopCount <= 0 || singleRequest ) && ! _hasPendingRequest ) {
             _requestCount++;
             // Logger.debug( "SitemapRequest.makeRequest (#" + _requestCount + ")" );
             // Logger.debugMemory( null );
@@ -151,6 +170,12 @@ class SitemapRequest extends BaseRequest {
         } else {
             // Logger.debug( "SitemapRequest.makeRequest: stopped or has pending request, not executed" );
         }
+    }
+
+    // Makes a single web request
+    // This can be executed without the sitemap request being started
+    public function makeSingleRequest() as Void {
+        makeRequestInternal( true );
     }
 
     // Processes the response
@@ -180,10 +205,13 @@ class SitemapRequest extends BaseRequest {
                 // shall be ignored
                 if( checkResponseCode( responseCode, SOURCE ) ) {
                     
-                    // Any positive result indicates that the phone connection is working.
-                    // Note that the exception handler also performs this confirmation
+                    // Any positive result outside of sync mode indicates that the
+                    // phone connection is working.
+                    // The exception handler also performs this confirmation
                     // for all errors except no-phone errors.
-                    ConnectivityHandler.get().confirmPhoneConnection();
+                    if( ! SitemapSyncDelegate.get().isSyncInProgress() ) {
+                        ConnectivityHandler.get().confirmPhoneConnection();
+                    }
                     
                     // The JSON is processed by processIncomingJson()
                     processIncomingJson( 
@@ -196,11 +224,19 @@ class SitemapRequest extends BaseRequest {
                 }
             } catch( ex ) {
                 // Calling the handler for exceptions
+                // Note: SitemapRequest.handleException differentiates between
+                // normal mode and sync mode, and in the case of the latter
+                // passes the exception on to the sync delegate
                 // Logger.debug( "SitemapRequest.onReceive: exception");
                 handleException( ex );
             }
         }
         // Logger.debug( "SitemapRequest.onReceive: end");
+    }
+
+    // Makes a timer-based web request
+    public function onTimerMakeRequest() as Void {
+        makeRequestInternal( false );
     }
 
     /*
@@ -261,7 +297,7 @@ class SitemapRequest extends BaseRequest {
         }
         if( _stopCount == 0 ) {
             // Logger.debug( "SitemapRequest.start: making request" );
-            makeRequest();
+            onTimerMakeRequest();
         }
     }
 
@@ -299,12 +335,12 @@ class SitemapRequest extends BaseRequest {
         if( delay > 0 ) {
             // Logger.debug( "SitemapRequest: starting timer for " + _pollingInterval + "ms" );
             _timer.start( 
-                method( :makeRequest ), 
+                method( :onTimerMakeRequest ), 
                 delay, 
                 false 
             );
         } else {
-            makeRequest();
+            onTimerMakeRequest();
         }
     }
 }

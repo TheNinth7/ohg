@@ -24,6 +24,16 @@ class SitemapSyncDelegate extends BaseSyncDelegate {
         BaseSyncDelegate.initialize();
     }
 
+    // Overrides a method from the parent class to clean up the sitemap request.
+    // Must not be called from outside. The method is public only due to
+    // a Monkey C limitation that prevents overriding protected or
+    // private methods.
+    public function beforeSyncEnds() as Void {
+        Logger.debug( "SitemapSyncDelegate: beforeSyncEnds" );
+        BaseSyncDelegate.beforeSyncEnds();
+        SitemapRequest.resetSyncInstance();
+    }
+
     // Called by the app to request an update of the sitemap in sync mode
     public function requestSitemapUpdate() as Void {
         startSync( "Updating sitemap over Wi-Fi ..." );
@@ -35,7 +45,8 @@ class SitemapSyncDelegate extends BaseSyncDelegate {
     // private methods.
     public function performSync() as Void {
         
-        // Start the sync here!
+        // Note: get() returns the sync instance of the sitemap request
+        SitemapRequest.get().makeSingleRequest();
         
         Logger.debug( "SitemapSyncDelegate: performSync" );
     }
