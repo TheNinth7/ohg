@@ -105,9 +105,14 @@ class CreateHomepageTask extends BaseSitemapProcessorTask {
     
     public function invoke() as Void {
         // Logger.debug( "CreateHomepageMenuTask.invoke" );
+        
         // The whole logic fits in one statement, we
         // create the new HomepageMenu, feed it into
         // the SwitchToHomepageTask and schedule that task
+        
+        // var homepageMenu = HomepageMenu.createFromWebResponse( _sitemapHomepage );
+
+
         AsyncTaskQueue.get().add(
             new SwitchToHomepageTask(
                 HomepageMenu.createFromWebResponse( _sitemapHomepage )
@@ -117,8 +122,10 @@ class CreateHomepageTask extends BaseSitemapProcessorTask {
 }
 
 // 1.2)
-// Switches to the newly created HomepageMenu view and
-// triggers the next sitemap request
+// In normal mode, this task switches to the newly created HomepageMenu view
+// and triggers the next sitemap request.
+// In sync mode, it only stops the sync. The view switch is performed after the
+// sync is stopped, in PostSitemapSyncTask.
 class SwitchToHomepageTask extends BaseSitemapProcessorTask {
     private var _homepageMenu as HomepageMenu;
 
@@ -129,12 +136,17 @@ class SwitchToHomepageTask extends BaseSitemapProcessorTask {
     
     public function invoke() as Void {
         // Logger.debug( "SwitchToHomepageTask.invoke" );
-        WatchUi.switchToView( 
-            _homepageMenu, 
-            HomepageMenuDelegate.get(), 
-            WatchUi.SLIDE_BLINK 
-        );
-        AsyncTaskQueue.get().add( new TriggerNextRequestTask() );
+        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+            AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
+        } else {
+            WatchUi.switchToView( 
+                _homepageMenu, 
+                HomepageMenuDelegate.get(), 
+                WatchUi.SLIDE_BLINK 
+            );
+            
+            AsyncTaskQueue.get().add( new TriggerNextRequestTask() );
+        }
     }
 }
 

@@ -82,6 +82,7 @@ public class ExceptionHandler {
                 ConnectivityHandler.get().tryWifiConnection();
                 return;
             } else {
+                Logger.debug( "ExceptionHandler: confirming phone connection." );
                 ConnectivityHandler.get().confirmPhoneConnection();
             }
         }
@@ -128,16 +129,37 @@ public class ExceptionHandler {
                 SitemapStore.deleteSitemapFromStorage();
             }
             
-            /*
-            * If no view is currently active, the exception is stored as a startup exception.
-            * Otherwise, the full-screen error view is shown immediately.
-            */
+            
+            // If no view is currently active, the exception is stored as a startup exception.
+            // Otherwise, the full-screen error view is shown immediately.
             if( ViewHandler.getCurrentViewSafe()[0] == null ) {
                 // Logger.debug( "ExceptionHandler: storing fatal startup exception" );
                 _startupException = [ex, true];
             } else {
                 ErrorView.showOrUpdate( ex );
             }
+        }
+    }
+
+
+    /*
+    * Used to handle errors from a sitemap sync that is automatically triggered on app startup.
+    *
+    * Errors that occur while sending a command or during a user-triggered sitemap sync
+    * are already handled by the sync API and are shown in the sync confirmation view.
+    * No additional error handling by the app is required in those cases.
+    */
+    public static function handleSyncException( ex as Exception ) as Void {
+        // Logger.debug( "ExceptionHandler: exception" );
+        Logger.debugException( ex );
+
+        // If no view is currently active, the exception is stored as a startup exception.
+        // Otherwise, the full-screen error view is shown immediately.
+        if( ViewHandler.getCurrentViewSafe()[0] == null ) {
+            // Logger.debug( "ExceptionHandler: storing sync startup exception" );
+            _startupException = [ex, true];
+        } else {
+            ErrorView.showOrUpdate( ex );
         }
     }
 

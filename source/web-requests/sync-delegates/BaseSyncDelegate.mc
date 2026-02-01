@@ -40,6 +40,12 @@ import Toybox.WatchUi;
  */
 class BaseSyncDelegate extends SyncDelegate {
 
+    // The sync result tuple indicates in its first field whether a sync was performed
+    // (true) or not (false), regardless of success. The second field is null if the
+    // request was successful; otherwise, it contains the exception describing the error.
+    typedef WifiSyncResult as [Boolean,Exception?];
+    private const RESET_SYNC_STATE = [false, null];
+
     // Set to true while the sync is in progress
     private var _isSyncInProgress as Boolean = false;
 
@@ -48,6 +54,9 @@ class BaseSyncDelegate extends SyncDelegate {
     // requires a sync
     private var _isSyncNeeded as Boolean = false;
     
+    // Holds the result of the last sync
+    private var _lastSyncState as WifiSyncResult = RESET_SYNC_STATE;
+
     // Constructor
     public function initialize() {
         SyncDelegate.initialize();
@@ -65,7 +74,15 @@ class BaseSyncDelegate extends SyncDelegate {
         Logger.debug( "BaseSyncDelegate: beforeSyncEnds" );
         _isSyncNeeded = false;
         _isSyncInProgress = false;
-        AsyncTaskQueue.get().add( new RestartSitemapRequestTask() );
+        _lastSyncState[0] = true;
+        AsyncTaskQueue.get().add( new PostSitemapSyncTask() );
+    }
+
+    // Returns the result of the last sync and resets the stored result
+    public function consumeLastSyncResult() as WifiSyncResult {
+        var lastSyncState = _lastSyncState;
+        _lastSyncState = RESET_SYNC_STATE;
+        return lastSyncState;
     }
 
     // Can be used by other classes to adjust their behavior depending on
@@ -73,24 +90,25 @@ class BaseSyncDelegate extends SyncDelegate {
     // exception handling differs, and sitemap responses must not trigger
     // any screen updates while sync mode is active.
     public function isSyncInProgress() as Boolean {
-        Logger.debug( "BaseSyncDelegate: isSyncInProgress=" + _isSyncInProgress );
+        // Logger.debug( "BaseSyncDelegate: isSyncInProgress=" + _isSyncInProgress );
         return _isSyncInProgress;
     }
 
     // Called by the API to determine whether a sync is required.
     // Must return true if a sync should be initiated.
     public function isSyncNeeded() as Boolean {
-        Logger.debug( "BaseSyncDelegate: isSyncNeeded=" + _isSyncNeeded );
+        // Logger.debug( "BaseSyncDelegate: isSyncNeeded=" + _isSyncNeeded );
         return _isSyncNeeded;
     }
 
     // Subclasses must call this method when their sync operation fails.
     // It exits sync mode and displays an error message to the user.
     public function onException( ex as Exception ) as Void {
-        Logger.debug( "BaseSyncDelegate: onException start" );
-        beforeSyncEnds();
+        Logger.debug( "BaseSyncDelegate: onException" );
+        // beforeSyncEnds();
+        _lastSyncState[1] = ex;
         Communications.notifySyncComplete( ex.getErrorMessage() );
-        Logger.debug( "BaseSyncDelegate: onException end" );
+        // Logger.debug( "BaseSyncDelegate: onException end" );
     }
 
     // Called by the API to start the sync.
@@ -99,7 +117,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // is handled here, so performSync implementation may throw 
     // exceptions and expect them to be handled.
     public function onStartSync() as Void {
-        Logger.debug( "BaseSyncDelegate: onStartSync start" );
+        Logger.debug( "BaseSyncDelegate: onStartSync" );
         try {
             _isSyncInProgress = true;
 
@@ -111,17 +129,17 @@ class BaseSyncDelegate extends SyncDelegate {
         } catch( ex ) {
             onException( ex );
         }
-        Logger.debug( "BaseSyncDelegate: onStartSync end" );
+        // Logger.debug( "BaseSyncDelegate: onStartSync end" );
     }
 
     // Called by the API if the user interrupts the sync.
     // Cancels all pending requests and exits sync mode.
     public function onStopSync() as Void {
-        Logger.debug( "BaseSyncDelegate: onStopSync start" );
+        Logger.debug( "BaseSyncDelegate: onStopSync" );
         BaseRequest.cancelAllRequests();
         beforeSyncEnds();
         Communications.notifySyncComplete( null );
-        Logger.debug( "BaseSyncDelegate: onStopSync stop" );
+        // Logger.debug( "BaseSyncDelegate: onStopSync end" );
     }
 
     // To be implemented by subclasses to perform the actual sync logic.
@@ -155,9 +173,9 @@ class BaseSyncDelegate extends SyncDelegate {
     // Exits sync mode. Subclasses must call this method when their sync
     // operation has completed.
     public function stopSync() as Void {
-        Logger.debug( "BaseSyncDelegate: stopSync start" );
+        Logger.debug( "BaseSyncDelegate: stopSync" );
         beforeSyncEnds();
         Communications.notifySyncComplete( null );
-        Logger.debug( "BaseSyncDelegate: stopSync end" );
+        // Logger.debug( "BaseSyncDelegate: stopSync end" );
     }
 }

@@ -45,11 +45,13 @@ class SitemapRequest extends BaseRequest {
             if( _syncInstance == null ) {
                 _syncInstance = new SitemapRequest();
             }
+            Logger.debug( "SitemapRequest.get: returning sync instance" );
             return _syncInstance as SitemapRequest;
         } else {
             if( _instance == null ) {
                 _instance = new SitemapRequest();
             }
+            Logger.debug( "SitemapRequest.get: returning main instance" );
             return _instance as SitemapRequest;
         }
     }
@@ -288,7 +290,7 @@ class SitemapRequest extends BaseRequest {
 
     // Start the request loop
     public function start() as Void {
-        // Logger.debug( "SitemapRequest.start" );
+        Logger.debug( "SitemapRequest.start" );
         if( _stopCount <= 0 ) {
             throw new GeneralException( "Tried to start already running sitemap request" );
         } else {
@@ -305,6 +307,7 @@ class SitemapRequest extends BaseRequest {
     // If there is a pending request, onReceive() is instructed to
     // ignore the next response
     public function stop() as Void {
+        Logger.debug( "SitemapRequest.stop" );
         _stopCount++;
         // When the SitemapRequest is stopped, all ongoing asynchronous
         // processing is also halted. Tasks in the task queue are atomic

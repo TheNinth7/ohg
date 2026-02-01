@@ -44,10 +44,9 @@ class SitemapSyncDelegate extends BaseSyncDelegate {
     // a Monkey C limitation that prevents overriding protected or
     // private methods.
     public function performSync() as Void {
-        
+        Logger.debug( "SitemapSyncDelegate: performSync" );
+
         // Note: get() returns the sync instance of the sitemap request
         SitemapRequest.get().makeSingleRequest();
-        
-        Logger.debug( "SitemapSyncDelegate: performSync" );
     }
 }
