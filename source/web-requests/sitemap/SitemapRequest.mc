@@ -251,10 +251,10 @@ class SitemapRequest extends BaseRequest {
     public function onTimerMakeRequest() as Void {
         Logger.debug( "SitemapRequest.onTimerMakeRequest" );
         if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
-            // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
+            Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
             makeRequestInternal( false );
         } else {
-            // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
+            Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
             ConnectivityHandler.get().tryWifiConnection();
         }
     }
