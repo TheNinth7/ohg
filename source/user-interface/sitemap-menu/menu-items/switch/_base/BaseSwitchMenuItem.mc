@@ -99,7 +99,7 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
 
     // Send the command via the command request
     public function sendCommand( command as String ) as Void {
-        Logger.debug( "BaseSwitchMenuItem: sending command ..." );
+        // Logger.debug( "BaseSwitchMenuItem: sending command ..." );
         _newState = command;
         if( _commandRequest != null ) {
             _commandRequest.sendCommand( command );

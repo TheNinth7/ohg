@@ -82,7 +82,7 @@ public class ExceptionHandler {
                 ConnectivityHandler.get().tryWifiConnection();
                 return;
             } else {
-                Logger.debug( "ExceptionHandler: confirming phone connection." );
+                // Logger.debug( "ExceptionHandler: confirming successful connection." );
                 ConnectivityHandler.get().confirmPhoneConnection();
             }
         }

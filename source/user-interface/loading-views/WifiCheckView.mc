@@ -71,7 +71,7 @@ class WifiCheckView extends WatchUi.View {
         // meaningful user interaction.
         ToastHandler.setUseToasts( false );
         
-        Logger.debug( "WifiCheckView: onShow" );
+        // Logger.debug( "WifiCheckView: onShow" );
 
         // Check whether a sitemap update was run.
         // As indicated by "consume", this result is returned only once.

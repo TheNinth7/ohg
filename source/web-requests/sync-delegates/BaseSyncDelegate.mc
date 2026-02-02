@@ -71,7 +71,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // connection, which is likely to be closed before the request
     // completes.
     public function beforeSyncEnds() as Void {
-        Logger.debug( "BaseSyncDelegate: beforeSyncEnds" );
+        // Logger.debug( "BaseSyncDelegate: beforeSyncEnds" );
         _isSyncNeeded = false;
         _isSyncInProgress = false;
         _lastSyncState[0] = true;
@@ -105,7 +105,11 @@ class BaseSyncDelegate extends SyncDelegate {
     // It exits sync mode and displays an error message to the user.
     public function onException( ex as Exception ) as Void {
         Logger.debug( "BaseSyncDelegate: onException" );
+        
+        // Not needed here, since notifySyncComplete with an error message
+        // also triggers onStopSync(), which in turn calls beforeSyncEnds().
         // beforeSyncEnds();
+        
         _lastSyncState[1] = ex;
         Communications.notifySyncComplete( ex.getErrorMessage() );
         // Logger.debug( "BaseSyncDelegate: onException end" );

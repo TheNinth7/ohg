@@ -45,13 +45,13 @@ class SitemapRequest extends BaseRequest {
             if( _syncInstance == null ) {
                 _syncInstance = new SitemapRequest();
             }
-            Logger.debug( "SitemapRequest.get: returning sync instance" );
+            // Logger.debug( "SitemapRequest.get: returning sync instance" );
             return _syncInstance as SitemapRequest;
         } else {
             if( _instance == null ) {
                 _instance = new SitemapRequest();
             }
-            Logger.debug( "SitemapRequest.get: returning main instance" );
+            // Logger.debug( "SitemapRequest.get: returning main instance" );
             return _instance as SitemapRequest;
         }
     }
@@ -212,6 +212,7 @@ class SitemapRequest extends BaseRequest {
                     // The exception handler also performs this confirmation
                     // for all errors except no-phone errors.
                     if( ! SitemapSyncDelegate.get().isSyncInProgress() ) {
+                        // Logger.debug( "SitemapRequest.onReceive: confirming successful connection." );
                         ConnectivityHandler.get().confirmPhoneConnection();
                     }
                     
@@ -238,7 +239,19 @@ class SitemapRequest extends BaseRequest {
 
     // Makes a timer-based web request
     public function onTimerMakeRequest() as Void {
-        makeRequestInternal( false );
+        // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
+        if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
+            makeRequestInternal( false );
+        } else {
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
+            ConnectivityHandler.get().tryWifiConnection();
+            triggerNextRequestInternal( 
+                _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
+                    ? _pollingInterval
+                    : SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL 
+            );
+        }
     }
 
     /*
@@ -290,7 +303,7 @@ class SitemapRequest extends BaseRequest {
 
     // Start the request loop
     public function start() as Void {
-        Logger.debug( "SitemapRequest.start" );
+        // Logger.debug( "SitemapRequest.start" );
         if( _stopCount <= 0 ) {
             throw new GeneralException( "Tried to start already running sitemap request" );
         } else {
@@ -307,7 +320,7 @@ class SitemapRequest extends BaseRequest {
     // If there is a pending request, onReceive() is instructed to
     // ignore the next response
     public function stop() as Void {
-        Logger.debug( "SitemapRequest.stop" );
+        // Logger.debug( "SitemapRequest.stop" );
         _stopCount++;
         // When the SitemapRequest is stopped, all ongoing asynchronous
         // processing is also halted. Tasks in the task queue are atomic

@@ -32,7 +32,7 @@ class AppSettings {
     // variables. They need to be public, because otherwise
     // the static accessors cannot access them
     public var url as String = "http://net-nas-1:8080/";
-    public var sitemap as String = "garmin_stress";
+    public var sitemap as String = "garmin_live";
     public var vSupportsRESTAPI as Boolean = true;
     public var vSuppressEmtpyResponses as Boolean = false;
     public var vSupportsWebHook as Boolean = false;
@@ -40,5 +40,5 @@ class AppSettings {
     public var vNeedsBasicAuth as Boolean = false;
     public var user as String = "";
     public var password as String?;
-    public var pollingInterval as Number = 0;
+    public var pollingInterval as Number = 3000;
 }

@@ -102,7 +102,7 @@ class BaseCommandRequest extends BaseRequest {
             var item = _weakItem.get() as CommandRequestDelegate?;
             if( item != null ) {
                 
-                Logger.debug( "BaseCommandRequest: starting sync mode ..." );
+                // Logger.debug( "BaseCommandRequest: starting sync mode ..." );
                 
                 // We assume already now that the command is completed. true indicates to the item that
                 // command is done in sync mode. The item therefore does not need to (and should not) update

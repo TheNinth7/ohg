@@ -23,7 +23,7 @@ import Toybox.Lang;
     }
 
     public function invoke() as Void {
-        Logger.debug( "StopSitemapSyncTask: stopping sync mode" );
+        // Logger.debug( "StopSitemapSyncTask: stopping sync mode" );
         SitemapSyncDelegate.get().stopSync();
     }
 }
@@ -39,7 +39,7 @@ import Toybox.Lang;
     }
 
     public function invoke() as Void {
-        Logger.debug( "PostSitemapSyncTask: restarting sitemap request" );
+        // Logger.debug( "PostSitemapSyncTask: restarting sitemap request" );
         SitemapRequest.get().start();
     }
 }
