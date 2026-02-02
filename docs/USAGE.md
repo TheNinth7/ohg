@@ -88,8 +88,15 @@ Once the app is installed, you can configure the following settings by opening i
 
 ## Connectivity
 
-Garmin wearables rely on your smartphone for network access.
-If your phone can reach your openHAB instance (e.g. via local network or VPN like Tailscale), the watch can too.
+This section covers all aspects of connecting your Garmin wearable to your openHAB, including network access (BLE/phone or Wi-Fi), using myopenHAB and how to send commands (native REST APIs or Webhook).
+
+## Network Access
+
+All Garmin wearables can connect to your network and the Internet via a BLE (Bluetooth Low Energy) connection to your phone. 
+
+### BLE/Phone Connectivity
+
+Using your phone for connectivity also allows you to use all connectivity options available on the phone, including using VPNs like Tailscale. Also when connected via phone, the openHAB app has a permanent connection to your openHAB and thus is able to show live states.
 
 **Platform-specific Limitations:**
 
@@ -97,6 +104,86 @@ If your phone can reach your openHAB instance (e.g. via local network or VPN lik
 - **Android**: Only HTTPS with a valid certificate is supported due to Garmin SDK limitations
 
 You can use [myopenHAB](https://www.myopenhab.org) to securely access your local openHAB instance over the Internet using HTTPS.
+
+### Wi-Fi
+
+Some Garmin wearables also can connect directly to your Wi-Fi. This allows both access to your local LAN and if available in your LAN to the Internet for using myopenHAB.
+
+However, Garmin does not allow a permanent Wi-Fi connection, instead the app needs to go into
+a dedicated sync mode, perform network tasks and then close the Wi-Fi connection again. During this sync, Garmin displays dedicated views informing the user of the sync progress.
+
+#### Wi-Fi mode
+
+If no BLE connection to a phone is available, the app will automatically determine if a Wi-Fi connection is available and then enter the Wi-Fi mode. These checks continue while the app is running and it can switch back and forth between BLE and Wi-Fi connection anytime.
+
+As stated above, when in Wi-Fi mode, no states will be displayed. The user can also check the current connectivity mode in the [settings menu](#settings-menu).
+
+#### No Polling of Sitemap Changes and States
+
+Due to limitations described above, when in Wi-Fi mode, the app does not regularly poll openHAB for changes or state updates and thus does not display the state of items. Only when on startup no data is in storage (e.g. after setting changes or fatal errors), the app will go into sync mode and retrieve the full sitemap. The [settings menu](#settings-menu) shows when the sitemap was retrieved last, and the user can also manually trigger an update via Wi-Fi, e.g. to download a structural change to the sitemap.
+
+#### Sending Commands
+
+For sending commands it thus cannot rely on the current state. For example for toggle switches that means that the user has to choose in an action menu whether the device should be switched on or off. Another example is the [`Slider`](#setpoint-and-slider), which in Wi-Fi mode will always start at the middle of the range and will operate in `releaseOnly` mode, i.e. send the command only when the new value is confirmed, not with every change in the widget.
+
+
+
+## Network Access
+
+All Garmin wearables can access your local network and the Internet via a BLE (Bluetooth Low Energy) connection to your phone.
+
+### BLE / Phone Connectivity
+
+Using your phone for connectivity allows the app to take advantage of all network options available on the phone, including VPNs such as Tailscale. When connected via the phone, the openHAB app maintains a permanent connection to openHAB and is therefore able to display live item states.
+
+**Platform-specific limitations:**
+
+- **iOS**: HTTP and HTTPS are supported  
+- **Android**: Only HTTPS with a valid certificate is supported due to Garmin SDK limitations
+
+You can use [myopenHAB](https://www.myopenhab.org) to securely access your local openHAB instance over the Internet via HTTPS.
+
+### Wi-Fi
+
+Some Garmin wearables can also connect directly to Wi-Fi. This allows access to the local LAN and, if Internet connectivity is available, to services such as myopenHAB.
+
+When connected via Wi-Fi, both HTTP and HTTPS are supported.
+
+Garmin does not allow a permanent Wi-Fi connection. Instead, the app must enter a dedicated sync mode, perform its network operations, and then close the Wi-Fi connection again. While this sync is active, Garmin displays system-provided views to inform the user about sync progress.
+
+#### Automatic Wi-Fi Detection and Mode Switching
+
+If no BLE connection to a phone is available, the app automatically checks whether a Wi-Fi connection can be used and, if so, switches to Wi-Fi mode. These checks continue while the app is running, and the app may switch between BLE and Wi-Fi connectivity at any time.
+
+As described above, when running in Wi-Fi mode no live item states are displayed. The current connectivity mode can be checked in the [settings menu](#settings-menu).
+
+<div class="garmin-screenshot-container">
+  <img src="images/app/12-wifi-settings-mode.png"/>
+  <img src="images/app/08-group-2.png"/>
+  <img src="images/app/08-group-3.png"/>
+</div>
+
+#### No Polling of Sitemap Changes and States
+
+Due to these limitations, the app does not regularly poll openHAB for sitemap changes or state updates while in Wi-Fi mode. As a result, item states are not displayed.
+
+<div class="garmin-screenshot-container">
+  <img src="images/app/12-wifi-nostates.png"/>
+</div>
+
+
+Only if no data is available at startup, for example after settings changes or a fatal error, the app enters sync mode to retrieve the full sitemap. The [settings menu](#settings-menu) shows when the sitemap was last retrieved, and the user can also manually trigger an update via Wi-Fi, for example to download structural changes to the sitemap.
+
+<div class="garmin-screenshot-container">
+  <img src="images/app/12-wifi-settings-last-update.png"/>
+  <img src="images/app/12-wifi-sitemap-update.png"/>
+</div>
+
+#### Sending Commands
+
+Because current item states are not available in Wi-Fi mode, sending commands cannot rely on existing state information. For toggle switches, this means the user must explicitly choose whether the item should be switched on or off via an action menu.
+
+Another example is the [`Slider`](#setpoint-and-slider). In Wi-Fi mode, the slider always starts at the middle of its range and operates in `releaseOnly` mode. The command is sent only when the new value is confirmed, not while the value is being adjusted.
 
 ### Using myopenHAB
 

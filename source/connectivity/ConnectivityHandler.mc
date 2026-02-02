@@ -205,7 +205,9 @@ import Toybox.Time;
                         // Only if a HomepageMenu is available ...
                         if( HomepageMenu.exists() ) {
                             var menu = HomepageMenu.get();
-                            // ... we invalidate the values ...
+                            // If the sitemap is fresh, we want to invalidate the
+                            // states, because even for a fresh sitemap we do not
+                            // want to show states in Wi-Fi mode
                             if( SitemapStore.isSitemapFresh() ) {
                                 var sitemap = SitemapStore.getSitemapFromMemoryForWifiMode();
                                 if( sitemap != null ) {
@@ -218,10 +220,13 @@ import Toybox.Time;
                                     throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
                                 }
                             } else if( SettingsMenuHandler.isShowingSettings() ) {
+                                // If the sitemap is already stale, and we are in
+                                // settings, we refresh the UI to show the new
+                                // connectivity mode
                                 WatchUi.requestUpdate();
                             } else if( ! HomepageMenu.isSitemapShowing() ) {
-                                // If the sitemap is not fresh, and the menu is currently not shown, we
-                                // switch to it immediately.
+                                // If the sitemap is already stale, and the menu is 
+                                // currently not shown, we switch to it immediately.
                                 ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
                             }
                         } else {

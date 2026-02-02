@@ -136,13 +136,14 @@ class BaseSyncDelegate extends SyncDelegate {
         // Logger.debug( "BaseSyncDelegate: onStartSync end" );
     }
 
-    // Called by the API if the user interrupts the sync.
+    // Called by the API when the user interrupts the sync
+    // or when the sync is ended by calling Communications.notifySyncComplete
+    // with an error message.
     // Cancels all pending requests and exits sync mode.
     public function onStopSync() as Void {
         Logger.debug( "BaseSyncDelegate: onStopSync" );
         BaseRequest.cancelAllRequests();
         beforeSyncEnds();
-        Communications.notifySyncComplete( null );
         // Logger.debug( "BaseSyncDelegate: onStopSync end" );
     }
 
