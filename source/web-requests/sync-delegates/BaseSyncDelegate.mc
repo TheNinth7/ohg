@@ -104,7 +104,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // Subclasses must call this method when their sync operation fails.
     // It exits sync mode and displays an error message to the user.
     public function onException( ex as Exception ) as Void {
-        Logger.debug( "BaseSyncDelegate: onException" );
+        // Logger.debug( "BaseSyncDelegate: onException" );
         
         // Not needed here, since notifySyncComplete with an error message
         // also triggers onStopSync(), which in turn calls beforeSyncEnds().
@@ -121,7 +121,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // is handled here, so performSync implementation may throw 
     // exceptions and expect them to be handled.
     public function onStartSync() as Void {
-        Logger.debug( "BaseSyncDelegate: onStartSync" );
+        // Logger.debug( "BaseSyncDelegate: onStartSync" );
         try {
             _isSyncInProgress = true;
 
@@ -141,7 +141,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // with an error message.
     // Cancels all pending requests and exits sync mode.
     public function onStopSync() as Void {
-        Logger.debug( "BaseSyncDelegate: onStopSync" );
+        // Logger.debug( "BaseSyncDelegate: onStopSync" );
         BaseRequest.cancelAllRequests();
         beforeSyncEnds();
         // Logger.debug( "BaseSyncDelegate: onStopSync end" );
@@ -158,7 +158,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // Marks this instance as needing a sync, stops the sitemap request timer,
     // and requests sync mode from the CIQ API.
     public function startSync( msg as String ) as Void {
-        Logger.debug( "BaseSyncDelegate: startSync" );
+        // Logger.debug( "BaseSyncDelegate: startSync" );
         try {
             _isSyncNeeded = true;
             SitemapRequest.get().stop();
@@ -178,7 +178,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // Exits sync mode. Subclasses must call this method when their sync
     // operation has completed.
     public function stopSync() as Void {
-        Logger.debug( "BaseSyncDelegate: stopSync" );
+        // Logger.debug( "BaseSyncDelegate: stopSync" );
         beforeSyncEnds();
         Communications.notifySyncComplete( null );
         // Logger.debug( "BaseSyncDelegate: stopSync end" );

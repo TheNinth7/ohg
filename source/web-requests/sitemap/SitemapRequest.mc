@@ -133,17 +133,23 @@ class SitemapRequest extends BaseRequest {
         if( SitemapSyncDelegate.get().isSyncInProgress() ) {
             SitemapSyncDelegate.get().onException( ex );
         } else {
-            ExceptionHandler.handleBackgroundException( ex );
-            
-            // If an error occurs during processing the sitemap from
-            // storage, the request is already schedule and we do 
-            // not need to to it anymore
-            if( ! _hasPendingRequest ) {
-                triggerNextRequestInternal( 
-                    _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
-                        ? _pollingInterval
-                        : SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL 
-                );
+
+            if( ex instanceof CommunicationException && ex.isNoPhone() ) {
+                ConnectivityHandler.get().tryWifiConnection();
+                return;
+            } else {
+                // Logger.debug( "ExceptionHandler: confirming successful connection." );
+
+                ConnectivityHandler.get().confirmPhoneConnection();
+
+                ExceptionHandler.handleBackgroundException( ex );
+                
+                // If an error occurs during processing the sitemap from
+                // storage, the request is already schedule and we do 
+                // not need to to it anymore
+                if( ! _hasPendingRequest ) {
+                    triggerNextRequest( false );
+                }
             }
         }
     }
@@ -238,19 +244,18 @@ class SitemapRequest extends BaseRequest {
     }
 
     // Makes a timer-based web request
+    // Timer-based requests only run via the phone connection
+    // This function therefore checks if the phone connection is
+    // available according to the system device settings. If not
+    // a Wi-Fi check is initiated.
     public function onTimerMakeRequest() as Void {
         Logger.debug( "SitemapRequest.onTimerMakeRequest" );
         if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
-            Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
             makeRequestInternal( false );
         } else {
-            Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
             ConnectivityHandler.get().tryWifiConnection();
-            triggerNextRequestInternal( 
-                _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
-                    ? _pollingInterval
-                    : SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL 
-            );
         }
     }
 
@@ -303,7 +308,7 @@ class SitemapRequest extends BaseRequest {
 
     // Start the request loop
     public function start() as Void {
-        Logger.debug( "SitemapRequest.start" );
+        // Logger.debug( "SitemapRequest.start" );
         if( _stopCount <= 0 ) {
             throw new GeneralException( "Tried to start already running sitemap request" );
         } else {
@@ -320,7 +325,7 @@ class SitemapRequest extends BaseRequest {
     // If there is a pending request, onReceive() is instructed to
     // ignore the next response
     public function stop() as Void {
-        Logger.debug( "SitemapRequest.stop" );
+        // Logger.debug( "SitemapRequest.stop" );
         _stopCount++;
         // When the SitemapRequest is stopped, all ongoing asynchronous
         // processing is also halted. Tasks in the task queue are atomic
@@ -333,19 +338,16 @@ class SitemapRequest extends BaseRequest {
         }
     }
 
-
-    // Used by the SitemapProcessor and TriggerNextRequestTask
-    // to trigger the next request after the current response has been
+    // Used to trigger the next request after the current response has been
     // successfully processed.
-    public function triggerNextRequest() as Void {
-        // Logger.debug( "SitemapRequest.triggerNextRequest" );
-        triggerNextRequestInternal( _pollingInterval );
-    }
-
-    // Internal function for triggering the next request,
-    // used both by handleException() and triggerNextRequest()
-    private function triggerNextRequestInternal( delay as Number ) as Void {
-        Logger.debug( "SitemapRequest.triggerNextRequestInternal" );
+    public function triggerNextRequest( applyErrorMinimumInterval as Boolean ) as Void {
+        // Logger.debug( "SitemapRequest.triggerNextRequestInternal" );
+        
+        // In case of errors, we apply a set minimum interval of 1 seconds
+        var delay = _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
+                        ? _pollingInterval
+                        : SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL;
+        
         // Depending on the delay the next request is
         // scheduled via timer or triggered immediately
         if( delay > 0 ) {

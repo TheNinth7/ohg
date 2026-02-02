@@ -67,26 +67,6 @@ public class ExceptionHandler {
             ex = ex1;
         }
 
-        // Communication exceptions from sitemap requests trigger
-        // updates to the connectivity state.
-        if( ex instanceof CommunicationBaseException
-            && ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP ) )
-        {
-            // If the exception indicates that the phone is not connected,
-            // a WiFi availability check is triggered.
-            // All other errors imply that a phone connection exists and
-            // this is confirmed to the `ConnectivityHandler`.
-            if( ex instanceof CommunicationException
-                && ex.isNoPhone() )
-            {
-                ConnectivityHandler.get().tryWifiConnection();
-                return;
-            } else {
-                // Logger.debug( "ExceptionHandler: confirming successful connection." );
-                ConnectivityHandler.get().confirmPhoneConnection();
-            }
-        }
-
         /*
         * A toast notification will be shown under the following conditions:
         * - Only if the current view has indicated to the `ToastHandler` that toasts are allowed.

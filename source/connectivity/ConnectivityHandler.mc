@@ -40,6 +40,10 @@ import Toybox.Time;
     // The four connectivity states
     public enum State {
         PHONE_CONNECTION,
+        // WIFI_CHECK_PENDING is only used for the transition from
+        // PHONE_CONNECTION to WIFI_CONNECTION or OFFLINE
+        // If the current state is OFFLINE, it stays OFFLINE until
+        // a Wi-Fi connection can be confirmed.
         WIFI_CHECK_PENDING,
         WIFI_CONNECTION,
         OFFLINE
@@ -166,11 +170,25 @@ import Toybox.Time;
     // connection is available and triggers a check of WiFi availability.
     public function tryWifiConnection() as Void {
         // Logger.debug( "ConnectivityHandler: tryWifiConnection" );
+        
+        // Since the Wi-Fi check is relatively time-consuming and blocks Wi-Fi sync,
+        // meaning no commands can be sent via Wi-Fi while it is running,
+        // we perform the check only once.
         if( _state != WIFI_CONNECTION ) {
+            
+            // WIFI_CHECK_PENDING is only used for the transition from
+            // PHONE_CONNECTION to WIFI_CONNECTION or OFFLINE
+            // If the current state is OFFLINE, it stays OFFLINE until
+            // a Wi-Fi connection can be confirmed.
             if( _state == PHONE_CONNECTION ) {
                 setState( WIFI_CHECK_PENDING );
             }
             Communications.checkWifiConnection( method( :tryWifiConnectionCallback ) );
+        } else {
+            // When SitemapRequest initiates a Wi-Fi check it DOES NOT
+            // schedule the next execution, this is done here , only
+            // after the Wi-Fi check was completed.
+            SitemapRequest.get().triggerNextRequest( true );
         }
     }
 
@@ -245,6 +263,11 @@ import Toybox.Time;
                 }
             } catch( ex ) {
                 ExceptionHandler.handleBackgroundException( ex );
+            } finally {
+                // When SitemapRequest initiates a Wi-Fi check it DOES NOT
+                // schedule the next execution, this is done here, only
+                // after the Wi-Fi check was completed.
+                SitemapRequest.get().triggerNextRequest( true );
             }
         }
     }

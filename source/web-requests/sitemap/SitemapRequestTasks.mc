@@ -244,6 +244,6 @@ class TriggerNextRequestTask extends BaseSitemapProcessorTask {
     }
     public function invoke() as Void {
         // Logger.debug( "TriggerNextRequestTask.invoke" );
-        SitemapRequest.get().triggerNextRequest();
+        SitemapRequest.get().triggerNextRequest( false );
     }
 }

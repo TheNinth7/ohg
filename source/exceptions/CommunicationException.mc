@@ -25,9 +25,10 @@ class CommunicationException extends CommunicationBaseException {
         var errorMsg;
         // For some errors we return specific messages,
         // for all others a generic one
-        if( isNoPhone() ) {
+        if( isNoPhone() && ConnectivityHandler.get().isOnWiFiConnection() ) {
+            return "Wi-Fi connection lost";
+        } else if( isNoPhone() ) {
             return "No phone\n(" + _responseCode + ")";
-
         } else if ( _responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE ) {
             errorMsg = "Invalid response\n(" + _responseCode + ")";
 
@@ -49,7 +50,9 @@ class CommunicationException extends CommunicationBaseException {
         var errorMsg;
         // For some errors we return specific toast messages,
         // for all others a generic one
-        if( isNoPhone() ) {
+        if( isNoPhone() && ConnectivityHandler.get().isOnWiFiConnection() ) {
+            return "No Wi-Fi";
+        } else if( isNoPhone() ) {
             return "No phone";
         } else if ( _responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE ) {
             errorMsg = "INVRES";

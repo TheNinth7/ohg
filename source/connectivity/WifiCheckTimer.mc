@@ -21,7 +21,7 @@ class WifiCheckTimer extends Timer.Timer {
     }
 
     private function startTimer() as Void {
-        Timer.Timer.start( method( :checkWifiState ), 0, false );
+        Timer.Timer.start( method( :checkWifiState ), 50, false );
     }
 
     public function checkWifiState() as Void {
