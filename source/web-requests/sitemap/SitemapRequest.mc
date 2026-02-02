@@ -239,12 +239,12 @@ class SitemapRequest extends BaseRequest {
 
     // Makes a timer-based web request
     public function onTimerMakeRequest() as Void {
-        // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
+        Logger.debug( "SitemapRequest.onTimerMakeRequest" );
         if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
-            // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
+            Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
             makeRequestInternal( false );
         } else {
-            // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
+            Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
             ConnectivityHandler.get().tryWifiConnection();
             triggerNextRequestInternal( 
                 _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
@@ -303,7 +303,7 @@ class SitemapRequest extends BaseRequest {
 
     // Start the request loop
     public function start() as Void {
-        // Logger.debug( "SitemapRequest.start" );
+        Logger.debug( "SitemapRequest.start" );
         if( _stopCount <= 0 ) {
             throw new GeneralException( "Tried to start already running sitemap request" );
         } else {
@@ -320,7 +320,7 @@ class SitemapRequest extends BaseRequest {
     // If there is a pending request, onReceive() is instructed to
     // ignore the next response
     public function stop() as Void {
-        // Logger.debug( "SitemapRequest.stop" );
+        Logger.debug( "SitemapRequest.stop" );
         _stopCount++;
         // When the SitemapRequest is stopped, all ongoing asynchronous
         // processing is also halted. Tasks in the task queue are atomic
@@ -345,7 +345,7 @@ class SitemapRequest extends BaseRequest {
     // Internal function for triggering the next request,
     // used both by handleException() and triggerNextRequest()
     private function triggerNextRequestInternal( delay as Number ) as Void {
-        // Logger.debug( "SitemapRequest.triggerNextRequestInternal" );
+        Logger.debug( "SitemapRequest.triggerNextRequestInternal" );
         // Depending on the delay the next request is
         // scheduled via timer or triggered immediately
         if( delay > 0 ) {
