@@ -257,4 +257,4 @@ SPDX-License-Identifier: EPL-2.0
 
 # Attributions
 
-The [interface icons](resources/icons-interface), except for the openHAB logo, are licensed under CC BY 3.0 by [Adrien Coquet](https://adrien-coquet.com/) from [Noun Project](https://thenounproject.com/browse/icons/).
+The [interface icons](resources/icons-interface), except for the openHAB logo, are licensed under CC BY 3.0 by [Adrien Coquet](https://adrien-coquet.com/) from [Noun Project](https://thenounproject.com/creator/coquet_adrien/).
