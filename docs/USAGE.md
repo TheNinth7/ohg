@@ -121,8 +121,6 @@ As described above, when running in Wi-Fi mode no live item states are displayed
 
 <div class="garmin-screenshot-container">
   <img src="images/app/12-wifi-settings-mode.png"/>
-  <img src="images/app/08-group-2.png"/>
-  <img src="images/app/08-group-3.png"/>
 </div>
 
 #### No Polling of Sitemap Changes and States
