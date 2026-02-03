@@ -21,7 +21,7 @@ class SwitchActionMenuDelegate extends ActionMenuDelegate {
 
     // on select, send the command
     public function onSelect( item as ActionMenuItem ) as Void {
-        // Logger.debug "SwitchActionMenuDelegate.onSelect" );
+        Logger.debug( "SwitchActionMenuDelegate.onSelect" );
         try {
             // The action menu items have the command as Id
             var command = item.getId();
@@ -33,6 +33,5 @@ class SwitchActionMenuDelegate extends ActionMenuDelegate {
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );
         }
-
     }
 }

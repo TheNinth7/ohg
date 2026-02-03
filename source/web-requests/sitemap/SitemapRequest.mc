@@ -249,12 +249,12 @@ class SitemapRequest extends BaseRequest {
     // available according to the system device settings. If not
     // a Wi-Fi check is initiated.
     public function onTimerMakeRequest() as Void {
-        Logger.debug( "SitemapRequest.onTimerMakeRequest" );
+        // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
         if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
-            Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
             makeRequestInternal( false );
         } else {
-            Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
             ConnectivityHandler.get().tryWifiConnection();
         }
     }
@@ -326,6 +326,7 @@ class SitemapRequest extends BaseRequest {
     // ignore the next response
     public function stop() as Void {
         // Logger.debug( "SitemapRequest.stop" );
+        _timer.stop();
         _stopCount++;
         // When the SitemapRequest is stopped, all ongoing asynchronous
         // processing is also halted. Tasks in the task queue are atomic

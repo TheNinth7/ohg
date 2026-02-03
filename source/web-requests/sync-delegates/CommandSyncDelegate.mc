@@ -68,7 +68,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     // the sync mode
     // Part of the CommandRequestDelegate interface
     public function onCommandComplete( syncMode as Boolean ) as Void {
-        stopSync();
+        finishSync();
     }
 
     // Called by the base class to perform the actual sync tasks.

@@ -125,7 +125,7 @@ class CreateHomepageTask extends BaseSitemapProcessorTask {
 // In normal mode, this task switches to the newly created HomepageMenu view
 // and triggers the next sitemap request.
 // In sync mode, it only stops the sync. The view switch is performed after the
-// sync is stopped, in PostSitemapSyncTask.
+// sync is stopped, in PostSyncTask.
 class SwitchToHomepageTask extends BaseSitemapProcessorTask {
     private var _homepageMenu as HomepageMenu;
 

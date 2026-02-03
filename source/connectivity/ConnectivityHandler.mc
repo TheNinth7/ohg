@@ -127,8 +127,27 @@ import Toybox.Time;
 
     // True if no phone connection is available
     // but WiFi is
-    public function isOnWiFiConnection() as Boolean {
+    public function isOnWifiConnection() as Boolean {
         return _state == WIFI_CONNECTION;
+    }
+
+    // Returns true if the device settings show Wi-Fi is connected
+    /*
+    public function isOnWiFiConnectionAccordingToSettings() as Boolean {
+        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
+        return wifi != null && wifi.state == System.CONNECTION_STATE_CONNECTED;
+    }
+    */
+
+    public function debugConnectionInfo() as Boolean {
+        Logger.debug( "ConnectivityHandler.debugConnectionInfo" );
+        var bluetooth = System.getDeviceSettings().connectionInfo[:bluetooth];
+        Logger.debug( "Bluetooth: " + ( bluetooth == null ? "nostate" : bluetooth.state ) );
+        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
+        Logger.debug( "Wi-Fi: " + ( wifi == null ? "nostate" : wifi.state ) );
+        var lte = System.getDeviceSettings().connectionInfo[:lte];
+        Logger.debug( "LTE: " + ( lte == null ? "nostate" : lte.state ) );
+        return wifi != null && wifi.state == System.CONNECTION_STATE_CONNECTED;
     }
 
     // Returns true if last successful phone connection or Wifi check 
@@ -169,12 +188,13 @@ import Toybox.Time;
     // This is called by `SitemapRequest`, indicates that no phone 
     // connection is available and triggers a check of WiFi availability.
     public function tryWifiConnection() as Void {
-        // Logger.debug( "ConnectivityHandler: tryWifiConnection" );
+        Logger.debug( "ConnectivityHandler.tryWifiConnection" );
         
         // Since the Wi-Fi check is relatively time-consuming and blocks Wi-Fi sync,
         // meaning no commands can be sent via Wi-Fi while it is running,
         // we perform the check only once.
         if( _state != WIFI_CONNECTION ) {
+            Logger.debug( "ConnectivityHandler.tryWifiConnection: checking for Wi-Fi connection" );
             
             // WIFI_CHECK_PENDING is only used for the transition from
             // PHONE_CONNECTION to WIFI_CONNECTION or OFFLINE
@@ -196,7 +216,7 @@ import Toybox.Time;
     // Depending on the outcome, the displayed view is updated
     // and sitemap states are invalidated if necessary.
     public function tryWifiConnectionCallback( result as TryWifiResult ) as Void {
-        // Logger.debug( "ConnectivityHandler: tryWifiConnectionCallback" );
+        Logger.debug( "ConnectivityHandler.tryWifiConnectionCallback" );
         if( ViewHandler.getCurrentViewSafe()[0] == null ) {
             // If there is no view, we defer the processing of the result
             // The processing of the deferred result is triggered by `WifiCheckTimer`,

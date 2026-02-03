@@ -9,7 +9,7 @@ import Toybox.Lang;
  *
  * These tasks adjust their behavior when running in sync mode. Since UI updates must not
  * be performed in sync mode, a StopSitemapSyncTask is queued instead. This task ends sync
- * mode and schedules a PostSitemapSyncTask, which restarts the sitemap request that was
+ * mode and schedules a PostSyncTask, which restarts the sitemap request that was
  * paused when sync mode was entered and updates the UI.
  */
 
@@ -24,7 +24,7 @@ import Toybox.Lang;
 
     public function invoke() as Void {
         // Logger.debug( "StopSitemapSyncTask: stopping sync mode" );
-        SitemapSyncDelegate.get().stopSync();
+        SitemapSyncDelegate.get().finishSync();
     }
 }
 
@@ -32,14 +32,14 @@ import Toybox.Lang;
 /*
  * Asynchronous task to restart the sitemap request after the sync mode has been closed.
  */
- class PostSitemapSyncTask extends BaseSitemapProcessorTask {
+ class PostSyncTask extends BaseSitemapProcessorTask {
 
     public function initialize() {
         BaseSitemapProcessorTask.initialize();
     }
 
     public function invoke() as Void {
-        // Logger.debug( "PostSitemapSyncTask: restarting sitemap request" );
+        Logger.debug( "PostSyncTask: restarting sitemap request" );
         SitemapRequest.get().start();
     }
 }
