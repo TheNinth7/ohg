@@ -27,11 +27,10 @@ class LoadingView extends WatchUi.View {
     function onUpdate( dc as Dc ) as Void {
         dc.setColor( Constants.UI_COLOR_TEXT, Constants.UI_COLOR_BACKGROUND );
         dc.clear();
-        new Text( {
-            :text => "Loading ...",
+        new Bitmap( {
+            :rezId => Rez.Drawables.iconHourglassWhite,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-            :locY => WatchUi.LAYOUT_VALIGN_CENTER,
-            :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
+            :locY => WatchUi.LAYOUT_VALIGN_CENTER
         } ).draw( dc );
     }
 }

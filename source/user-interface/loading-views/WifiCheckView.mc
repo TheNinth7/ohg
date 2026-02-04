@@ -14,43 +14,23 @@ class WifiCheckView extends WatchUi.View {
     private var _first as Boolean = true;
     
     // Drawable for the message
-    private var _textArea as TextArea;
+    private var _bitmap as Bitmap;
+
 
     // Constructor, creates the TextArea drawable.
     public function initialize() {
         View.initialize();
         
-        _textArea = new TextArea( {
-            :text => "No phone:\nchecking WiFi availability ...",
-            :font => Constants.UI_ERROR_FONTS,
+        _bitmap = new Bitmap( {
+            :rezId => Rez.Drawables.iconSearchForWifi,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-            :locY => WatchUi.LAYOUT_VALIGN_CENTER,
-            :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
-            :color => Constants.UI_COLOR_WIFI,
-            :backgroundColor => Constants.UI_COLOR_BACKGROUND
+            :locY => WatchUi.LAYOUT_VALIGN_CENTER
         } );
     }
 
     // Determins whether the WifiCheckView is currently showing
     public static function isShowing() as Boolean {
         return ViewHandler.getCurrentViewSafe()[0] instanceof WifiCheckView;
-    }
-
-    // Sets the size of the TextArea
-    public function onLayout( dc as Dc ) {
-        // We get the width and height of the drawing context
-        // to calculate the size of the text area ...        
-        var width = dc.getWidth();
-        var height = dc.getHeight();
-
-        // ... and for round screens, adapt it to the
-        // largest square fitting into the circle
-        if( System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND ) {
-            width = width / Math.sqrt( 2 );
-            height = width;
-        }
-
-        _textArea.setSize( width, height );
     }
 
     // Called when the view is shown.
@@ -87,7 +67,7 @@ class WifiCheckView extends WatchUi.View {
                 if( syncEx == null ) {
                     // If the sync was successful, we switch to the HomepageMenu
                     if( HomepageMenu.exists() ) {
-                        _textArea.setText( "Sitemap update completed. Opening the sitemap." );
+                        _bitmap.setBitmap( Rez.Drawables.iconHourglassBlue );
                         WatchUi.switchToView( 
                             HomepageMenu.get(), 
                             HomepageMenuDelegate.get(), 
@@ -119,10 +99,9 @@ class WifiCheckView extends WatchUi.View {
         // https://github.com/TheNinth7/ohg/issues/81
         dc.clearClip();
 
-        dc.setColor( Constants.UI_COLOR_WIFI, Constants.UI_COLOR_BACKGROUND );
         dc.clear();
 
-        _textArea.draw( dc );
+        _bitmap.draw( dc );
 
         // See `WifiCheckTimer` for details
         if( _first == true ) {

@@ -29,4 +29,9 @@
     <bitmap id="iconPauseHint" scaleY="7%" filename="pause-hint.svg" dithering="none" />
     <bitmap id="iconNextHint" scaleY="7%" filename="next-hint.svg" dithering="none" />
     <bitmap id="iconPreviousHint" scaleY="7%" filename="previous-hint.svg" dithering="none" />
+
+    <bitmap id="iconSearchForWifi" scaleY="50%" filename="search-for-wifi.svg" dithering="none" />
+    <bitmap id="iconHourglassBlue" scaleY="50%" filename="hourglass-blue.svg" dithering="none" />
+    <bitmap id="iconHourglassWhite" scaleY="50%" filename="hourglass-white.svg" dithering="none" />
+
 </drawables>
