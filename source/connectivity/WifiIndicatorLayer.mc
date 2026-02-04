@@ -17,7 +17,8 @@ class WifiIndicatorLayer extends Layer {
             dc.setColor( Constants.UI_COLOR_WIFI, Graphics.COLOR_TRANSPARENT );
             dc.clear();
             dc.setPenWidth( 4 );
-            dc.drawCircle( width / 2, height / 2, ( width / 2 ) - 2 );
+            //dc.drawCircle( width / 2, height / 2, ( width / 2 ) - 2 );
+            dc.drawCircle( 200, 200, 100 );
         }
     }
 }

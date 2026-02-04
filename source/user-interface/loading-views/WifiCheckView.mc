@@ -26,6 +26,8 @@ class WifiCheckView extends WatchUi.View {
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER
         } );
+
+        addLayer( new WifiIndicatorLayer() );
     }
 
     // Determins whether the WifiCheckView is currently showing
