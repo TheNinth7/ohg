@@ -23,6 +23,8 @@ class BaseMenu extends CustomMenu {
 
     // The Drawable for the title
     private var _title as Text;
+    
+    // The Drawable for the connection mode indicator
     private var _cmi as ConnectionModeIndicator = new ConnectionModeIndicator();
 
     // Constructor
