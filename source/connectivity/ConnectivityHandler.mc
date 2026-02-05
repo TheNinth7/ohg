@@ -139,17 +139,6 @@ import Toybox.Time;
     }
     */
 
-    public function debugConnectionInfo() as Boolean {
-        // Logger.debug( "ConnectivityHandler.debugConnectionInfo" );
-        var bluetooth = System.getDeviceSettings().connectionInfo[:bluetooth];
-        // Logger.debug( "Bluetooth: " + ( bluetooth == null ? "nostate" : bluetooth.state ) );
-        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
-        // Logger.debug( "Wi-Fi: " + ( wifi == null ? "nostate" : wifi.state ) );
-        var lte = System.getDeviceSettings().connectionInfo[:lte];
-        // Logger.debug( "LTE: " + ( lte == null ? "nostate" : lte.state ) );
-        return wifi != null && wifi.state == System.CONNECTION_STATE_CONNECTED;
-    }
-
     // Returns true if last successful phone connection or Wifi check 
     // happened within the state expiry time. While states are not acutally shown
     // in Wifi mode, we still want to use the same timeframe

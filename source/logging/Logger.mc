@@ -72,6 +72,18 @@ public class Logger {
         }
     }
 
+    (:debug)
+    public static function debugConnectionInfo() as Boolean {
+        Logger.debug( "ConnectivityHandler.debugConnectionInfo" );
+        var bluetooth = System.getDeviceSettings().connectionInfo[:bluetooth];
+        Logger.debug( "Bluetooth: " + ( bluetooth == null ? "nostate" : bluetooth.state ) );
+        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
+        Logger.debug( "Wi-Fi: " + ( wifi == null ? "nostate" : wifi.state ) );
+        var lte = System.getDeviceSettings().connectionInfo[:lte];
+        Logger.debug( "LTE: " + ( lte == null ? "nostate" : lte.state ) );
+        return wifi != null && wifi.state == System.CONNECTION_STATE_CONNECTED;
+    }
+
     // For release builds, there shall be no debug output
     (:release) public static function debug( text as String ) as Void {}
     (:release) public static function debugException( ex as Exception ) as Void {}

@@ -132,7 +132,7 @@ class BaseSyncDelegate extends SyncDelegate {
     public function onStartSync() as Void {
         // Logger.debug( "BaseSyncDelegate: onStartSync" );
         try {
-            ConnectivityHandler.get().debugConnectionInfo();
+            // Logger.debugConnectionInfo();
 
             _isSyncInProgress = true;
 
@@ -171,7 +171,7 @@ class BaseSyncDelegate extends SyncDelegate {
     public function startSync( msg as String ) as Void {
         // Logger.debug( "BaseSyncDelegate: startSync" );
         try {
-            ConnectivityHandler.get().debugConnectionInfo();
+            // Logger.debugConnectionInfo();
             _isSyncNeeded = true;
             SitemapRequest.get().stop();
             // Newer API versions support displaying a custom message in the sync view
