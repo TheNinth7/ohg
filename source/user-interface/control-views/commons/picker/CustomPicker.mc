@@ -44,9 +44,7 @@ class CustomPicker extends CustomView {
     }
 
     private var _title as String; // The title as String
-    // For drawing the title we use a TextArea, which
-    // dynamically chooses the font size and applies line breaks if needed
-    private var _titleDrawable as TextArea?;
+
     // The Drawable for drawing the currently focused pickable
     private var _pickable as Text?;
 
@@ -66,17 +64,9 @@ class CustomPicker extends CustomView {
         var dcHeight = dc.getHeight();
         var dcWidth = dc.getWidth();
 
-        // The title
-        _titleDrawable = new TextArea( {
-            :text => _title,
-            :font => Constants.UI_PICKER_TITLE_FONTS,
-            :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
-            :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-            :locY => dcHeight * 0.075,
-            :width => dcWidth * 0.5,
-            :height => dcHeight * 0.2
-        } );
-        addDrawable( _titleDrawable );
+        // Add the title and connection mode indicator using 
+        // the standard layout provided by the base class
+        addTitleAndConnectionIndicator( _title, dcWidth, dcHeight );
 
         // Vertical starting point of the controls
         // and the pickable. All these Drawables are

@@ -42,6 +42,40 @@ class CustomView extends View {
         }
     }
 
+    // This function allows subclasses to add a title TextArea and a
+    // connection mode indicator at a standardized position at the
+    // top of the screen.
+    protected function addTitleAndConnectionIndicator( 
+        title as String, 
+        dcWidth as Number, 
+        dcHeight as Number 
+    ) as TextArea {
+        
+        // Calculate locY of the title
+        var titleLocY = dcHeight * 0.075;
+
+        // Create and add the title Drawable
+        var titleDrawable = new TextArea( {
+            :text => title,
+            :font => Constants.UI_PICKER_TITLE_FONTS,
+            :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
+            :locX => WatchUi.LAYOUT_HALIGN_CENTER,
+            :locY => titleLocY,
+            :width => dcWidth * 0.5,
+            :height => dcHeight * 0.2
+        } );
+        addDrawable( titleDrawable );
+
+        // Create and add the connection mode indicator,
+        // located at the vertical center between the title
+        // and the upper edge of the screen
+        var cmi = new ConnectionModeIndicator();
+        cmi.setCenterY( ( titleLocY / 2 ).toNumber() );
+        addDrawable( cmi );
+
+        return titleDrawable;
+    }
+
     // Draw all Drawables
     public function draw( dc as Dc ) as Void {
         for( var i = 0; i < _drawables.size(); i++ ) {

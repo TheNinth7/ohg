@@ -50,17 +50,13 @@ class PlayerView extends CustomView {
         var dcHeight = dc.getHeight();
         var dcWidth = dc.getWidth();
 
-        // The title
-        _titleDrawable = new TextArea( {
-            :text => _sitemapSwitch.getLabel(),
-            :font => Constants.UI_PICKER_TITLE_FONTS,
-            :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
-            :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-            :locY => dcHeight * 0.075,
-            :width => dcWidth * 0.5,
-            :height => dcHeight * 0.2
-        } );
-        addDrawable( _titleDrawable );
+        // Add the title and connection mode indicator using 
+        // the standard layout provided by the base class
+        _titleDrawable = addTitleAndConnectionIndicator(
+            _sitemapSwitch.getLabel(),
+            dcWidth,
+            dcHeight
+        );
 
         // The play/pause button
         _playPauseIcon = new PlayPauseBitmap( {
@@ -96,17 +92,13 @@ class PlayerView extends CustomView {
         var dcHeight = dc.getHeight();
         var dcWidth = dc.getWidth();
 
-        // The title
-        _titleDrawable = new TextArea( {
-            :text => _sitemapSwitch.getLabel(),
-            :font => Constants.UI_PICKER_TITLE_FONTS,
-            :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
-            :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-            :locY => dcHeight * 0.075,
-            :width => dcWidth * 0.5,
-            :height => dcHeight * 0.2
-        } );
-        addDrawable( _titleDrawable );
+        // Add the title and connection mode indicator using 
+        // the standard layout provided by the base class
+        _titleDrawable = addTitleAndConnectionIndicator(
+            _sitemapSwitch.getLabel(),
+            dcWidth,
+            dcHeight
+        );
 
         // The play/pause button
         _playPauseIcon = new PlayPauseBitmap( {

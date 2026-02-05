@@ -159,12 +159,4 @@ class DefaultConstants {
 
     // List of fonts to be used by the picker for the title
     public static const UI_PICKER_TITLE_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
-
-    /*
-    // Width of the circle/rectancle at the border of the screen,
-    // indicating the connectivity mode
-    public static const UI_CONNECTION_MODE_INDICATOR_WIDTH as Number = 
-        ( UI_SCREEN_WIDTH * 0.015 ).toNumber();
-
-    */
 }

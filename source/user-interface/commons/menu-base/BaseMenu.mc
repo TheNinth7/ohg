@@ -23,6 +23,7 @@ class BaseMenu extends CustomMenu {
 
     // The Drawable for the title
     private var _title as Text;
+    private var _cmi as ConnectionModeIndicator = new ConnectionModeIndicator();
 
     // Constructor
     protected function initialize( options as BaseMenuOptions ) {
@@ -144,7 +145,13 @@ class BaseMenu extends CustomMenu {
                     locY += Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT );
                 }
                 _title.setLocation( WatchUi.LAYOUT_HALIGN_CENTER, locY );
+
+                // Set the location for the connection mode indicator
+                _cmi.setCenterY( ( locY / 2 ).toNumber() );
             }
+
+            // Draw the connection mode indicator
+            _cmi.draw( dc );
 
             // Draw the title
             _title.draw( dc );
