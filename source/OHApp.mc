@@ -112,10 +112,10 @@ class OHApp extends Application.AppBase {
         // isSyncNeeded() method returns false, indicating that no further sync should be
         // initiated.
         if( csd.isSyncNeeded() ) {
-            Logger.debug( "OHApp.getSyncDelegate: returning command sync delegate" );
+            // Logger.debug( "OHApp.getSyncDelegate: returning command sync delegate" );
             return csd;
         } else {
-            Logger.debug( "OHApp.getSyncDelegate: returning sitemap sync delegate" );
+            // Logger.debug( "OHApp.getSyncDelegate: returning sitemap sync delegate" );
             return SitemapSyncDelegate.get();
         }
     }
