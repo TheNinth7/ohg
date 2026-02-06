@@ -67,7 +67,14 @@ class AddOrUpdateMenuItemTask extends BaseSitemapProcessorTask {
             // item is the same or has changed
             var item = _pageMenu.getItem( _index ) as BaseWidgetMenuItem;
             if( item.isMyType( _sitemapWidget ) ) {
-                // If the type is the same, we update the menu item
+                // If the type matches, the menu item is updated.
+                // However, if the item was updated internally within the configured
+                // post-command hold time, the update is ignored. Internal updates are used
+                // by some menu items to immediately reflect the new state after a command
+                // is sent. The sitemap request issued immediately after the command may
+                // still return the old state. To avoid this, the post-command hold time
+                // configured in the app settings locks the item against updates for a
+                // defined period after sending a command.
                 if( ! item.isInHoldTime() ) {
                     item.updateWidget( _sitemapWidget );
                 }

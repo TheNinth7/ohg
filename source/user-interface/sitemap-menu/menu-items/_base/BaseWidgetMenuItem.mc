@@ -45,6 +45,12 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
     // also during updates
     private var _isActionable as Boolean;
 
+    // The last time an internal update was applied. Internal updates are applied
+    // by some menu items directly after a command is sent to immediately reflect
+    // the new state. Storing this timestamp is required to apply the post-command
+    // hold time configured in the app settings.
+    private var _lastInternalStateUpdate as Moment?;
+
     // Constructor
     protected function initialize( 
         options as BaseWidgetMenuItemOptions
@@ -73,6 +79,8 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         return _page != null;
     }
     
+    // Returns true if the item is still within the configured post-command hold time
+    // since the last internal state update.
     public function isInHoldTime() as Boolean {
         var postCommandHoldTime = AppSettings.getPostCommandHoldTime();
         if( _lastInternalStateUpdate != null && postCommandHoldTime.value() > 0 ) {
@@ -88,9 +96,10 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         throw new AbstractMethodException( "BaseSitemapMenuItem.getItemType" );
     }
 
-
-    private var _lastInternalStateUpdate as Moment?;
-
+    // Must be called by subclasses when they perform an internal state update.
+    // Some menu items use internal updates to immediately reflect the new state
+    // after a command is sent. This notification stores the time of the update,
+    // which is required to apply the configured post-command hold time.
     protected function notifyInternalStateUpdated() as Void {
         _lastInternalStateUpdate = Time.now();
     }

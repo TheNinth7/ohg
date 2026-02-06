@@ -70,8 +70,9 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
             if( ! syncMode ) {
                 WatchUi.requestUpdate();
                 updateItemState( _newState );
+                // Notify the base class that we applied an internal state update
+                notifyInternalStateUpdated();
             }
-            notifyInternalStateUpdated();
             _newState = null;
         }
     }
