@@ -146,6 +146,11 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         return _label;
     }
 
+    // Returns the state drawable
+    public function getStateDrawable() as StateDrawable? {
+        return _stateDrawable;
+    }
+
     // The state Drawable can change without a set function being called,
     // so we track its width to detect changes that may require a layout update.
     // This function returns true if the current Drawable's width differs

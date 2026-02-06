@@ -27,9 +27,6 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     // to the full-screen view when it is opened
     private var _sitemapSwitch as SitemapSwitch;
 
-    // The Drawable for the state
-    private var _stateDrawable as PlayPauseStateDrawable;
-
     // Constructor
     // Initializes the BaseCommandRequest used for changing the state,
     // the Drawable for the displayed state and the superclass
@@ -42,19 +39,15 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
         
         _commandRequest = BaseCommandRequest.get( self, false );
 
-        // The state shown in the menu item
-        _stateDrawable = new PlayPauseStateDrawable( 
-            sitemapSwitch.getSwitchItem().getState().equals( SwitchItem.ITEM_STATE_PLAY ) 
-        );
-        
         BaseWidgetMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
-                :stateDrawable => _stateDrawable,
                 :isActionable => _commandRequest != null,
                 :parent => parent,
                 :processingMode => processingMode
             }
         );
+
+        updateDisplayState( sitemapSwitch );
     }
 
     // This function is called during a command request to identify
@@ -116,6 +109,49 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
         );
     }
 
+    /*
+    * This function is used by both the constructor and updateWidget()
+    * to refresh the displayed state.
+    *
+    * For PLAY and PAUSE, it uses PlayPauseStateDrawable as the
+    * state drawable of the base class.
+    *
+    * For all other states (typically NO_STATE), the state is shown
+    * using the base class’s responsive state text.
+    */
+    private function updateDisplayState( sitemapSwitch as SitemapSwitch ) as Void {
+        var currentStateDrawable = getStateDrawable();
+        var currentState = sitemapSwitch.getSwitchItem().getState();
+
+        // This expression returns
+        // true for PLAY
+        // false for PAUSE
+        // a String for any other state        
+        var currentStateParsed = 
+            currentState.equals( SwitchItem.ITEM_STATE_PLAY )
+            ? true
+            : currentState.equals( SwitchItem.ITEM_STATE_PAUSE )
+              ? false
+              : sitemapSwitch.getDisplayState();
+
+        // For PLAY/PAUSE ...
+        if( currentStateParsed instanceof Boolean ) {
+            // ... we either update the existing Drawable or create a new one ...
+            if( currentStateDrawable instanceof PlayPauseStateDrawable ) {
+                currentStateDrawable.setPlaying( currentStateParsed );
+            } else {
+                setStateDrawable( new PlayPauseStateDrawable( currentStateParsed ) );
+            }
+            // ... and do not display a text.
+            setStateTextResponsive( null );
+        } else if( currentStateParsed instanceof String ) {
+            // And for text we set the Drawable to null and instead
+            // show the text
+            setStateDrawable( null );
+            setStateTextResponsive( currentStateParsed );
+        }
+    }
+
     // Updates the menu item
     // This function is called when new data comes in from the
     // sitemap polling
@@ -129,11 +165,8 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
         
         // Store the new widget
         _sitemapSwitch = sitemapWidget;
-        
-        // Update the state drawable
-        _stateDrawable.setPlaying( 
-            _sitemapSwitch.getSwitchItem().getState().equals( SwitchItem.ITEM_STATE_PLAY ) 
-        );
+
+        updateDisplayState( _sitemapSwitch );
 
         // If the view is currently open, we update it as well      
         if( _playerView != null ) {
