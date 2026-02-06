@@ -162,7 +162,7 @@ class SitemapRequest extends BaseRequest {
         // - and there is no pending request
         if( ( _stopCount <= 0 || singleRequest ) && ! _hasPendingRequest ) {
             _requestCount++;
-            Logger.debug( "SitemapRequest.makeRequest (#" + _requestCount + ")" );
+            // Logger.debug( "SitemapRequest.makeRequest (#" + _requestCount + ")" );
             // Logger.debugMemory( null );
             
             // _hasPendingRequest has to be set to true BEFORE makeWebRequest
@@ -176,7 +176,7 @@ class SitemapRequest extends BaseRequest {
             Communications.makeWebRequest( _url, null, getBaseOptions(), method( :onReceive ) );
             _memoryUsedBeforeRequest = System.getSystemStats().usedMemory;
         } else {
-            Logger.debug( "SitemapRequest.makeRequest: stopped or has pending request, not executed" );
+            // Logger.debug( "SitemapRequest.makeRequest: stopped or has pending request, not executed" );
         }
     }
 
@@ -196,13 +196,13 @@ class SitemapRequest extends BaseRequest {
     ) as Void {
         _hasPendingRequest = false;
         _responseCount++;
-        Logger.debug( "SitemapRequest.onReceive: start (#" + _responseCount + ")" );
+        // Logger.debug( "SitemapRequest.onReceive: start (#" + _responseCount + ")" );
 
         // When stop() is called, and there is a pending request, then
         // _ignoreNextResponse is set true. onReceive() acts on this,
         // ignores the next response and resets the member
         if( _ignoreNextResponse ) {
-            Logger.debug( "SitemapRequest.onReceive: ignoring this response");
+            // Logger.debug( "SitemapRequest.onReceive: ignoring this response");
             _ignoreNextResponse = false;
             triggerNextRequest( false );
         } else {
@@ -241,7 +241,7 @@ class SitemapRequest extends BaseRequest {
                 handleException( ex );
             }
         }
-        Logger.debug( "SitemapRequest.onReceive: end");
+        // Logger.debug( "SitemapRequest.onReceive: end");
     }
 
     // Makes a timer-based web request
@@ -309,7 +309,7 @@ class SitemapRequest extends BaseRequest {
 
     // Start the request loop
     public function start() as Void {
-        Logger.debug( "SitemapRequest.start" );
+        // Logger.debug( "SitemapRequest.start" );
         if( _stopCount <= 0 ) {
             throw new GeneralException( "Tried to start already running sitemap request" );
         } else {
@@ -326,7 +326,7 @@ class SitemapRequest extends BaseRequest {
     // If there is a pending request, onReceive() is instructed to
     // ignore the next response
     public function stop() as Void {
-        Logger.debug( "SitemapRequest.stop" );
+        // Logger.debug( "SitemapRequest.stop" );
         _stopCount++;
         // When the SitemapRequest is stopped, all ongoing asynchronous
         // processing is also halted. Tasks in the task queue are atomic
@@ -334,7 +334,7 @@ class SitemapRequest extends BaseRequest {
         // data inconsistencies.
         AsyncTaskQueue.get().removeAll();
         if( _hasPendingRequest ) {
-            Logger.debug( "SitemapRequest.stop: pending request, will ignore the next response" );
+            // Logger.debug( "SitemapRequest.stop: pending request, will ignore the next response" );
             _ignoreNextResponse = true;
         }
     }

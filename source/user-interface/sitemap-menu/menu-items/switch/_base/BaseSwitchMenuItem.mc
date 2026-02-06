@@ -65,7 +65,7 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
     // Triggers `updateItemState()` for the subclass to update the state `Drawable`,
     // and then requests a UI redraw.
     public function onCommandComplete( syncMode as Boolean ) as Void {
-        Logger.debug( "BaseSwitchMenuItem.onCommandComplete" );
+        // Logger.debug( "BaseSwitchMenuItem.onCommandComplete" );
         if( _newState != null ) {
             if( ! syncMode ) {
                 WatchUi.requestUpdate();
@@ -80,7 +80,7 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
     // Called by the command request if an error occurred.
     // The `_newState` will not be applied.
     public function onException( ex as Exception ) as Void {
-        Logger.debug( "BaseSwitchMenuItem.onException" );
+        // Logger.debug( "BaseSwitchMenuItem.onException" );
         _newState = null;
     }
 

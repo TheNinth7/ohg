@@ -93,7 +93,7 @@ class BaseCommandRequest extends BaseRequest {
         // but the app still needs to switch into sync mode to connect to it. If _syncMode
         // is true, then we are already in sync mode and can send the command.
         if( ! ConnectivityHandler.get().isOnWifiConnection() || _syncMode ) {
-            Logger.debug( "BaseCommandRequest: sending command" );
+            // Logger.debug( "BaseCommandRequest: sending command" );
             makeWebRequest( cmd );
         } else {
 
@@ -133,7 +133,7 @@ class BaseCommandRequest extends BaseRequest {
             // In sync mode, sendCommand will stop the requests, and they will be started 
             // after sync mode has been completed by a asynchronous task
             if( ! _syncMode ) {
-                Logger.debug( "BaseCommandRequest.makeWebRequest: stopping sitemap request" );
+                // Logger.debug( "BaseCommandRequest.makeWebRequest: stopping sitemap request" );
                 SitemapRequest.get().stop();
             }
             
@@ -160,7 +160,7 @@ class BaseCommandRequest extends BaseRequest {
 
             // In sync mode, the sitemap request is restarted by a task scheduled by the `SyncDelegate`
             if( ! _syncMode ) {
-                Logger.debug( "BaseCommandRequest.makeWebRequest: restarting sitemap request after error" );
+                // Logger.debug( "BaseCommandRequest.makeWebRequest: restarting sitemap request after error" );
                 SitemapRequest.get().start();
             }
             
@@ -186,7 +186,7 @@ class BaseCommandRequest extends BaseRequest {
                 // In Wifi mode, sendCommand will stop the requests, and they will be started 
                 // after sync mode has been completed by a asynchronous task
                 if( ! _syncMode ) {
-                    Logger.debug( "BaseCommandRequest.onReceive: restarting sitemap request" );
+                    // Logger.debug( "BaseCommandRequest.onReceive: restarting sitemap request" );
                     SitemapRequest.get().start();
                 }
 
