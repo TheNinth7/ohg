@@ -47,7 +47,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
             }
         );
 
-        updateDisplayState( sitemapSwitch );
+        updateDisplayState();
     }
 
     // This function is called during a command request to identify
@@ -90,13 +90,48 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
         return true;
     }
 
-    // The delegate uses this function to send a command and update the state
+    // The delegate uses this function to send a command and update the state.
+    // In addition to sending the command, it updates the internal state
+    // immediately so the new state is displayed right away.
+    // It also notifies the base class to lock the state against further
+    // updates, if this behavior is enabled.
     public function sendCommand( newState as String ) as Void {
+        
+        // Technically there is no guarantee for a command request to
+        // be present, though if there is no command request, the
+        // full-screen view will not be available and now command
+        // should be sent. We check for it anyway.
         if( _commandRequest == null ) {
             throw new GeneralException( "PlayerMenuItem: state update not possible because command support is not active" );
         }
-        ( _commandRequest as BaseCommandRequest ).sendCommand( newState );
-        _sitemapSwitch.updateState( newState );
+        
+        // Send the command
+        _commandRequest.sendCommand( newState );
+        
+        // For PLAY and PAUSE commands we want to immediately show the
+        // new state, and thus update the currently stored state and 
+        // its display
+        if( newState.equals( SwitchItem.ITEM_STATE_PLAY ) 
+            || newState.equals( SwitchItem.ITEM_STATE_PAUSE )
+        ) {
+            // Perform an internal update of the state in the SitemapSwitch
+            _sitemapSwitch.updateState( newState );
+            
+            // Notify the base class that an internal state update was performed.
+            // This triggers the post-command hold time for state updates,
+            // if configured in the app settings.
+            notifyInternalStateUpdated();
+
+            // Update state displayed by the menu item
+            updateDisplayState();
+
+            // If the full-screen view is still open, then we update the view 
+            // and request a UI update.
+            if( _playerView != null ) {
+                _playerView.updateWidget( _sitemapSwitch );
+                WatchUi.requestUpdate();
+            }
+        }
     }
 
     // The delegate uses this function to send play/pause commands
@@ -119,9 +154,9 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     * For all other states (typically NO_STATE), the state is shown
     * using the base class’s responsive state text.
     */
-    private function updateDisplayState( sitemapSwitch as SitemapSwitch ) as Void {
+    private function updateDisplayState() as Void {
         var currentStateDrawable = getStateDrawable();
-        var currentState = sitemapSwitch.getSwitchItem().getState();
+        var currentState = _sitemapSwitch.getSwitchItem().getState();
 
         // This expression returns
         // true for PLAY
@@ -132,7 +167,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
             ? true
             : currentState.equals( SwitchItem.ITEM_STATE_PAUSE )
               ? false
-              : sitemapSwitch.getDisplayState();
+              : _sitemapSwitch.getDisplayState();
 
         // For PLAY/PAUSE ...
         if( currentStateParsed instanceof Boolean ) {
@@ -166,7 +201,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
         // Store the new widget
         _sitemapSwitch = sitemapWidget;
 
-        updateDisplayState( _sitemapSwitch );
+        updateDisplayState();
 
         // If the view is currently open, we update it as well      
         if( _playerView != null ) {
