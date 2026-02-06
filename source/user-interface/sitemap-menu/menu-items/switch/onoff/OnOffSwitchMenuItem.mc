@@ -154,12 +154,19 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
         _stateDrawable.setEnabled( _isEnabled, _smallIcon );
     }
 
+    (:debug)
+    public function debugArbeitszimmer( sitemapWidget as SitemapWidget ) as Void {
+        var switchItem = ( sitemapWidget as SitemapSwitch ).getSwitchItem();
+        var name = switchItem.getName();
+        if( name.equals( "Light_OG_AO_Schreibtisch_Switch" ) || name.equals( "CC_OG_AO_Lichter" ) ) {
+            Logger.debug( "OnOffSwitchMenuItem.updateWidget: " + name + "=" + switchItem.getState() );
+        }
+    }
+
     // Override the update method of the super class
     // and obtain the updated list of commmand mappings
     public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
-        if( ( sitemapWidget as SitemapSwitch ).getSwitchItem().getName().equals( "Light_OG_AO_Schreibtisch_Switch" ) ) {
-            Logger.debug( "OnOffSwitchMenuItem.updateWidget: new schreibtisch state is " + ( sitemapWidget as SitemapSwitch ).getSwitchItem().getState() );
-        }
+        debugArbeitszimmer( sitemapWidget );
         BaseSwitchMenuItem.updateWidget( sitemapWidget );
         _smallIcon = sitemapWidget.getLinkedPage() != null;
         // Update the display state

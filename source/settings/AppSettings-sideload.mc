@@ -1,4 +1,5 @@
 import Toybox.Lang;
+import Toybox.Time;
 import Toybox.Application.Properties;
 
 /*
@@ -41,6 +42,6 @@ class AppSettings {
     public var vNeedsBasicAuth as Boolean = false;
     public var user as String = "";
     public var password as String?;
-    public var pollingInterval as Number = 3000;
+    public var pollingInterval as Number = 0;
     public var postCommandHoldTime as Duration = new Duration( 3 );
 }
