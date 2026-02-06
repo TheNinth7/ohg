@@ -68,7 +68,9 @@ class AddOrUpdateMenuItemTask extends BaseSitemapProcessorTask {
             var item = _pageMenu.getItem( _index ) as BaseWidgetMenuItem;
             if( item.isMyType( _sitemapWidget ) ) {
                 // If the type is the same, we update the menu item
-                item.updateWidget( _sitemapWidget );
+                if( ! item.isInHoldTime() ) {
+                    item.updateWidget( _sitemapWidget );
+                }
             } else {
                 // If the type is not the same, we create a new item
                 // and replace the existing menu item with it

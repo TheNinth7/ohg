@@ -1,4 +1,5 @@
 import Toybox.Lang;
+import Toybox.Time;
 import Toybox.Application.Properties;
 
 /*
@@ -27,6 +28,7 @@ class AppSettings {
     public static function getUser() as String { return get().user; }
     public static function getPassword() as String { return get().password as String; }
     public static function getPollingInterval() as Number { return get().pollingInterval; }
+    public static function getPostCommandHoldTime() as Duration { return get().postCommandHoldTime; }
 
     // Prefix of the server-specific settings
     // Currently only index=0 is supported (e.g. url_0),
@@ -40,6 +42,7 @@ class AppSettings {
     private const SUPPRESS_EMRES_PREFIX = "suppressEmptyResponseExceptions_";
     private const WEBHOOK_PREFIX = "webhook_";
     private const INTERVAL_PREFIX = "pollingInterval_";
+    private const POST_COMMAND_HOLD_TIME_PREFIX = "postCommandHoldTime_";
 
     // The constructor stores all settings in the following
     // variables. They need to be public, because otherwise
@@ -54,6 +57,7 @@ class AppSettings {
     public var user as String;
     public var password as String?;
     public var pollingInterval as Number;
+    public var postCommandHoldTime as Duration;
 
     /* Constants to be set for sideloading a build
        (sideloaded builds do not support settings configuration via UI)
@@ -103,6 +107,10 @@ class AppSettings {
         
         // The polling interval defines how often sitemap data is polled
         pollingInterval = Properties.getValue( INTERVAL_PREFIX + _index ) as Number;
+
+        // The hold time defines the amount of time (in ms) for which a state remains locked
+        // after a command has been sent
+        postCommandHoldTime = new Duration( Properties.getValue( POST_COMMAND_HOLD_TIME_PREFIX + _index ) as Number / 1000 );
     }
 
     // Helper function that reads a string setting and throws an error if it

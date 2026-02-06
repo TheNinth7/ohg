@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
+import Toybox.Time;
 
 /*
  * Abstract base class for menu items that display sitemap widgets.
@@ -72,10 +73,26 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         return _page != null;
     }
     
+    public function isInHoldTime() as Boolean {
+        var postCommandHoldTime = AppSettings.getPostCommandHoldTime();
+        if( _lastInternalStateUpdate != null && postCommandHoldTime.value() > 0 ) {
+            return Time.now().lessThan( _lastInternalStateUpdate.add( postCommandHoldTime ) );
+        } else {
+            return false;
+        }
+    }
+
     // Subclasses must override this method to determine whether the given
     // `SitemapWidget` instance is compatible with this menu item type.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean { 
         throw new AbstractMethodException( "BaseSitemapMenuItem.getItemType" );
+    }
+
+
+    private var _lastInternalStateUpdate as Moment?;
+
+    protected function notifyInternalStateUpdated() as Void {
+        _lastInternalStateUpdate = Time.now();
     }
 
     // Handles selection of the menu item.

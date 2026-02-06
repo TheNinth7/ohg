@@ -27,6 +27,7 @@ class AppSettings {
     public static function getUser() as String { return get().user; }
     public static function getPassword() as String { return get().password as String; }
     public static function getPollingInterval() as Number { return get().pollingInterval; }
+    public static function getPostCommandHoldTime() as Duration { return get().postCommandHoldTime; }
 
     // The constructor stores all settings in the following
     // variables. They need to be public, because otherwise
@@ -41,4 +42,5 @@ class AppSettings {
     public var user as String = "";
     public var password as String?;
     public var pollingInterval as Number = 3000;
+    public var postCommandHoldTime as Duration = new Duration( 3 );
 }

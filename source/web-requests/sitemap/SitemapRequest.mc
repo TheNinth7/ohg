@@ -162,7 +162,7 @@ class SitemapRequest extends BaseRequest {
         // - and there is no pending request
         if( ( _stopCount <= 0 || singleRequest ) && ! _hasPendingRequest ) {
             _requestCount++;
-            // Logger.debug( "SitemapRequest.makeRequest (#" + _requestCount + ")" );
+            Logger.debug( "SitemapRequest.makeRequest (#" + _requestCount + ")" );
             // Logger.debugMemory( null );
             
             // _hasPendingRequest has to be set to true BEFORE makeWebRequest
@@ -196,7 +196,7 @@ class SitemapRequest extends BaseRequest {
     ) as Void {
         _hasPendingRequest = false;
         _responseCount++;
-        // Logger.debug( "SitemapRequest.onReceive: start (#" + _responseCount + ")" );
+        Logger.debug( "SitemapRequest.onReceive: start (#" + _responseCount + ")" );
 
         // When stop() is called, and there is a pending request, then
         // _ignoreNextResponse is set true. onReceive() acts on this,
@@ -326,7 +326,6 @@ class SitemapRequest extends BaseRequest {
     // ignore the next response
     public function stop() as Void {
         // Logger.debug( "SitemapRequest.stop" );
-        _timer.stop();
         _stopCount++;
         // When the SitemapRequest is stopped, all ongoing asynchronous
         // processing is also halted. Tasks in the task queue are atomic

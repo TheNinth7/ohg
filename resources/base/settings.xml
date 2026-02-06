@@ -8,6 +8,7 @@
         <property id="password_0" type="string"></property>
         <property id="suppressEmptyResponseExceptions_0" type="boolean">false</property>
         <property id="pollingInterval_0" type="number">3000</property>
+        <property id="postCommandHoldTime_0" type="number">0</property>
     </properties>
 
     <settings>
@@ -33,6 +34,9 @@
             <settingConfig type="boolean" required="false"/>
         </setting>
         <setting propertyKey="@Properties.pollingInterval_0" title="Polling interval (ms): Time between data requests to your openHAB instance. Set to 0 to request new data immediately after the previous response is processed.">
+            <settingConfig type="numeric" required="false" min="0" max="10000"/>
+        </setting>
+        <setting propertyKey="@Properties.postCommandHoldTime_0" title="Post command hold time (ms): Time during which state updates are ignored after a command is sent. This prevents temporary state flip-flopping while the system processes the command and applies the new state.">
             <settingConfig type="numeric" required="false" min="0" max="10000"/>
         </setting>
     </settings>
