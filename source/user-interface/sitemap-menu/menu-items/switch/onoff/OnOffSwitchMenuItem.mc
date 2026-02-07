@@ -61,7 +61,11 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
                 ? SwitchItem.ITEM_STATE_OFF 
                 : SwitchItem.ITEM_STATE_ON;
         } else {
-            showCommandSelection();
+            var menuEntries = [
+                [SwitchItem.ITEM_STATE_ON, SwitchItem.ITEM_STATE_ON],
+                [SwitchItem.ITEM_STATE_OFF, SwitchItem.ITEM_STATE_OFF]
+            ];
+            showCommandSelection( menuEntries );
             return null;
         }
     }
@@ -106,46 +110,6 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
         }
         throw new GeneralException( "OnOffSwitchMenuItem: state '" + itemState + "' is not supported" );
     }
-
-
-    // showCommandSelection displays a menu that lets the user choose either an ON
-    // or OFF command. This is used when the current state of the item is not
-    // available.
-    // There are two implementations:
-    // - ActionMenu on devices that support it
-    // - CustomMenu on devices where ActionMenu is not available (e.g. Edge devices)
-    
-    // ActionMenu implementation
-    (:exclForFullMenu)
-    private function showCommandSelection() as Void {
-        var actionMenu = new ActionMenu( null );
-        actionMenu.addItem( new ActionMenuItem( { :label => SwitchItem.ITEM_STATE_ON }, SwitchItem.ITEM_STATE_ON ) );
-        actionMenu.addItem( new ActionMenuItem( { :label => SwitchItem.ITEM_STATE_OFF }, SwitchItem.ITEM_STATE_OFF ) );
-        WatchUi.showActionMenu( actionMenu, new SwitchActionMenuDelegate( self ) );
-    }
-
-    // CustomMenu implementation
-    (:exclForActionMenu)
-    private function showCommandSelection() as Void {
-        // Instantiate the menu
-        var menu = new CommandMenu( _sitemapSwitch.getLabel() );
-        menu.addItem( new CommandMenuItem( SwitchItem.ITEM_STATE_ON, SwitchItem.ITEM_STATE_ON ) );
-        menu.addItem( new CommandMenuItem( SwitchItem.ITEM_STATE_OFF, SwitchItem.ITEM_STATE_OFF ) );
-        ViewHandler.pushView( menu, new CommandMenuDelegate( self ), WatchUi.SLIDE_LEFT );
-    }
-
-    /*
-    // Menu2 implementation, not used since CustomMenu aligns better visually with the rest of the menu structure
-    (:exclForActionMenu)
-    private function showCommandSelection() as Void {
-        // Instantiate the menu
-        var menu = new Menu2( { :title => _sitemapSwitch.getLabel() } );
-        menu.addItem( new MenuItem( SwitchItem.ITEM_STATE_ON, null, SwitchItem.ITEM_STATE_ON, {} ) );
-        menu.addItem( new MenuItem( SwitchItem.ITEM_STATE_OFF, null, SwitchItem.ITEM_STATE_OFF, {} ) );
-        ViewHandler.pushView( menu, new CommandMenuDelegate( self ), WatchUi.SLIDE_LEFT );
-    }
-    */
-
 
     // Update the member and Drawable
     public function updateItemState( state as String ) as Void {

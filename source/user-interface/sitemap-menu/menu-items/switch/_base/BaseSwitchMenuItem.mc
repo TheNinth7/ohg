@@ -110,6 +110,48 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
         }
     }
 
+    // showCommandSelection displays a menu that lets the user choose from a list of
+    // commands. It is used for generic switches with more than two states, as well as
+    // for two-state switches when the current state is unknown and toggling is
+    // therefore not possible.
+    //
+    // There are two implementations:
+    // - ActionMenu on devices that support it
+    // - CustomMenu on devices where ActionMenu is not available (e.g. Edge devices)
+    
+    // Types for passing in data to showCommandSelection
+    typedef CommandMenuEntry as [String, String];
+    typedef CommandMenuEntries as Array<CommandMenuEntry>;
+
+    // ActionMenu implementation
+    (:exclForFullMenu)
+    protected function showCommandSelection( menuEntries as CommandMenuEntries ) as Void {
+        var actionMenu = new ActionMenu( null );
+        for( var i = 0; i < menuEntries.size(); i++ ) {
+            actionMenu.addItem( 
+                new ActionMenuItem( { 
+                    :label => menuEntries[i][0] }, 
+                    menuEntries[i][1] 
+            ) );
+        }
+        WatchUi.showActionMenu( actionMenu, new SwitchActionMenuDelegate( self ) );
+    }
+
+    // CustomMenu implementation
+    (:exclForActionMenu)
+    protected function showCommandSelection( menuEntries as CommandMenuEntries ) as Void {
+        // Instantiate the menu
+        var menu = new CommandMenu( _sitemapSwitch.getLabel() );
+        for( var i = 0; i < menuEntries.size(); i++ ) {
+            menu.addItem( 
+                new CommandMenuItem( 
+                    menuEntries[i][0], 
+                    menuEntries[i][1] 
+            ) );
+        }
+        ViewHandler.pushView( menu, new CommandMenuDelegate( self ), WatchUi.SLIDE_LEFT );
+    }
+
     // updateItemState() is called when a state change occurs—either received
     // from the server or triggered by user interaction. This method centralizes
     // logic that should apply to both scenarios.

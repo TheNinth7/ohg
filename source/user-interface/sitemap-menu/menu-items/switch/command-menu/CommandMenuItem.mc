@@ -35,7 +35,9 @@ class CommandMenuItem extends BaseMenuItem {
         var dcWidth = dc.getWidth();
         var dcHeight = dc.getHeight();
 
-        var yCenter = ( dcHeight/2 ).toNumber();
+        var font = Constants.UI_MENU_ITEM_FONTS[0];
+
+        var yCenter = dcHeight/2 - Graphics.getFontHeight( font )/2 + Graphics.getFontDescent( font )/2;
 
         // Apply the left padding
         var locX = ( dcWidth * Constants.UI_MENU_ITEM_PADDING_LEFT_FACTOR ).toNumber();
@@ -45,7 +47,7 @@ class CommandMenuItem extends BaseMenuItem {
         // Create the Drawables
         _labelTextArea = new Text( {
             :text => _label,
-            :font => Constants.UI_MENU_ITEM_FONTS[0],
+            :font => font,
             :locX => locX,
             :locY => yCenter,
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
