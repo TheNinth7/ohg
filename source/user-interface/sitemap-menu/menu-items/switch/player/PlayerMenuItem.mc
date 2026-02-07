@@ -19,6 +19,10 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     // For sending commands
     private var _commandRequest as BaseCommandRequest?;
 
+    // If the state is changed, the new state is stored in `_newState` and 
+    // only applied after the request succeeds.
+    private var _newState as String?;
+
     // The full-screen view is instantiated only when the
     // menu item is selected
     private var _playerView as PlayerView?;
@@ -58,64 +62,16 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
 
     // Nothing to be done, but needed to fullfil the delegate interface
     function onCommandComplete( syncMode as Boolean ) as Void {
-    }
-
-    // Exceptions from the command request are handed
-    // over to the ExceptionHandler
-    function onException( ex as Exception ) as Void {
-        ExceptionHandler.handleBackgroundException( ex );
-    }
-
-    // Called by the delegate when the view is exited
-    function onReturn() as Void {
-        _playerView = null;
-    }
-
-    // When the menu item is selected, the full-screen 
-    // view is initialized and pushed to the view stack
-    public function onSelect() as Boolean {
-        // First we see if the base class handles the event ...
-        if( ! BaseWidgetMenuItem.onSelect() ) {
-            // ... if not, and we do have a command request, then we
-            // initialize a new full-screen view and display it
-            if( _commandRequest != null ) {
-                _playerView = new PlayerView( _sitemapSwitch );
-                ViewHandler.pushView(
-                    _playerView,
-                    new PlayerDelegate( self ),
-                    WatchUi.SLIDE_LEFT
-                );
-            }
-        }
-        return true;
-    }
-
-    // The delegate uses this function to send a command and update the state.
-    // In addition to sending the command, it updates the internal state
-    // immediately so the new state is displayed right away.
-    // It also notifies the base class to lock the state against further
-    // updates, if this behavior is enabled.
-    public function sendCommand( newState as String ) as Void {
-        
-        // Technically there is no guarantee for a command request to
-        // be present, though if there is no command request, the
-        // full-screen view will not be available and now command
-        // should be sent. We check for it anyway.
-        if( _commandRequest == null ) {
-            throw new GeneralException( "PlayerMenuItem: state update not possible because command support is not active" );
-        }
-        
-        // Send the command
-        _commandRequest.sendCommand( newState );
-        
         // For PLAY and PAUSE commands we want to immediately show the
         // new state, and thus update the currently stored state and 
         // its display
-        if( newState.equals( SwitchItem.ITEM_STATE_PLAY ) 
-            || newState.equals( SwitchItem.ITEM_STATE_PAUSE )
+        if( _newState != null 
+            && ! syncMode
+            && ( _newState.equals( SwitchItem.ITEM_STATE_PLAY ) 
+                 || _newState.equals( SwitchItem.ITEM_STATE_PAUSE ) )
         ) {
             // Perform an internal update of the state in the SitemapSwitch
-            _sitemapSwitch.updateState( newState );
+            _sitemapSwitch.updateState( _newState );
             
             // Notify the base class that an internal state update was performed.
             // This triggers the post-command hold time for state updates,
@@ -132,6 +88,72 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
                 WatchUi.requestUpdate();
             }
         }
+        _newState = null;
+    }
+
+    // Exceptions from the command request are handed
+    // over to the ExceptionHandler
+    function onException( ex as Exception ) as Void {
+        _newState = null;
+        ExceptionHandler.handleBackgroundException( ex );
+    }
+
+    // Called by the delegate when the view is exited
+    function onReturn() as Void {
+        _playerView = null;
+    }
+
+    // When the menu item is selected, either the full-screen view is initialized
+    // and pushed onto the view stack, or, when in Wi-Fi mode, a command menu is
+    // shown to let the user select one of the four available commands.
+    public function onSelect() as Boolean {
+        // First we see if the base class handles the event ...
+        if( ! BaseWidgetMenuItem.onSelect() ) {
+            // ... if not, and we do have a command request, then we
+            // initialize a new full-screen view and display it
+            if( _commandRequest != null ) {
+                if( _sitemapSwitch.getSwitchItem().hasState() ) {
+                    _playerView = new PlayerView( _sitemapSwitch );
+                    ViewHandler.pushView(
+                        _playerView,
+                        new PlayerDelegate( self ),
+                        WatchUi.SLIDE_LEFT
+                    );
+                } else {
+                    CommandMenuHandler.showCommandSelection( 
+                        [ ["Play", SwitchItem.ITEM_STATE_PLAY],
+                          ["Pause", SwitchItem.ITEM_STATE_PAUSE],
+                          ["Next", SwitchItem.ITEM_COMMAND_NEXT],
+                          ["Previous", SwitchItem.ITEM_COMMAND_PREVIOUS] ],
+                        self 
+                    );
+                }
+            }
+        }
+        return true;
+    }
+
+    // The delegate uses this function to send a command and update the state.
+    // In addition to sending the command, it updates the internal state
+    // immediately so the new state is displayed right away.
+    // It also notifies the base class to lock the state against further
+    // updates, if this behavior is enabled.
+    public function sendCommand( newState as String ) as Void {
+        
+        // Store the new state, it will be applied if the request
+        // suceeds in onCommandComplete 
+        _newState = newState;
+
+        // Technically there is no guarantee for a command request to
+        // be present, though if there is no command request, the
+        // full-screen view will not be available and now command
+        // should be sent. We check for it anyway.
+        if( _commandRequest == null ) {
+            throw new GeneralException( "PlayerMenuItem: state update not possible because command support is not active" );
+        }
+        
+        // Send the command
+        _commandRequest.sendCommand( newState );
     }
 
     // The delegate uses this function to send play/pause commands

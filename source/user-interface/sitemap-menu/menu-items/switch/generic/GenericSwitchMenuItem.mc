@@ -96,7 +96,7 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
         }
         
         // ... and show the menu
-        showCommandSelection( menuEntries );
+        CommandMenuHandler.showCommandSelection( menuEntries, self );
 
         // Returning null tells the super class to not
         // send any command and instead wait for the

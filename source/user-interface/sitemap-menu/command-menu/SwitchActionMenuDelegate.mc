@@ -11,10 +11,10 @@ import Toybox.WatchUi;
 (:exclForFullMenu)
 class SwitchActionMenuDelegate extends ActionMenuDelegate {
 
-    var _menuItem as BaseSwitchMenuItem;
+    var _menuItem as CommandMenuDelegate;
 
     // Constructor
-    public function initialize( menuItem as BaseSwitchMenuItem ) {
+    public function initialize( menuItem as CommandMenuDelegate ) {
         ActionMenuDelegate.initialize();
         _menuItem = menuItem;
     }
