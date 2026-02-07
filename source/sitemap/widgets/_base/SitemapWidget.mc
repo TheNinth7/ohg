@@ -164,9 +164,9 @@ class SitemapWidget extends SitemapElement {
     // The value color is applied to the displayed state
     public function getValueColor() as ColorType? { return _valueColor; }
 
-    // Determines if a display state is available
+    // Determines if a remote display state is available
     public function hasRemoteDisplayState() as Boolean {
-        return ! _displayState.equals( NO_DISPLAY_STATE );
+        return ! _remoteDisplayState.equals( NO_DISPLAY_STATE );
     }
 
     // Determines if a display state is available
