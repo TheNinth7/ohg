@@ -79,7 +79,8 @@ class BaseMenu extends CustomMenu {
         CustomMenu.initialize( 
             options[:itemHeight] as Number,
             Constants.UI_COLOR_BACKGROUND, 
-            parentOptions );
+            parentOptions 
+        );
     }
 
     // The superclass already defines setTitle() with a Drawable argument,
