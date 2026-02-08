@@ -11,12 +11,12 @@ import Toybox.WatchUi;
 (:exclForFullMenu)
 class SwitchActionMenuDelegate extends ActionMenuDelegate {
 
-    var _menuItem as CommandMenuDelegate;
+    var _delegate as SendCommandDelegate;
 
     // Constructor
-    public function initialize( menuItem as CommandMenuDelegate ) {
+    public function initialize( delegate as SendCommandDelegate ) {
         ActionMenuDelegate.initialize();
-        _menuItem = menuItem;
+        _delegate = delegate;
     }
 
     // on select, send the command
@@ -26,7 +26,7 @@ class SwitchActionMenuDelegate extends ActionMenuDelegate {
             // The action menu items have the command as Id
             var command = item.getId();
             if( command instanceof String ) {
-                _menuItem.sendCommand( command );
+                _delegate.sendCommand( command );
             } else {
                 throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_COMMAND );
             }

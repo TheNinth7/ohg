@@ -121,6 +121,7 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
                     );
                 } else {
                     CommandMenuHandler.showCommandSelection( 
+                        _sitemapSwitch.getLabel(),
                         [ ["Play", SwitchItem.ITEM_STATE_PLAY],
                           ["Pause", SwitchItem.ITEM_STATE_PAUSE],
                           ["Next", SwitchItem.ITEM_COMMAND_NEXT],

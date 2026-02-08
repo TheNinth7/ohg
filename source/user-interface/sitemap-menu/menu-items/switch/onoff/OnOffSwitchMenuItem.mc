@@ -62,6 +62,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
                 : SwitchItem.ITEM_STATE_ON;
         } else {
             CommandMenuHandler.showCommandSelection( 
+                _sitemapSwitch.getLabel(),
                 [ [SwitchItem.ITEM_STATE_ON, SwitchItem.ITEM_STATE_ON],
                   [SwitchItem.ITEM_STATE_OFF, SwitchItem.ITEM_STATE_OFF] ], 
                 self 

@@ -16,7 +16,7 @@ typedef CommandMenuEntries as Array<CommandMenuEntry>;
 
 // Sending the actual command done by a delegate passed into
 // showCommandSelection, which needs to fullfil this interface
-typedef CommandMenuDelegate as interface {
+typedef SendCommandDelegate as interface {
     function sendCommand( cmd as String ) as Void;
 };
 
@@ -24,8 +24,9 @@ class CommandMenuHandler {
     // ActionMenu implementation
     (:exclForFullMenu)
     public static function showCommandSelection( 
+        label as String,
         menuEntries as CommandMenuEntries, 
-        delegate as CommandMenuDelegate 
+        delegate as SendCommandDelegate 
     ) as Void {
         var actionMenu = new ActionMenu( null );
         for( var i = 0; i < menuEntries.size(); i++ ) {
@@ -41,11 +42,12 @@ class CommandMenuHandler {
     // CustomMenu implementation
     (:exclForActionMenu)
     public static function showCommandSelection( 
+        label as String,
         menuEntries as CommandMenuEntries, 
-        delegate as CommandMenuDelegate 
+        delegate as SendCommandDelegate 
     ) as Void {
         // Instantiate the menu
-        var menu = new CommandMenu( _sitemapSwitch.getLabel() );
+        var menu = new CommandMenu( label );
         for( var i = 0; i < menuEntries.size(); i++ ) {
             menu.addItem( 
                 new CommandMenuItem( 
