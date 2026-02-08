@@ -10,6 +10,9 @@ import Toybox.Lang;
  * As it is only needed once, it is implemented as a singleton.
  */
 class HomepageMenuDelegate extends PageMenuDelegate {
+    
+    /******* STATIC *******/ 
+    
     // Singleton accessor
     private static var _instance as HomepageMenuDelegate?;
     public static function get() as HomepageMenuDelegate {
@@ -18,6 +21,8 @@ class HomepageMenuDelegate extends PageMenuDelegate {
         }
         return _instance as HomepageMenuDelegate;
     }
+
+    /******* INSTANCE *******/ 
 
     // Constructor
     private function initialize() {

@@ -9,13 +9,8 @@ import Toybox.Lang;
  */
 class PageMenuDelegate extends WatchUi.Menu2InputDelegate {
     
-    // Needs to be public despite this being a singleton class,
-    // due to a Monkey C quirk:
-    // With protected, the static get() cannot access it
-    // With private, the derived HomepageMenuDelegate cannot access
-    public function initialize() {
-        Menu2InputDelegate.initialize();
-    }
+    /******* STATIC *******/ 
+
     // Singleton accessor
     private static var _instance as PageMenuDelegate?;
     public static function get() as PageMenuDelegate {
@@ -23,6 +18,16 @@ class PageMenuDelegate extends WatchUi.Menu2InputDelegate {
             _instance = new PageMenuDelegate();
         }
         return _instance as PageMenuDelegate;
+    }
+
+    /******* INSTANCE *******/ 
+
+    // Needs to be public despite this being a singleton class,
+    // due to a Monkey C quirk:
+    // With protected, the static get() cannot access it
+    // With private, the derived HomepageMenuDelegate cannot access
+    public function initialize() {
+        Menu2InputDelegate.initialize();
     }
     
     // onSelect() will call the event handler of the menu item,
