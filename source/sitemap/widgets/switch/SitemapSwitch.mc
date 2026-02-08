@@ -120,7 +120,7 @@ class SitemapSwitch extends SitemapWidget {
         var switchDisplayState = null;
 
         if(    ! _switchItem.getType().equals( "Dimmer" )
-            && ! _switchItem.getType().equals( "Rollershutter" )
+            // && ! _switchItem.getType().equals( "Rollershutter" )
         ) {
             // First priority: lookup the mappings defined for the widget
             switchDisplayState = _mappings.lookup( _switchItem.getState() );
