@@ -30,9 +30,9 @@
     <bitmap id="iconNextHint" scaleY="7%" filename="next-hint.svg" dithering="none" />
     <bitmap id="iconPreviousHint" scaleY="7%" filename="previous-hint.svg" dithering="none" />
 
-    <bitmap id="iconWifi" scaleY="5%" filename="wifi.svg" dithering="none" />
-    <bitmap id="iconSearchForWifi" scaleY="50%" filename="wifi-search.svg" dithering="none" />
-    <bitmap id="iconHourglassBlue" scaleY="50%" filename="hourglass-blue.svg" dithering="none" />
-    <bitmap id="iconHourglassWhite" scaleY="50%" filename="hourglass-white.svg" dithering="none" />
+    <bitmap id="iconWifi" scaleX="5%" filename="wifi.svg" dithering="none" />
+    <bitmap id="iconSearchForWifi" scaleX="50%" filename="wifi-search.svg" dithering="none" />
+    <bitmap id="iconHourglassBlue" scaleX="50%" filename="hourglass-blue.svg" dithering="none" />
+    <bitmap id="iconHourglassWhite" scaleX="50%" filename="hourglass-white.svg" dithering="none" />
 
 </drawables>

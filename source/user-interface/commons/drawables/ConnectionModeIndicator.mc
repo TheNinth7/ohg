@@ -25,9 +25,12 @@ class ConnectionModeIndicator extends Bitmap {
     // Accepts the y-coordinate of the intended center of the indicator
     // and derives the Drawable's locY value from it.
     public function setCenterY( centerY as Number ) as Void {
-        setLocation(
-            WatchUi.LAYOUT_HALIGN_CENTER,
-            centerY - ( getDimensions()[1] / 2 ).toNumber()
-        );
+        var spacing = centerY - ( getDimensions()[1] / 2 ).toNumber();
+        
+        if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
+            setLocation( spacing, spacing );
+        } else {
+            setLocation( WatchUi.LAYOUT_HALIGN_CENTER, spacing );
+        }
     }
 }
