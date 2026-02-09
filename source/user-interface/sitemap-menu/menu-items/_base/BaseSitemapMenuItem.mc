@@ -241,17 +241,9 @@ class BaseSitemapMenuItem extends BaseMenuItem {
                 && ( rightSideDrawable instanceof StateText
                      || rightSideDrawable instanceof TextArea )
             ) {
-                // StateText is derived from Text. For Text, the width and height
-                // are only populated after drawing. Therefore, we need to use
-                // a custom function to access the height.
-                var rightSideDrawableHeight = 
-                    rightSideDrawable instanceof StateText                
-                    ? rightSideDrawable.getFontHeight()
-                    : rightSideDrawable.height;
-
                 rightSideDrawableLocY = 
                     yCenter 
-                    - rightSideDrawableHeight/2 
+                    - LittleHelpers.getDrawableHeight( rightSideDrawable )/2 
                     + Constants.UI_MENU_ITEM_LABEL_OFFSET;
             } else {
                 rightSideDrawableLocY = WatchUi.LAYOUT_VALIGN_CENTER;
@@ -278,13 +270,6 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         );
     }
 
-/*
-    private function calculateTextElementLocY( yCenter as Number ) as Number {
-        return Constants.UI_MENU_ITEM_LABEL_OFFSET != 0
-                ? yCenter - _labelTextArea.height/2 + Constants.UI_MENU_ITEM_LABEL_OFFSET
-                : WatchUi.LAYOUT_VALIGN_CENTER;
-    }
-*/
     // Optional override to handle item selection (e.g., enter button or touch tap).
     // @return true if the event was handled, false otherwise.
     // In class hierarchies, a subclass can call the parent's onSelect and proceed

@@ -30,9 +30,9 @@ class LittleHelpers {
     }
 
     // Returns the width of a Drawable, taking into
-    // consideration that the `StateText` as a 
+    // consideration that the `StateText` has a 
     // precomputedWidth property, to compensate for the
-    // incomplete implementation of the API's `Text`, 
+    // incomplete implementation of the API's `Text.width`, 
     // which is not populated until after the draw
     public static function getDrawableWidthOrNull( drawable as Drawable? ) as Number? {
         return
@@ -45,5 +45,17 @@ class LittleHelpers {
             drawable instanceof StateText
                 ? drawable.precomputedWidth
                 : drawable.width.toNumber();
+    }
+
+    // Returns the height of a Drawable, taking into
+    // consideration that the `StateText` has a 
+    // getFontHeight function, to compensate for the
+    // incomplete implementation of the API's `Text.height`, 
+    // which is not populated until after the draw
+    public static function getDrawableHeight( drawable as Drawable ) as Number {
+        return
+                drawable instanceof StateText                
+                ? drawable.getFontHeight()
+                : drawable.height.toNumber();
     }
 }
