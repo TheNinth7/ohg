@@ -18,7 +18,7 @@ class Constants extends EdgeDefaultConstants {
     // - negative position indicates y coordinate on the left side of the screen
     public static const UI_INPUT_HINT_POSITIONS as Array<Number> = [
         ( DefaultConstants.UI_SCREEN_HEIGHT * 0.125 ).toNumber(), 
-        ( DefaultConstants.UI_SCREEN_HEIGHT * 0.675 ).toNumber(), 
+        ( DefaultConstants.UI_SCREEN_HEIGHT * 0.755 ).toNumber(), 
         -( DefaultConstants.UI_SCREEN_HEIGHT * 0.495 ).toNumber(), 
         -( DefaultConstants.UI_SCREEN_HEIGHT * 0.755 ).toNumber() 
     ];
