@@ -17,4 +17,8 @@ class GlanceDefaultConstants {
     public static const UI_GLANCE_FONTS as Array<FontDefinition> = [Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE];
 
     public static const UI_FONT_COLOR = Graphics.COLOR_WHITE;
+
+    // This offset in pixel is applied to the positioning of glance text
+    // Positive means the label is shifted down, negative means up
+    public static const UI_GLANCE_TEXT_OFFSET as Number = 0;
 }

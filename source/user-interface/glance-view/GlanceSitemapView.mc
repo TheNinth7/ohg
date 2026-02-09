@@ -43,6 +43,15 @@ class GlanceSitemapView extends WatchUi.GlanceView {
             } else {
                 _textArea.setText( "openHAB" );
             }
+            
+            // If an offset is defined in the constants,
+            // we apply it here (currently used for Edge devices only)
+            if( GlanceConstants.UI_GLANCE_TEXT_OFFSET != 0 ) {
+                _textArea.setLocation( 
+                    WatchUi.LAYOUT_HALIGN_CENTER, 
+                    dc.getHeight()/2 - _textArea.height/2 + GlanceConstants.UI_GLANCE_TEXT_OFFSET
+                );
+            }
         } catch( ex ) {
             // Show any errors
             // Note that communication errors are caught by the sitemap
