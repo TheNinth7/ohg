@@ -228,7 +228,37 @@ class BaseSitemapMenuItem extends BaseMenuItem {
 
             rightX -= LittleHelpers.getDrawableWidth( rightSideDrawable );
 
-            rightSideDrawable.setLocation( rightX, WatchUi.LAYOUT_VALIGN_CENTER );
+            // Calculate the locY coordinate.
+            // Elements are normally vertically centered. However, on some devices
+            // (currently all Edge devices), text elements require a vertical offset
+            // defined in the constants.
+            //
+            // If such an offset is defined, we compute locY manually using that offset.
+            // If no offset is defined, and for non-text elements, we use
+            // WatchUi.LAYOUT_VALIGN_CENTER.
+            var rightSideDrawableLocY;
+            if( Constants.UI_MENU_ITEM_LABEL_OFFSET != 0
+                && ( rightSideDrawable instanceof StateText
+                     || rightSideDrawable instanceof TextArea )
+            ) {
+                // StateText is derived from Text. For Text, the width and height
+                // are only populated after drawing. Therefore, we need to use
+                // a custom function to access the height.
+                var rightSideDrawableHeight = 
+                    rightSideDrawable instanceof StateText                
+                    ? rightSideDrawable.getFontHeight()
+                    : rightSideDrawable.height;
+
+                rightSideDrawableLocY = 
+                    yCenter 
+                    - rightSideDrawableHeight/2 
+                    + Constants.UI_MENU_ITEM_LABEL_OFFSET;
+            } else {
+                rightSideDrawableLocY = WatchUi.LAYOUT_VALIGN_CENTER;
+            }
+
+            // Set the location
+            rightSideDrawable.setLocation( rightX, rightSideDrawableLocY );
 
             if( i < rightSideDrawables.size() - 1 ) {
                 rightX -= stateSpacing;
@@ -237,8 +267,8 @@ class BaseSitemapMenuItem extends BaseMenuItem {
             }
         }
 
-        // Finally the text area is initialized
-        // At the calculated leftX and width
+        // Finally, initialize the text area at the calculated leftX and width.
+        // If a text offset is defined, apply it here as well.
         _labelTextArea.setSize( rightX - leftX, dcHeight );
         _labelTextArea.setLocation( 
             leftX, 
@@ -248,6 +278,13 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         );
     }
 
+/*
+    private function calculateTextElementLocY( yCenter as Number ) as Number {
+        return Constants.UI_MENU_ITEM_LABEL_OFFSET != 0
+                ? yCenter - _labelTextArea.height/2 + Constants.UI_MENU_ITEM_LABEL_OFFSET
+                : WatchUi.LAYOUT_VALIGN_CENTER;
+    }
+*/
     // Optional override to handle item selection (e.g., enter button or touch tap).
     // @return true if the event was handled, false otherwise.
     // In class hierarchies, a subclass can call the parent's onSelect and proceed

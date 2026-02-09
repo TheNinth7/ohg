@@ -45,6 +45,11 @@ class TextDimensions {
         return get().getDc().getTextWidthInPixels( text, font );
     }
 
+    // Use the Dc from the buffered bitmap to determine the height of a font
+    public static function getFontHeight( font as FontType ) as Number {
+        return get().getDc().getFontHeight( font );
+    }
+
     // This function calculates the width ratio of one string (text1) towards
     // the sum of itself and a second string (text2)
     public static function getWidthRatio( text1 as String, text2 as String ) as Float {

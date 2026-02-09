@@ -27,10 +27,21 @@ class StateText extends Text {
             :text => text,
             :font => FONT,
             :color => Constants.UI_COLOR_ACTIONABLE,
-            :backgroundColor => Constants.UI_MENU_ITEM_BG_COLOR            
+            :backgroundColor => Constants.UI_MENU_ITEM_BG_COLOR
         } );
         _text = text;
         precomputedWidth = TextDimensions.getTextWidthInPixels( text, FONT );
+    }
+
+    // The font height is only needed on Edge devices to calculate
+    // the locY offset for StateText. Therefore, it is calculated
+    // on demand and stored in a static variable for reuse.
+    private static var _fontHeight as Number?;
+    public function getFontHeight() as Number {
+        if( _fontHeight == null ) {
+            _fontHeight = TextDimensions.getFontHeight( FONT );
+        }
+        return _fontHeight;
     }
 
     // Updates the text state
