@@ -23,9 +23,7 @@ class Constants extends EdgeDefaultConstants {
         -( DefaultConstants.UI_SCREEN_HEIGHT * 0.755 ).toNumber() 
     ];
 
-    /*
-    * Button-based Edge devices require a colored background for the focused item,
-    * as they do not provide any other visual indication of focus.
-    */
-    public static const UI_MENU_ITEM_BG_COLOR_FOCUSED as ColorType = 0x04395E; // greyish dark blue
+    // Padding is increased, due to the rounded rectangle focus indicator
+    public static const UI_MENU_ITEM_PADDING_LEFT_FACTOR as Float = 0.05;
+    public static const UI_MENU_ITEM_PADDING_RIGHT_FACTOR as Float = 0.05;
 }

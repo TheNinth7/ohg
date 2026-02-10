@@ -133,7 +133,6 @@ class DefaultConstants {
     // This offset in pixel is applied to the positioning of the menu item icon
     // Positive means the icon is shifted down, negative means up
     public static const UI_MENU_ITEM_ICON_OFFSET as Number = 0;
-        // ( UI_SCREEN_HEIGHT * 0.005 ).toNumber();
 
     // This offset in pixel is applied to the positioning of the menu item label
     // Positive means the label is shifted down, negative means up
@@ -148,11 +147,15 @@ class DefaultConstants {
     
     /*
     * Allows specifying a distinct background color for focused menu items.
-    * This is useful on devices like the Edge 540 and 840, which provide no built-in
-    * focus indicator (see constants/edge/button). Setting this to transparent
-    * disables the custom focus background.
+    * This is useful on devices like the Edge 540 and 840, which in the simulator
+    * do not provide a built-in focus indicator (see ../edge/widget/button-x40/Constants.mc).
+    * Setting this to transparent disables the custom focus background.
     */
     public static const UI_MENU_ITEM_BG_COLOR_FOCUSED as ColorType = Graphics.COLOR_TRANSPARENT;
+
+    // Height and width of the toggle switch relative to the menu item height
+    public static const UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT as Number = ( UI_MENU_ITEM_HEIGHT * 0.8 ).toNumber();
+    public static const UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH as Number = ( UI_MENU_ITEM_HEIGHT * 0.45 ).toNumber();
 
     // List of fonts to be used by the error view
     public static const UI_ERROR_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];

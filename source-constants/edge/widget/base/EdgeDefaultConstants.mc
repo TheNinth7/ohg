@@ -11,7 +11,7 @@ class EdgeDefaultConstants extends DefaultConstants {
 
     // Default height of title and footer is too high
     public static const UI_MENU_TITLE_HEIGHT as Number = 
-        ( DefaultConstants.UI_SCREEN_WIDTH * 0.35 ).toNumber();
+        ( DefaultConstants.UI_SCREEN_WIDTH * 0.3 ).toNumber();
     public static const UI_MENU_FOOTER_HEIGHT as Number = 
         ( DefaultConstants.UI_SCREEN_HEIGHT * 0.2 ).toNumber();
 
@@ -25,7 +25,7 @@ class EdgeDefaultConstants extends DefaultConstants {
 
     // Less padding but more spacing
     public static const UI_MENU_ITEM_PADDING_LEFT_FACTOR as Float = 0.01;
-    public static const UI_MENU_ITEM_PADDING_RIGHT_FACTOR as Float = 0.01;
+    public static const UI_MENU_ITEM_PADDING_RIGHT_FACTOR as Float = 0.02;
     public static const UI_MENU_ITEM_SPACING_FACTOR as Float = 0.05;
 
     // Also the item heights are set differently and defined as proportion
@@ -45,6 +45,10 @@ class EdgeDefaultConstants extends DefaultConstants {
     // Positive means the label is shifted down, negative means up
     public static const UI_MENU_ITEM_LABEL_OFFSET as Number =
         ( DefaultConstants.UI_SCREEN_HEIGHT * 0.011 ).toNumber();
+
+    // Height and width of the toggle switch relative to the menu item height
+    public static const UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT as Number = ( UI_MENU_ITEM_HEIGHT * 0.65 ).toNumber();
+    public static const UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH as Number = ( UI_MENU_ITEM_HEIGHT * 0.37 ).toNumber();
 
     // Also for the error view we add FONT_LARGE
     public static const UI_ERROR_FONTS as Array<FontDefinition> = [Graphics.FONT_LARGE, Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];

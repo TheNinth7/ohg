@@ -20,11 +20,7 @@ class OnOffStateBitmaps {
         return _instance as OnOffStateBitmaps;
     }
 
-    // Height and width of the switch is defined relative to the menu item height
-    public var HEIGHT as Number = ( Constants.UI_MENU_ITEM_HEIGHT * 0.8 ).toNumber();
-    public var WIDTH as Number = ( Constants.UI_MENU_ITEM_HEIGHT * 0.45 ).toNumber();
-    
-    // The circles are again defines as a factor the the WIDTH defined above
+    // The circles are again defines as a factor to the width (Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH)
     private const OUTER_CIRCLE_FACTOR = 0.8;
     private const INNER_CIRCLE_FACTOR = 0.75;
     
@@ -41,20 +37,20 @@ class OnOffStateBitmaps {
     // Constructor
     public function initialize() {
         on = BufferedBitmapFactory.createBufferedBitmap( {
-            :width => WIDTH,
-            :height => HEIGHT,
+            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
+            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
         } );
         draw( on, true );
 
         off = BufferedBitmapFactory.createBufferedBitmap( {
-            :width => WIDTH,
-            :height => HEIGHT,
+            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
+            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
         } );
         draw( off, false );
 
         nostate = BufferedBitmapFactory.createBufferedBitmap( {
-            :width => WIDTH,
-            :height => HEIGHT,
+            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
+            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
         } );
         draw( nostate, null );
     }
@@ -70,14 +66,14 @@ class OnOffStateBitmaps {
 
         // Define the color of the switch
         if( isEnabled ) {
-            dc.setColor( Constants.UI_COLOR_ACTIVE, Constants.UI_MENU_ITEM_BG_COLOR );
+            dc.setColor( Constants.UI_COLOR_ACTIVE, Graphics.COLOR_TRANSPARENT );
             
             // Currently not used, because it does not work on Edge devices (it should)
             // and also not on devices pre-CIQ 4.0.0. Apart from having to specifiy
             // the background color, there is no drawback in using setColor
             // dc.setFill( 0xFF000000 + Constants.UI_COLOR_ACTIVE );
         } else {
-            dc.setColor( Graphics.COLOR_LT_GRAY, Constants.UI_MENU_ITEM_BG_COLOR );
+            dc.setColor( Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT );
 
             // See the comment on the first setFill
             // dc.setFill( 0xFF000000 + Graphics.COLOR_LT_GRAY );
@@ -102,7 +98,7 @@ class OnOffStateBitmaps {
 
         // draw the inner circle showing the switch state
 
-        dc.setColor( Constants.UI_COLOR_BACKGROUND, Constants.UI_MENU_ITEM_BG_COLOR );
+        dc.setColor( Constants.UI_COLOR_BACKGROUND, Graphics.COLOR_TRANSPARENT );
         // See the comment on the first setFill
         // dc.setFill( 0xFF000000 + Graphics.COLOR_BLACK );
 
