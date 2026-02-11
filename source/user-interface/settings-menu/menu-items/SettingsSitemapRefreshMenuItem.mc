@@ -22,10 +22,13 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
 
     // Trigger the sitemap sync
     public function onSelect() as Boolean {
-        
-        // Request a sitemap update in sync mode from the sync delegate
-        SitemapSyncDelegate.get().requestSitemapUpdate();
-        
+        // Only if we are on WiFi connection we trigger the sync,
+        // otherwise the menu item is disabled (see onUpdate)
+        if( ConnectivityHandler.get().isOnWifiConnection() ) {
+            // Request a sitemap update in sync mode from the sync delegate
+            SitemapSyncDelegate.get().requestSitemapUpdate();
+        }
+
         // True indicates that this function has handled the user input event
         return true;
     }
