@@ -8,14 +8,14 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4-beta (62f545ba5e, 2024-04-22)"
-   sodipodi:docname="openhab_logo_light.svg"
+   sodipodi:docname="openhab-logo-dark.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview1"
-     pagecolor="#000000"
+     pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
      inkscape:showpageshadow="2"
@@ -25,11 +25,11 @@
      inkscape:document-units="mm"
      inkscape:zoom="0.763461"
      inkscape:cx="-144.08071"
-     inkscape:cy="286.19668"
-     inkscape:window-width="1920"
-     inkscape:window-height="1111"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:cy="287.5065"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -52,7 +52,7 @@
       <path
          fill-rule="evenodd"
          clip-rule="evenodd"
-         fill="#ffffff"
+         fill="#000000"
          d="m 168.00551,72.760417 c 13.98777,0 25.39483,11.407572 25.39483,25.395477 0,13.987006 -11.40706,25.395096 -25.39483,25.395096 -7.64036,0 -14.50945,-3.40677 -19.17118,-8.7757 l 0.89736,-0.90072 0.65138,-0.65164 0.65267,-0.65344 0.65293,-0.65294 0.0266,-0.0264 c 3.91655,4.63745 9.76788,7.5923 16.29022,7.5923 11.74657,0 21.32686,-9.57978 21.32686,-21.326603 0,-11.747474 -9.58029,-21.327509 -21.32686,-21.327509 -11.74709,0 -21.32738,9.580035 -21.32738,21.327509 0,1.581946 0.17595,3.123453 0.50578,4.609283 l -1.41503,1.418 -1.88864,1.89019 c -0.82256,-2.49403 -1.26982,-5.15433 -1.26982,-7.917473 0,-13.987905 11.40705,-25.395478 25.39509,-25.395478 z"
          id="path69"
          style="stroke-width:0.264583" />

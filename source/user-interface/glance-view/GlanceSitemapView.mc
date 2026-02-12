@@ -28,7 +28,6 @@ class GlanceSitemapView extends WatchUi.GlanceView {
         } );
     }
 
-
     public function onUpdate( dc as Dc ) as Void {
         // If size has not been set yet, then set it
         if( _textArea.width == 0 ) {
@@ -54,8 +53,6 @@ class GlanceSitemapView extends WatchUi.GlanceView {
             }
         } catch( ex ) {
             // Show any errors
-            // Note that communication errors are caught by the sitemap
-            // request but not consumed here, instead they are ignored
             _textArea.setColor( Graphics.COLOR_RED );
             var msg = ex.getErrorMessage();
             msg = msg != null ? msg : "Unknown error";
