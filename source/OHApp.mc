@@ -136,7 +136,7 @@ class OHApp extends Application.AppBase {
     // Switching into night mode may change the screen colors
     // Currently only used in the glance of Edge devices
     public function onNightModeChanged() as Void {
-        Logger.debug( "OHApp.onNightModeChanged" );
+        // Logger.debug( "OHApp.onNightModeChanged" );
         WatchUi.requestUpdate();
     }
 }

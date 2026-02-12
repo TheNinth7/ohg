@@ -35,7 +35,8 @@ class GlanceSitemapView extends WatchUi.GlanceView {
         }
         try {
             // Apply standard or night mode color
-            if( System.getDeviceSettings().isNightModeEnabled ) {
+            var deviceSettings = System.getDeviceSettings();
+            if( deviceSettings has :isNightModeEnabled && deviceSettings.isNightModeEnabled ) {
                 _textArea.setColor( GlanceConstants.UI_FONT_COLOR_NIGHT );
             } else {
                 _textArea.setColor( GlanceConstants.UI_FONT_COLOR );
