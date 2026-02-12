@@ -34,8 +34,14 @@ class GlanceSitemapView extends WatchUi.GlanceView {
             _textArea.setSize( dc.getWidth(), dc.getHeight() );
         }
         try {
-            // Display either the homepage label or if not a default
-            _textArea.setColor( GlanceConstants.UI_FONT_COLOR );
+            // Apply standard or night mode color
+            if( System.getDeviceSettings().isNightModeEnabled ) {
+                _textArea.setColor( GlanceConstants.UI_FONT_COLOR_NIGHT );
+            } else {
+                _textArea.setColor( GlanceConstants.UI_FONT_COLOR );
+            }
+
+            // Display either the homepage label or if it is not available a default
             var label = SitemapStore.getLabel();
             if( label != null ) {
                 _textArea.setText( label );
