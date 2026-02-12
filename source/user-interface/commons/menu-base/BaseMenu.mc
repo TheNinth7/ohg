@@ -139,13 +139,12 @@ class BaseMenu extends CustomMenu {
             * provides more horizontal space and achieves better visual balance. We use the full font descent.
             */
             if( _title.locY == 0 ) {
-                var locY = clipHeight * 0.5 - Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT ) / 2;
+                var locY;
                 
                 if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-                    //locY = WatchUi.LAYOUT_VALIGN_CENTER;
-                    locY += Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT )/2;
+                    locY = clipHeight * 0.5 - Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT ) / 2 + Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT )/2;
                 } else {
-                    locY += Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT );
+                    locY = clipHeight * 0.6 - Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT ) / 2 + Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT );
                 }
                 _title.setLocation( WatchUi.LAYOUT_HALIGN_CENTER, locY );
 

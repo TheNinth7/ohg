@@ -11,13 +11,20 @@ class ConnectionModeIndicator extends Bitmap {
 
     // Constructor
     public function initialize() {
-        Bitmap.initialize( { :rezId => Rez.Drawables.iconWifi } );
+        Bitmap.initialize( { :rezId => getResourceId() } );
     }
 
     // Draw, but only if we are in Wi-Fi mode
-    public function draw( dc as Dc ) {
+    public function draw( dc as Dc ) as Void {
+        Bitmap.setBitmap( getResourceId() );
+        Bitmap.draw( dc );
+    }
+
+    private function getResourceId() as ResourceId {
         if( ConnectivityHandler.get().isOnWifiConnection() ) {
-            Bitmap.draw( dc );
+            return Rez.Drawables.iconWifi;
+        } else {
+            return Rez.Drawables.iconBluetooth;
         }
     }
 
