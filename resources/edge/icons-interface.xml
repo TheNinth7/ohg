@@ -1,7 +1,8 @@
 <!--
-    Override the logo size for Edge devices
+    Override logo/icon sizes for Edge devices
 -->
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <bitmap id="logoOpenhabText" scaleX="60%" filename="../icons-interface/openhab-text-light.svg" dithering="none" />
-    <bitmap id="iconWifi" scaleY="4%" filename="../icons-interface/wifi.svg" dithering="none" />
+    <bitmap id="iconBluetooth" scaleX="12%" filename="../icons-interface/bluetooth.svg" dithering="none" />
+    <bitmap id="iconWifi" scaleX="12%" filename="../icons-interface/wifi.svg" dithering="none" />
 </drawables>

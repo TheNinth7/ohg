@@ -94,6 +94,12 @@ class OHApp extends Application.AppBase {
         return [ _glanceView ];
     }
 
+    /*
+    function getGlanceTheme() as AppBase.GlanceTheme {
+        Logger.debug( "OHApp.getGlanceTheme" );
+        return GLANCE_THEME_BLUE;
+    }
+    */
 
     // Define the sync delegate, which in our case is used
     // to request a sitemap or send a command via WiFi.

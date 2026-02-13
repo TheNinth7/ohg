@@ -44,8 +44,6 @@ class DefaultConstants {
     
     // For cancelling an action
     public static const UI_COLOR_DESTRUCTIVE as ColorType = 0x9F1C1C;
-    // 0xB71C1C darker red;
-    // 0xD32F2F brighter red;
 
     // For messages related to WiFi, a blue that fits with openHAB orange
     public static const UI_COLOR_WIFI as ColorType = 0x1F6AE1;

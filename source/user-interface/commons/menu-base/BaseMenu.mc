@@ -136,20 +136,27 @@ class BaseMenu extends CustomMenu {
             * We use half the font descent for a subtle adjustment.
             *
             * On round watch faces (with reduced title height), placing the title further below center
-            * provides more horizontal space and achieves better visual balance. We use the full font descent.
+            * provides more horizontal space and achieves better visual balance.
             */
             if( _title.locY == 0 ) {
+                // This is the offset to calculate the locY from a given
+                // center of the text. The offset is based on the font height but
+                // scews position downwards by half the descent, for better visual balance.
+                var offset = Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT )/2 - Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT )/2;
                 var locY;
                 
+                // Depending on screen shape we use a different factor to calculate the center
+                // of the text, and also a different mode for placing the connection mode icon
                 if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-                    locY = clipHeight * 0.5 - Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT ) / 2 + Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT )/2;
+                    locY = clipHeight * 0.5 - offset;
+                    _cmi.setLocationToUpperLeftCorner();
                 } else {
-                    locY = clipHeight * 0.6 - Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT ) / 2 + Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT );
+                    locY = clipHeight * 0.625 - offset;
+                    // We offset the center of the connection mode indicator a bit to the bottom, since
+                    // the title font typically contains some empty space at the top of the characters
+                    _cmi.setCenterY( ( locY / 2 + Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT ) * 0.075 ).toNumber() );
                 }
                 _title.setLocation( WatchUi.LAYOUT_HALIGN_CENTER, locY );
-
-                // Set the location for the connection mode indicator
-                _cmi.setCenterY( ( locY / 2 ).toNumber() );
             }
 
             // Draw the connection mode indicator
