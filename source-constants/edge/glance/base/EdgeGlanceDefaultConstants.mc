@@ -21,5 +21,5 @@ class EdgeGlanceDefaultConstants extends GlanceDefaultConstants {
     // This offset in pixel is applied to the positioning of glance text
     // Positive means the label is shifted down, negative means up
     public static const UI_GLANCE_TEXT_OFFSET as Number = 
-        ( System.getDeviceSettings().screenHeight * 0.02 ).toNumber();
+        ( System.getDeviceSettings().screenWidth * 0.02 ).toNumber();
 }
