@@ -111,6 +111,27 @@ import Toybox.System;
         dc.setColor( Graphics.COLOR_RED, Constants.UI_COLOR_BACKGROUND );
         dc.clear();
 
+        // Offline exceptions get a special error screen,
+        // all others are drawn as TextArea
+        if( _exception instanceof OfflineException ) {
+            drawOfflineException( dc );
+        } else {
+            drawTextArea( dc );
+        }
+    }
+
+    // Draws an offline error screen
+    private function drawOfflineException( dc as Dc ) as Void {
+        var bitmap = new Bitmap( {
+            :rezId => Rez.Drawables.iconOffline,
+            :locX => WatchUi.LAYOUT_HALIGN_CENTER,
+            :locY => WatchUi.LAYOUT_VALIGN_CENTER
+        } );
+        bitmap.draw( dc );
+    }
+
+    // Draw the error message in a TextArea
+    private function drawTextArea( dc as Dc ) as Void {
         // Define the error message
         var text = _exception.getErrorMessage();
         text = ( text == null || text.equals( "" ) ) ? "Unknown Exception" : text; 
@@ -144,4 +165,5 @@ import Toybox.System;
             :height => height
         } ).draw( dc );
     }
+
 }

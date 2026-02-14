@@ -33,6 +33,7 @@
     <bitmap id="iconBluetooth" scaleY="7%" filename="bluetooth.svg" dithering="none" />
     <bitmap id="iconWifi" scaleY="7%" filename="wifi.svg" dithering="none" />
     <bitmap id="iconSearchForWifi" scaleX="75%" filename="wifi-search.svg" dithering="none" />
+    <bitmap id="iconOffline" scaleX="75%" filename="offline.svg" dithering="none" />
     <bitmap id="iconHourglassBlue" scaleX="50%" filename="hourglass-blue.svg" dithering="none" />
     <bitmap id="iconHourglassWhite" scaleX="50%" filename="hourglass-white.svg" dithering="none" />
 
