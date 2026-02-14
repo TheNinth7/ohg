@@ -101,7 +101,7 @@ import Toybox.Time;
     // Returns a textual description of the current state
     public function getStateDescription() as String {
         switch( _state ) {
-            case PHONE_CONNECTION: return "Phone";
+            case PHONE_CONNECTION: return "Phone (BLE)";
             case WIFI_CHECK_PENDING: return "Checking Wi-Fi availablity ...";
             case WIFI_CONNECTION: return "Wi-Fi";
             case OFFLINE: return "Offline";
