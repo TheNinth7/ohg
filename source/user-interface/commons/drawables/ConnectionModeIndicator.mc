@@ -24,7 +24,7 @@ class ConnectionModeIndicator extends Bitmap {
             var spacing = height * 0.2;
             setLocation( spacing, spacing );
         } else {
-            var spacing = height * 0.25;
+            var spacing = height * 0.5;
             setLocation( WatchUi.LAYOUT_HALIGN_CENTER, spacing );
         }
     }

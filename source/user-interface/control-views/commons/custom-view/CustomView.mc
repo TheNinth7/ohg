@@ -52,7 +52,7 @@ class CustomView extends View {
     ) as TextArea {
         
         // Calculate locY of the title
-        var titleLocY = dcHeight * 0.075;
+        var titleLocY = dcHeight * 0.1;
 
         // Create and add the title Drawable
         var titleDrawable = new TextArea( {

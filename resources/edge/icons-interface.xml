@@ -10,6 +10,6 @@
         to match the width of wifi.svg, with empty space added to the right side
         of the icon.
     -->
-    <bitmap id="iconBluetooth" scaleX="12%" filename="../icons-interface/bluetooth-edge.svg" dithering="none" />
-    <bitmap id="iconWifi" scaleX="12%" filename="../icons-interface/wifi.svg" dithering="none" />
+    <bitmap id="iconBluetooth" scaleX="14%" filename="../icons-interface/bluetooth-edge.svg" dithering="none" />
+    <bitmap id="iconWifi" scaleX="14%" filename="../icons-interface/wifi.svg" dithering="none" />
 </drawables>
