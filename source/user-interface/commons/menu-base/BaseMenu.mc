@@ -139,31 +139,29 @@ class BaseMenu extends CustomMenu {
             * provides more horizontal space and achieves better visual balance.
             */
             if( _title.locY == 0 ) {
-                // This is the offset to calculate the locY from a given
-                // center of the text. The offset is based on the font height but
-                // scews position downwards by half the descent, for better visual balance.
-                var offset = Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT )/2 - Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT )/2;
-                var locY;
                 
-                // Depending on screen shape we use a different factor to calculate the center
-                // of the text, and also a different mode for placing the connection mode icon
+                // Depending on screen shape we use a different factor to calculate the center of the title
+                var centerY;
                 if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-                    locY = clipHeight * 0.5 - offset;
-                    _cmi.setLocationToUpperLeftCorner();
+                    centerY = clipHeight * 0.5;
                 } else {
-                    locY = clipHeight * 0.625 - offset;
-                    // We offset the center of the connection mode indicator a bit to the bottom, since
-                    // the title font typically contains some empty space at the top of the characters
-                    _cmi.setCenterY( ( locY / 2 + Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT ) * 0.075 ).toNumber() );
+                    centerY = clipHeight * 0.6;
                 }
+                
+                // Then we calculate the upper Y coordinate by substracting half of the font height
+                // Most fonts have more blank space in the bottom, so for better visual balance we move 
+                // the font a bit down, by half the font descent
+                var locY = centerY - Graphics.getFontHeight( Constants.UI_MENU_TITLE_FONT )/2 + Graphics.getFontDescent( Constants.UI_MENU_TITLE_FONT )/2;
+                
                 _title.setLocation( WatchUi.LAYOUT_HALIGN_CENTER, locY );
             }
+
+            // Draw the title
+            _title.draw( dc );
 
             // Draw the connection mode indicator
             _cmi.draw( dc );
 
-            // Draw the title
-            _title.draw( dc );
         } catch( ex ) {
             ExceptionHandler.handleBackgroundException( ex );
         }

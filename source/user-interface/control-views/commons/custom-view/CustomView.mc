@@ -67,18 +67,7 @@ class CustomView extends View {
         addDrawable( titleDrawable );
 
         // Create and add the connection mode indicator,
-        var cmi = new ConnectionModeIndicator();
-        if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-            // On rectangular screens it is located in the upper left corner
-            cmi.setLocationToUpperLeftCorner();
-        } else {
-            // On round screens, the icon is positioned between the title and the
-            // upper edge of the screen, slightly closer to the title.
-            // This compensates for the extra padding that most title fonts
-            // include above the visible text.
-            cmi.setCenterY( ( titleLocY / 3 * 2 ).toNumber() );
-        }
-        addDrawable( cmi );
+        addDrawable( new ConnectionModeIndicator() );
 
         return titleDrawable;
     }
