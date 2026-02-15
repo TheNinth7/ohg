@@ -25,7 +25,7 @@ class BaseMenu extends CustomMenu {
     private var _title as Text;
     
     // The Drawable for the connection mode indicator
-    private var _cmi as ConnectionModeIndicator = new ConnectionModeIndicator();
+    private var _cmi as ConnectionModeIndicator = new ConnectionModeIndicator( ConnectionModeIndicator.LOCATION_MENU );
 
     // Constructor
     protected function initialize( options as BaseMenuOptions ) {
@@ -145,7 +145,7 @@ class BaseMenu extends CustomMenu {
                 if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
                     centerY = clipHeight * 0.5;
                 } else {
-                    centerY = clipHeight * 0.6;
+                    centerY = clipHeight * 0.625;
                 }
                 
                 // Then we calculate the upper Y coordinate by substracting half of the font height

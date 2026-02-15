@@ -16,17 +16,26 @@ import Toybox.Graphics;
  */
 class ConnectionModeIndicator extends Bitmap {
 
+    enum Location {
+        LOCATION_MENU,
+        LOCATION_CUSTOM_VIEW
+    }
+
     // Constructor
-    public function initialize() {
+    public function initialize( location as Location ) {
         Bitmap.initialize( { :rezId => getResourceId() } );
 
         if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
             var spacing = height * 0.2;
             setLocation( spacing, spacing );
         } else {
+            var locYFactor = 
+                location == LOCATION_MENU
+                ? 0.05
+                : 0.02;
             setLocation( 
                 WatchUi.LAYOUT_HALIGN_CENTER, 
-                Constants.UI_SCREEN_HEIGHT * 0.035 
+                Constants.UI_SCREEN_HEIGHT * locYFactor
             );
         }
     }

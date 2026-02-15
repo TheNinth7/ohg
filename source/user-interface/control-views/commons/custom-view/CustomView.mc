@@ -52,7 +52,7 @@ class CustomView extends View {
     ) as TextArea {
         
         // Calculate locY of the title
-        var titleLocY = dcHeight * 0.1;
+        var titleLocY = dcHeight * 0.075;
 
         // Create and add the title Drawable
         var titleDrawable = new TextArea( {
@@ -67,7 +67,7 @@ class CustomView extends View {
         addDrawable( titleDrawable );
 
         // Create and add the connection mode indicator,
-        addDrawable( new ConnectionModeIndicator() );
+        addDrawable( new ConnectionModeIndicator(  ConnectionModeIndicator.LOCATION_CUSTOM_VIEW ) );
 
         return titleDrawable;
     }
