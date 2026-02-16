@@ -130,17 +130,27 @@ class SitemapRequest extends BaseRequest {
             HomepageMenu.clear();
         }
 
+        // During sync, all errors are handled by the sync delegate
         if( SitemapSyncDelegate.get().isSyncInProgress() ) {
             SitemapSyncDelegate.get().onException( ex );
         } else {
 
+            // If Communications.makeWebRequest() returns an error indicating
+            // that no BLE connection to the phone is available, we fall back
+            // to Wi-Fi.
+            //
+            // Although makeWebRequestPeriodic() checks phone connectivity via
+            // DeviceSettings.connectionInfo beforehand, makeWebRequest() may
+            // still return a BLE error, for example if the connection was lost
+            // between the check and the actual request.
             if( ex instanceof CommunicationException && ex.isNoPhone() ) {
-                ConnectivityHandler.get().tryWifiConnection();
-                return;
+                ConnectivityHandler.get().tryWifiConnectionAndTriggerNextRequest();
             } else {
                 // Logger.debug( "ExceptionHandler: confirming successful connection." );
-
-                ConnectivityHandler.get().confirmPhoneConnection();
+                
+                if( ! ( ex instanceof OfflineException ) ) {
+                    ConnectivityHandler.get().confirmPhoneConnection();
+                }
 
                 ExceptionHandler.handleBackgroundException( ex );
                 
@@ -148,7 +158,7 @@ class SitemapRequest extends BaseRequest {
                 // storage, the request is already schedule and we do 
                 // not need to to it anymore
                 if( ! _hasPendingRequest ) {
-                    triggerNextRequest( false );
+                    triggerNextRequest( true );
                 }
             }
         }
@@ -180,9 +190,27 @@ class SitemapRequest extends BaseRequest {
         }
     }
 
-    // Makes a single web request
-    // This can be executed without the sitemap request being started
-    public function makeSingleRequest() as Void {
+    // Executes web requests as part of the timer-based loop.
+    // Timer-driven requests are performed via the phone connection only.
+    // This function checks whether the phone connection is enabled
+    // in the system settings. If it is not available, a Wi-Fi
+    // connectivity check is initiated instead.
+    public function makeRequestPeriodic() as Void {
+        // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
+        if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
+            makeRequestInternal( false );
+        } else {
+            // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
+            ConnectivityHandler.get().tryWifiConnectionAndTriggerNextRequest();
+        }
+    }
+
+    // Executes a single web request.
+    // Can be called independently of the sitemap request loop.
+    // Used by the command sync delegate to initiate a sitemap
+    // update via Wi-Fi.
+    public function makeRequestSingle() as Void {
         makeRequestInternal( true );
     }
 
@@ -244,19 +272,13 @@ class SitemapRequest extends BaseRequest {
         // Logger.debug( "SitemapRequest.onReceive: end");
     }
 
-    // Makes a timer-based web request
-    // Timer-based requests only run via the phone connection
-    // This function therefore checks if the phone connection is
-    // available according to the system device settings. If not
-    // a Wi-Fi check is initiated.
+    // Called by the request loop timer to initiate a request.
+    // Wraps makeRequestPeriodic() with exception handling.
     public function onTimerMakeRequest() as Void {
-        // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
-        if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
-            // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
-            makeRequestInternal( false );
-        } else {
-            // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
-            ConnectivityHandler.get().tryWifiConnection();
+        try {
+            makeRequestPeriodic();
+        } catch ( ex ) {
+            SitemapRequest.handleException( ex );
         }
     }
 
@@ -318,7 +340,7 @@ class SitemapRequest extends BaseRequest {
         }
         if( _stopCount == 0 ) {
             // Logger.debug( "SitemapRequest.start: making request" );
-            onTimerMakeRequest();
+            makeRequestPeriodic();
         }
     }
 
@@ -346,6 +368,7 @@ class SitemapRequest extends BaseRequest {
         
         // In case of errors, we apply a set minimum interval of 1 seconds
         var delay = _pollingInterval > SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL
+                    || ! applyErrorMinimumInterval
                         ? _pollingInterval
                         : SITEMAP_ERROR_MINIMUM_POLLING_INTERVAL;
         
@@ -359,7 +382,7 @@ class SitemapRequest extends BaseRequest {
                 false 
             );
         } else {
-            onTimerMakeRequest();
+            makeRequestPeriodic();
         }
     }
 }

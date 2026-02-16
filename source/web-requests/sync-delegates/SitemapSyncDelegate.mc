@@ -48,6 +48,6 @@ class SitemapSyncDelegate extends BaseSyncDelegate {
         // Logger.debug( "SitemapSyncDelegate: performSync" );
 
         // Note: get() returns the sync instance of the sitemap request
-        SitemapRequest.get().makeSingleRequest();
+        SitemapRequest.get().makeRequestSingle();
     }
 }

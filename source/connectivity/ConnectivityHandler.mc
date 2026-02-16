@@ -109,6 +109,12 @@ import Toybox.Time;
         }
     }
 
+    // Returns true if the device settings show that there is Wi-Fi capability
+    public function hasWiFiCapability() as Boolean {
+        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
+        return wifi != null && wifi.state != System.CONNECTION_STATE_NOT_INITIALIZED;
+    }
+
     // True if no connection is available
     public function isOffline() as Boolean {
         return _state == OFFLINE;
@@ -157,7 +163,7 @@ import Toybox.Time;
     // loaded.
     public function processDeferredResult() as Void {
         if( _deferredResult != null ) {
-            tryWifiConnectionCallback( _deferredResult );
+            processWifiCheckResponseAndTriggerNextRequest( _deferredResult );
             _deferredResult = null;
         }
     }
@@ -174,16 +180,24 @@ import Toybox.Time;
         }
     }
 
-    // This is called by `SitemapRequest`, indicates that no phone 
-    // connection is available and triggers a check of WiFi availability.
-    public function tryWifiConnection() as Void {
-        // Logger.debug( "ConnectivityHandler.tryWifiConnection" );
+    // This is called by `SitemapRequest` when there is no phone connection available 
+    // and triggers a check of WiFi availability. After the check is concluded
+    // SitemapRequest.triggerNextRequest
+    public function tryWifiConnectionAndTriggerNextRequest() as Void {
+        // Logger.debug( "ConnectivityHandler.tryWifiConnectionAndTriggerNextRequest" );
         
-        // Since the Wi-Fi check is relatively time-consuming and blocks Wi-Fi sync,
-        // meaning no commands can be sent via Wi-Fi while it is running,
-        // we perform the check only once.
-        if( _state != WIFI_CONNECTION ) {
-            // Logger.debug( "ConnectivityHandler.tryWifiConnection: checking for Wi-Fi connection" );
+        // Check first if the devices has Wi-Fi capability, and
+        // if not, go directly into offline mode
+        if( ! hasWiFiCapability() ) {
+            _state = OFFLINE;
+            ExceptionHandler.handleBackgroundException( new OfflineException() );
+            SitemapRequest.get().triggerNextRequest( true );
+        } else if( _state != WIFI_CONNECTION ) {
+            // Since the Wi-Fi check is relatively time-consuming and blocks Wi-Fi sync,
+            // meaning no commands can be sent via Wi-Fi while it is running,
+            // we perform the check only once.
+
+            // Logger.debug( "ConnectivityHandler.tryWifiConnectionAndTriggerNextRequest: checking for Wi-Fi connection" );
             
             // WIFI_CHECK_PENDING is only used for the transition from
             // PHONE_CONNECTION to WIFI_CONNECTION or OFFLINE
@@ -192,11 +206,11 @@ import Toybox.Time;
             if( _state == PHONE_CONNECTION ) {
                 setState( WIFI_CHECK_PENDING );
             }
-            Communications.checkWifiConnection( method( :tryWifiConnectionCallback ) );
+            Communications.checkWifiConnection( method( :processWifiCheckResponseAndTriggerNextRequest ) );
         } else {
-            // When SitemapRequest initiates a Wi-Fi check it DOES NOT
-            // schedule the next execution, this is done here , only
-            // after the Wi-Fi check was completed.
+            // If SitemapRequest triggers a Wi-Fi check, it does NOT schedule
+            // the next execution itself. Scheduling is handled here, or
+            // after the Wi-Fi check has completed.
             SitemapRequest.get().triggerNextRequest( true );
         }
     }
@@ -204,8 +218,8 @@ import Toybox.Time;
     // Processes the result of the WiFi availability check.
     // Depending on the outcome, the displayed view is updated
     // and sitemap states are invalidated if necessary.
-    public function tryWifiConnectionCallback( result as TryWifiResult ) as Void {
-        // Logger.debug( "ConnectivityHandler.tryWifiConnectionCallback" );
+    public function processWifiCheckResponseAndTriggerNextRequest( result as TryWifiResult ) as Void {
+        // Logger.debug( "ConnectivityHandler.processWifiCheckResponseAndTriggerNextRequest" );
         if( ViewHandler.getCurrentViewSafe()[0] == null ) {
             // If there is no view, we defer the processing of the result
             // The processing of the deferred result is triggered by `WifiCheckTimer`,
@@ -229,39 +243,8 @@ import Toybox.Time;
                         // ... we update the state.
                         setState( WIFI_CONNECTION );
 
-                        // Only if a HomepageMenu is available ...
-                        if( HomepageMenu.exists() ) {
-                            var menu = HomepageMenu.get();
-                            // If the sitemap is fresh, we want to invalidate the
-                            // states, because even for a fresh sitemap we do not
-                            // want to show states in Wi-Fi mode
-                            if( SitemapStore.isSitemapFresh() ) {
-                                var sitemap = SitemapStore.getSitemapFromMemoryForWifiMode();
-                                if( sitemap != null ) {
-                                    menu.update( sitemap );
-                                    // The update runs asynchronously, so we add a task that
-                                    // switches to the menu or triggers an UI refresh if it
-                                    // is already shown
-                                    AsyncTaskQueue.get().add( new WifiCheckRefreshUiTask() );
-                                } else {
-                                    throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
-                                }
-                            } else if( SettingsMenuHandler.isShowingSettings() ) {
-                                // If the sitemap is already stale, and we are in
-                                // settings, we refresh the UI to show the new
-                                // connectivity mode
-                                WatchUi.requestUpdate();
-                            } else if( ! HomepageMenu.isSitemapShowing() ) {
-                                // If the sitemap is already stale, and the menu is 
-                                // currently not shown, we switch to it immediately.
-                                ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
-                            }
-                        } else {
-                            // Logger.debug( "ConnectivityHandler: on Wi-Fi but no sitemap, requesting an update." );
-                            // If there is no menu yet, this means there is no sitemap in storage
-                            // and it must be requested.
-                            SitemapSyncDelegate.get().requestSitemapUpdate();
-                        }
+                        // Switch the UI into WiFi mode
+                        switchViewsToWifiMode();
                     }
                 } else {
                     // If the state changed to OFFLINE ...
@@ -278,6 +261,43 @@ import Toybox.Time;
                 // after the Wi-Fi check was completed.
                 SitemapRequest.get().triggerNextRequest( true );
             }
+        }
+    }
+
+    // Activates Wi-Fi mode with view-dependent handling.
+    private function switchViewsToWifiMode() as Void {
+        // Only if a HomepageMenu is available ...
+        if( HomepageMenu.exists() ) {
+            var menu = HomepageMenu.get();
+            // If the sitemap is fresh, we want to invalidate the
+            // states, because even for a fresh sitemap we do not
+            // want to show states in Wi-Fi mode
+            if( SitemapStore.isSitemapFresh() ) {
+                var sitemap = SitemapStore.getSitemapFromMemoryForWifiMode();
+                if( sitemap != null ) {
+                    menu.update( sitemap );
+                    // The update runs asynchronously, so we add a task that
+                    // switches to the menu or triggers an UI refresh if it
+                    // is already shown
+                    AsyncTaskQueue.get().add( new WifiCheckRefreshUiTask() );
+                } else {
+                    throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
+                }
+            } else if( SettingsMenuHandler.isShowingSettings() ) {
+                // If the sitemap is already stale, and we are in
+                // settings, we refresh the UI to show the new
+                // connectivity mode
+                WatchUi.requestUpdate();
+            } else if( ! HomepageMenu.isSitemapShowing() ) {
+                // If the sitemap is already stale, and the menu is 
+                // currently not shown, we switch to it immediately.
+                ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
+            }
+        } else {
+            // Logger.debug( "ConnectivityHandler: on Wi-Fi but no sitemap, requesting an update." );
+            // If there is no menu yet, this means there is no sitemap in storage
+            // and it must be requested.
+            SitemapSyncDelegate.get().requestSitemapUpdate();
         }
     }
 }

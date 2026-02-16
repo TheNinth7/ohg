@@ -123,7 +123,9 @@ import Toybox.System;
     // Draws an offline error screen
     private function drawOfflineException( dc as Dc ) as Void {
         var bitmap = new Bitmap( {
-            :rezId => Rez.Drawables.iconOffline,
+            :rezId => ConnectivityHandler.get().hasWiFiCapability()
+                        ? Rez.Drawables.iconOfflineWifi
+                        : Rez.Drawables.iconOffline,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER
         } );
