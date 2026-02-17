@@ -14,6 +14,7 @@ import Toybox.Lang;
  * The timer is started in WifiCheckView.onUpdate(), because the view is only
  * considered loaded after that.
  */
+/*
 class WifiCheckTimer extends Timer.Timer {
     public function initialize() {
         Timer.Timer.initialize();
@@ -34,3 +35,4 @@ class WifiCheckTimer extends Timer.Timer {
         }
     }
 }
+*/

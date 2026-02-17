@@ -60,19 +60,9 @@ class OHApp extends Application.AppBase {
             // other cases returns an errorView for display.
             var errorView = ExceptionHandler.consumeStartupException( hasMenu );
             
-            // Check if we have connectivity
-            // If we have phone or Wifi connectivity, null will be returned
-            // If we are currently checking for WiFi, then a view showing a status message
-            // will be returned
-            // If we are offline, an exception will be thrown to make use of the error
-            // handling in this function
-            var connectivityView = ConnectivityHandler.get().ensureConnectivity();
-
             if( errorView != null ) {
                 // If there is an error view, display it
                 return [errorView];
-            } else if( connectivityView != null ) {
-                return [connectivityView];
             } else if( hasMenu ) {
                 // If there is HomepageMenu, display it
                 return [ menu as View, HomepageMenuDelegate.get() ];

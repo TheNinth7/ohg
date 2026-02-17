@@ -111,25 +111,7 @@ import Toybox.System;
         dc.setColor( Graphics.COLOR_RED, Constants.UI_COLOR_BACKGROUND );
         dc.clear();
 
-        // Offline exceptions get a special error screen,
-        // all others are drawn as TextArea
-        if( _exception instanceof OfflineException ) {
-            drawOfflineException( dc );
-        } else {
-            drawTextArea( dc );
-        }
-    }
-
-    // Draws an offline error screen
-    private function drawOfflineException( dc as Dc ) as Void {
-        var bitmap = new Bitmap( {
-            :rezId => ConnectivityHandler.get().hasWiFiCapability()
-                        ? Rez.Drawables.iconOfflineWifi
-                        : Rez.Drawables.iconOffline,
-            :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-            :locY => WatchUi.LAYOUT_VALIGN_CENTER
-        } );
-        bitmap.draw( dc );
+        drawTextArea( dc );
     }
 
     // Draw the error message in a TextArea

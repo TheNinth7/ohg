@@ -67,28 +67,20 @@ public class ExceptionHandler {
             ex = ex1;
         }
 
-        if( ex instanceof OfflineException && ConnectivityHandler.get().hadSuccessfulConnectionWithinLimit() ) {
-            // Offline exception is ignored if it is temporary (non-fatal)
-        } else if( ToastHandler.useToasts()
-            &&  ( ( ex instanceof CommunicationBaseException 
-                      &&  ( ! ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP )
-                            || ( isSitemapFresh && !ex.isFatal() ) 
-                          ) 
-                  )
-                  || ( ex instanceof OfflineException && ConnectivityHandler.get().hadSuccessfulConnectionWithinLimit() )
-                ) 
+        /*
+        * A toast notification will be shown under the following conditions:
+        * - Only if the current view has indicated to the `ToastHandler` that toasts are allowed.
+        * - For all non-sitemap (i.e., command) communication errors.
+        * - For sitemap errors that are not fatal in themselves and 
+        *   the state is still fresh (within the state expiry time).
+        *
+        * In all other cases, a full-screen error view is displayed instead.
+        */
+        if( ToastHandler.useToasts()
+            && ex instanceof CommunicationBaseException 
+            &&  ( ! ex.isFrom( CommunicationBaseException.EX_SOURCE_SITEMAP )
+                  || ( isSitemapFresh && !ex.isFatal() ) ) 
         ) {
-            /*
-            * A toast notification will be shown under the following conditions:
-            * - Only if the current view has indicated to the `ToastHandler` that toasts are allowed.
-            * - For all non-sitemap (i.e., command) communication errors.
-            * - For sitemap errors that are not fatal in themselves and 
-            *   the state is still fresh (within the state expiry time).
-            * - For the `OfflineException`, if the last successful Wifi check is still fresh.
-            *
-            * In all other cases, a full-screen error view is displayed instead.
-            */
-
             // Logger.debug( "ExceptionHandler: non-fatal error: " + ex.getToastMessage().toUpper() );
             
             // If there is no view yet, the exception is stored
@@ -108,10 +100,7 @@ public class ExceptionHandler {
             // would briefly show the menu before the error happens again.
             // Clearing the cache ensures the app goes directly into a loading or
             // error view until valid data is received.
-            if( ! ( ex instanceof OfflineException ) ) {
-                SitemapStore.deleteSitemapFromStorage();
-            }
-            
+            SitemapStore.deleteSitemapFromStorage();
             
             // If no view is currently active, the exception is stored as a startup exception.
             // Otherwise, the full-screen error view is shown immediately.

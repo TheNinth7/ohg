@@ -23,7 +23,7 @@ class SettingsSitemapLastUpdatedMenuItem extends SettingsTextMenuItem {
 
     // Returns a formatted version of the current sitemap age
     private function getSitemapTimestamp() as String {
-        if( ConnectivityHandler.get().isOnPhoneConnection() ) {
+        if( ConnectivityHandler.get().isPhoneConnected() ) {
             return "Just Now";
         } else {
             var timestamp = SitemapStore.getSitemapTimestamp();

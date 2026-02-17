@@ -91,7 +91,7 @@ class SitemapStore  {
     // Return the sitemap currently stored in Memory, marked as stale
     // independent of the actual timestamp of the sitemap.
     (:typecheck(disableGlanceCheck))
-    public static function getSitemapFromMemoryForWifiMode() as SitemapHomepage? {
+    public static function getSitemapFromMemoryWithStaleStates() as SitemapHomepage? {
         return getSitemapFromMemory( false );
     }
 

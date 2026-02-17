@@ -84,6 +84,23 @@ class HomepageMenu extends BasePageMenu {
         return _instance as HomepageMenu;
     }
 
+    // Hides the states by retrieving the cached sitemap,
+    // marking all states as stale, and updating the menu.
+    //
+    // Since this is executed within the HomepageMenu,
+    // we assume that a sitemap is already available in memory.
+    // However, as this is not technically guaranteed,
+    // we explicitly check for this condition and throw
+    // an exception if no sitemap is found.
+    public function hideStates() as Void {
+        var sitemap = SitemapStore.getSitemapFromMemoryWithStaleStates();
+        if( sitemap != null ) {
+            update( sitemap );
+        } else {
+            throw new GeneralException( "HomepageMenu: failed to hide menu states because no sitemap is loaded in memory." );
+        }
+    }
+    
     // Returns true, if any sitemap-related view is currently showing
     // These are:
     // - Any `CustomMenu` implementations, exception the `SettingsMenu`

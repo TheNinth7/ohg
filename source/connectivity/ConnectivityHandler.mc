@@ -56,9 +56,6 @@ import Toybox.Time;
         :errorCode as Communications.WifiConnectionStatus 
     };
 
-    // See processDeferredResult
-    private var _deferredResult as TryWifiResult?;
-
     // The current state
     private var _state as State = PHONE_CONNECTION;
 
@@ -73,7 +70,7 @@ import Toybox.Time;
     // connection is currently available
     public function confirmPhoneConnection() as Void {
         // Logger.debug( "ConnectivityHandler.confirmPhoneConnection" );
-        setState( PHONE_CONNECTION );
+        updateStateAndUi( PHONE_CONNECTION );
         _lastSuccessfullConnection = Time.now();
     }
 
@@ -83,6 +80,7 @@ import Toybox.Time;
     // and throws an OfflineException if there is no connectivity.
     // In all other cases, it returns null, indicating that `OhApp`
     // can assume full connectivity.
+    /*
     public function ensureConnectivity() as WifiCheckView? {
         if( _state == WIFI_CHECK_PENDING ) {
             return new WifiCheckView();
@@ -92,6 +90,7 @@ import Toybox.Time;
             return null;
         }
     }
+    */
 
     // Returns the state
     public function getState() as State {
@@ -109,42 +108,6 @@ import Toybox.Time;
         }
     }
 
-    // Returns true if the device settings show that there is Wi-Fi capability
-    public function hasWiFiCapability() as Boolean {
-        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
-        return wifi != null && wifi.state != System.CONNECTION_STATE_NOT_INITIALIZED;
-    }
-
-    // True if no connection is available
-    public function isOffline() as Boolean {
-        return _state == OFFLINE;
-    }
-
-    // True if phone connection is available
-    public function isOnPhoneConnection() as Boolean {
-        return _state == PHONE_CONNECTION;
-    }
-
-    // Returns true if the device settings show a connected phone
-    public function isOnPhoneConnectionAccordingToSettings() as Boolean {
-        var bluetooth = System.getDeviceSettings().connectionInfo[:bluetooth];
-        return bluetooth != null && bluetooth.state == System.CONNECTION_STATE_CONNECTED;
-    }
-
-    // True if no phone connection is available
-    // but WiFi is
-    public function isOnWifiConnection() as Boolean {
-        return _state == WIFI_CONNECTION;
-    }
-
-    // Returns true if the device settings show Wi-Fi is connected
-    /*
-    public function isOnWiFiConnectionAccordingToSettings() as Boolean {
-        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
-        return wifi != null && wifi.state == System.CONNECTION_STATE_CONNECTED;
-    }
-    */
-
     // Returns true if last successful phone connection or Wifi check 
     // happened within the state expiry time. While states are not acutally shown
     // in Wifi mode, we still want to use the same timeframe
@@ -155,29 +118,40 @@ import Toybox.Time;
             && Time.now().compare( _lastSuccessfullConnection ) < Constants.STATE_EXPIRATION_TIME;
     }
 
-    // If on startup there is no phone connection, the WiFi check
-    // result may be returned before the first view is fully loaded.
-    // In this case, the result is stored here and processing is
-    // deferred to `WifiCheckTimer`, which will repeatedly check
-    // and call processDeferredResult when the view has been fully
-    // loaded.
-    public function processDeferredResult() as Void {
-        if( _deferredResult != null ) {
-            processWifiCheckResponseAndTriggerNextRequest( _deferredResult );
-            _deferredResult = null;
-        }
+    // Returns true if the device settings show that there is Wi-Fi capability
+    public function hasWifiCapability() as Boolean {
+        var wifi = System.getDeviceSettings().connectionInfo[:wifi];
+        return wifi != null && wifi.state != System.CONNECTION_STATE_NOT_INITIALIZED;
     }
 
-    // Internal functions used to update the connectivity state.
-    // In addition to storing the new state, they trigger a UI update
-    // if the settings menu is currently displayed, since that menu
-    // shows the current connectivity mode.
-    private function setState( state as State ) as Void {
-        _state = state;
-        // Logger.debug( "ConnectivityHandler: setting state to " + getStateDescription() );
-        if( SettingsMenuHandler.isShowingSettings() ) {
-            WatchUi.requestUpdate();
-        }
+    // True if any connection is available
+    public function isConnected() as Boolean {
+        return isPhoneConnected() || isWifiConnected();
+    }
+
+    // True if no connection is available
+    public function isOffline() as Boolean {
+        return _state == OFFLINE;
+    }
+
+    // True if phone connection is available
+    public function isPhoneConnected() as Boolean {
+        return _state == PHONE_CONNECTION;
+    }
+
+    // Returns true if the device settings indicate that a phone is connected.
+    // The internal state exposed by isPhoneConnected() is updated only
+    // after the phone connection has been confirmed by a successful
+    // sitemap request.
+    public function isPhoneConnectedAccordingToSettings() as Boolean {
+        var bluetooth = System.getDeviceSettings().connectionInfo[:bluetooth];
+        return bluetooth != null && bluetooth.state == System.CONNECTION_STATE_CONNECTED;
+    }
+
+    // True if no phone connection is available
+    // but WiFi is
+    public function isWifiConnected() as Boolean {
+        return _state == WIFI_CONNECTION;
     }
 
     // This is called by `SitemapRequest` when there is no phone connection available 
@@ -188,9 +162,8 @@ import Toybox.Time;
         
         // Check first if the devices has Wi-Fi capability, and
         // if not, go directly into offline mode
-        if( ! hasWiFiCapability() ) {
-            _state = OFFLINE;
-            ExceptionHandler.handleBackgroundException( new OfflineException() );
+        if( ! hasWifiCapability() ) {
+            updateStateAndUi( OFFLINE );
             SitemapRequest.get().triggerNextRequest( true );
         } else if( _state != WIFI_CONNECTION ) {
             // Since the Wi-Fi check is relatively time-consuming and blocks Wi-Fi sync,
@@ -200,11 +173,9 @@ import Toybox.Time;
             // Logger.debug( "ConnectivityHandler.tryWifiConnectionAndTriggerNextRequest: checking for Wi-Fi connection" );
             
             // WIFI_CHECK_PENDING is only used for the transition from
-            // PHONE_CONNECTION to WIFI_CONNECTION or OFFLINE
-            // If the current state is OFFLINE, it stays OFFLINE until
-            // a Wi-Fi connection can be confirmed.
+            // PHONE_CONNECTION to other states
             if( _state == PHONE_CONNECTION ) {
-                setState( WIFI_CHECK_PENDING );
+                updateStateAndUi( WIFI_CHECK_PENDING );
             }
             Communications.checkWifiConnection( method( :processWifiCheckResponseAndTriggerNextRequest ) );
         } else {
@@ -220,84 +191,63 @@ import Toybox.Time;
     // and sitemap states are invalidated if necessary.
     public function processWifiCheckResponseAndTriggerNextRequest( result as TryWifiResult ) as Void {
         // Logger.debug( "ConnectivityHandler.processWifiCheckResponseAndTriggerNextRequest" );
-        if( ViewHandler.getCurrentViewSafe()[0] == null ) {
-            // If there is no view, we defer the processing of the result
-            // The processing of the deferred result is triggered by `WifiCheckTimer`,
-            // which is triggered in `WifiCheckView.onUpdate`, because only after that
-            // the initial view is loaded (starting it here could lead to unncessary executions
-            // before the initial view was loaded)
-            _deferredResult = result;
-        } else {
-            try {
-                // If since the request was made the state has been changed
-                // back to PHONE_CONNECTION, we ignore the result
-                if( _state != PHONE_CONNECTION && result[:wifiAvailable] == true ) {
-                    // If WiFi is available ...
-
-                    _lastSuccessfullConnection = Time.now();
-                    
-                    // ... and that was previously unknown ...
-                    if( _state != WIFI_CONNECTION ) {
-                        // Logger.debug( "ConnectivityHandler: switching into Wi-Fi mode." );
-
-                        // ... we update the state.
-                        setState( WIFI_CONNECTION );
-
-                        // Switch the UI into WiFi mode
-                        switchViewsToWifiMode();
-                    }
-                } else {
-                    // If the state changed to OFFLINE ...
-                    if( _state != OFFLINE ) {
-                        setState( OFFLINE );
-                    }
-                    throw new OfflineException();
-                }
-            } catch( ex ) {
-                ExceptionHandler.handleBackgroundException( ex );
-            } finally {
-                // When SitemapRequest initiates a Wi-Fi check it DOES NOT
-                // schedule the next execution, this is done here, only
-                // after the Wi-Fi check was completed.
-                SitemapRequest.get().triggerNextRequest( true );
+        try {
+            // If since the request was made the state has been changed
+            // back to PHONE_CONNECTION, we ignore the result
+            if( _state != PHONE_CONNECTION && result[:wifiAvailable] == true ) {
+                // If WiFi is available ...
+                _lastSuccessfullConnection = Time.now();
+                // ... we update the state.
+                updateStateAndUi( WIFI_CONNECTION );
+            } else {
+                updateStateAndUi( OFFLINE );
             }
+        } catch( ex ) {
+            ExceptionHandler.handleBackgroundException( ex );
+        } finally {
+            // When SitemapRequest initiates a Wi-Fi check it DOES NOT
+            // schedule the next execution, this is done here, only
+            // after the Wi-Fi check was completed.
+            SitemapRequest.get().triggerNextRequest( true );
         }
     }
 
-    // Activates Wi-Fi mode with view-dependent handling.
-    private function switchViewsToWifiMode() as Void {
-        // Only if a HomepageMenu is available ...
-        if( HomepageMenu.exists() ) {
-            var menu = HomepageMenu.get();
-            // If the sitemap is fresh, we want to invalidate the
-            // states, because even for a fresh sitemap we do not
-            // want to show states in Wi-Fi mode
-            if( SitemapStore.isSitemapFresh() ) {
-                var sitemap = SitemapStore.getSitemapFromMemoryForWifiMode();
-                if( sitemap != null ) {
-                    menu.update( sitemap );
-                    // The update runs asynchronously, so we add a task that
-                    // switches to the menu or triggers an UI refresh if it
-                    // is already shown
-                    AsyncTaskQueue.get().add( new WifiCheckRefreshUiTask() );
-                } else {
-                    throw new GeneralException( "ConnectivityHandler: failed to invalidate menu states because no sitemap is loaded in memory." );
-                }
-            } else if( SettingsMenuHandler.isShowingSettings() ) {
-                // If the sitemap is already stale, and we are in
-                // settings, we refresh the UI to show the new
-                // connectivity mode
-                WatchUi.requestUpdate();
-            } else if( ! HomepageMenu.isSitemapShowing() ) {
-                // If the sitemap is already stale, and the menu is 
-                // currently not shown, we switch to it immediately.
-                ViewHandler.popToBottomAndSwitch( HomepageMenu.get(), HomepageMenuDelegate.get() );
+    // Internal function that updates the connectivity state.
+    //
+    // Besides storing the new state, it invalidates the display states
+    // when entering Wi-Fi check or offline mode, requests the sitemap
+    // via Wi-Fi if required, and triggers a UI refresh.
+    private function updateStateAndUi( newState as State ) as Void {
+        var oldState = _state;
+        if( oldState != newState ) {
+            _state = newState;
+
+            // When leaving phone mode and a HomepageMenu is available,
+            // invalidate the current states even if they are still fresh.
+            // States must not be displayed while in Wi-Fi or offline mode,
+            // even when the underlying sitemap is up to date.
+            if( oldState == PHONE_CONNECTION
+                && HomepageMenu.exists()
+                && SitemapStore.isSitemapFresh() 
+            ) {
+                HomepageMenu.get().hideStates();
+                // hideStates updates the menu structure asynchronously.
+                // so we need to schedule an asynchronous task to request
+                // an UI update afterwards.
+                AsyncTaskQueue.get().add( new RequestUiUpdateTask() );
             }
-        } else {
-            // Logger.debug( "ConnectivityHandler: on Wi-Fi but no sitemap, requesting an update." );
-            // If there is no menu yet, this means there is no sitemap in storage
-            // and it must be requested.
-            SitemapSyncDelegate.get().requestSitemapUpdate();
+            // If no menu is available while in Wi-Fi mode, this indicates that
+            // no sitemap is stored locally and it must be requested via Wi-Fi
+            // using the sync delegate.
+            else if( _state == WIFI_CONNECTION && ! HomepageMenu.exists() ) {
+
+                // Logger.debug( "ConnectivityHandler: on Wi-Fi but no sitemap, requesting an update." );
+                SitemapSyncDelegate.get().requestSitemapUpdate();
+            }
+
+            // Always request an immediate UI update
+            // to refresh the connection mode indicators.
+            WatchUi.requestUpdate();
         }
     }
 }

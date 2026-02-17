@@ -8,6 +8,7 @@ import Toybox.System;
  * the phone connection is not available and that the app is
  * checking whether WiFi is available.
  */
+/*
 class WifiCheckView extends WatchUi.View {
 
     // Indicate to onUpdate() that this is the first execution
@@ -110,3 +111,4 @@ class WifiCheckView extends WatchUi.View {
         }
     }
 }
+*/

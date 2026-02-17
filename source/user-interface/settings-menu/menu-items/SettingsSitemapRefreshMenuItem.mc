@@ -24,7 +24,7 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
     public function onSelect() as Boolean {
         // Only if we are on WiFi connection we trigger the sync,
         // otherwise the menu item is disabled (see onUpdate)
-        if( ConnectivityHandler.get().isOnWifiConnection() ) {
+        if( ConnectivityHandler.get().isWifiConnected() ) {
             // Request a sitemap update in sync mode from the sync delegate
             SitemapSyncDelegate.get().requestSitemapUpdate();
         }
@@ -35,7 +35,7 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
 
     // Called by the base class to render the menu item.
     public function onUpdate( dc as Dc ) as Void {
-        if( ConnectivityHandler.get().isOnWifiConnection() ) {
+        if( ConnectivityHandler.get().isWifiConnected() ) {
             BaseSitemapMenuItem.setLabelColor( Constants.UI_COLOR_TEXT );
             BaseSitemapMenuItem.setActionIcon( ACTION_ICON_COMMAND );
         } else {

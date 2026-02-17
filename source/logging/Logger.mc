@@ -54,7 +54,6 @@ public class Logger {
                 || ex instanceof JsonParsingException
                 || ex instanceof OutOfMemoryException
                 || ex instanceof NonFatalUserInterfaceException
-                || ex instanceof OfflineException
             ) )
             {
             ex.printStackTrace();

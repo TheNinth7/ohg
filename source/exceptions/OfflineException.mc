@@ -3,6 +3,7 @@ import Toybox.Lang;
 /*
  * Exception thrown if there is no connectivity.
  */
+/*
 (:glance)
 class OfflineException extends GeneralException {
     function initialize() {
@@ -13,3 +14,4 @@ class OfflineException extends GeneralException {
         return "Offline";
     }
 }
+*/

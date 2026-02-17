@@ -148,9 +148,7 @@ class SitemapRequest extends BaseRequest {
             } else {
                 // Logger.debug( "ExceptionHandler: confirming successful connection." );
                 
-                if( ! ( ex instanceof OfflineException ) ) {
-                    ConnectivityHandler.get().confirmPhoneConnection();
-                }
+                ConnectivityHandler.get().confirmPhoneConnection();
 
                 ExceptionHandler.handleBackgroundException( ex );
                 
@@ -197,7 +195,7 @@ class SitemapRequest extends BaseRequest {
     // connectivity check is initiated instead.
     public function makeRequestPeriodic() as Void {
         // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
-        if( ConnectivityHandler.get().isOnPhoneConnectionAccordingToSettings() ) {
+        if( ConnectivityHandler.get().isPhoneConnectedAccordingToSettings() ) {
             // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
             makeRequestInternal( false );
         } else {

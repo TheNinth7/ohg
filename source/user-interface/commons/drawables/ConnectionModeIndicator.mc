@@ -50,10 +50,19 @@ class ConnectionModeIndicator extends Bitmap {
     // Retrieves the ResourceId of the icon that shall be shown,
     // based on the current connection mode
     private function getResourceId() as ResourceId {
-        if( ConnectivityHandler.get().isOnWifiConnection() ) {
-            return Rez.Drawables.iconWifi;
-        } else {
-            return Rez.Drawables.iconBluetooth;
+        switch( ConnectivityHandler.get().getState() ) {
+            case ConnectivityHandler.PHONE_CONNECTION:
+                return Rez.Drawables.iconConnectionModeBluetooth;
+            case ConnectivityHandler.WIFI_CONNECTION:
+                return Rez.Drawables.iconConnectionModeWifi;
+            case ConnectivityHandler.WIFI_CHECK_PENDING:
+                return Rez.Drawables.iconConnectionModeWifiCheckPending;
+            default:
+                if( ConnectivityHandler.get().hasWifiCapability() ) {
+                    return Rez.Drawables.iconConnectionModeOfflineWifi;
+                } else {
+                    return Rez.Drawables.iconConnectionModeOffline;
+                }
         }
     }
 }
