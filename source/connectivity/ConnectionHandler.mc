@@ -178,6 +178,7 @@ import Toybox.Time;
     // and sitemap states are invalidated if necessary.
     public function processWifiCheckResponseAndTriggerNextRequest( result as TryWifiResult ) as Void {
         // Logger.debug( "ConnectionHandler.processWifiCheckResponseAndTriggerNextRequest" );
+        /*
         try {
             // If since the request was made the state has been changed
             // back to BLUETOOTH_CONNECTED, we ignore the result
@@ -197,6 +198,7 @@ import Toybox.Time;
             // after the Wi-Fi check was completed.
             SitemapRequest.get().triggerNextRequest( true );
         }
+        */
     }
 
     // Internal function that updates the connectivity state.

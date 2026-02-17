@@ -54,6 +54,16 @@ resBase=resources/base;resources/icons-interface;resources/icons-widgets
 # e.g. $(resLauncherIcon)/40x40-light
 resLauncherIcons=resources/icons-launcher
 
+# The resourcePath of all Edge devices includes additional
+# directories with resource definitions that override the icon sizes.
+# The base definition is only used in the two subsequent variants.
+resEdgeBase=$(resBase);resources/edge/icons-interface;resources/edge/icons-widgets
+# "Short" is used for devices with shorter screens, such as the 540, 840, 550, or 850.
+resEdgeShort=$(resEdgeBase);resources/edge/icons-interface-short
+# "Tall" is used for devices with taller screens, such as the 1040 or 1050.
+resEdgeTall=$(resEdgeBase);resources/edge/icons-interface-tall
+
+
 # SOURCE PATH
 # Defines which source files shall be included for the build
 
@@ -194,27 +204,24 @@ vivoactive6.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 vivoactive6.excludeAnnotations = $(venu3.excludeAnnotations)
 
 # CYCLING COMPUTERS
-# The resourcePath of all Edge devices contains an additional
-# directory with a drawables.xml that overrides the default
-# logo width
 
 # Touch devices with CIQ level between 4.0.0 and 5.0.0
-edgeexplore2.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/36x36-dark
+edgeexplore2.resourcePath=$(resEdgeTall);$(resLauncherIcons)/36x36-dark
 edgeexplore2.excludeAnnotations = $(annotCiq400Plus);$(annotTouch);$(annotScreenRectangular);$(annotFullMenu)
 edgeexplore2.sourcePath = $(srcEdgeTouch)
 
 # Button-based, CIQ >= 5.1.0
-edge540.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/35x35-dark
+edge540.resourcePath=$(resEdgeShort);$(resLauncherIcons)/35x35-dark
 edge540.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
 edge540.sourcePath = $(srcEdgeButtonX40)
 edge840.resourcePath=$(edge540.resourcePath)
 edge840.excludeAnnotations = $(edge540.excludeAnnotations)
 edge840.sourcePath = $(srcEdgeButtonX40)
-edgemtb.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/36x36-dark
+edgemtb.resourcePath=$(resEdgeShort);$(resLauncherIcons)/36x36-dark
 edgemtb.excludeAnnotations = $(edge540.excludeAnnotations)
 # For the Edge MTB a special source string is assembled to use a different glance constants class (the Edge MTB needs different font coloring)
 edgemtb.sourcePath = $(srcBase);source-constants/edge/widget/base;source-constants/edge/widget/button-x40;source-constants/edge/glance/base;source-constants/edge/glance/mtb
-edge550.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/56x56-dark
+edge550.resourcePath=$(resEdgeShort);$(resLauncherIcons)/56x56-dark
 edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
 edge550.sourcePath = $(srcEdgeButtonX50)
 edge850.resourcePath=$(edge550.resourcePath)
@@ -223,9 +230,9 @@ edge850.sourcePath = $(srcEdgeButtonX50)
 
 
 # Touch-based, CIQ >= 5.1.0
-edge1040.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/40x40-dark
+edge1040.resourcePath=$(resEdgeTall);$(resLauncherIcons)/40x40-dark
 edge1040.excludeAnnotations = $(annotCiq510Plus);$(annotTouch);$(annotScreenRectangular);$(annotFullMenu)
 edge1040.sourcePath = $(srcEdgeTouch)
-edge1050.resourcePath=$(resBase);resources/edge;$(resLauncherIcons)/68x68-dark
+edge1050.resourcePath=$(resEdgeTall);$(resLauncherIcons)/68x68-dark
 edge1050.excludeAnnotations = $(edge1040.excludeAnnotations)
 edge1050.sourcePath = $(srcEdgeTouch)

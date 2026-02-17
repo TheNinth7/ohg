@@ -61,6 +61,9 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
 
         var dc = bufferedBitmap.getDc();
 
+        dc.setColor( Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT );
+        dc.clear();
+
         var locX = 0;
 
         for( var i = 0; i < elements.size(); i++ ) {
@@ -78,10 +81,10 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
         var rezId;
         if( ch.isBluetoothConnected() ) {
             rezId = Rez.Drawables.iconConnStateGreen;
-        } else if( ch.isOffline() ) {
-            rezId = Rez.Drawables.iconConnStateRed;
-        } else {
+        } else if( ch.isWifiConnected() ) {
             rezId = Rez.Drawables.iconConnStateYellow;
+        } else {
+            rezId = Rez.Drawables.iconConnStateRed;
         }
         return new Bitmap( { :rezId => rezId } );
     }
@@ -123,7 +126,7 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
         } );
 
         if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-            var spacing = height * 0.2;
+            var spacing = ( height * 0.2 ).toNumber();
             setLocation( spacing, spacing );
         } else {
             var locYFactor = 

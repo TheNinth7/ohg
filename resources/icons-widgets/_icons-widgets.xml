@@ -1,3 +1,7 @@
+<!--
+    Widget icons correspond to the openHAB icons assigned
+    to the respective sitemap elements.
+-->
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <bitmap id="menuBatteryLevel00" scaleY="12%" filename="batterylevel-00.svg" dithering="none"/>
     <bitmap id="menuBatteryLevel01" scaleY="12%" filename="batterylevel-01.svg" dithering="none"/>

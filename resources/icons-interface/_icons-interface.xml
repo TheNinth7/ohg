@@ -1,3 +1,7 @@
+<!--
+    Interface icons are used to build the app's user interface,
+    for example for navigation controls or to indicate the connection mode.
+-->
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <bitmap id="logoOpenhabText" scaleX="40%" filename="openhab-text-light.svg" dithering="none" />
 
