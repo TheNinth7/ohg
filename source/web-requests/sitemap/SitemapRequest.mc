@@ -144,11 +144,11 @@ class SitemapRequest extends BaseRequest {
             // still return a BLE error, for example if the connection was lost
             // between the check and the actual request.
             if( ex instanceof CommunicationException && ex.isNoPhone() ) {
-                ConnectivityHandler.get().tryWifiConnectionAndTriggerNextRequest();
+                ConnectionHandler.get().tryWifiConnectionAndTriggerNextRequest();
             } else {
                 // Logger.debug( "ExceptionHandler: confirming successful connection." );
                 
-                ConnectivityHandler.get().confirmPhoneConnection();
+                ConnectionHandler.get().confirmPhoneConnection();
 
                 ExceptionHandler.handleBackgroundException( ex );
                 
@@ -195,12 +195,12 @@ class SitemapRequest extends BaseRequest {
     // connectivity check is initiated instead.
     public function makeRequestPeriodic() as Void {
         // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
-        if( ConnectivityHandler.get().isPhoneConnectedAccordingToSettings() ) {
+        if( ConnectionHandler.get().isPhoneConnectedAccordingToSettings() ) {
             // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
             makeRequestInternal( false );
         } else {
             // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
-            ConnectivityHandler.get().tryWifiConnectionAndTriggerNextRequest();
+            ConnectionHandler.get().tryWifiConnectionAndTriggerNextRequest();
         }
     }
 
@@ -246,7 +246,7 @@ class SitemapRequest extends BaseRequest {
                     // for all errors except no-phone errors.
                     if( ! SitemapSyncDelegate.get().isSyncInProgress() ) {
                         // Logger.debug( "SitemapRequest.onReceive: confirming successful connection." );
-                        ConnectivityHandler.get().confirmPhoneConnection();
+                        ConnectionHandler.get().confirmPhoneConnection();
                     }
                     
                     // The JSON is processed by processIncomingJson()

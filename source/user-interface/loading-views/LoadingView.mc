@@ -83,7 +83,7 @@ class LoadingView extends WatchUi.View {
         dc.setColor( Constants.UI_COLOR_TEXT, Constants.UI_COLOR_BACKGROUND );
         dc.clear();
         new Bitmap( {
-            :rezId => Rez.Drawables.iconHourglassWhite,
+            :rezId => Rez.Drawables.iconHourglass,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER
         } ).draw( dc );

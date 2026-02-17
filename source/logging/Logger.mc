@@ -73,7 +73,7 @@ public class Logger {
 
     (:debug)
     public static function debugConnectionInfo() as Void {
-        // Logger.debug( "ConnectivityHandler.debugConnectionInfo" );
+        // Logger.debug( "ConnectionHandler.debugConnectionInfo" );
         var bluetooth = System.getDeviceSettings().connectionInfo[:bluetooth];
         Logger.info( "Bluetooth: " + ( bluetooth == null ? "nostate" : bluetooth.state ) );
         var wifi = System.getDeviceSettings().connectionInfo[:wifi];

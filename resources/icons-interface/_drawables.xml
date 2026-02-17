@@ -30,13 +30,15 @@
     <bitmap id="iconNextHint" scaleY="7%" filename="next-hint.svg" dithering="none" />
     <bitmap id="iconPreviousHint" scaleY="7%" filename="previous-hint.svg" dithering="none" />
 
-    <bitmap id="iconConnectionModeBluetooth" scaleY="7%" filename="cm-bluetooth.svg" dithering="none" />
-    <bitmap id="iconConnectionModeWifi" scaleY="7%" filename="cm-wifi.svg" dithering="none" />
-    <bitmap id="iconConnectionModeWifiCheckPending" scaleY="7%" filename="cm-wifi-check.svg" dithering="none" />
-    <bitmap id="iconConnectionModeOffline" scaleY="7%" filename="cm-offline.svg" dithering="none" />
-    <bitmap id="iconConnectionModeOfflineWifi" scaleY="7%" filename="cm-offline-wifi.svg" dithering="none" />
-    <bitmap id="iconSearchForWifi" scaleX="75%" filename="wifi-search.svg" dithering="none" />
-    <bitmap id="iconHourglassBlue" scaleX="50%" filename="hourglass-blue.svg" dithering="none" />
-    <bitmap id="iconHourglassWhite" scaleX="50%" filename="hourglass-white.svg" dithering="none" />
+    <bitmap id="iconBluetoothOn" scaleY="7%" filename="cm-bluetooth-on.svg" dithering="none" />
+    <bitmap id="iconBluetoothOff" scaleY="7%" filename="cm-bluetooth-off.svg" dithering="none" />
+    <bitmap id="iconWifiCheck" scaleY="7%" filename="cm-wifi-check.svg" dithering="none" />
+    <bitmap id="iconWifiOn" scaleY="7%" filename="cm-wifi-on.svg" dithering="none" />
+    <bitmap id="iconWifiOff" scaleY="7%" filename="cm-wifi-off.svg" dithering="none" />
+    <bitmap id="iconConnStateGreen" scaleY="7%" filename="cm-state-green.svg" dithering="none" />
+    <bitmap id="iconConnStateYellow" scaleY="7%" filename="cm-state-yellow.svg" dithering="none" />
+    <bitmap id="iconConnStateRed" scaleY="7%" filename="cm-state-red.svg" dithering="none" />
+
+    <bitmap id="iconHourglass" scaleX="50%" filename="hourglass-white.svg" dithering="none" />
 
 </drawables>

@@ -29,7 +29,7 @@ class WifiCheckTimer extends Timer.Timer {
         // If there is a view now, we process the deferred result,
         // otherwise restart the timer
         if( ViewHandler.getCurrentViewSafe()[0] != null ) {
-            ConnectivityHandler.get().processDeferredResult();
+            ConnectionHandler.get().processDeferredResult();
         } else {
             startTimer();
         }

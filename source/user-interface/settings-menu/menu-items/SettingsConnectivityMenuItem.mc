@@ -23,7 +23,7 @@ class SettingsConnectivityMenuItem extends SettingsTextMenuItem {
     * Also updates the connectivity mode.
     */
     public function onUpdate( dc as Dc ) as Void {
-        setSubLabel( ConnectivityHandler.get().getStateDescription() );
+        setSubLabel( ConnectionHandler.get().getStateDescription() );
         SettingsTextMenuItem.onUpdate( dc );
     }
 }

@@ -12,4 +12,8 @@ class CustomMath {
     public static function min( a as Numeric, b as Numeric ) as Numeric {
         return a < b ? a : b;
     }
+
+    public static function max( a as Numeric, b as Numeric ) as Numeric {
+        return a > b ? a : b;
+    }
 }
