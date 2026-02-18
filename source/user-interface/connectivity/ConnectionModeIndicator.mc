@@ -84,21 +84,20 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
 
         // If there is an existing buffered bitmap with the
         // right size, it is kept, otherwise a new one is created
-        var bufferedBitmap;
-        if( _bufferedBitmap != null
-            && _bufferedBitmap.getWidth() == width 
-            && _bufferedBitmap.getHeight() == height 
+        var newBufferedBitmap = _bufferedBitmap;
+        
+        if( newBufferedBitmap == null
+            || newBufferedBitmap.getWidth() != width 
+            || newBufferedBitmap.getHeight() != height 
         ) {
-            bufferedBitmap = _bufferedBitmap;
-        } else {
-            bufferedBitmap = BufferedBitmapFactory.createBufferedBitmap( {
+            newBufferedBitmap = BufferedBitmapFactory.createBufferedBitmap( {
                 :height => height,
                 :width => width
             } );
-        }
+        } 
 
         // Obtain and clear the Dc
-        var dc = bufferedBitmap.getDc();
+        var dc = newBufferedBitmap.getDc();
         dc.setColor( Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT );
         dc.clear();
 
@@ -111,7 +110,7 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
             locX += element.width + spacing;
         }
 
-        return bufferedBitmap;
+        return newBufferedBitmap;
     }
 
     // Accessor for the buffered bitmap singleton
