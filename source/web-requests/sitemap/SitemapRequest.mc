@@ -41,7 +41,7 @@ class SitemapRequest extends BaseRequest {
 
     // Returns the appropriate Singleton instance based on the current mode.
     public static function get() as SitemapRequest {
-        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+        if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             if( _syncInstance == null ) {
                 _syncInstance = new SitemapRequest();
             }
@@ -131,7 +131,7 @@ class SitemapRequest extends BaseRequest {
         }
 
         // During sync, all errors are handled by the sync delegate
-        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+        if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             SitemapSyncDelegate.get().onException( ex );
         } else {
 
@@ -244,7 +244,7 @@ class SitemapRequest extends BaseRequest {
                     // phone connection is working.
                     // The exception handler also performs this confirmation
                     // for all errors except no-phone errors.
-                    if( ! SitemapSyncDelegate.get().isSyncInProgress() ) {
+                    if( ! SafeSitemapSyncDelegate.isSyncInProgress() ) {
                         // Logger.debug( "SitemapRequest.onReceive: confirming successful connection." );
                         ConnectionHandler.get().confirmPhoneConnection();
                     }
@@ -316,7 +316,7 @@ class SitemapRequest extends BaseRequest {
         // loading or error view. In this state, we prioritize speed over responsiveness
         // to complete processing as quickly as possible. The same applies to
         // sync mode.
-        if( ! HomepageMenu.exists() || SitemapSyncDelegate.get().isSyncInProgress() ) {
+        if( ! HomepageMenu.exists() || SafeSitemapSyncDelegate.isSyncInProgress() ) {
             taskQueue.prioritizeSpeed();
         } else {
             taskQueue.prioritizeResponsiveness();

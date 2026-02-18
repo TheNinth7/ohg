@@ -37,6 +37,12 @@ import Toybox.WatchUi;
  * See the following link for API documentation:
  * https://forums.garmin.com/developer/connect-iq/b/news-announcements/posts/connect-iq-3-1-connects-you-to-the-world
  *
+ * IMPORTANT: When calling functions of this class from code that may also run
+ * on devices without Wi-Fi support, always use SafeSitemapSyncDelegate as a wrapper.
+ * See that class for details.
+ *
+ * At the moment, this requirement only applies to the SitemapSyncDelegate
+ * implementation, not to CommandSyncDelegate.
  */
 class BaseSyncDelegate extends SyncDelegate {
 
@@ -69,12 +75,6 @@ class BaseSyncDelegate extends SyncDelegate {
     }
 
     /******* INSTANCE *******/ 
-
-    // The sync result tuple indicates in its first field whether a sync was performed
-    // (true) or not (false), regardless of success. The second field is null if the
-    // request was successful; otherwise, it contains the exception describing the error.
-    typedef WifiSyncResult as [Boolean,Exception?];
-    private const RESET_SYNC_STATE = [false, null];
 
     // Set to true while the sync is in progress
     private var _isSyncInProgress as Boolean = false;
@@ -109,6 +109,8 @@ class BaseSyncDelegate extends SyncDelegate {
     }
 
     // Returns the result of the last sync and resets the stored result
+    // ATTENTION: See the note on SafeSitemapSyncDelegate in this class description
+    // before using this function.
     public function consumeLastSyncResult() as WifiSyncResult {
         var lastSyncState = _lastSyncState;
         _lastSyncState = RESET_SYNC_STATE;
@@ -128,6 +130,8 @@ class BaseSyncDelegate extends SyncDelegate {
     // whether the application is currently in sync mode. For example,
     // exception handling differs, and sitemap responses must not trigger
     // any screen updates while sync mode is active.
+    // ATTENTION: See the note on SafeSitemapSyncDelegate in this class description
+    // before using this function.
     public function isSyncInProgress() as Boolean {
         // Logger.debug( "BaseSyncDelegate: isSyncInProgress=" + _isSyncInProgress );
         return _isSyncInProgress;

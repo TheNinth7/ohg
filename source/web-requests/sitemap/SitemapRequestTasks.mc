@@ -68,7 +68,7 @@ class ProcessIncomingJsonTask extends BaseSitemapProcessorTask {
         // Logger.debug( "ProcessIncomingJsonTask.invoke" );
 
         // In sync mode, update the progress bar
-        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+        if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             Communications.notifySyncProgress( 60 );
         }
         
@@ -136,7 +136,7 @@ class SwitchToHomepageTask extends BaseSitemapProcessorTask {
     
     public function invoke() as Void {
         // Logger.debug( "SwitchToHomepageTask.invoke" );
-        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+        if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
         } else {
             WatchUi.switchToView( 
@@ -166,7 +166,7 @@ class UpdateHomepageTask extends BaseSitemapProcessorTask {
     public function invoke() as Void {
 
         // In sync mode, update the progress bar
-        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+        if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             Communications.notifySyncProgress( 80 );
         }
 
@@ -178,7 +178,7 @@ class UpdateHomepageTask extends BaseSitemapProcessorTask {
         HomepageMenu.get().update( _sitemapHomepage );
 
         // If we are in sync mode we are done and stop the sync
-        if( SitemapSyncDelegate.get().isSyncInProgress() ) {
+        if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
         } else {
             AsyncTaskQueue.get().add( new RefreshUiTask() );

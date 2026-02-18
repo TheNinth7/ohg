@@ -44,7 +44,7 @@ class LoadingView extends WatchUi.View {
         // As indicated by "consume", this result is returned only once.
         // A subsequent call to consumeLastSyncResult will only return a value
         // if another sync has been executed.
-        var lastSyncResult = SitemapSyncDelegate.get().consumeLastSyncResult();
+        var lastSyncResult = SafeSitemapSyncDelegate.consumeLastSyncResult();
         
         try {
             // [0] is true, if a sync was done

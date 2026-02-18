@@ -150,7 +150,7 @@ class SitemapStore  {
     ) as SitemapHomepage {
         _json = incomingJson.getForStorage();
         _estimatedSitemapSize = incomingJson.estimatedSize;
-        var isSyncInProgress = SitemapSyncDelegate.get().isSyncInProgress();
+        var isSyncInProgress = SafeSitemapSyncDelegate.isSyncInProgress();
         var homepage = new SitemapHomepage( 
             new JsonAdapter( incomingJson.json ), 
             isSyncInProgress ? false : true, // in sync mode, we mark the sitemap as stale/not fresh because we do not want to display states

@@ -2,7 +2,13 @@ import Toybox.Lang;
 import Toybox.Communications;
 import Toybox.WatchUi;
 
-
+/*
+ * Sync delegate for updating the sitemap via Wi-Fi.
+ *
+ * IMPORTANT: When calling functions of this class from code that may also run
+ * on devices without Wi-Fi support, always use SafeSitemapSyncDelegate as a wrapper.
+ * See that class for details.
+ */
 class SitemapSyncDelegate extends BaseSyncDelegate {
 
     /******* STATIC *******/ 
