@@ -105,10 +105,19 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
     }
 
     // Handles selection of the menu item.
+    //
     // If a submenu is present, it is opened on selection. This typically takes precedence
     // over changing the state of the item. Therefore, subclasses should first call the
     // parent class’s onSelect() method. If it returns false (i.e., the event was not handled),
     // the subclass can proceed with its own selection logic (e.g., state changes).
+    //
+    // This function also ensures that a connection is available before sending a command.
+    // If no connection is present, it attempts to open the required submenus. If no
+    // submenu exists to establish a connection, it throws an OfflineException.
+    //
+    // When the OfflineException is passed to
+    // ExceptionHandler.handleUserInterfaceException by the delegate, it is shown to the 
+    // user as a toast notification.
     //
     // Subclasses without custom selection behavior, such as ContainerMenuItem or TextMenuItem,
     // do not need to override this method.
@@ -117,6 +126,9 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
             ViewHandler.pushView( _page, PageMenuDelegate.get(), WatchUi.SLIDE_LEFT );
             return true;
         } else {
+            if( ! ConnectionHandler.get().isConnected() ) {
+                throw new OfflineException();
+            }
             return false;
         }
     }
