@@ -18,8 +18,19 @@ import Toybox.Time;
  * If WiFi is available, the state moves to WIFI_CONNECTED.
  * Otherwise, it transitions to OFFLINE.
  *
- * The sitemap request continues to execute, and the connectivity
- * state is updated accordingly.
+ * The sitemap request continues to run and updates the connectivity
+ * state accordingly.
+ *
+ * The Wi-Fi check is handled differently. Because it is relatively
+ * expensive, it is performed only once when Bluetooth is not available.
+ * After that, the state remains WIFI_CONNECTED until one of the
+ * following occurs:
+ *
+ * - A SitemapRequest succeeds via Bluetooth
+ *   => state transitions to BLUETOOTH_CONNECTED
+ *
+ * - A manually triggered command sent via Wi-Fi fails
+ *   => state transitions to OFFLINE
  */
  public class ConnectionHandler {
 
@@ -178,7 +189,6 @@ import Toybox.Time;
     // and sitemap states are invalidated if necessary.
     public function processWifiCheckResponseAndTriggerNextRequest( result as TryWifiResult ) as Void {
         // Logger.debug( "ConnectionHandler.processWifiCheckResponseAndTriggerNextRequest" );
-        /*
         try {
             // If since the request was made the state has been changed
             // back to BLUETOOTH_CONNECTED, we ignore the result
@@ -198,7 +208,6 @@ import Toybox.Time;
             // after the Wi-Fi check was completed.
             SitemapRequest.get().triggerNextRequest( true );
         }
-        */
     }
 
     // Internal function that updates the connectivity state.

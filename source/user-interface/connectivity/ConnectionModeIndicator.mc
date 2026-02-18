@@ -86,8 +86,8 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
         // right size, it is kept, otherwise a new one is created
         var bufferedBitmap;
         if( _bufferedBitmap != null
-            && _bufferedBitmap.width == width 
-            && _bufferedBitmap.height == height 
+            && _bufferedBitmap.getWidth() == width 
+            && _bufferedBitmap.getHeight() == height 
         ) {
             bufferedBitmap = _bufferedBitmap;
         } else {
