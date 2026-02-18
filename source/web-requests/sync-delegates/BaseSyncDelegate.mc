@@ -40,6 +40,36 @@ import Toybox.WatchUi;
  */
 class BaseSyncDelegate extends SyncDelegate {
 
+    /******* STATIC *******/ 
+
+    // True if the sync delegate requests a confirmation of
+    // Wi-Fi availablity. See consumeWifiCheckRequest() for details.
+    private static var _wifiCheckRequest as Boolean = false;
+
+    // Returns true if any sync delegate requests confirmation of Wi-Fi availability.
+    //
+    // If Bluetooth is not connected, Wi-Fi availability is checked only once.
+    // After switching to Wi-Fi mode, no periodic checks are performed because
+    // those checks would block the app from sending Wi-Fi commands.
+    //
+    // If a Wi-Fi sync fails, Wi-Fi should be verified again after the sync ends
+    // to ensure it is still available.
+    //
+    // Unfortunately, there is no specific error indicating that a sync failed
+    // due to missing Wi-Fi. Instead, only onStopSync() is called. Since this
+    // callback is also triggered for other error conditions and when the user
+    // cancels the sync, we cannot reliably distinguish the cause.
+    //
+    // Therefore, as a precaution, we always request a Wi-Fi check whenever
+    // onStopSync() is invoked.
+    public static function consumeWifiCheckRequest() as Boolean {
+        var wifiCheckRequest = _wifiCheckRequest;
+        _wifiCheckRequest = false;
+        return wifiCheckRequest;
+    }
+
+    /******* INSTANCE *******/ 
+
     // The sync result tuple indicates in its first field whether a sync was performed
     // (true) or not (false), regardless of success. The second field is null if the
     // request was successful; otherwise, it contains the exception describing the error.
@@ -153,8 +183,13 @@ class BaseSyncDelegate extends SyncDelegate {
     // Cancels all pending requests and exits sync mode.
     public function onStopSync() as Void {
         // Logger.debug( "BaseSyncDelegate: onStopSync" );
+        
+        // See consumeWifiCheckRequest() for details
+        _wifiCheckRequest = true;
+        
         BaseRequest.cancelAllRequests();
         beforeSyncEnds();
+        
         // Logger.debug( "BaseSyncDelegate: onStopSync end" );
     }
 

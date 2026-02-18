@@ -163,10 +163,11 @@ import Toybox.Time;
         if( ! hasWifiCapability() ) {
             updateStateAndUi( OFFLINE );
             SitemapRequest.get().triggerNextRequest( true );
-        } else if( _state != WIFI_CONNECTED ) {
+        } else if( _state != WIFI_CONNECTED || BaseSyncDelegate.consumeWifiCheckRequest() ) {
             // Since the Wi-Fi check is relatively time-consuming and blocks Wi-Fi sync,
             // meaning no commands can be sent via Wi-Fi while it is running,
-            // we perform the check only once.
+            // we perform the check only once, or if requested by a sync delegate after
+            // a failed sync.
 
             // Logger.debug( "ConnectionHandler.tryWifiConnectionAndTriggerNextRequest: checking for Wi-Fi connection" );
             
