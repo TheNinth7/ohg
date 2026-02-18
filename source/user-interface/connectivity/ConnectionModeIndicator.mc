@@ -55,7 +55,7 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
     // Creates or updates the buffered bitmap to reflect the
     // current connection mode. Invoked by ConnectionHandler
     // whenever the connection mode changes.
-    private static function createOrUpdate() as BufferedBitmap {
+    private static function createOrUpdate() as BufferedBitmapType {
         
         // First, all the icons are assembled in an array
         var elements = new Array<Drawable>[0];
