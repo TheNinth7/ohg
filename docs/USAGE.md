@@ -158,14 +158,12 @@ Another example is the [`Slider`](#setpoint-and-slider). In Wi-Fi mode, the slid
 
 #### Offline
 
-While checking for Wi-Fi and when neither BLE nor Wi-Fi is available, the app enters offline mode, indicated by a red status indicator.
-
+While searching for Wi-Fi, and whenever neither BLE nor Wi-Fi is available, the app enters offline mode, indicated by a red status indicator. In offline mode, the menu structure can still be navigated. However, when attempting to send a command, an “OFFLINE” toast notification is displayed.
 
 <div class="garmin-screenshot-container">
   <img src="images/app/12-indicator-offline-menu.png"/>
   <img src="images/app/12-offline-toast.png"/>
 </div>
-
 
 ### Using myopenHAB
 
