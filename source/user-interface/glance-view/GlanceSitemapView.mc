@@ -22,17 +22,33 @@ class GlanceSitemapView extends WatchUi.GlanceView {
         _textArea = new TextArea( { 
             :backgroundColor => Graphics.COLOR_TRANSPARENT,
             :font => GlanceConstants.UI_GLANCE_FONTS,
-            :justification => Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER,
-            :locX => WatchUi.LAYOUT_HALIGN_CENTER,
-            :locY => WatchUi.LAYOUT_VALIGN_CENTER
+            :justification => Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         } );
     }
 
-    public function onUpdate( dc as Dc ) as Void {
-        // If size has not been set yet, then set it
-        if( _textArea.width == 0 ) {
-            _textArea.setSize( dc.getWidth(), dc.getHeight() );
+    public function onLayout( dc as Dc ) as Void {
+        var locX = 0;
+        var locY = WatchUi.LAYOUT_VALIGN_CENTER;
+        var width = dc.getWidth();
+        var height = dc.getHeight();
+
+        if( GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET != 0 ) {
+            locX = GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET;
+            width -= GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET;
         }
+
+        // If an offset is defined in the constants,
+        // we apply it here (currently used for Edge devices only)
+        if( GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET != 0 ) {
+            locY = GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET;
+            height -= GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET;
+        }
+
+        _textArea.setSize( width, height );
+        _textArea.setLocation( locX, locY );
+    }
+
+    public function onUpdate( dc as Dc ) as Void {
         try {
             // Apply standard or night mode color
             var deviceSettings = System.getDeviceSettings();
@@ -48,15 +64,6 @@ class GlanceSitemapView extends WatchUi.GlanceView {
                 _textArea.setText( label );
             } else {
                 _textArea.setText( "openHAB" );
-            }
-            
-            // If an offset is defined in the constants,
-            // we apply it here (currently used for Edge devices only)
-            if( GlanceConstants.UI_GLANCE_TEXT_OFFSET != 0 ) {
-                _textArea.setLocation( 
-                    WatchUi.LAYOUT_HALIGN_CENTER, 
-                    dc.getHeight()/2 - _textArea.height/2 + GlanceConstants.UI_GLANCE_TEXT_OFFSET
-                );
             }
         } catch( ex ) {
             // Show any errors

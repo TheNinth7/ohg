@@ -22,6 +22,8 @@ class GlanceDefaultConstants {
     public static const UI_FONT_COLOR_NIGHT = Graphics.COLOR_WHITE;
 
     // This offset in pixel is applied to the positioning of glance text
-    // Positive means the label is shifted down, negative means up
-    public static const UI_GLANCE_TEXT_OFFSET as Number = 0;
+    // Vertical: positive means the label is shifted down, negative means up
+    public static const UI_GLANCE_TEXT_VERTICAL_OFFSET as Number = 0;
+    // Horizontal: positive means the label is shifted right
+    public static const UI_GLANCE_TEXT_HORIZONTAL_OFFSET as Number = 0;
 }
