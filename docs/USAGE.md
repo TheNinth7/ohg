@@ -143,7 +143,7 @@ Due to the limitations of the Wi-Fi mode, the app does not regularly poll openHA
   <img src="images/app/12-nostates.png"/>
 </div>
 
-Only if no data is available at startup, for example after settings changes or a fatal error, the app enters sync mode to retrieve the full sitemap. The [settings menu](#settings-menu) shows when the sitemap was last retrieved, and the user can also manually trigger an update via Wi-Fi, for example to download structural changes to the sitemap.
+Only if no cached sitemap is available at startup, for example after settings changes or a fatal error, the app enters sync mode to retrieve the full sitemap. The [settings menu](#settings-menu) shows when the sitemap was last retrieved, and the user can also manually trigger an update via Wi-Fi, for example to download structural changes to the sitemap.
 
 <div class="garmin-screenshot-container">
   <img src="images/app/12-settings-last-update.png"/>
