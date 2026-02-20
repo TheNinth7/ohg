@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="50.790001"
+   height="50.790623"
+   viewBox="0 0 50.790001 50.790623"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="openhab-logo-dark-frame.svg"
+   inkscape:export-filename="openhab-logo-dark.png"
+   inkscape:export-xdpi="23.373913"
+   inkscape:export-ydpi="23.373913"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.02"
+     inkscape:cx="-93.069307"
+     inkscape:cy="218.06931"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1" />
+  <rect
+     style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:59.243;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:23.7;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     id="rect1"
+     width="50.789291"
+     height="50.789291"
+     x="0.00035486018"
+     y="0.00066575798"
+     inkscape:label="frame" />
+  <g
+     id="g1"
+     transform="matrix(0.74414886,0,0,0.74414886,-99.626004,-47.647126)"
+     inkscape:label="openhab">
+    <path
+       fill-rule="evenodd"
+       clip-rule="evenodd"
+       fill="#e64a19"
+       d="m 145.23816,109.01854 19.87295,-19.887547 2.89414,-2.894009 2.89414,2.894009 14.6699,14.669777 -0.0214,0.074 -0.28939,0.85227 -0.32841,0.83186 -0.36922,0.81223 -0.40644,0.79245 -0.36948,0.64131 -15.77966,-15.779659 c -6.88537,6.890535 -13.77048,13.780939 -20.65559,20.671089 -0.79504,-1.17099 -1.5335,-2.37712 -2.1115,-3.67781 z"
+       id="path68"
+       style="stroke-width:0.264583"
+       inkscape:label="roof" />
+    <path
+       fill-rule="evenodd"
+       clip-rule="evenodd"
+       fill="#000000"
+       d="m 168.00551,72.760417 c 13.98777,0 25.39483,11.407572 25.39483,25.395477 0,13.987006 -11.40706,25.395096 -25.39483,25.395096 -7.64036,0 -14.50945,-3.40677 -19.17118,-8.7757 l 0.89736,-0.90072 0.65138,-0.65164 0.65267,-0.65344 0.65293,-0.65294 0.0266,-0.0264 c 3.91655,4.63745 9.76788,7.5923 16.29022,7.5923 11.74657,0 21.32686,-9.57978 21.32686,-21.326603 0,-11.747474 -9.58029,-21.327509 -21.32686,-21.327509 -11.74709,0 -21.32738,9.580035 -21.32738,21.327509 0,1.581946 0.17595,3.123453 0.50578,4.609283 l -1.41503,1.418 -1.88864,1.89019 c -0.82256,-2.49403 -1.26982,-5.15433 -1.26982,-7.917473 0,-13.987905 11.40705,-25.395478 25.39509,-25.395478 z"
+       id="path69"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+       inkscape:label="circle" />
+  </g>
+</svg>
