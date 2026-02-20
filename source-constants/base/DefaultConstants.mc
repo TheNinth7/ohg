@@ -160,4 +160,8 @@ class DefaultConstants {
 
     // List of fonts to be used by the picker for the title
     public static const UI_PICKER_TITLE_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
+
+    // If true, anti-aliasing is used when drawing primitives (lines, circles, rectangulars)
+    // This for example is used for the toggle switch and the input hints
+    public static const UI_USE_ANTI_ALIASING as Boolean = true;
 }

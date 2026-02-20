@@ -24,5 +24,5 @@ class EdgeGlanceDefaultConstants extends GlanceDefaultConstants {
     // Horizontal: positive means the label is shifted right
     public static const UI_GLANCE_TEXT_HORIZONTAL_OFFSET as Number = 
         ( System.getDeviceSettings().screenWidth * 0.03 ).toNumber();
-
+        
 }
