@@ -10,13 +10,13 @@
         To achieve a consistent visual size on both short and tall devices,
         the icon sizes must be defined differently for each device type.
     -->
-    <bitmap id="iconBluetoothOn" scaleY="5%" filename="../../icons-interface/cm-bluetooth-on.svg" dithering="none" />
-    <bitmap id="iconBluetoothOff" scaleY="5%" filename="../../icons-interface/cm-bluetooth-off.svg" dithering="none" />
-    <bitmap id="iconWifiCheck" scaleY="5%" filename="../../icons-interface/cm-wifi-check.svg" dithering="none" />
-    <bitmap id="iconWifiOn" scaleY="5%" filename="../../icons-interface/cm-wifi-on.svg" dithering="none" />
-    <bitmap id="iconWifiOff" scaleY="5%" filename="../../icons-interface/cm-wifi-off.svg" dithering="none" />
-    <bitmap id="iconConnStateGreen" scaleY="5%" filename="../../icons-interface/cm-state-green.svg" dithering="none" />
-    <bitmap id="iconConnStateYellow" scaleY="5%" filename="../../icons-interface/cm-state-yellow.svg" dithering="none" />
-    <bitmap id="iconConnStateRed" scaleY="5%" filename="../../icons-interface/cm-state-red.svg" dithering="none" />
+    <bitmap id="iconBluetoothOn" scaleY="6%" filename="../../icons-interface/cm-bluetooth-on.svg" dithering="none" />
+    <bitmap id="iconBluetoothOff" scaleY="6%" filename="../../icons-interface/cm-bluetooth-off.svg" dithering="none" />
+    <bitmap id="iconWifiCheck" scaleY="6%" filename="../../icons-interface/cm-wifi-check.svg" dithering="none" />
+    <bitmap id="iconWifiOn" scaleY="6%" filename="../../icons-interface/cm-wifi-on.svg" dithering="none" />
+    <bitmap id="iconWifiOff" scaleY="6%" filename="../../icons-interface/cm-wifi-off.svg" dithering="none" />
+    <bitmap id="iconConnStateGreen" scaleY="6%" filename="../../icons-interface/cm-state-green.svg" dithering="none" />
+    <bitmap id="iconConnStateYellow" scaleY="6%" filename="../../icons-interface/cm-state-yellow.svg" dithering="none" />
+    <bitmap id="iconConnStateRed" scaleY="6%" filename="../../icons-interface/cm-state-red.svg" dithering="none" />
 
 </drawables>
