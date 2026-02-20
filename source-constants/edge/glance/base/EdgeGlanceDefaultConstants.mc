@@ -10,7 +10,7 @@ class EdgeGlanceDefaultConstants extends GlanceDefaultConstants {
     protected function initialize() { GlanceDefaultConstants.initialize(); }
     
     // Edge devices need larger fonts
-    public static const UI_GLANCE_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL];
+    public static const UI_GLANCE_FONTS as Array<FontDefinition> = [Graphics.FONT_GLANCE];
 
     // The Edge devices use a white background for glances, so the font needs to be black
     public static const UI_FONT_COLOR = Graphics.COLOR_BLACK;
@@ -20,10 +20,9 @@ class EdgeGlanceDefaultConstants extends GlanceDefaultConstants {
 
     // This offset in pixel is applied to the positioning of glance text
     // Vertical: positive means the label is shifted down, negative means up
-    public static const UI_GLANCE_TEXT_VERTICAL_OFFSET as Number = 
-        ( System.getDeviceSettings().screenWidth * 0.022 ).toNumber();
+    public static const UI_GLANCE_TEXT_VERTICAL_OFFSET as Number = 0;
     // Horizontal: positive means the label is shifted right
     public static const UI_GLANCE_TEXT_HORIZONTAL_OFFSET as Number = 
-        ( System.getDeviceSettings().screenWidth * 0.04 ).toNumber();
+        ( System.getDeviceSettings().screenWidth * 0.03 ).toNumber();
 
 }

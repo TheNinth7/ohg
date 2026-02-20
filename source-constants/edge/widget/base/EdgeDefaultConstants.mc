@@ -13,15 +13,15 @@ class EdgeDefaultConstants extends DefaultConstants {
     public static const UI_MENU_TITLE_HEIGHT as Number = 
         ( DefaultConstants.UI_SCREEN_WIDTH * 0.3 ).toNumber();
     public static const UI_MENU_FOOTER_HEIGHT as Number = 
-        ( DefaultConstants.UI_SCREEN_HEIGHT * 0.2 ).toNumber();
+        ( DefaultConstants.UI_SCREEN_HEIGHT * 0.15 ).toNumber();
 
     // On the Edge devices no gap between title and menu items is
     // needed, therefore the title height is set to the full amount (defined above)
     public static const UI_MENU_TITLE_HEIGHT_FACTOR as Float = 1.0;
 
     // Edge devices need larger fonts
-    public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_LARGE;  
-    public static const UI_MENU_ITEM_FONTS as Array<FontDefinition> = [Graphics.FONT_LARGE, Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY];
+    public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_MEDIUM;  
+    public static const UI_MENU_ITEM_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY];
 
     // Less padding but more spacing
     public static const UI_MENU_ITEM_PADDING_LEFT_FACTOR as Float = 0.01;
@@ -51,6 +51,6 @@ class EdgeDefaultConstants extends DefaultConstants {
     public static const UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH as Number = ( UI_MENU_ITEM_HEIGHT * 0.37 ).toNumber();
 
     // Also for the error view we add FONT_LARGE
-    public static const UI_ERROR_FONTS as Array<FontDefinition> = [Graphics.FONT_LARGE, Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
-    public static const UI_PICKER_TITLE_FONTS as Array<FontDefinition> = [Graphics.FONT_LARGE, Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
+    public static const UI_ERROR_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
+    public static const UI_PICKER_TITLE_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
 }
