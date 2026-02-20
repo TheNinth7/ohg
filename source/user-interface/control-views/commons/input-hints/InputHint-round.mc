@@ -38,7 +38,7 @@ class InputHint extends BaseInputHint {
     // Draw the input hint
     public function draw( dc as Dc ) as Void {
         // Anti-alias is only available in newer SDK versions
-        if( dc has :setAntiAlias ) {
+        if(  Constants.UI_USE_ANTI_ALIASING && dc has :setAntiAlias ) {
             dc.setAntiAlias( true );
         }
         

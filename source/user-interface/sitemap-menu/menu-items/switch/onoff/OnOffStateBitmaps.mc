@@ -89,7 +89,9 @@ class OnOffStateBitmaps {
         var upperYCenter = xCenter; // Center of the upper circle
         var lowerYCenter = dc.getHeight() - spacing - radius; // Center of the lower circle
         dc.setPenWidth( 1 );
-        dc.setAntiAlias( true );
+        if(  Constants.UI_USE_ANTI_ALIASING && dc has :setAntiAlias ) {
+            dc.setAntiAlias( true );
+        }
         dc.fillCircle( xCenter, upperYCenter, radius );
         dc.fillCircle( xCenter, lowerYCenter, radius );
         // Correction values -1 and + 3 have been determined by
