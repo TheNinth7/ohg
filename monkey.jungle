@@ -146,6 +146,12 @@ descentmk351mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 
 # For Forerunner devices, the sourcePath must also be set,
 # as they have different button positions defined in Constants.
+
+# FR945 LTE is the only Forerunner with CIQ 3.4
+fr945lte.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
+fr945lte.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
+fr945lte.sourcePath=$(srcForerunner)
+
 fr165.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 fr165.sourcePath=$(srcForerunner)
 fr165m.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
@@ -166,6 +172,7 @@ fr57042mm.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 fr57042mm.sourcePath=$(srcForerunner)
 fr57047mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 fr57047mm.sourcePath=$(srcForerunner)
+fr955.sourcePath=$(srcForerunner)
 fr955.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 fr955.sourcePath=$(srcForerunner)
 fr965.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
