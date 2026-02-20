@@ -11,7 +11,7 @@ class EdgeDefaultConstants extends DefaultConstants {
 
     // Default height of title and footer is too high
     public static const UI_MENU_TITLE_HEIGHT as Number = 
-        ( DefaultConstants.UI_SCREEN_WIDTH * 0.3 ).toNumber();
+        ( DefaultConstants.UI_SCREEN_WIDTH * 0.30 ).toNumber();
     public static const UI_MENU_FOOTER_HEIGHT as Number = 
         ( DefaultConstants.UI_SCREEN_HEIGHT * 0.15 ).toNumber();
 
@@ -20,7 +20,7 @@ class EdgeDefaultConstants extends DefaultConstants {
     public static const UI_MENU_TITLE_HEIGHT_FACTOR as Float = 1.0;
 
     // Edge devices need larger fonts
-    public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_MEDIUM;  
+    public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_LARGE;  
     public static const UI_MENU_ITEM_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY];
 
     // Less padding but more spacing
