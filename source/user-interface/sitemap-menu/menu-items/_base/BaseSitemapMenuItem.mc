@@ -96,14 +96,14 @@ class BaseSitemapMenuItem extends BaseMenuItem {
 
     // Constructor
     protected function initialize( options as Options ) {
-        BaseMenuItem.initialize();
+        var label = options[:label];
+        BaseMenuItem.initialize( label );
         _labelTextArea = new TextArea( {
             :font => Constants.UI_MENU_ITEM_FONTS,
             :justification => Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         } );
         setIcon( options[:icon] as ResourceId? );
         setStateDrawable( options[:stateDrawable] as StateDrawable? );
-        var label = options[:label];
         if( label != null ) {
             setLabel( label );            
         }

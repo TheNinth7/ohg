@@ -20,7 +20,7 @@ class CommandMenuItem extends BaseMenuItem {
     * Initializes the superclass and stores the label and command.
     */
     public function initialize( label as String, command as String ) {
-        BaseMenuItem.initialize();
+        BaseMenuItem.initialize( null );
         _label = label;
         _command = command;
     }

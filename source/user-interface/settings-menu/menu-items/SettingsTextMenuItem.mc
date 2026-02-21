@@ -19,7 +19,7 @@ class SettingsTextMenuItem extends BaseMenuItem {
     * Initializes the superclass and stores the label and sublabel.
     */
     public function initialize( label as String, subLabel as String ) {
-        BaseMenuItem.initialize();
+        BaseMenuItem.initialize( null );
         _title = label;
         _subLabel = subLabel;
     }

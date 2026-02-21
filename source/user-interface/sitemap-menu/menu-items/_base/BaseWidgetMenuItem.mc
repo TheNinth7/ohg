@@ -64,6 +64,7 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         // And initialize the base class, partly with data from
         // the SitemapWidget, partly with other options
         BaseSitemapMenuItem.initialize( {
+            :label => ( options[:sitemapWidget] as SitemapWidget ).getLabel(),
             :stateDrawable => options[:stateDrawable],
             :stateTextResponsive => options[:stateTextResponsive]
         } );

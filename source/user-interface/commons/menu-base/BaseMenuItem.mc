@@ -22,8 +22,9 @@ class BaseMenuItem extends CustomMenuItem {
     // Constructor
     // This base class currently only uses the `id` from the options;
     // all other options are used by derived classes.
-    protected function initialize() {
-        CustomMenuItem.initialize( null, {} );
+    protected function initialize( id as Object? ) {
+        Logger.debug( "BaseMenuItem.initialize: id=" + id );
+        CustomMenuItem.initialize( id, {} );
     }
 
     public function draw( dc as Dc ) as Void {
@@ -34,10 +35,8 @@ class BaseMenuItem extends CustomMenuItem {
             }
 
             // We apply the focus color
-            Logger.debug( "BaseMenuItem.draw: isSelected=" + isSelected() );
-            Logger.debug( "BaseMenuItem.draw: isFocused=" + isFocused() );
-            
             if( isFocused() ) {
+                Logger.debug( "BaseMenuItem.draw: " + getId() + " is focused" );
                 dc.setColor( Theme.focusedMenuItemTextColor, Theme.focusedMenuItemBackgroundColor );
             } else {
                 dc.setColor( Theme.textColor, Theme.menuItemBackgroundColor );
