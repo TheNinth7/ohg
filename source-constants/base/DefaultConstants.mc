@@ -105,6 +105,11 @@ class DefaultConstants {
     // Positive means the label is shifted down, negative means up
     public static const UI_MENU_ITEM_LABEL_OFFSET as Number = 0;
 
+    // This offset in pixel is applied to the positioning of the label
+    // and sublabel in the SettingsMenuTextItem.
+    // Positive means the label is shifted down, negative means up
+    public static const UI_MENU_SETTINGS_TEXT_ITEM_LABEL_OFFSET as Number = 0;
+
     // Height and width of the toggle switch relative to the menu item height
     public static const UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT as Number = ( UI_MENU_ITEM_HEIGHT * 0.8 ).toNumber();
     public static const UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH as Number = ( UI_MENU_ITEM_HEIGHT * 0.45 ).toNumber();

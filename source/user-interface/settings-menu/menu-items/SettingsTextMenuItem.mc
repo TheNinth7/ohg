@@ -41,7 +41,9 @@ class SettingsTextMenuItem extends BaseMenuItem {
             :text => _title,
             :font => Constants.UI_MENU_ITEM_FONTS[0],
             :locX => locX,
-            :locY => yCenter - Graphics.getFontHeight( Constants.UI_MENU_ITEM_FONTS[0] ),
+            :locY => yCenter 
+                     - Graphics.getFontHeight( Constants.UI_MENU_ITEM_FONTS[0] )
+                     + Constants.UI_MENU_SETTINGS_TEXT_ITEM_LABEL_OFFSET,
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
             :width => width,
             :height => yCenter
@@ -50,7 +52,7 @@ class SettingsTextMenuItem extends BaseMenuItem {
             :text => _subLabel,
             :font => Constants.UI_MENU_ITEM_FONTS,
             :locX => locX,
-            :locY => yCenter,
+            :locY => yCenter + Constants.UI_MENU_SETTINGS_TEXT_ITEM_LABEL_OFFSET,
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
             :width => width,
             :height => yCenter

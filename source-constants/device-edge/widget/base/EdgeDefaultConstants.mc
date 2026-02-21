@@ -33,8 +33,7 @@ class EdgeDefaultConstants extends DefaultConstants {
     // with taller displays (such as 1040/1050)
     public static const UI_MENU_ITEM_HEIGHT as Number = 
         ( DefaultConstants.UI_SCREEN_WIDTH * 0.25 ).toNumber();
-    public static const UI_SETTINGS_ITEM_HEIGHT as Number = 
-        ( DefaultConstants.UI_SCREEN_WIDTH * 0.25 ).toNumber();
+    public static const UI_SETTINGS_ITEM_HEIGHT as Number = UI_MENU_ITEM_HEIGHT;
 
     // If an icon is present, the amount of space defined below will be reserved,
     // to allow alignment of labels that have icons of different widths.
@@ -44,7 +43,13 @@ class EdgeDefaultConstants extends DefaultConstants {
     // This offset in pixel is applied to the positioning of the menu item label
     // Positive means the label is shifted down, negative means up
     public static const UI_MENU_ITEM_LABEL_OFFSET as Number =
-        ( DefaultConstants.UI_SCREEN_HEIGHT * 0.011 ).toNumber();
+        ( DefaultConstants.UI_SCREEN_WIDTH * 0.015 ).toNumber();
+
+    // This offset in pixel is applied to the positioning of the label
+    // and sublabel in the SettingsMenuTextItem.
+    // Positive means the label is shifted down, negative means up
+    public static const UI_MENU_SETTINGS_TEXT_ITEM_LABEL_OFFSET as Number =
+        ( DefaultConstants.UI_SCREEN_WIDTH * 0.01 ).toNumber();
 
     // Height and width of the toggle switch relative to the menu item height
     public static const UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT as Number = ( UI_MENU_ITEM_HEIGHT * 0.65 ).toNumber();
