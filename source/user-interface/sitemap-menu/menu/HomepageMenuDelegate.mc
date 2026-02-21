@@ -95,7 +95,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     // Therefore here we override onBack and use the
     // standard popView()
     public function onBack() as Void {
-        // Logger.debug( "HomepageMenuDelegate.onBack" );
+        Logger.debug( "HomepageMenuDelegate.onBack" );
         try {
             WatchUi.popView( WatchUi.SLIDE_RIGHT );
         } catch( ex ) {

@@ -48,7 +48,7 @@ class OHApp extends Application.AppBase {
     (:typecheck(disableGlanceCheck))
     public function getInitialView() as [Views] or [Views, InputDelegates] {
         try {
-            Logger.debug( "OHApp.getInitialView" );
+            // Logger.debug( "OHApp.getInitialView" );
             // First we initialize the menu from storage
             var menu = HomepageMenu.createFromStorage();
             var hasMenu = menu != null;
@@ -84,14 +84,14 @@ class OHApp extends Application.AppBase {
     
     // Initializes the glance view
     function getGlanceView() as [ GlanceView ] or [ GlanceView, GlanceViewDelegate ] or Null {
-        Logger.debug( "OHApp.getGlanceView" );
+        // Logger.debug( "OHApp.getGlanceView" );
         _glanceView = new GlanceSitemapView();
         return [ _glanceView ];
     }
 
     /*
     function getGlanceTheme() as AppBase.GlanceTheme {
-        Logger.debug( "OHApp.getGlanceTheme" );
+        // Logger.debug( "OHApp.getGlanceTheme" );
         return GLANCE_THEME_BLUE;
     }
     */
@@ -137,7 +137,7 @@ class OHApp extends Application.AppBase {
     // Switching into night mode may change the screen colors
     // Currently only used in the glance of Edge devices
     public function onNightModeChanged() as Void {
-        Logger.debug( "OHApp.onNightModeChanged" );
+        // Logger.debug( "OHApp.onNightModeChanged" );
         Theme.update();
         WatchUi.requestUpdate();
     }

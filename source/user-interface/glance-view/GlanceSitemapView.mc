@@ -18,7 +18,7 @@ class GlanceSitemapView extends WatchUi.GlanceView {
 
     // Constructor
     public function initialize() {
-        Logger.debug( "GlanceSitemapView.initialize" );
+        // Logger.debug( "GlanceSitemapView.initialize" );
         GlanceView.initialize();
         
         // Initialize the text area
@@ -32,7 +32,7 @@ class GlanceSitemapView extends WatchUi.GlanceView {
 
     // Setup the text area and its content
     public function onLayout( dc as Dc ) as Void {
-        Logger.debug( "GlanceSitemapView.onLayout" );
+        // Logger.debug( "GlanceSitemapView.onLayout" );
         try {
             var locX = 0;
             var locY = WatchUi.LAYOUT_VALIGN_CENTER;

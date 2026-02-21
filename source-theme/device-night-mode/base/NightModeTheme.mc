@@ -28,6 +28,7 @@ class NightModeTheme extends DefaultTheme {
     }
 
     public static function setLightTheme() as Void {
+        DefaultTheme.useLightTheme = false;
         DefaultTheme.textColor = Graphics.COLOR_BLACK;
         DefaultTheme.backgroundColor = Graphics.COLOR_WHITE;
         DefaultTheme.stateColor = Graphics.COLOR_DK_GRAY;
@@ -36,6 +37,7 @@ class NightModeTheme extends DefaultTheme {
     }
 
     public static function setDarkTheme() as Void {
+        DefaultTheme.useLightTheme = true;
         DefaultTheme.textColor = Graphics.COLOR_WHITE;
         DefaultTheme.backgroundColor = Graphics.COLOR_BLACK;
         DefaultTheme.stateColor = Graphics.COLOR_LT_GRAY;

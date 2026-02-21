@@ -43,6 +43,7 @@
     <bitmap id="iconConnStateYellow" scaleY="7%" filename="cm-state-yellow.svg" dithering="none" />
     <bitmap id="iconConnStateRed" scaleY="7%" filename="cm-state-red.svg" dithering="none" />
 
-    <bitmap id="iconHourglass" scaleX="50%" filename="hourglass-white.svg" dithering="none" />
+    <bitmap id="iconHourglassWhite" scaleX="50%" filename="hourglass-white.svg" dithering="none" />
+    <bitmap id="iconHourglassBlack" scaleX="50%" filename="hourglass-black.svg" dithering="none" />
 
 </drawables>

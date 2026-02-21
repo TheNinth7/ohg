@@ -8,6 +8,10 @@ class DefaultTheme {
 
     protected function initialize() {}
 
+    // Current state of the night mode, for use by other classes
+    // to adapt their behavior (e.g. choosing different bitmaps)
+    public static var useLightTheme as Boolean = false;
+    
     // MAIN COLOR DEFINITIONS
     
     // Text color

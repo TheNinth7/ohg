@@ -77,19 +77,19 @@ resEdgeTall=$(resEdgeBase);resources/edge/icons-interface-tall
 # srcDefault holds the default implementation of Constants and GlanceConstants
 # The other variables define the path for individual devices
 srcBase=source;source-constants/base;source-theme/base
-srcDefault=$(srcBase);source-constants/default-device;source-theme/default-device
-srcFenix6Pro=$(srcBase);source-constants/fenix6pro;source-theme/default-device
-srcForerunner=$(srcBase);source-constants/forerunner;source-theme/default-device
-srcVenux1=$(srcBase);source-constants/venux1;source-theme/default-device
+srcDefault=$(srcBase);source-constants/device-default;source-theme/device-default
+srcFenix6Pro=$(srcBase);source-constants/device-fenix6pro;source-theme/device-default
+srcForerunner=$(srcBase);source-constants/device-forerunner;source-theme/device-default
+srcVenux1=$(srcBase);source-constants/device-venux1;source-theme/device-default
 
 # For all Edge devices
-srcEdgeBase=$(srcBase);source-constants/edge/widget/base;source-constants/edge/glance/base;source-constants/edge/glance/device-default;source-theme/night-mode/base
+srcEdgeBase=$(srcBase);source-constants/device-edge/widget/base;source-constants/device-edge/glance;source-theme/device-night-mode/base
 # For Edge touch devices (such as Explore 2/1040/1050)
-srcEdgeTouch=$(srcEdgeBase);source-constants/edge/widget/device-touch;source-theme/night-mode/device-default
+srcEdgeTouch=$(srcEdgeBase);source-constants/device-edge/widget/device-touch;source-theme/device-night-mode/device-default
 # For 540/840 Edge button devices
-srcEdgeButtonX40=$(srcEdgeBase);source-constants/edge/widget/device-x40-button;source-theme/night-mode/device-edge-x40-button
+srcEdgeButtonX40=$(srcEdgeBase);source-constants/device-edge/widget/device-x40-button;source-theme/device-night-mode/device-edge-x40-button
 # For 540/840 Edge button devices
-srcEdgeButtonX50=$(srcEdgeBase);source-constants/edge/widget/device-x50-button;source-theme/night-mode/device-edge-x50-button
+srcEdgeButtonX50=$(srcEdgeBase);source-constants/device-edge/widget/device-x50-button;source-theme/device-night-mode/device-edge-x50-button
 
 # DEVICES
 # The following section assembles the excludeAnnotations,
@@ -226,8 +226,7 @@ edge840.excludeAnnotations = $(edge540.excludeAnnotations)
 edge840.sourcePath = $(srcEdgeButtonX40)
 edgemtb.resourcePath=$(resEdgeShort);$(resLauncherIcons)/36x36-dark
 edgemtb.excludeAnnotations = $(edge540.excludeAnnotations)
-# For the Edge MTB a special source string is assembled to use a different glance constants class (the Edge MTB needs different font coloring)
-edgemtb.sourcePath = $(srcBase);source-constants/edge/widget/base;source-constants/edge/widget/device-x40-button;source-constants/edge/glance/base;source-constants/edge/glance/device-mtb
+edgemtb.sourcePath = $(srcEdgeButtonX40)
 edge550.resourcePath=$(resEdgeShort);$(resLauncherIcons)/56x56-dark
 edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
 edge550.sourcePath = $(srcEdgeButtonX50)

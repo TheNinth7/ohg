@@ -75,7 +75,11 @@ class CustomView extends View {
     // Draw all Drawables
     public function draw( dc as Dc ) as Void {
         for( var i = 0; i < _drawables.size(); i++ ) {
-            _drawables[i].draw( dc );
+            var drawable = _drawables[i];
+            if( drawable instanceof Text || drawable instanceof TextArea ) {
+                drawable.setColor( Theme.textColor );
+            }
+            drawable.draw( dc );
         }
     }
     

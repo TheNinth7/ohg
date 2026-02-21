@@ -25,9 +25,7 @@ class StateText extends Text {
     public function initialize( text as String ) {
         Text.initialize( {
             :text => text,
-            :font => FONT,
-            :color => Theme.stateColor,
-            :backgroundColor => Theme.menuItemBackgroundColor
+            :font => FONT
         } );
         _text = text;
         precomputedWidth = TextDimensions.getTextWidthInPixels( text, FONT );
