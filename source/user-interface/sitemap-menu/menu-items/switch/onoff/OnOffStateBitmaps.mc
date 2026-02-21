@@ -66,17 +66,17 @@ class OnOffStateBitmaps {
 
         // Define the color of the switch
         if( isEnabled ) {
-            dc.setColor( Constants.UI_COLOR_ACTIVE, Graphics.COLOR_TRANSPARENT );
+            dc.setColor( Theme.onColor, Graphics.COLOR_TRANSPARENT );
             
             // Currently not used, because it does not work on Edge devices (it should)
             // and also not on devices pre-CIQ 4.0.0. Apart from having to specifiy
             // the background color, there is no drawback in using setColor
-            // dc.setFill( 0xFF000000 + Constants.UI_COLOR_ACTIVE );
+            // dc.setFill( 0xFF000000 + Theme.onColor );
         } else {
-            dc.setColor( Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT );
+            dc.setColor( Theme.stateColor, Graphics.COLOR_TRANSPARENT );
 
             // See the comment on the first setFill
-            // dc.setFill( 0xFF000000 + Graphics.COLOR_LT_GRAY );
+            // dc.setFill( 0xFF000000 + Graphics.stateColor );
         }
         
         // Spacing defines the gap between the outer edge of the `Drawable` and the switch.
@@ -100,7 +100,7 @@ class OnOffStateBitmaps {
 
         // draw the inner circle showing the switch state
 
-        dc.setColor( Constants.UI_COLOR_BACKGROUND, Graphics.COLOR_TRANSPARENT );
+        dc.setColor( Theme.backgroundColor, Graphics.COLOR_TRANSPARENT );
         // See the comment on the first setFill
         // dc.setFill( 0xFF000000 + Graphics.COLOR_BLACK );
 

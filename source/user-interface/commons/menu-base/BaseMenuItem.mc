@@ -33,16 +33,20 @@ class BaseMenuItem extends CustomMenuItem {
                 onLayout( dc );
             }
 
-            // If the focused background color is not transparent and the item is focused, 
-            // fill the background with the specified color.
-            if( isFocused()
-                && Constants.UI_MENU_ITEM_BG_COLOR_FOCUSED != Graphics.COLOR_TRANSPARENT 
-            ) {
-                dc.setColor( Constants.UI_COLOR_TEXT, Constants.UI_MENU_ITEM_BG_COLOR_FOCUSED );
-                dc.clear();
+            // We apply the focus color
+            Logger.debug( "BaseMenuItem.draw: isSelected=" + isSelected() );
+            Logger.debug( "BaseMenuItem.draw: isFocused=" + isFocused() );
+            
+            if( isFocused() ) {
+                dc.setColor( Theme.focusedMenuItemTextColor, Theme.focusedMenuItemBackgroundColor );
+            } else {
+                dc.setColor( Theme.textColor, Theme.menuItemBackgroundColor );
             }
+            
+            dc.clear();
 
             onUpdate( dc );
+
         } catch( ex ) {
             ExceptionHandler.handleBackgroundException( ex );
         }

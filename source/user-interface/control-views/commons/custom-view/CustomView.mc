@@ -89,7 +89,7 @@ class CustomView extends View {
         // https://github.com/TheNinth7/ohg/issues/81
         dc.clearClip();
 
-        dc.setColor( Constants.UI_COLOR_TEXT, Constants.UI_COLOR_BACKGROUND );
+        dc.setColor( Theme.textColor, Theme.backgroundColor );
         dc.clear();
 
         draw( dc );

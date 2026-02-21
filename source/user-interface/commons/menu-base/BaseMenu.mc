@@ -37,7 +37,6 @@ class BaseMenu extends CustomMenu {
         // the corresponding `Drawable` required by the `CustomMenu` superclass.
         _title = new Text( {
             :text => options[:title] as String,
-            :color => Constants.UI_COLOR_TEXT,
             :font => Constants.UI_MENU_TITLE_FONT
         } );
         
@@ -78,7 +77,7 @@ class BaseMenu extends CustomMenu {
         // Initialize the super class
         CustomMenu.initialize( 
             options[:itemHeight] as Number,
-            Constants.UI_COLOR_BACKGROUND, 
+            Theme.backgroundColor, 
             parentOptions 
         );
     }
@@ -115,7 +114,7 @@ class BaseMenu extends CustomMenu {
             * As a workaround, affected views must explicitly call `Dc.clearClip()` 
             * to reset the clipping region.
             */
-            dc.setColor( Constants.UI_COLOR_TEXT, Constants.UI_MENU_TITLE_BACKGROUND_COLOR );
+            dc.setColor( Theme.textColor, Theme.menuTitleBackgroundColor );
             dc.setClip( 0, 0, dc.getWidth(), clipHeight );
             dc.clear();
             dc.clearClip();
@@ -124,9 +123,9 @@ class BaseMenu extends CustomMenu {
             // we could fill a rectangle with the background color 
             // instead of clearing the `Dc`.
             /*
-            dc.setColor( Constants.UI_MENU_TITLE_BACKGROUND_COLOR, Constants.UI_MENU_TITLE_BACKGROUND_COLOR );
+            dc.setColor( Theme.menuTitleBackgroundColor, Theme.menuTitleBackgroundColor );
             dc.fillRectangle( 0, 0, dc.getWidth(), clipHeight );
-            dc.setColor( Constants.UI_COLOR_TEXT, Constants.UI_MENU_TITLE_BACKGROUND_COLOR );
+            dc.setColor( Theme.textColor, Theme.menuTitleBackgroundColor );
             */
 
             /*
@@ -155,6 +154,9 @@ class BaseMenu extends CustomMenu {
                 
                 _title.setLocation( WatchUi.LAYOUT_HALIGN_CENTER, locY );
             }
+
+            setBackgroundColor( Theme.menuItemBackgroundColor );
+            _title.setColor( Theme.textColor );
 
             // Draw the title
             _title.draw( dc );

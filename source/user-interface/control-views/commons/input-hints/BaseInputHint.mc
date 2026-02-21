@@ -40,14 +40,14 @@ class BaseInputHint extends Drawable {
     }
     // Association of Type with colors
     private const UI_INPUT_HINT_COLORS as Array<ColorType> = [
-        Constants.UI_COLOR_TEXT,
-        Constants.UI_COLOR_TEXT,
-        Constants.UI_COLOR_TEXT,
-        Constants.UI_COLOR_TEXT,
-        Constants.UI_COLOR_TEXT,
-        Constants.UI_COLOR_TEXT,
-        Constants.UI_COLOR_TEXT,
-        Constants.UI_COLOR_TEXT
+        Theme.textColor,
+        Theme.textColor,
+        Theme.textColor,
+        Theme.textColor,
+        Theme.textColor,
+        Theme.textColor,
+        Theme.textColor,
+        Theme.textColor
     ];
     // Association of Type with icons
     private const UI_INPUT_HINT_ICONS as Array<ResourceId?> = [

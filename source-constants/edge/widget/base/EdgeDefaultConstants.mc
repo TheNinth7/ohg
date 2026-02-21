@@ -34,7 +34,7 @@ class EdgeDefaultConstants extends DefaultConstants {
     public static const UI_MENU_ITEM_HEIGHT as Number = 
         ( DefaultConstants.UI_SCREEN_WIDTH * 0.25 ).toNumber();
     public static const UI_SETTINGS_ITEM_HEIGHT as Number = 
-        ( DefaultConstants.UI_SCREEN_WIDTH * 0.35 ).toNumber();
+        ( DefaultConstants.UI_SCREEN_WIDTH * 0.25 ).toNumber();
 
     // If an icon is present, the amount of space defined below will be reserved,
     // to allow alignment of labels that have icons of different widths.

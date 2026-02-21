@@ -13,8 +13,12 @@ class GlanceSitemapView extends WatchUi.GlanceView {
     // Glance shows a single text area
     private var _textArea as TextArea;
 
+    // Set to true if an error occurs in onLayout
+    private var _hasError as Boolean = false;
+
     // Constructor
     public function initialize() {
+        Logger.debug( "GlanceSitemapView.initialize" );
         GlanceView.initialize();
         
         // Initialize the text area
@@ -26,52 +30,60 @@ class GlanceSitemapView extends WatchUi.GlanceView {
         } );
     }
 
+    // Setup the text area and its content
     public function onLayout( dc as Dc ) as Void {
-        var locX = 0;
-        var locY = WatchUi.LAYOUT_VALIGN_CENTER;
-        var width = dc.getWidth();
-        var height = dc.getHeight();
-
-        if( GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET != 0 ) {
-            locX = GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET;
-            width -= GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET;
-        }
-
-        // If an offset is defined in the constants,
-        // we apply it here (currently used for Edge devices only)
-        if( GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET != 0 ) {
-            locY = GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET;
-            height -= GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET;
-        }
-
-        _textArea.setSize( width, height );
-        _textArea.setLocation( locX, locY );
-    }
-
-    public function onUpdate( dc as Dc ) as Void {
+        Logger.debug( "GlanceSitemapView.onLayout" );
         try {
-            // Apply standard or night mode color
-            var deviceSettings = System.getDeviceSettings();
-            if( deviceSettings has :isNightModeEnabled && deviceSettings.isNightModeEnabled ) {
-                _textArea.setColor( GlanceConstants.UI_FONT_COLOR_NIGHT );
-            } else {
-                _textArea.setColor( GlanceConstants.UI_FONT_COLOR );
+            var locX = 0;
+            var locY = WatchUi.LAYOUT_VALIGN_CENTER;
+            var width = dc.getWidth();
+            var height = dc.getHeight();
+
+            // If offsets are defined in the constants, we apply them 
+            // here (currently used for Edge devices only)
+            if( GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET != 0 ) {
+                locX = GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET;
+                width -= GlanceConstants.UI_GLANCE_TEXT_HORIZONTAL_OFFSET;
+            }
+            if( GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET != 0 ) {
+                locY = GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET;
+                height -= GlanceConstants.UI_GLANCE_TEXT_VERTICAL_OFFSET;
             }
 
-            // Display either the homepage label or if it is not available a default
+            // Set the layout of the text area
+            _textArea.setSize( width, height );
+            _textArea.setLocation( locX, locY );
+
+            // Set the content of the text area
+            // Displays either the homepage label or if it is not available a default
             var label = SitemapStore.getLabel();
             if( label != null ) {
                 _textArea.setText( label );
             } else {
                 _textArea.setText( "openHAB" );
             }
+            _hasError = false;
         } catch( ex ) {
             // Show any errors
-            _textArea.setColor( Graphics.COLOR_RED );
+            _hasError = true;
             var msg = ex.getErrorMessage();
             msg = msg != null ? msg : "Unknown error";
             _textArea.setText( msg );
         }
+    }
+
+    public function onUpdate( dc as Dc ) as Void {
+        // Update the color on every onUpdate() to handle night mode changes.
+        // On Edge devices, the glance focus indicator toggles night mode
+        // without calling AppBase.onNightModeChange(), so the theme must be
+        // refreshed on each update.
+        if( _hasError ) {
+            _textArea.setColor( Theme.errorColor );
+        } else {
+            Theme.update();
+            _textArea.setColor( Theme.textColor );
+        }
+
         _textArea.draw( dc );
     }
 }

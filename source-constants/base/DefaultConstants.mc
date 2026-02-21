@@ -24,34 +24,6 @@ class DefaultConstants {
     public static const UI_SCREEN_HEIGHT as Number = System.getDeviceSettings().screenHeight;
     public static const UI_SCREEN_WIDTH as Number = System.getDeviceSettings().screenWidth;
 
-    // MAIN COLOR DEFINITIONS
-    
-    // Active represents devices that are on/active
-    public static const UI_COLOR_ACTIVE as ColorType = 0xE64E19; // openHAB orange
-    
-    // Inactive represents devices that are off/inactive,
-    // as well as non-actionable states
-    public static const UI_COLOR_INACTIVE as ColorType = Graphics.COLOR_LT_GRAY;
-    
-    // Actionable represents states that can be changed in the app
-    public static const UI_COLOR_ACTIONABLE as ColorType = Graphics.COLOR_LT_GRAY; 
-    // 0x6F88FF mid-level blue, our choice
-    // 0x8FA0F0 less saturated blue
-    // 0x1976d2 more saturated blue 
-
-    // For confirming an action
-    public static const UI_COLOR_POSITIVE as ColorType = 0x388E3C;
-    
-    // For cancelling an action
-    public static const UI_COLOR_DESTRUCTIVE as ColorType = 0x9F1C1C;
-
-    // For messages related to WiFi, a blue that fits with openHAB orange
-    public static const UI_COLOR_WIFI as ColorType = 0x1F6AE1;
-
-    // Foreground and background colors
-    public static const UI_COLOR_TEXT as ColorType = Graphics.COLOR_WHITE;
-    public static const UI_COLOR_BACKGROUND as ColorType = Graphics.COLOR_BLACK;
-
     // Positions of the keys, for drawing input hints
     // Corresponds to CustomView.InputHints enumeration
     // 0=ENTER
@@ -86,9 +58,6 @@ class DefaultConstants {
     // Font to be used in the menu title
     public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_SMALL;  
 
-    // Background color of the menu titles
-    public static const UI_MENU_TITLE_BACKGROUND_COLOR as Number = 0x212021;
-    
     // Item height can be set individually for sitemap menu and settings menu
     public static const UI_MENU_ITEM_HEIGHT as Number = 
         ( UI_SCREEN_HEIGHT * 0.2 ).toNumber();
@@ -135,21 +104,6 @@ class DefaultConstants {
     // This offset in pixel is applied to the positioning of the menu item label
     // Positive means the label is shifted down, negative means up
     public static const UI_MENU_ITEM_LABEL_OFFSET as Number = 0;
-
-    /*
-    * Background color of menu items. Some newer devices, such as the Fenix 8 series,
-    * provide a colored background for the focused item. Therefore, the menu item
-    * background color is set to transparent to allow the focus background to show through.
-    */
-    public static const UI_MENU_ITEM_BG_COLOR as ColorType = Graphics.COLOR_TRANSPARENT;
-    
-    /*
-    * Allows specifying a distinct background color for focused menu items.
-    * This is useful on devices like the Edge 540 and 840, which in the simulator
-    * do not provide a built-in focus indicator (see ../edge/widget/button-x40/Constants.mc).
-    * Setting this to transparent disables the custom focus background.
-    */
-    public static const UI_MENU_ITEM_BG_COLOR_FOCUSED as ColorType = Graphics.COLOR_TRANSPARENT;
 
     // Height and width of the toggle switch relative to the menu item height
     public static const UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT as Number = ( UI_MENU_ITEM_HEIGHT * 0.8 ).toNumber();

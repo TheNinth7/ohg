@@ -26,8 +26,8 @@ class StateText extends Text {
         Text.initialize( {
             :text => text,
             :font => FONT,
-            :color => Constants.UI_COLOR_ACTIONABLE,
-            :backgroundColor => Constants.UI_MENU_ITEM_BG_COLOR
+            :color => Theme.stateColor,
+            :backgroundColor => Theme.menuItemBackgroundColor
         } );
         _text = text;
         precomputedWidth = TextDimensions.getTextWidthInPixels( text, FONT );

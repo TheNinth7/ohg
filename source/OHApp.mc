@@ -24,6 +24,9 @@ class OHApp extends Application.AppBase {
     // Constructor
     public function initialize() {
         AppBase.initialize();
+
+        // Initialize the color theme
+        Theme.init();
     }
 
     // onStart() is called on application start up
@@ -45,6 +48,7 @@ class OHApp extends Application.AppBase {
     (:typecheck(disableGlanceCheck))
     public function getInitialView() as [Views] or [Views, InputDelegates] {
         try {
+            Logger.debug( "OHApp.getInitialView" );
             // First we initialize the menu from storage
             var menu = HomepageMenu.createFromStorage();
             var hasMenu = menu != null;
@@ -80,6 +84,7 @@ class OHApp extends Application.AppBase {
     
     // Initializes the glance view
     function getGlanceView() as [ GlanceView ] or [ GlanceView, GlanceViewDelegate ] or Null {
+        Logger.debug( "OHApp.getGlanceView" );
         _glanceView = new GlanceSitemapView();
         return [ _glanceView ];
     }
@@ -132,7 +137,8 @@ class OHApp extends Application.AppBase {
     // Switching into night mode may change the screen colors
     // Currently only used in the glance of Edge devices
     public function onNightModeChanged() as Void {
-        // Logger.debug( "OHApp.onNightModeChanged" );
+        Logger.debug( "OHApp.onNightModeChanged" );
+        Theme.update();
         WatchUi.requestUpdate();
     }
 }

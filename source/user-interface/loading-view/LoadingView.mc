@@ -80,7 +80,7 @@ class LoadingView extends WatchUi.View {
 
     // Display the loading message 
     function onUpdate( dc as Dc ) as Void {
-        dc.setColor( Constants.UI_COLOR_TEXT, Constants.UI_COLOR_BACKGROUND );
+        dc.setColor( Theme.textColor, Theme.backgroundColor );
         dc.clear();
         new Bitmap( {
             :rezId => Rez.Drawables.iconHourglass,

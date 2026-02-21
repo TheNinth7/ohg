@@ -43,8 +43,6 @@ class SettingsTextMenuItem extends BaseMenuItem {
             :locX => locX,
             :locY => yCenter - Graphics.getFontHeight( Constants.UI_MENU_ITEM_FONTS[0] ),
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :color => Constants.UI_COLOR_TEXT,
-            :backgroundColor => Constants.UI_MENU_ITEM_BG_COLOR,
             :width => width,
             :height => yCenter
         } );
@@ -54,8 +52,6 @@ class SettingsTextMenuItem extends BaseMenuItem {
             :locX => locX,
             :locY => yCenter,
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :color => Constants.UI_COLOR_TEXT,
-            :backgroundColor => Constants.UI_MENU_ITEM_BG_COLOR,
             :width => width,
             :height => yCenter
         } );
@@ -66,9 +62,18 @@ class SettingsTextMenuItem extends BaseMenuItem {
     * This event handler is responsible for rendering the content.
     */
     public function onUpdate( dc as Dc ) as Void {
-        // Draw the Drawables        
+        // Colors need to be updated on every draw, since switch
+        // focus change and switch between standard and night mode 
+        // could happen anytime
+        var color = isFocused()
+                    ? Theme.focusedMenuItemTextColor
+                    : Theme.textColor;
+        ( _labelTextArea as TextArea ).setColor( color );
+        ( _subLabelTextArea as TextArea ).setColor( color );
+
+        // Draw the text fields
         ( _labelTextArea as TextArea ).draw( dc );
-        ( _subLabelTextArea as TextArea ).draw( dc );
+        (_subLabelTextArea as TextArea ).draw( dc );
     }
 
     // Set the sub label

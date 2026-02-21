@@ -72,6 +72,8 @@ class BaseSitemapMenuItem extends BaseMenuItem {
     // we initialize the label with an empty string.
     private var _label as String = ""; 
     private var _labelTextArea as TextArea;
+    // Color of the label
+    private var _labelColor as ColorType?;
 
     // The set functions set this to true if a change occured
     // that needs the layout to be updated
@@ -89,17 +91,15 @@ class BaseSitemapMenuItem extends BaseMenuItem {
     // setStateTextResponsive() to determine whether it has actually changed.
     private var _stateTextResponsive as [String, TextArea]?;
 
-    // Color of the state    
-    private var _stateColor as ColorType = ensureStateColor( null );
+    // Color of the state
+    private var _stateColor as ColorType?;
 
     // Constructor
     protected function initialize( options as Options ) {
         BaseMenuItem.initialize();
         _labelTextArea = new TextArea( {
             :font => Constants.UI_MENU_ITEM_FONTS,
-            :justification => Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER,
-            :color => ensureLabelColor( null ),
-            :backgroundColor => Constants.UI_MENU_ITEM_BG_COLOR,
+            :justification => Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
         } );
         setIcon( options[:icon] as ResourceId? );
         setStateDrawable( options[:stateDrawable] as StateDrawable? );
@@ -107,9 +107,9 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         if( label != null ) {
             setLabel( label );            
         }
-        setLabelColor( options[:labelColor] );
+        _labelColor = options[:labelColor];
         setStateTextResponsive( options[:stateTextResponsive] );
-        setStateColor( options[:stateColor] );
+        _stateColor = options[:stateColor];
         setActionIcon( options[:actionIcon] );
     }
 
@@ -127,18 +127,6 @@ class BaseSitemapMenuItem extends BaseMenuItem {
             rightSideDrawables.add( _stateTextResponsive[1] ); 
         }
         return rightSideDrawables;
-    }
-
-    // Takes the optional label color as argument and
-    // if it is null returns the default color
-    private function ensureLabelColor( labelColor as ColorType? ) as ColorType {
-        return labelColor != null ? labelColor : Constants.UI_COLOR_TEXT;
-    }
-
-    // Takes the optional state color as argument and
-    // if it is null returns the default color
-    private function ensureStateColor( stateColor as ColorType? ) as ColorType {
-        return stateColor != null ? stateColor : Constants.UI_COLOR_INACTIVE;
     }
 
     // Returns the label of the menu item as String
@@ -287,6 +275,9 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         //dc.setColor( Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT );
         //dc.drawRectangle( 0, 0, dc.getWidth(), dc.getHeight() );
 
+        updateLabelDrawableColor();
+        updateStateDrawablesColor();
+
         LittleHelpers.drawTupleIfNotNull( _icon, dc );
         _labelTextArea.draw( dc );
         LittleHelpers.drawTupleIfNotNull( _stateTextResponsive, dc );
@@ -389,7 +380,7 @@ class BaseSitemapMenuItem extends BaseMenuItem {
 
     // Sets or updates the label color
     protected function setLabelColor( labelColor as ColorType? ) as Void {
-        _labelTextArea.setColor( ensureLabelColor( labelColor ) );
+        _labelColor = labelColor;
     }
 
     // Sets or replaces the state Drawable
@@ -398,17 +389,8 @@ class BaseSitemapMenuItem extends BaseMenuItem {
     }
 
     // Sets the optional state color.
-    // The color is applied to both the responsive state text and the state Drawable,
-    // if the Drawable is of the StateText type.
-    // Coloring Bitmap Drawables is not currently supported, but may be added in the future.
     protected function setStateColor( stateColor as ColorType? ) as Void {
-        _stateColor = ensureStateColor( stateColor );
-        if( _stateDrawable instanceof StateText ) {
-            ( _stateDrawable as StateText ).setColor( _stateColor );
-        }
-        if( _stateTextResponsive != null ) {
-            _stateTextResponsive[1].setColor( _stateColor );
-        }
+        _stateColor = stateColor;
     }
 
     // Set or update the responsive state text
@@ -422,9 +404,7 @@ class BaseSitemapMenuItem extends BaseMenuItem {
                         :text => text,
                         :font => Constants.UI_MENU_ITEM_FONTS,
                         :locY => WatchUi.LAYOUT_VALIGN_CENTER,
-                        :justification => Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER,
-                        :color => _stateColor,
-                        :backgroundColor => Constants.UI_MENU_ITEM_BG_COLOR,
+                        :justification => Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
                     } )
                 ];
                 requestLayoutUpdate();
@@ -444,9 +424,44 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         }
     }
 
+     // Updates the color of the label Drawable.
+    // Since the app can switch between standard and night mode anytime,
+    // this needs to be called on every draw.
+    private function updateLabelDrawableColor() as Void {
+        _labelTextArea.setColor(
+            _labelColor != null 
+            ? _labelColor 
+            : isFocused()
+              ? Theme.focusedMenuItemTextColor
+              : Theme.textColor
+        );
+    }
+
     // Updates the stored state width
     // See isStateWidthDifferent()
     private function updateOldStateWidth() as Void {
         _oldStateWidth = LittleHelpers.getDrawableWidthOrNull( _stateDrawable ); 
     }
+
+    // Updates the color of the state Drawables.
+    // Since the app can switch between standard and night mode anytime,
+    // this needs to be called on every draw.
+    // The color is applied to both the responsive state text and the state Drawable,
+    // if the Drawable is of the StateText type.
+    // Coloring Bitmap Drawables is not currently supported, but may be added in the future.
+    private function updateStateDrawablesColor() as Void {
+        var stateColor = _stateColor != null 
+                         ? _stateColor 
+                         : isFocused()
+                           ? Theme.focusedMenuItemStateColor
+                           : Theme.stateColor;
+
+        if( _stateDrawable instanceof StateText ) {
+            _stateDrawable.setColor( stateColor );
+        }
+        if( _stateTextResponsive != null ) {
+            _stateTextResponsive[1].setColor( stateColor );
+        }
+    }
+
 }
