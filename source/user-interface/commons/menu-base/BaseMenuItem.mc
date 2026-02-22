@@ -37,9 +37,9 @@ class BaseMenuItem extends CustomMenuItem {
             // We apply the focus color
             if( isFocused() ) {
                 // Logger.debug( "BaseMenuItem.draw: " + getId() + " is focused" );
-                dc.setColor( Theme.focusedMenuItemTextColor, Theme.focusedMenuItemBackgroundColor );
+                dc.setColor( ThemeManager.focused.textColor, ThemeManager.focused.menuItemBackgroundColor );
             } else {
-                dc.setColor( Theme.textColor, Theme.menuItemBackgroundColor );
+                dc.setColor( ThemeManager.current.textColor, ThemeManager.current.menuItemBackgroundColor );
             }
             
             dc.clear();

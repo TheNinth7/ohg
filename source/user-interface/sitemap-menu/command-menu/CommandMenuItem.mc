@@ -51,8 +51,8 @@ class CommandMenuItem extends BaseMenuItem {
             :locX => locX,
             :locY => yCenter,
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :color => Theme.textColor,
-            :backgroundColor => Theme.menuItemBackgroundColor,
+            :color => ThemeManager.current.textColor,
+            :backgroundColor => ThemeManager.current.menuItemBackgroundColor,
             :width => width,
             :height => dcHeight
         } );

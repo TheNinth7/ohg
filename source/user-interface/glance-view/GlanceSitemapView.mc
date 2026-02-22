@@ -78,10 +78,19 @@ class GlanceSitemapView extends WatchUi.GlanceView {
         // without calling AppBase.onNightModeChange(), so the theme must be
         // refreshed on each update.
         if( _hasError ) {
-            _textArea.setColor( Theme.errorColor );
+            _textArea.setColor( Graphics.COLOR_RED );
         } else {
-            Theme.update();
-            _textArea.setColor( Theme.textColor );
+            // In the Glance we keep it simple and work without
+            // themes, since only the text color needs to be set
+            // and there are only three different cases
+            var deviceSettings = System.getDeviceSettings();
+            _textArea.setColor( 
+                deviceSettings has :isNightModeEnabled 
+                ? deviceSettings.isNightModeEnabled
+                  ? Graphics.COLOR_WHITE // night mode enabled
+                  : Graphics.COLOR_BLACK // night mode disabled
+                : Graphics.COLOR_WHITE   // device does not support night mode
+            );
         }
 
         _textArea.draw( dc );

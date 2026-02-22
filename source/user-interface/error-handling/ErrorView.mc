@@ -108,7 +108,7 @@ import Toybox.System;
 
 
         // Set the colors
-        dc.setColor( Theme.errorColor, Theme.backgroundColor );
+        dc.setColor( ThemeManager.current.errorColor, ThemeManager.current.backgroundColor );
         dc.clear();
 
         drawTextArea( dc );
@@ -143,8 +143,8 @@ import Toybox.System;
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER,
             :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
-            :color => Theme.errorColor,
-            :backgroundColor => Theme.backgroundColor,
+            :color => ThemeManager.current.errorColor,
+            :backgroundColor => ThemeManager.current.backgroundColor,
             :width => width,
             :height => height
         } ).draw( dc );

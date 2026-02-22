@@ -432,8 +432,8 @@ class BaseSitemapMenuItem extends BaseMenuItem {
             _labelColor != null 
             ? _labelColor 
             : isFocused()
-              ? Theme.focusedMenuItemTextColor
-              : Theme.textColor
+              ? ThemeManager.focused.textColor
+              : ThemeManager.current.textColor
         );
     }
 
@@ -453,8 +453,8 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         var stateColor = _stateColor != null 
                          ? _stateColor 
                          : isFocused()
-                           ? Theme.focusedMenuItemStateColor
-                           : Theme.stateColor;
+                           ? ThemeManager.focused.stateColor
+                           : ThemeManager.current.stateColor;
 
         if( _stateDrawable instanceof StateText ) {
             _stateDrawable.setColor( stateColor );

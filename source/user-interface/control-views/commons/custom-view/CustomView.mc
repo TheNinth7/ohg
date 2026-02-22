@@ -77,7 +77,7 @@ class CustomView extends View {
         for( var i = 0; i < _drawables.size(); i++ ) {
             var drawable = _drawables[i];
             if( drawable instanceof Text || drawable instanceof TextArea ) {
-                drawable.setColor( Theme.textColor );
+                drawable.setColor( ThemeManager.current.textColor );
             }
             drawable.draw( dc );
         }
@@ -93,7 +93,7 @@ class CustomView extends View {
         // https://github.com/TheNinth7/ohg/issues/81
         dc.clearClip();
 
-        dc.setColor( Theme.textColor, Theme.backgroundColor );
+        dc.setColor( ThemeManager.current.textColor, ThemeManager.current.backgroundColor );
         dc.clear();
 
         draw( dc );

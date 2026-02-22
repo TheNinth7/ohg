@@ -69,7 +69,7 @@ class OnOffStateDrawable extends Text {
         return isEnabled ? "ON" : "OFF";
     }
     private function getColor( isEnabled as Boolean ) as ColorType {
-        return isEnabled ? Theme.onColor : Theme.stateColor;
+        return isEnabled ? ThemeManager.current.onColor : ThemeManager.current.stateColor;
     }
 }
 */

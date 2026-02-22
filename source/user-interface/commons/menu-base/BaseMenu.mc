@@ -73,11 +73,11 @@ class BaseMenu extends CustomMenu {
         if( Constants.UI_MENU_FOOTER_HEIGHT != -1 ) {
             parentOptions[:footerItemHeight] = Constants.UI_MENU_FOOTER_HEIGHT;
         }
-        
+
         // Initialize the super class
         CustomMenu.initialize( 
             options[:itemHeight] as Number,
-            Theme.backgroundColor, 
+            ThemeManager.current.backgroundColor, 
             parentOptions 
         );
     }
@@ -114,7 +114,7 @@ class BaseMenu extends CustomMenu {
             * As a workaround, affected views must explicitly call `Dc.clearClip()` 
             * to reset the clipping region.
             */
-            dc.setColor( Theme.textColor, Theme.menuTitleBackgroundColor );
+            dc.setColor( ThemeManager.current.textColor, ThemeManager.current.menuTitleBackgroundColor );
             dc.setClip( 0, 0, dc.getWidth(), clipHeight );
             dc.clear();
             dc.clearClip();
@@ -123,9 +123,9 @@ class BaseMenu extends CustomMenu {
             // we could fill a rectangle with the background color 
             // instead of clearing the `Dc`.
             /*
-            dc.setColor( Theme.menuTitleBackgroundColor, Theme.menuTitleBackgroundColor );
+            dc.setColor( ThemeManager.current.menuTitleBackgroundColor, ThemeManager.current.menuTitleBackgroundColor );
             dc.fillRectangle( 0, 0, dc.getWidth(), clipHeight );
-            dc.setColor( Theme.textColor, Theme.menuTitleBackgroundColor );
+            dc.setColor( ThemeManager.current.textColor, ThemeManager.current.menuTitleBackgroundColor );
             */
 
             /*
@@ -155,8 +155,8 @@ class BaseMenu extends CustomMenu {
                 _title.setLocation( WatchUi.LAYOUT_HALIGN_CENTER, locY );
             }
 
-            setBackgroundColor( Theme.menuItemBackgroundColor );
-            _title.setColor( Theme.textColor );
+            setBackgroundColor( ThemeManager.current.backgroundColor );
+            _title.setColor( ThemeManager.current.textColor );
 
             // Draw the title
             _title.draw( dc );

@@ -35,10 +35,10 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
     // Called by the base class to render the menu item.
     public function onUpdate( dc as Dc ) as Void {
         if( ConnectionHandler.get().isWifiConnected() ) {
-            BaseSitemapMenuItem.setLabelColor( Theme.textColor );
+            BaseSitemapMenuItem.setLabelColor( ThemeManager.current.textColor );
             BaseSitemapMenuItem.setActionIcon( ACTION_ICON_COMMAND );
         } else {
-            BaseSitemapMenuItem.setLabelColor( Theme.stateColor );
+            BaseSitemapMenuItem.setLabelColor( ThemeManager.current.stateColor );
             BaseSitemapMenuItem.setActionIcon( null );
         }
         BaseSitemapMenuItem.onUpdate( dc );

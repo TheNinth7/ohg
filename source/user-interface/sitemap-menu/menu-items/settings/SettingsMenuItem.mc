@@ -29,7 +29,7 @@ class SettingsMenuItem extends BaseSitemapMenuItem {
             :id => "__settings__",
             :icon => Rez.Drawables.menuSettings,
             :label => "Settings",
-            :labelColor => Theme.stateColor
+            :labelColor => ThemeManager.current.stateColor
         } );
     }
 

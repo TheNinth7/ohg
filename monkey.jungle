@@ -65,33 +65,151 @@ resEdgeTall=$(resEdgeBase);resources/edge/icons-interface-tall
 
 
 # SOURCE PATH
-# Defines which source files shall be included for the build
 
-# Device-specific properties, mainly for the UI are implemented
-# as constants. The classes DefaultConstants and GlanceDefaultConstants
-# define the default values, the derived Constants and GlanceConstants
-# are used for accessing the values. Individual devices may use different
-# implementations of Constants and GlanceConstants and override some
-# of the default values.ä
-# srcBase holds the default values
-# srcDefault holds the default implementation of Constants and GlanceConstants
-# The other variables define the path for individual devices
-srcBase=source;source-constants/base;source-theme/base
-srcDefault=$(srcBase);source-constants/device-default;source-theme/device-default
-srcFenix6Pro=$(srcBase);source-constants/device-fenix6pro;source-theme/device-default
-srcForerunner=$(srcBase);source-constants/device-forerunner;source-theme/device-default
-srcVenux1=$(srcBase);source-constants/device-venux1;source-theme/device-default
+# Defines which source files are included in the build.
+#
+# The following is controlled via source file variables:
+#
+# Constants: Device-specific properties that are static and cannot change at runtime,
+#            for example values used for layout or to enable or disable specific features.
+# Themes:    Runtime-switchable color schemes, for example for day and night mode.
 
-# For all Edge devices
-srcEdgeBase=$(srcBase);source-constants/device-edge/widget/base;source-constants/device-edge/glance;source-theme/device-night-mode/base
-# For Edge touch devices (such as Explore 2/1040/1050)
-srcEdgeTouch=$(srcEdgeBase);source-constants/device-edge/widget/device-touch;source-theme/device-night-mode/device-default
-# For 540/840 Edge button devices
-srcEdgeButtonX40=$(srcEdgeBase);source-constants/device-edge/widget/device-x40-button;source-theme/device-night-mode/device-edge-x40-button
-# For 540/840 Edge button devices
-srcEdgeButtonX50=$(srcEdgeBase);source-constants/device-edge/widget/device-x50-button;source-theme/device-night-mode/device-edge-x50-button
+# SOURCE PATH - CONSTANTS
+
+# The classes DefaultConstants and GlanceDefaultConstants in the base directory
+# define the default values. The derived classes Constants and GlanceConstants
+# provide access to these values.
+#
+# Individual devices may use device-specific implementations of
+# Constants and GlanceConstants to override selected default values.
+#
+# srcConstantsBase contains the default values.
+# srcConstantsDefault contains the default implementations of
+# Constants and GlanceConstants.
+#
+# The remaining variables define the paths for individual device
+# implementations.
+srcConstantsBase=source-constants/base
+srcConstantsDefault=$(srcConstantsBase);source-constants/device-default
+
+# Watches
+srcConstantsFenix6Pro=$(srcConstantsBase);source-constants/device-fenix6pro
+srcConstantsForerunner=$(srcConstantsBase);source-constants/device-forerunner
+srcConstantsVenux1=$(srcConstantsBase);source-constants/device-venux1
+
+# Edge devices
+# Base path for all Edge devices
+srcConstantsEdgeBase=$(srcConstantsBase);source-constants/device-edge/widget/base;source-constants/device-edge/glance
+# Edge touch devices
+srcConstantsEdgeTouch=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-touch
+# Edge x40 button-based devices
+srcConstantsEdgeX40Button=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x40-button
+# Edge x50 button-based devices
+srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x50-button
+
+# SOURCE PATH - THEMES
+
+# SOURCE PATH - THEMES - DEFINITIONS
+
+# Theme definitions specify the source directories that contain
+# the color theme implementations.
+srcThemeDefinitionsBase=source-themes/theme-definitions/base
+srcThemeDefinitionsDark=source-themes/theme-definitions/dark
+srcThemeDefinitionsLight=source-themes/theme-definitions/light
+
+# Edge devices that use buttons for control (for example 540, 840,
+# 550, 850, MTB) require a focus indicator in the menu to show
+# which menu item is currently selected.
+
+# Edge x40 button-based devices display a frame around the focused
+# menu item natively on the physical device. No additional
+# implementation is required for the device itself.
+#
+# This behavior is not available in the simulator. Therefore,
+# a blue background is used there as the menu item focus indicator.
+srcThemeDefinitionsFocusBlue=source-themes/theme-definitions/focus-blue
+
+# Edge x50 button-based devices display a rounded frame in the
+# background color for the focused menu item. The app must therefore
+# use contrasting colors for the focused entry.
+# These devices use the light theme for day mode and the dark theme
+# for night mode. For the focused menu item, the opposite theme
+# is applied to ensure proper contrast.
+srcThemeDefinitionsFocusInverted=source-themes/theme-definitions/focus-inverted
+
+# SOURCE PATH - THEMES - THEME MANAGER
+
+# The theme manager provides access to the themes at runtime and
+# handles switching themes dynamically.
+srcThemeManagerBase=source-themes/theme-manager/base
+
+# For devices that use only the dark theme.
+srcThemeManagerDefault=source-themes/theme-manager/device-default
+
+# Devices that support night mode use the light theme by default
+# and switch to the dark theme when night mode is active.
+srcThemeManagerNightModeBase=source-themes/theme-manager/device-night-mode/base
+
+# The default implementation switches between day and night mode
+# and does not apply a menu item focus indicator.
+# This applies to touch-based Edge devices (Explore 2, 1040, 1050).
+srcThemeManagerNightModeDefault=$(srcThemeManagerNightModeBase);source-themes/theme-manager/device-night-mode/device-default
+
+# Button-based devices use a focus indicator.
+# The implementation for x40 and x50 devices is the same here.
+# They differ only in the source directories included for
+# the actual focus indicator theme implementations.
+srcThemeManagerNightModeFocusIndicator=$(srcThemeManagerNightModeBase);source-themes/theme-manager/device-night-mode/device-focus-indicator
+
+# SOURCE PATH - THEMES - ASSEMBLY
+
+# Now the theme-related portion of the source path can be assembled.
+srcThemesBase=$(srcThemeDefinitionsBase);$(srcThemeManagerBase)
+
+# Default configuration applied to most devices (no night mode).
+srcThemesDefault=$(srcThemesBase);$(srcThemeDefinitionsDark);$(srcThemeManagerDefault)
+
+# Configuration for devices that support night mode.
+srcThemesNightModeBase=$(srcThemesBase);$(srcThemeDefinitionsDark);$(srcThemeDefinitionsLight)
+
+# Device without focus indicator
+srcThemesNightModeDefault=$(srcThemesNightModeBase);$(srcThemeManagerNightModeDefault)
+
+# Devices with a focus indicator.
+# Here, the two different focus indicator types for x40 and x50
+# generation devices are applied.
+srcThemesNightModeEdgeX40Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsFocusBlue);$(srcThemeManagerNightModeFocusIndicator)
+srcThemesNightModeEdgeX50Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsFocusInverted);$(srcThemeManagerNightModeFocusIndicator)
+
+# SOURCE PATH - ASSEMBLY
+
+# This section assembles the source path variables
+# for different devices. The actual source path
+# is defined per device in the section below.
+
+# Main source directory
+srcBase=source
+
+# The default source path used for most devices with round screens.
+srcDefault=$(srcBase);$(srcConstantsDefault);$(srcThemesDefault)
+
+# Some watch models use device-specific constants.
+srcFenix6Pro=$(srcBase);$(srcConstantsFenix6Pro);$(srcThemesDefault)
+srcForerunner=$(srcBase);$(srcConstantsForerunner);$(srcThemesDefault)
+srcVenux1=$(srcBase);$(srcConstantsVenux1);$(srcThemesDefault)
+
+# Edge devices
+# Touch-based devices (Explore 2, 1040, 1050).
+# These devices do not have physical control buttons.
+srcEdgeTouch=$(srcBase);$(srcConstantsEdgeTouch);$(srcThemesNightModeDefault)
+# Button-based devices (540, 840, MTB, 550, 850).
+# These devices have physical control buttons and,
+# in some cases (840, 850), also support touch input.
+srcEdgeButtonX40=$(srcBase);$(srcConstantsEdgeX40Button);$(srcThemesNightModeEdgeX40Button)
+srcEdgeButtonX50=$(srcBase);$(srcConstantsEdgeX50Button);$(srcThemesNightModeEdgeX50Button)
 
 # DEVICES
+
 # The following section assembles the excludeAnnotations,
 # sourcePath and resourcePath for each device
 

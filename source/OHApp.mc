@@ -24,9 +24,6 @@ class OHApp extends Application.AppBase {
     // Constructor
     public function initialize() {
         AppBase.initialize();
-
-        // Initialize the color theme
-        Theme.init();
     }
 
     // onStart() is called on application start up
@@ -135,10 +132,18 @@ class OHApp extends Application.AppBase {
     }
 
     // Switching into night mode may change the screen colors
-    // Currently only used in the glance of Edge devices
+    (:typecheck(disableGlanceCheck))
     public function onNightModeChanged() as Void {
-        // Logger.debug( "OHApp.onNightModeChanged" );
-        Theme.update();
+        Logger.debug( "OHApp.onNightModeChanged" );
+        
+        // The ThemeManager exists only in the foreground scope.
+        // In the glance scope, theme handling is very simple and
+        // implemented directly in the onUpdate() of the glance view.
+        if( ! isGlance() ) {
+            NightModeTracker.get().update();
+            ThemeManager.update();
+        }
+        
         WatchUi.requestUpdate();
     }
 }

@@ -54,7 +54,7 @@ class InputHint extends BaseInputHint {
             dc.setAntiAlias( true );
         }
         
-        dc.setColor( _color, Theme.backgroundColor );
+        dc.setColor( _color, ThemeManager.current.backgroundColor );
         dc.setPenWidth( LINE_WIDTH );
         dc.drawLine( _x, _yStart, _x, _yEnd );
 

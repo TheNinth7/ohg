@@ -43,7 +43,7 @@ class InputHint extends BaseInputHint {
         }
         
         // Draw the arc
-        dc.setColor( _color, Theme.backgroundColor );
+        dc.setColor( _color, ThemeManager.current.backgroundColor );
         dc.setPenWidth( LINE_WIDTH );
         dc.drawArc( _xCenter, _yCenter, _arcRadius, Graphics.ARC_COUNTER_CLOCKWISE, _arcFromAngle, _arcToAngle );
 

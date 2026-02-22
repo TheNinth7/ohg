@@ -68,8 +68,8 @@ class SettingsTextMenuItem extends BaseMenuItem {
         // focus change and switch between standard and night mode 
         // could happen anytime
         var color = isFocused()
-                    ? Theme.focusedMenuItemTextColor
-                    : Theme.textColor;
+                    ? ThemeManager.focused.textColor
+                    : ThemeManager.current.textColor;
         ( _labelTextArea as TextArea ).setColor( color );
         ( _subLabelTextArea as TextArea ).setColor( color );
 
