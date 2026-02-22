@@ -3,7 +3,8 @@ import Toybox.Graphics;
 
 /*
  * Themes define the color schemes used in the app and can
- * change dynamically at runtime.
+ * change dynamically at runtime. This also includes icons
+ * whose colors must be adapted to the active theme.
  *
  * The light theme is the default on devices that support
  * night mode (currently all Edge cycling computers).
@@ -20,6 +21,11 @@ class LightTheme extends BaseTheme {
     public var menuTitleBackgroundColor as ColorType = 0xEFEFEF;
 
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassBlack;
+
+    public var iconPlayButton as ResourceId = Rez.Drawables.iconPlayButtonDarkGrey;
+    public var iconPauseButton as ResourceId = Rez.Drawables.iconPauseButtonDarkGrey;
+    public var iconPlayMenuItem as ResourceId = Rez.Drawables.iconPlayMenuItemDarkGrey;
+    public var iconPauseMenuItem as ResourceId = Rez.Drawables.iconPauseMenuItemDarkGrey;
 
     public var iconNextHint as ResourceId = Rez.Drawables.iconNextHintBlack;
     public var iconPreviousHint as ResourceId = Rez.Drawables.iconPreviousHintBlack;

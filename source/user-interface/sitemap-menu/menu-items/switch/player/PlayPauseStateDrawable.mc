@@ -34,7 +34,7 @@ class PlayPauseStateDrawable extends Bitmap {
     // Returns the right resource id for a given state
     private function getPlayPauseBitmap( isPlaying as Boolean ) as ResourceId {
         return isPlaying == true
-            ? Rez.Drawables.iconPlayMenuItem
-            : Rez.Drawables.iconPauseMenuItem;
+            ? ThemeManager.current.iconPlayMenuItem
+            : ThemeManager.current.iconPauseMenuItem;
     }
 }

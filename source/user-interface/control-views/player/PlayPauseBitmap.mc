@@ -32,9 +32,9 @@ class PlayPauseBitmap extends CustomBitmap {
 
     // Resources for button-based devices (where input hints are displayed)
     (:exclForTouch)
-    private var _playRezId as ResourceId = Rez.Drawables.iconPauseButton;
+    private var _playRezId as ResourceId = ThemeManager.current.iconPauseButton;
     (:exclForTouch)
-    private var _pauseRezId as ResourceId = Rez.Drawables.iconPlayButton;
+    private var _pauseRezId as ResourceId = ThemeManager.current.iconPlayButton;
 
     // Constructor
     // Processes the initial state

@@ -3,7 +3,8 @@ import Toybox.Graphics;
 
 /*
  * Themes define the color schemes used in the app and can
- * change dynamically at runtime.
+ * change dynamically at runtime. This also includes icons
+ * whose colors must be adapted to the active theme.
  *
  * The Theme interface must be implemented by all themes and
  * defines the complete set of member variables that each
@@ -36,6 +37,12 @@ typedef Theme as interface {
 
     // The icon shown on the loading screen
     var iconHourglass as ResourceId;
+
+    // Play/pause icons
+    var iconPlayButton as ResourceId;
+    var iconPauseButton as ResourceId;
+    var iconPlayMenuItem as ResourceId;
+    var iconPauseMenuItem as ResourceId;
 
     // Next/previous icons
     var iconNextHint as ResourceId;

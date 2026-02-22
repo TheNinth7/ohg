@@ -3,7 +3,8 @@ import Toybox.Graphics;
 
 /*
  * Themes define the color schemes used in the app and can
- * change dynamically at runtime.
+ * change dynamically at runtime. This also includes icons
+ * whose colors must be adapted to the active theme.
  *
  * BaseTheme defines a set of common colors shared by all themes.
  *

@@ -3,7 +3,8 @@ import Toybox.Graphics;
 
 /*
  * Themes define the color schemes used in the app and can
- * change dynamically at runtime.
+ * change dynamically at runtime. This also includes icons
+ * whose colors must be adapted to the active theme.
  *
  * The light focus theme is used to style the menu item that is
  * currently focused when the light theme is active.

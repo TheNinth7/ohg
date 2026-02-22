@@ -3,7 +3,8 @@ import Toybox.Graphics;
 
 /*
  * Themes define the color schemes used in the app and can
- * change dynamically at runtime.
+ * change dynamically at runtime. This also includes icons
+ * whose colors must be adapted to the active theme.
  *
  * The dark theme is the default on devices that do not support
  * night mode (currently all watches). On devices that support
@@ -21,6 +22,11 @@ class DarkTheme extends BaseTheme {
     public var menuTitleBackgroundColor as ColorType = 0x212021;
 
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassWhite;
+
+    public var iconPlayButton as ResourceId = Rez.Drawables.iconPlayButtonLightGrey;
+    public var iconPauseButton as ResourceId = Rez.Drawables.iconPauseButtonLightGrey;
+    public var iconPlayMenuItem as ResourceId = Rez.Drawables.iconPlayMenuItemLightGrey;
+    public var iconPauseMenuItem as ResourceId = Rez.Drawables.iconPauseMenuItemLightGrey;
 
     public var iconNextHint as ResourceId = Rez.Drawables.iconNextHintWhite;
     public var iconPreviousHint as ResourceId = Rez.Drawables.iconPreviousHintWhite;
