@@ -3,7 +3,8 @@
     for example for navigation controls or to indicate the connection mode.
 -->
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
-    <bitmap id="logoOpenhabText" scaleX="40%" filename="openhab-text-light.svg" dithering="none" />
+    <bitmap id="logoOpenhabTextWhite" scaleX="40%" filename="openhab-text-white.svg" dithering="none" />
+    <bitmap id="logoOpenhabTextBlack" scaleX="40%" filename="openhab-text-black.svg" dithering="none" />
 
     <bitmap id="iconWarning" personality="system_icon_light__warning" />
     <bitmap id="iconDownToSettings" scaleY="15%" filename="down-to-settings.svg" dithering="none" />

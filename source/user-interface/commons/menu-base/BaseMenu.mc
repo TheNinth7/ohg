@@ -45,7 +45,7 @@ class BaseMenu extends CustomMenu {
         var footer = options[:footer] as Drawable?;
         if( footer == null ) {
             footer = new Bitmap( {
-                    :rezId => Rez.Drawables.logoOpenhabText,
+                    :rezId => ThemeManager.current.logoOpenhabText,
                     :locX => WatchUi.LAYOUT_HALIGN_CENTER,
                     :locY => WatchUi.LAYOUT_VALIGN_CENTER } );
         }

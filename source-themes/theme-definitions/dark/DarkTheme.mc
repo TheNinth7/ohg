@@ -21,6 +21,8 @@ class DarkTheme extends BaseTheme {
 
     public var menuTitleBackgroundColor as ColorType = 0x212021;
 
+    public var logoOpenhabText as ResourceId = Rez.Drawables.logoOpenhabTextWhite;
+
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassWhite;
 
     public var iconPlayButton as ResourceId = Rez.Drawables.iconPlayButtonLightGrey;

@@ -20,6 +20,8 @@ class LightTheme extends BaseTheme {
 
     public var menuTitleBackgroundColor as ColorType = 0xEFEFEF;
 
+    public var logoOpenhabText as ResourceId = Rez.Drawables.logoOpenhabTextBlack;
+
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassBlack;
 
     public var iconPlayButton as ResourceId = Rez.Drawables.iconPlayButtonDarkGrey;

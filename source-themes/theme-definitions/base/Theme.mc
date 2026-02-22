@@ -35,6 +35,9 @@ typedef Theme as interface {
     // background color is set to transparent to allow the focus background to show through.
     var menuItemBackgroundColor as ColorType;
 
+    // openHAB logo for the menu footer
+    var logoOpenhabText as ResourceId;
+
     // The icon shown on the loading screen
     var iconHourglass as ResourceId;
 
