@@ -6,9 +6,14 @@ import Toybox.Graphics;
  * change dynamically at runtime.
  *
  * BaseTheme defines a set of common colors shared by all themes.
+ *
+ * See the Theme interface in Theme.mc for documentation of
+ * each member.
  */
- class BaseTheme {
+class BaseTheme {
     
+    // Constructor
+    // This is an abstract class, so it is declared as protected.
     protected function initialize() {}
 
     // openHAB orange

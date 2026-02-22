@@ -1,7 +1,20 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 
-class LightThemeFocus extends DarkTheme {
+/*
+ * Themes define the color schemes used in the app and can
+ * change dynamically at runtime.
+ *
+ * The light focus theme is used to style the menu item that is
+ * currently focused when the light theme is active.
+ *
+ * This implementation is used for Edge x50 devices. The goal
+ * is to invert the background and font colors of the active theme.
+ * Therefore, the focus variant for the light theme is based on
+ * the dark theme, with the only modification being a solid
+ * menu item background instead of a transparent one.
+ */
+ class LightThemeFocus extends DarkTheme {
 
     public var menuItemBackgroundColor as ColorType = backgroundColor;
 

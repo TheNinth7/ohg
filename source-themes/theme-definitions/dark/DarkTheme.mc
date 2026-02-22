@@ -1,7 +1,16 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 
-class DarkTheme extends BaseTheme {
+/*
+ * Themes define the color schemes used in the app and can
+ * change dynamically at runtime.
+ *
+ * The dark theme is the default on devices that do not support
+ * night mode (currently all watches). On devices that support
+ * night mode (currently all Edge cycling computers), it is
+ * used when night mode is active.
+ */
+ class DarkTheme extends BaseTheme {
 
     public var textColor as ColorType = Graphics.COLOR_WHITE;
 
