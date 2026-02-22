@@ -8,7 +8,7 @@ import Toybox.Graphics;
  * This base implementation uses the dark theme only and does not provide
  * any switching logic.
  */
- class BaseThemeManager {
+class BaseThemeManager {
     
     // The dark theme is created once here and also used
     // by subclasses
@@ -24,5 +24,11 @@ import Toybox.Graphics;
     // choosing the theme shall be re-evaluated
     public static function update() as Void {}
 
+    // Constructor
+    // Declared as protected.
+    // These classes are not intended to be instantiated directly.
+    // The base class constructor is protected so that subclasses
+    // can invoke it. The constructors of the concrete subclasses
+    // are private to prevent external instantiation.
     protected function initialize() {}
 }

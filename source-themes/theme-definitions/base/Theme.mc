@@ -36,4 +36,8 @@ typedef Theme as interface {
 
     // The icon shown on the loading screen
     var iconHourglass as ResourceId;
+
+    // The bitmaps for displaying a ON/OFF toggle switch
+    var onOffBitmaps as OnOffStateBitmaps;
+    var smallOnOffBitmaps as SmallOnOffStateBitmaps; 
 };

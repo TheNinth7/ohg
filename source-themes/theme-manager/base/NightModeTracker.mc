@@ -10,7 +10,7 @@ import Toybox.Graphics;
  * For performance reasons, this class is implemented as a singleton
  * and caches the current night mode state.
  */
- class NightModeTracker {
+class NightModeTracker {
 
     /******* STATIC *******/ 
 

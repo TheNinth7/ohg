@@ -26,6 +26,7 @@ class ThemeManager extends BaseNightModeThemeManager {
     public static var focused as Theme = getFocused();
 
     // Internal function to determine the current focus theme
+    // Used when defining the member above and in onUpdate below
     private static function getFocused() as Theme {
         return NightModeTracker.get().isNightModeEnabled()
                ? darkFocus
@@ -40,6 +41,7 @@ class ThemeManager extends BaseNightModeThemeManager {
     }
 
     // Constructor
+    // Declared as private to prevent instantiation
     private function initialize() {
         BaseNightModeThemeManager.initialize();
     }

@@ -12,7 +12,7 @@ import Toybox.Graphics;
  * indicator and is only applied in the simulator for
  * Edge x40 devices.
  */
- class DarkThemeFocus extends DarkTheme {
+class DarkThemeFocus extends DarkTheme {
 
     public function initialize() {
         DarkTheme.initialize();

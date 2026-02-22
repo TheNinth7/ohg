@@ -35,7 +35,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
         _isEnabled = parseItemState( sitemapSwitch.getSwitchItem().getState() );
 
         _smallIcon = sitemapSwitch.getLinkedPage() != null;
-        _stateDrawable = new OnOffStateDrawable( _isEnabled, _smallIcon );
+        _stateDrawable = new OnOffStateDrawable( _isEnabled, isFocused(), _smallIcon );
         
         // Initialize the superclass
         // For the toggle switch we support the display
@@ -86,6 +86,13 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
             : sitemapSwitch.getRemoteDisplayStateOrNull();
     }
 
+    // Intercept the onUpdate call to update the
+    // focus in the Drawable, then call the parent class' onUpdate
+    public function onUpdate( dc as Dc ) as Void {
+        _stateDrawable.setFocus( isFocused() );
+        BaseSwitchMenuItem.onUpdate( dc );
+    }
+
     // Converts the string state to a nullable Boolean for _isEnabled
     // The widget supports string states:
     // "ON" => true; "OFF" => false
@@ -116,7 +123,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
     public function updateItemState( state as String ) as Void {
         BaseSwitchMenuItem.updateItemState( state );
         _isEnabled = parseItemState( state );
-        _stateDrawable.setEnabled( _isEnabled, _smallIcon );
+        _stateDrawable.setEnabledAndIconSize( _isEnabled, _smallIcon );
     }
 
     /*

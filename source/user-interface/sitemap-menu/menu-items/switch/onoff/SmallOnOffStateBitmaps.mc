@@ -12,22 +12,18 @@ import Toybox.Graphics;
  */
 class SmallOnOffStateBitmaps extends OnOffStateBitmaps {
     
-    // Singleton accessor
-    private static var _instance as SmallOnOffStateBitmaps?;
-    public static function get() as SmallOnOffStateBitmaps {
-        if( _instance == null ) {
-            _instance = new SmallOnOffStateBitmaps();
-        }
-        return _instance as SmallOnOffStateBitmaps;
-    }
-
     // When combined with a sub-menu indicator, the toggle switch will be rendered smaller 
     // The factors below are 0.65 the factor of the standard sized icon
     public var HEIGHT as Number = ( Constants.UI_MENU_ITEM_HEIGHT * 0.52 ).toNumber(); // Factor 0.8 * 0.65
     public var WIDTH as Number = ( Constants.UI_MENU_ITEM_HEIGHT * 0.2925 ).toNumber(); // Factor 0.45 * 0.65
 
     // Constructor
-    private function initialize() {
-        OnOffStateBitmaps.initialize();
+    public function initialize( 
+        onFillColor as ColorType, 
+        offFillColor as ColorType,
+        switchColor as ColorType 
+    ) {
+        OnOffStateBitmaps.initialize( onFillColor, offFillColor, switchColor );
     }
+
 }

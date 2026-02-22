@@ -11,15 +11,6 @@ import Toybox.Graphics;
  */
 class OnOffStateBitmaps {
     
-    // Singleton accessor
-    private static var _instance as OnOffStateBitmaps?;
-    public static function get() as OnOffStateBitmaps {
-        if( _instance == null ) {
-            _instance = new OnOffStateBitmaps();
-        }
-        return _instance as OnOffStateBitmaps;
-    }
-
     // The circles are again defines as a factor to the width (Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH)
     private const OUTER_CIRCLE_FACTOR = 0.8;
     private const INNER_CIRCLE_FACTOR = 0.75;
@@ -29,56 +20,42 @@ class OnOffStateBitmaps {
     private const NO_STATE_LINE_LENGTH_FACTOR = 0.7;
     private const NO_STATE_LINE_WIDTH_FACTOR = 0.6;
 
-    // The BufferedBitmaps for ON and OFF
+    // The BufferedBitmaps for ON, OFF and no available state
     public var on as BufferedBitmapType;
     public var off as BufferedBitmapType;
     public var nostate as BufferedBitmapType;
 
     // Constructor
-    public function initialize() {
-        on = BufferedBitmapFactory.createBufferedBitmap( {
-            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
-            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
-        } );
-        draw( on, true );
-
-        off = BufferedBitmapFactory.createBufferedBitmap( {
-            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
-            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
-        } );
-        draw( off, false );
-
-        nostate = BufferedBitmapFactory.createBufferedBitmap( {
-            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
-            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
-        } );
-        draw( nostate, null );
+    public function initialize( 
+        onFillColor as ColorType, 
+        offFillColor as ColorType,
+        switchColor as ColorType 
+    ) {
+        on = draw( true, onFillColor, switchColor );
+        off = draw( false, offFillColor, switchColor );
+        nostate = draw( null, offFillColor, switchColor );
     }
 
-    // Draws the switch UI element.
-    // The outline is composed of two circles and a rectangle:
-    // - Colored in openHAB orange when "on"
-    // - Colored in light grey when "off"
+    // Draw the switch UI element.
+    // The outline consists of two circles and a rectangle,
+    // filled with the configured fill color.
     // A smaller black circle indicates the current on/off position.
-    protected function draw( bufferedBitmap as BufferedBitmapType, isEnabled as Boolean? ) as Void {
+    protected function draw( 
+        isEnabled as Boolean?,
+        fillColor as ColorType,
+        switchColor as ColorType
+    ) as BufferedBitmapType {
+        
+        var bufferedBitmap = BufferedBitmapFactory.createBufferedBitmap( {
+            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
+            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
+        } );
+
         var dc = bufferedBitmap.getDc();
         dc.clear();
 
-        // Define the color of the switch
-        if( isEnabled ) {
-            dc.setColor( ThemeManager.current.onColor, Graphics.COLOR_TRANSPARENT );
-            
-            // Currently not used, because it does not work on Edge devices (it should)
-            // and also not on devices pre-CIQ 4.0.0. Apart from having to specifiy
-            // the background color, there is no drawback in using setColor
-            // dc.setFill( 0xFF000000 + ThemeManager.current.onColor );
-        } else {
-            dc.setColor( ThemeManager.current.stateColor, Graphics.COLOR_TRANSPARENT );
+        dc.setColor( fillColor, Graphics.COLOR_TRANSPARENT );
 
-            // See the comment on the first setFill
-            // dc.setFill( 0xFF000000 + Graphics.stateColor );
-        }
-        
         // Spacing defines the gap between the outer edge of the `Drawable` and the switch.
         // This is necessary because anti-aliasing can cause drawing primitives to slightly 
         // exceed their intended boundaries.
@@ -100,7 +77,7 @@ class OnOffStateBitmaps {
 
         // draw the inner circle showing the switch state
 
-        dc.setColor( ThemeManager.current.backgroundColor, Graphics.COLOR_TRANSPARENT );
+        dc.setColor( switchColor, Graphics.COLOR_TRANSPARENT );
         // See the comment on the first setFill
         // dc.setFill( 0xFF000000 + Graphics.COLOR_BLACK );
 
@@ -114,5 +91,7 @@ class OnOffStateBitmaps {
             var yCenter = ( dc.getHeight()/2 ).toNumber();
             dc.drawLine( xCenter - innerRadius, yCenter, xCenter + innerRadius, yCenter );
         }
+
+        return bufferedBitmap;
     }
 }

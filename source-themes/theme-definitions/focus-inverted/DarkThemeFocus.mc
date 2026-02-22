@@ -14,7 +14,7 @@ import Toybox.Graphics;
  * the light theme, with the only modification being a solid
  * menu item background instead of a transparent one.
  */
- class DarkThemeFocus extends LightTheme {
+class DarkThemeFocus extends LightTheme {
 
     public var menuItemBackgroundColor as ColorType = backgroundColor;
 

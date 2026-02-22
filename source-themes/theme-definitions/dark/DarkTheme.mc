@@ -10,7 +10,7 @@ import Toybox.Graphics;
  * night mode (currently all Edge cycling computers), it is
  * used when night mode is active.
  */
- class DarkTheme extends BaseTheme {
+class DarkTheme extends BaseTheme {
 
     public var textColor as ColorType = Graphics.COLOR_WHITE;
 
@@ -21,6 +21,11 @@ import Toybox.Graphics;
     public var menuTitleBackgroundColor as ColorType = 0x212021;
 
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassWhite;
+
+    public var onOffBitmaps as OnOffStateBitmaps = 
+        new OnOffStateBitmaps( onColor, stateColor, backgroundColor );
+    public var smallOnOffBitmaps as SmallOnOffStateBitmaps = 
+        new SmallOnOffStateBitmaps( onColor, stateColor, backgroundColor );
 
     public function initialize() {
         BaseTheme.initialize();

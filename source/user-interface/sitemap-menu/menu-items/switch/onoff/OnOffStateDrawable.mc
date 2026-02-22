@@ -11,38 +11,64 @@ import Toybox.Graphics;
 class OnOffStateDrawable extends BufferedBitmapDrawable {
 
     // Storing the state helps us determining if there was an
-    // actual change of state, when setEnabled is called.
+    // actual change of state, when setEnabled and setFocus is called.
     private var _isEnabled as Boolean?;
-    private var _smallIcon as Boolean;
+    private var _useSmallIcon as Boolean;
+    private var _isFocused as Boolean;
 
     // Constructor
     // Processes the initial state
-    public function initialize( isEnabled as Boolean?, smallIcon as Boolean ) {
+    public function initialize( 
+        isEnabled as Boolean?, 
+        isFocused as Boolean, 
+        useSmallIcon as Boolean 
+    ) {
         _isEnabled = isEnabled;
-        _smallIcon = smallIcon;
+        _isFocused = isFocused;
+        _useSmallIcon = useSmallIcon;
 
         BufferedBitmapDrawable.initialize( {
-            :bufferedBitmap => getOnOffBitmap( isEnabled, smallIcon )
+            :bufferedBitmap => getOnOffBitmap( isEnabled, isFocused, useSmallIcon )
         } );
     }
 
 
-    // setEnabled is called with every sitemap update
+    // setEnabledAndIconSize is called with every sitemap update
     // To improve performance, we only switch the BufferedBitmap
     // if the state changed
-    public function setEnabled( isEnabled as Boolean?, smallIcon as Boolean ) as Void {
-        if( _isEnabled != isEnabled || _smallIcon != smallIcon ) {
+    public function setEnabledAndIconSize( isEnabled as Boolean?, useSmallIcon as Boolean ) as Void {
+        if( _isEnabled != isEnabled || _useSmallIcon != useSmallIcon ) {
             _isEnabled = isEnabled;
-            _smallIcon = smallIcon;
-            setBufferedBitmap( getOnOffBitmap( isEnabled, smallIcon ) );
+            _useSmallIcon = useSmallIcon;
+            setBufferedBitmap( getOnOffBitmap( isEnabled, _isFocused, useSmallIcon ) );
+        }
+    }
+
+    // setFocus is called with every draw, since the focus can change anytime
+    // To improve performance, we only switch the BufferedBitmap
+    // if the state changed
+    public function setFocus( isFocused as Boolean ) as Void {
+        if( _isFocused != isFocused ) {
+            _isFocused = isFocused;
+            setBufferedBitmap( getOnOffBitmap( _isEnabled, isFocused, _useSmallIcon ) );
         }
     }
 
     // Returns the right bitmap for a given state
-    private function getOnOffBitmap( isEnabled as Boolean?, smallIcon as Boolean ) as BufferedBitmapType {
-        var bitmaps = smallIcon
-                        ? SmallOnOffStateBitmaps.get()
-                        : OnOffStateBitmaps.get();
+    private function getOnOffBitmap( 
+        isEnabled as Boolean?, 
+        isFocused as Boolean, 
+        useSmallIcon as Boolean 
+    ) as BufferedBitmapType {
+        
+        var theme = isFocused
+                    ? ThemeManager.focused
+                    : ThemeManager.current;
+
+        var bitmaps = useSmallIcon
+                        ? theme.smallOnOffBitmaps
+                        : theme.onOffBitmaps;
+
         return isEnabled == null
                 ? bitmaps.nostate
                 : isEnabled
