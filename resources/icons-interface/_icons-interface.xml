@@ -23,16 +23,20 @@
     <bitmap id="iconPauseTouch" scaleY="30%" filename="pause-touch.svg" dithering="none" />
     <bitmap id="iconPlayMenuItem" scaleY="5%" filename="play-menuitem.svg" dithering="none" />
     <bitmap id="iconPauseMenuItem" scaleY="5%" filename="pause-menuitem.svg" dithering="none" />
-    <bitmap id="iconNext" scaleY="30%" filename="next.svg" dithering="none" />
-    <bitmap id="iconPrevious" scaleY="30%" filename="previous.svg" dithering="none" />
+    <bitmap id="iconNextWhite" scaleY="30%" filename="next-white.svg" dithering="none" />
+    <bitmap id="iconNextBlack" scaleY="30%" filename="next-black.svg" dithering="none" />
+    <bitmap id="iconPreviousWhite" scaleY="30%" filename="previous-white.svg" dithering="none" />
+    <bitmap id="iconPreviousBlack" scaleY="30%" filename="previous-black.svg" dithering="none" />
 
     <bitmap id="iconCheckHint" scaleY="9%" personality="system_icon_positive__check" />
     <bitmap id="iconCancelHint" scaleY="8%" personality="system_icon_destructive__cancel" />
     <bitmap id="iconStopHint" scaleY="7%" filename="stop-hint.svg" dithering="none" />
     <bitmap id="iconPlayHint" scaleY="7%" filename="play-hint.svg" dithering="none" />
     <bitmap id="iconPauseHint" scaleY="7%" filename="pause-hint.svg" dithering="none" />
-    <bitmap id="iconNextHint" scaleY="7%" filename="next-hint.svg" dithering="none" />
-    <bitmap id="iconPreviousHint" scaleY="7%" filename="previous-hint.svg" dithering="none" />
+    <bitmap id="iconNextHintWhite" scaleY="7%" filename="next-hint-white.svg" dithering="none" />
+    <bitmap id="iconNextHintBlack" scaleY="7%" filename="next-hint-black.svg" dithering="none" />
+    <bitmap id="iconPreviousHintWhite" scaleY="7%" filename="previous-hint-white.svg" dithering="none" />
+    <bitmap id="iconPreviousHintBlack" scaleY="7%" filename="previous-hint-black.svg" dithering="none" />
 
     <bitmap id="iconBluetoothOn" scaleY="7%" filename="cm-bluetooth-on.svg" dithering="none" />
     <bitmap id="iconBluetoothOff" scaleY="7%" filename="cm-bluetooth-off.svg" dithering="none" />

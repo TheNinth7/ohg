@@ -22,6 +22,11 @@ class DarkTheme extends BaseTheme {
 
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassWhite;
 
+    public var iconNextHint as ResourceId = Rez.Drawables.iconNextHintWhite;
+    public var iconPreviousHint as ResourceId = Rez.Drawables.iconPreviousHintWhite;
+    public var iconNext as ResourceId = Rez.Drawables.iconNextWhite;
+    public var iconPrevious as ResourceId = Rez.Drawables.iconPreviousWhite;
+
     public var onOffBitmaps as OnOffStateBitmaps = 
         new OnOffStateBitmaps( onColor, stateColor, backgroundColor );
     public var smallOnOffBitmaps as SmallOnOffStateBitmaps = 

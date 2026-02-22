@@ -111,13 +111,13 @@ class PlayerView extends CustomView {
 
         // The next/previous buttons
         addDrawable( new CustomBitmap( {
-            :rezId => Rez.Drawables.iconPrevious,
+            :rezId => ThemeManager.current.iconPrevious,
             :locX => 0.2,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER,
             :touchId => :touchPrevious
         } ) );
         addDrawable( new CustomBitmap( {
-            :rezId => Rez.Drawables.iconNext,
+            :rezId => ThemeManager.current.iconNext,
             :locX => 0.8,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER,
             :touchId => :touchNext

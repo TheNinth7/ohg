@@ -57,8 +57,8 @@ class BaseInputHint extends Drawable {
         Rez.Drawables.iconStopHint,
         Rez.Drawables.iconPlayHint,
         Rez.Drawables.iconPauseHint,
-        Rez.Drawables.iconPreviousHint,
-        Rez.Drawables.iconNextHint
+        ThemeManager.current.iconPreviousHint,
+        ThemeManager.current.iconPreviousHint
     ];
 
     // Default line width

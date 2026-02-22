@@ -21,6 +21,11 @@ class LightTheme extends BaseTheme {
 
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassBlack;
 
+    public var iconNextHint as ResourceId = Rez.Drawables.iconNextHintBlack;
+    public var iconPreviousHint as ResourceId = Rez.Drawables.iconPreviousHintBlack;
+    public var iconNext as ResourceId = Rez.Drawables.iconNextBlack;
+    public var iconPrevious as ResourceId = Rez.Drawables.iconPreviousBlack;
+
     public var onOffBitmaps as OnOffStateBitmaps = 
         new OnOffStateBitmaps( onColor, stateColor, backgroundColor );
     public var smallOnOffBitmaps as SmallOnOffStateBitmaps = 
