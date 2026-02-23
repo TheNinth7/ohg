@@ -3,57 +3,74 @@
     for example for navigation controls or to indicate the connection mode.
 -->
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
-    <bitmap id="logoOpenhabTextWhite" scaleX="40%" filename="openhab-text-white.svg" dithering="none" />
-    <bitmap id="logoOpenhabTextBlack" scaleX="40%" filename="openhab-text-black.svg" dithering="none" />
 
     <bitmap id="iconWarning" personality="system_icon_light__warning" />
-    <bitmap id="iconDownToSettings" scaleY="15%" filename="down-to-settings.svg" dithering="none" />
-    <bitmap id="chevronUpGreen" scaleX="10%" filename="chevron-up-green.svg" dithering="none" />
-    <bitmap id="chevronUpGrey" scaleX="10%" filename="chevron-up-grey.svg" dithering="none" />
-    <bitmap id="chevronDownGreen" scaleX="10%" filename="chevron-down-green.svg" dithering="none" />
-    <bitmap id="chevronDownGrey" scaleX="10%" filename="chevron-down-grey.svg" dithering="none" />
-    <bitmap id="chevronRightOrange" scaleY="5%" filename="chevron-right-orange.svg" dithering="none" />
-    <bitmap id="chevronRightOrangeDoubleOrange" scaleY="5%" filename="chevron-right-double-orange.svg" dithering="none" />
+    <bitmap id="chevronRightOrange" scaleY="5%" filename="action/chevron-right-orange.svg" dithering="none" />
+    <bitmap id="chevronRightOrangeDouble" scaleY="5%" filename="action/chevron-right-double-orange.svg" dithering="none" />
 
-    <bitmap id="iconCheck" scaleX="15%" filename="check.svg" dithering="none" />
-    <bitmap id="iconCancel" scaleX="15%" filename="cancel.svg" dithering="none" />
-    <bitmap id="iconStop" scaleY="15%" filename="stop.svg" dithering="none" />
-    
-    <bitmap id="iconPlayButtonLightGrey" scaleY="25%" filename="play-button-lt-gray.svg" dithering="none" />
-    <bitmap id="iconPlayButtonDarkGrey" scaleY="25%" filename="play-button-dk-gray.svg" dithering="none" />
-    <bitmap id="iconPauseButtonLightGrey" scaleY="25%" filename="pause-button-lt-gray.svg" dithering="none" />
-    <bitmap id="iconPauseButtonDarkGrey" scaleY="25%" filename="pause-button-dk-gray.svg" dithering="none" />
-    <bitmap id="iconPlayTouch" scaleY="30%" filename="play-touch.svg" dithering="none" />
-    <bitmap id="iconPauseTouch" scaleY="30%" filename="pause-touch.svg" dithering="none" />
-    <bitmap id="iconPlayMenuItemLightGrey" scaleY="5%" filename="play-menuitem-lt-gray.svg" dithering="none" />
-    <bitmap id="iconPlayMenuItemDarkGrey" scaleY="5%" filename="play-menuitem-dk-gray.svg" dithering="none" />
-    <bitmap id="iconPauseMenuItemLightGrey" scaleY="5%" filename="pause-menuitem-lt-gray.svg" dithering="none" />
-    <bitmap id="iconPauseMenuItemDarkGrey" scaleY="5%" filename="pause-menuitem-dk-gray.svg" dithering="none" />
-    <bitmap id="iconNextWhite" scaleY="30%" filename="next-white.svg" dithering="none" />
-    <bitmap id="iconNextBlack" scaleY="30%" filename="next-black.svg" dithering="none" />
-    <bitmap id="iconPreviousWhite" scaleY="30%" filename="previous-white.svg" dithering="none" />
-    <bitmap id="iconPreviousBlack" scaleY="30%" filename="previous-black.svg" dithering="none" />
+    <!-- CONNECTIVITY -->
+
+    <bitmap id="iconBluetoothOn" scaleY="7%" filename="connectivity/bluetooth-on.svg" dithering="none" />
+    <bitmap id="iconBluetoothOff" scaleY="7%" filename="connectivity/bluetooth-off.svg" dithering="none" />
+    <bitmap id="iconWifiCheck" scaleY="7%" filename="connectivity/wifi-check.svg" dithering="none" />
+    <bitmap id="iconWifiOn" scaleY="7%" filename="connectivity/wifi-on.svg" dithering="none" />
+    <bitmap id="iconWifiOff" scaleY="7%" filename="connectivity/wifi-off.svg" dithering="none" />
+    <bitmap id="iconConnStateGreen" scaleY="7%" filename="connectivity/state-green.svg" dithering="none" />
+    <bitmap id="iconConnStateYellow" scaleY="7%" filename="connectivity/state-yellow.svg" dithering="none" />
+    <bitmap id="iconConnStateRed" scaleY="7%" filename="connectivity/state-red.svg" dithering="none" />
+
+    <!-- CONFIRMATION -->
+
+    <bitmap id="iconCheck" scaleX="15%" filename="confirmation/check.svg" dithering="none" />
+    <bitmap id="iconCancel" scaleX="15%" filename="confirmation/cancel.svg" dithering="none" />
 
     <bitmap id="iconCheckHint" scaleY="9%" personality="system_icon_positive__check" />
     <bitmap id="iconCancelHint" scaleY="8%" personality="system_icon_destructive__cancel" />
-    <bitmap id="iconStopHint" scaleY="7%" filename="stop-hint.svg" dithering="none" />
-    <bitmap id="iconPlayHint" scaleY="7%" filename="play-hint.svg" dithering="none" />
-    <bitmap id="iconPauseHint" scaleY="7%" filename="pause-hint.svg" dithering="none" />
-    <bitmap id="iconNextHintWhite" scaleY="7%" filename="next-hint-white.svg" dithering="none" />
-    <bitmap id="iconNextHintBlack" scaleY="7%" filename="next-hint-black.svg" dithering="none" />
-    <bitmap id="iconPreviousHintWhite" scaleY="7%" filename="previous-hint-white.svg" dithering="none" />
-    <bitmap id="iconPreviousHintBlack" scaleY="7%" filename="previous-hint-black.svg" dithering="none" />
 
-    <bitmap id="iconBluetoothOn" scaleY="7%" filename="cm-bluetooth-on.svg" dithering="none" />
-    <bitmap id="iconBluetoothOff" scaleY="7%" filename="cm-bluetooth-off.svg" dithering="none" />
-    <bitmap id="iconWifiCheck" scaleY="7%" filename="cm-wifi-check.svg" dithering="none" />
-    <bitmap id="iconWifiOn" scaleY="7%" filename="cm-wifi-on.svg" dithering="none" />
-    <bitmap id="iconWifiOff" scaleY="7%" filename="cm-wifi-off.svg" dithering="none" />
-    <bitmap id="iconConnStateGreen" scaleY="7%" filename="cm-state-green.svg" dithering="none" />
-    <bitmap id="iconConnStateYellow" scaleY="7%" filename="cm-state-yellow.svg" dithering="none" />
-    <bitmap id="iconConnStateRed" scaleY="7%" filename="cm-state-red.svg" dithering="none" />
+    <!-- FOOTER -->
 
-    <bitmap id="iconHourglassWhite" scaleX="50%" filename="hourglass-white.svg" dithering="none" />
-    <bitmap id="iconHourglassBlack" scaleX="50%" filename="hourglass-black.svg" dithering="none" />
+    <bitmap id="logoOpenhabTextWhite" scaleX="40%" filename="footer/openhab-text-white.svg" dithering="none" />
+    <bitmap id="logoOpenhabTextBlack" scaleX="40%" filename="footer/openhab-text-black.svg" dithering="none" />
+
+    <bitmap id="iconDownToSettings" scaleY="15%" filename="footer/down-to-settings.svg" dithering="none" />
+
+    <!-- LOADING -->
+
+    <bitmap id="iconHourglassWhite" scaleX="50%" filename="loading/hourglass-white.svg" dithering="none" />
+    <bitmap id="iconHourglassBlack" scaleX="50%" filename="loading/hourglass-black.svg" dithering="none" />
+
+    <!-- PLAYER -->
+
+    <bitmap id="iconPlayButtonLightGrey" scaleY="25%" filename="player/play-button-lt-gray.svg" dithering="none" />
+    <bitmap id="iconPlayButtonDarkGrey" scaleY="25%" filename="player/play-button-dk-gray.svg" dithering="none" />
+    <bitmap id="iconPauseButtonLightGrey" scaleY="25%" filename="player/pause-button-lt-gray.svg" dithering="none" />
+    <bitmap id="iconPauseButtonDarkGrey" scaleY="25%" filename="player/pause-button-dk-gray.svg" dithering="none" />
+    <bitmap id="iconPlayTouch" scaleY="30%" filename="player/play-touch.svg" dithering="none" />
+    <bitmap id="iconPauseTouch" scaleY="30%" filename="player/pause-touch.svg" dithering="none" />
+    <bitmap id="iconPlayMenuItemLightGrey" scaleY="5%" filename="player/play-menuitem-lt-gray.svg" dithering="none" />
+    <bitmap id="iconPlayMenuItemDarkGrey" scaleY="5%" filename="player/play-menuitem-dk-gray.svg" dithering="none" />
+    <bitmap id="iconPauseMenuItemLightGrey" scaleY="5%" filename="player/pause-menuitem-lt-gray.svg" dithering="none" />
+    <bitmap id="iconPauseMenuItemDarkGrey" scaleY="5%" filename="player/pause-menuitem-dk-gray.svg" dithering="none" />
+    <bitmap id="iconNextWhite" scaleY="30%" filename="player/next-white.svg" dithering="none" />
+    <bitmap id="iconNextBlack" scaleY="30%" filename="player/next-black.svg" dithering="none" />
+    <bitmap id="iconPreviousWhite" scaleY="30%" filename="player/previous-white.svg" dithering="none" />
+    <bitmap id="iconPreviousBlack" scaleY="30%" filename="player/previous-black.svg" dithering="none" />
+
+    <bitmap id="iconPlayHint" scaleY="7%" filename="player/play-hint.svg" dithering="none" />
+    <bitmap id="iconPauseHint" scaleY="7%" filename="player/pause-hint.svg" dithering="none" />
+    <bitmap id="iconNextHintWhite" scaleY="7%" filename="player/next-hint-white.svg" dithering="none" />
+    <bitmap id="iconNextHintBlack" scaleY="7%" filename="player/next-hint-black.svg" dithering="none" />
+    <bitmap id="iconPreviousHintWhite" scaleY="7%" filename="player/previous-hint-white.svg" dithering="none" />
+    <bitmap id="iconPreviousHintBlack" scaleY="7%" filename="player/previous-hint-black.svg" dithering="none" />
+
+    <!-- ROLLERSHUTTER -->
+
+    <bitmap id="iconStop" scaleY="15%" filename="rollershutter/stop.svg" dithering="none" />
+    <bitmap id="iconStopHint" scaleY="7%" filename="rollershutter/stop-hint.svg" dithering="none" />
+
+    <!-- UP/DOWN -->
+
+    <bitmap id="chevronUpGrey" scaleX="10%" filename="updown/chevron-up-grey.svg" dithering="none" />
+    <bitmap id="chevronDownGrey" scaleX="10%" filename="updown/chevron-down-grey.svg" dithering="none" />
 
 </drawables>

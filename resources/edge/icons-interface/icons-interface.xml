@@ -2,6 +2,6 @@
     Override interface icon sizes for all Edge devices
 -->
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
-    <bitmap id="logoOpenhabTextWhite" scaleX="40%" filename="../../icons-interface/openhab-text-white.svg" dithering="none" />
-    <bitmap id="logoOpenhabTextBlack" scaleX="40%" filename="../../icons-interface/openhab-text-black.svg" dithering="none" />
+    <bitmap id="logoOpenhabTextWhite" scaleX="40%" filename="../../icons-interface/footer/openhab-text-white.svg" dithering="none" />
+    <bitmap id="logoOpenhabTextBlack" scaleX="40%" filename="../../icons-interface/footer/openhab-text-black.svg" dithering="none" />
 </drawables>

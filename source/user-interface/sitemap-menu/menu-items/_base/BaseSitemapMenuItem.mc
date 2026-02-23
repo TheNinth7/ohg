@@ -56,7 +56,7 @@ class BaseSitemapMenuItem extends BaseMenuItem {
     // provides two standard icons. These are stored as static constants so that
     // they can be shared across all menu items without redundant instantiation.
     protected static const ACTION_ICON_COMMAND = new Bitmap( { :rezId => Rez.Drawables.chevronRightOrange } );
-    protected static const ACTION_ICON_PAGE = new Bitmap( { :rezId => Rez.Drawables.chevronRightOrangeDoubleOrange } );
+    protected static const ACTION_ICON_PAGE = new Bitmap( { :rezId => Rez.Drawables.chevronRightOrangeDouble } );
 
     // The action icon
     private var _actionIcon as Drawable?;
