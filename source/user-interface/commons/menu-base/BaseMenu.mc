@@ -107,7 +107,7 @@ class BaseMenu extends CustomMenu {
             * The height of the background-colored region is defined in the device-specific 
             * `Constants` implementation.
             */
-            var clipHeight = dcHeight * Constants.UI_MENU_TITLE_HEIGHT_FACTOR;
+            var clipHeight = dcHeight * Constants.UI_MENU_TITLE_CLIP_FACTOR;
 
             /*
             * This code causes an issue where the full `Dc` size of the title is incorrectly 
@@ -123,9 +123,7 @@ class BaseMenu extends CustomMenu {
             dc.clearClip();
 
             // On rectangular screens, we draw a divider between menu title and menu items
-            if( Constants.UI_MENU_ITEM_SHOW_DIVIDER 
-                && Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE 
-            ) {
+            if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
                 dc.setPenWidth( 2 );
                 var lineY = dcHeight - 1;
                 dc.setColor( ThemeManager.current.menuTitleDividerColor, ThemeManager.current.menuTitleBackgroundColor );
@@ -153,12 +151,7 @@ class BaseMenu extends CustomMenu {
             if( _title.locY == 0 ) {
                 
                 // Depending on screen shape we use a different factor to calculate the center of the title
-                var centerY;
-                if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-                    centerY = clipHeight * 0.5;
-                } else {
-                    centerY = clipHeight * 0.625;
-                }
+                var centerY = clipHeight * Constants.UI_MENU_TITLE_TEXT_POSITION;
                 
                 // Then we calculate the upper Y coordinate by substracting half of the font height
                 // Most fonts have more blank space in the bottom, so for better visual balance we move 

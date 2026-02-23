@@ -18,7 +18,11 @@ class EdgeDefaultConstants extends DefaultConstants {
 
     // On the Edge devices no gap between title and menu items is
     // needed, therefore the title height is set to the full amount (defined above)
-    public static const UI_MENU_TITLE_HEIGHT_FACTOR as Float = 1.0;
+    public static const UI_MENU_TITLE_CLIP_FACTOR as Float = 1.0;
+
+    // On Edge devices, the connection mode indicator is displayed below
+    // the title text, so the title text is positioned higher
+    public static const UI_MENU_TITLE_TEXT_POSITION as Float = 0.29;
 
     // Edge devices need larger fonts
     public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_MEDIUM;  
@@ -28,7 +32,6 @@ class EdgeDefaultConstants extends DefaultConstants {
     public static const UI_MENU_ITEM_PADDING_LEFT_FACTOR as Float = 0.01;
     public static const UI_MENU_ITEM_PADDING_RIGHT_FACTOR as Float = 0.02;
     public static const UI_MENU_ITEM_SPACING_FACTOR as Float = 0.05;
-
 
     // If an icon is present, the amount of space defined below will be reserved,
     // to allow alignment of labels that have icons of different widths.

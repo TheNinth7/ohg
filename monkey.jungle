@@ -100,10 +100,12 @@ srcConstantsVenux1=$(srcConstantsBase);source-constants/device-venux1
 # Edge devices
 # Base path for all Edge devices
 srcConstantsEdgeBase=$(srcConstantsBase);source-constants/device-edge/widget/base;source-constants/device-edge/glance
-# Edge touch devices
-srcConstantsEdgeTouch=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-touch
+# Edge x40 touch-based devices
+srcConstantsEdgeX40Touch=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x40-touch
 # Edge x40 button-based devices
 srcConstantsEdgeX40Button=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x40-button
+# Edge x50 touch-based devices
+srcConstantsEdgeX50Touch=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x50-touch
 # Edge x50 button-based devices
 srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x50-button
 
@@ -199,7 +201,8 @@ srcVenux1=$(srcBase);$(srcConstantsVenux1);$(srcThemesDefault)
 # Edge devices
 # Touch-based devices (Explore 2, 1040, 1050).
 # These devices do not have physical control buttons.
-srcEdgeTouch=$(srcBase);$(srcConstantsEdgeTouch);$(srcThemesNightModeDefault)
+srcEdgeX40Touch=$(srcBase);$(srcConstantsEdgeX40Touch);$(srcThemesNightModeDefault)
+srcEdgeX50Touch=$(srcBase);$(srcConstantsEdgeX50Touch);$(srcThemesNightModeDefault)
 # Button-based devices (540, 840, MTB, 550, 850).
 # These devices have physical control buttons and,
 # in some cases (840, 850), also support touch input.
@@ -331,7 +334,7 @@ vivoactive6.excludeAnnotations = $(venu3.excludeAnnotations)
 # Touch devices with CIQ level between 4.0.0 and 5.0.0
 edgeexplore2.resourcePath=$(resEdgeTall);$(resLauncherIcons)/36x36-dark
 edgeexplore2.excludeAnnotations = $(annotCiq400Plus);$(annotTouch);$(annotScreenRectangular);$(annotFullMenu)
-edgeexplore2.sourcePath = $(srcEdgeTouch)
+edgeexplore2.sourcePath = $(srcEdgeX40Touch)
 
 # Button-based, CIQ >= 5.1.0
 edge540.resourcePath=$(resEdgeShort);$(resLauncherIcons)/35x35-dark
@@ -354,7 +357,7 @@ edge850.sourcePath = $(srcEdgeButtonX50)
 # Touch-based, CIQ >= 5.1.0
 edge1040.resourcePath=$(resEdgeTall);$(resLauncherIcons)/40x40-dark
 edge1040.excludeAnnotations = $(annotCiq510Plus);$(annotTouch);$(annotScreenRectangular);$(annotFullMenu)
-edge1040.sourcePath = $(srcEdgeTouch)
+edge1040.sourcePath = $(srcEdgeX40Touch)
 edge1050.resourcePath=$(resEdgeTall);$(resLauncherIcons)/68x68-dark
 edge1050.excludeAnnotations = $(edge1040.excludeAnnotations)
-edge1050.sourcePath = $(srcEdgeTouch)
+edge1050.sourcePath = $(srcEdgeX50Touch)

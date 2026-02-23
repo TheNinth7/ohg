@@ -80,7 +80,15 @@ class DefaultConstants {
     * available title area is filled, leaving 20% as spacing above 
     * the menu items.
     */
-    public static const UI_MENU_TITLE_HEIGHT_FACTOR as Float = 0.8;
+    public static const UI_MENU_TITLE_CLIP_FACTOR as Float = 0.8;
+
+    /*
+    * Position of the title text.
+    * The value is relative to the height of the clip area.
+    * For example, 0.5 means the title text will be vertically
+    * centered within the clip area.
+    */
+    public static const UI_MENU_TITLE_TEXT_POSITION as Float = 0.625;
 
     // Font to be used in the menu title
     public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_SMALL;  

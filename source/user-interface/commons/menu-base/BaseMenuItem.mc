@@ -39,7 +39,9 @@ class BaseMenuItem extends CustomMenuItem {
             dc.setColor( theme.textColor, theme.menuItemBackgroundColor );
             dc.clear();
 
-            if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
+            if( Constants.UI_MENU_ITEM_SHOW_DIVIDER
+                && Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE 
+            ) {
                 dc.setPenWidth( 2 );
                 var lineY = dc.getHeight() - 1;
                 dc.setColor( ThemeManager.current.menuItemDividerColor, ThemeManager.current.menuItemBackgroundColor );

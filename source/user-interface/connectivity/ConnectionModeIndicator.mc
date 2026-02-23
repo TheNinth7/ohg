@@ -170,6 +170,9 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
 
     /******* INSTANCE *******/ 
 
+    // The location of this instance
+    private var _location as Location;
+
     // Constructor
     // Determines the indicator position based on the provided
     // location type and the current screen shape.
@@ -183,6 +186,8 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
     // title text positioning.
     public function initialize( location as Location ) {
         
+        _location = location;
+
         // Initialize the parent class with the singleton buffered bitmap
         BufferedBitmapDrawable.initialize( { 
             :bufferedBitmap => getBufferedBitmap(), 
@@ -190,8 +195,13 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
 
         // Set the location as outlined above
         if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-            var spacing = ( height * 0.2 ).toNumber();
-            setLocation( spacing*3, spacing );
+            // Only custom view location is set here
+            // Location for menu is set in draw() since Dc is
+            // needed for determining the location
+            if( location == LOCATION_CUSTOM_VIEW ) {
+                var spacing = ( height * 0.2 ).toNumber();
+                setLocation( spacing, spacing );
+            }
         } else {
             var locYFactor = 
                 location == LOCATION_MENU
@@ -210,6 +220,9 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
     // The parent class is always updated with the current buffered
     // bitmap instance to ensure the current indicator is drawn.
     public function draw( dc as Dc ) as Void {
+        if( locX == 0 && _location == LOCATION_MENU ) {
+            setLocation( WatchUi.LAYOUT_HALIGN_CENTER, dc.getHeight() * 0.525 );
+        }
         BufferedBitmapDrawable.setBufferedBitmap( getBufferedBitmap() );
         BufferedBitmapDrawable.draw( dc );       
     }

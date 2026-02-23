@@ -19,11 +19,11 @@
     <bitmap id="iconConnStateYellow" scaleY="5%" filename="../../icons-interface/connectivity/state-yellow.svg" dithering="none" />
     <bitmap id="iconConnStateRed" scaleY="5%" filename="../../icons-interface/connectivity/state-red.svg" dithering="none" />
 
-    <bitmap id="iconPlayTouch" scaleY="20%" filename="../../icons-interface/play-touch.svg" dithering="none" />
-    <bitmap id="iconPauseTouch" scaleY="20%" filename="../../icons-interface/pause-touch.svg" dithering="none" />
-    <bitmap id="iconNextWhite" scaleY="20%" filename="../../icons-interface/next-white.svg" dithering="none" />
-    <bitmap id="iconNextBlack" scaleY="20%" filename="../../icons-interface/next-black.svg" dithering="none" />
-    <bitmap id="iconPreviousWhite" scaleY="20%" filename="../../icons-interface/previous-white.svg" dithering="none" />
-    <bitmap id="iconPreviousBlack" scaleY="20%" filename="../../icons-interface/previous-black.svg" dithering="none" />
+    <bitmap id="iconPlayTouch" scaleY="20%" filename="../../icons-interface/player/play-touch.svg" dithering="none" />
+    <bitmap id="iconPauseTouch" scaleY="20%" filename="../../icons-interface/player/pause-touch.svg" dithering="none" />
+    <bitmap id="iconNextWhite" scaleY="20%" filename="../../icons-interface/player/next-white.svg" dithering="none" />
+    <bitmap id="iconNextBlack" scaleY="20%" filename="../../icons-interface/player/next-black.svg" dithering="none" />
+    <bitmap id="iconPreviousWhite" scaleY="20%" filename="../../icons-interface/player/previous-white.svg" dithering="none" />
+    <bitmap id="iconPreviousBlack" scaleY="20%" filename="../../icons-interface/player/previous-black.svg" dithering="none" />
 
 </drawables>
