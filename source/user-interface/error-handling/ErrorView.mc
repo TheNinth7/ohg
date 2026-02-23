@@ -127,7 +127,7 @@ import Toybox.System;
 
         // ... and for round screens, adapt it to the
         // largest square fitting into the circle
-        if( System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND ) {
+        if( Constants.UI_SCREEN_SHAPE == System.SCREEN_SHAPE_ROUND ) {
             width = width / Math.sqrt( 2 );
             height = width;
         }

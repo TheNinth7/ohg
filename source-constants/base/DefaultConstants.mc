@@ -20,9 +20,12 @@ class DefaultConstants {
     // was possible
     public static const STATE_EXPIRATION_TIME as Number = 10;
 
-    // Height of the screen, used in calculation of other constants
+    // Screen dimensions, used in calculation of other constants
     public static const UI_SCREEN_HEIGHT as Number = System.getDeviceSettings().screenHeight;
     public static const UI_SCREEN_WIDTH as Number = System.getDeviceSettings().screenWidth;
+    
+    // Screen shape, rectangular or round
+    public static const UI_SCREEN_SHAPE = System.getDeviceSettings().screenShape;
 
     // Positions of the keys, for drawing input hints
     // Corresponds to CustomView.InputHints enumeration

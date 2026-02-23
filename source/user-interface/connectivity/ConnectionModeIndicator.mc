@@ -189,7 +189,7 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
         } );
 
         // Set the location as outlined above
-        if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
+        if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
             var spacing = ( height * 0.2 ).toNumber();
             setLocation( spacing*3, spacing );
         } else {

@@ -97,6 +97,9 @@ class BaseMenu extends CustomMenu {
     public function drawTitle( dc as Dc ) as Void {
         // Logger.debug( "BaseMenu.drawTitle" );
         try {
+            var dcWidth = dc.getWidth();
+            var dcHeight = dc.getHeight();
+
             /*
             * For most devices, we avoid coloring the entire title area to leave a small black bar 
             * separating the colored section from the menu items.
@@ -104,7 +107,7 @@ class BaseMenu extends CustomMenu {
             * The height of the background-colored region is defined in the device-specific 
             * `Constants` implementation.
             */
-            var clipHeight = dc.getHeight() * Constants.UI_MENU_TITLE_HEIGHT_FACTOR;
+            var clipHeight = dcHeight * Constants.UI_MENU_TITLE_HEIGHT_FACTOR;
 
             /*
             * This code causes an issue where the full `Dc` size of the title is incorrectly 
@@ -115,16 +118,24 @@ class BaseMenu extends CustomMenu {
             * to reset the clipping region.
             */
             dc.setColor( ThemeManager.current.textColor, ThemeManager.current.menuTitleBackgroundColor );
-            dc.setClip( 0, 0, dc.getWidth(), clipHeight );
+            dc.setClip( 0, 0, dcWidth, clipHeight );
             dc.clear();
             dc.clearClip();
+
+            // On rectangular screens, we draw a divider between menu title and menu items
+            if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
+                dc.setPenWidth( 2 );
+                var lineY = dcHeight - 1;
+                dc.setColor( ThemeManager.current.menuTitleDividerColor, ThemeManager.current.menuTitleBackgroundColor );
+                dc.drawLine( 0, lineY, dcWidth, lineY );
+            }
 
             // As an alternative workaround for the above-mentioned issue, 
             // we could fill a rectangle with the background color 
             // instead of clearing the `Dc`.
             /*
             dc.setColor( ThemeManager.current.menuTitleBackgroundColor, ThemeManager.current.menuTitleBackgroundColor );
-            dc.fillRectangle( 0, 0, dc.getWidth(), clipHeight );
+            dc.fillRectangle( 0, 0, dcWidth, clipHeight );
             dc.setColor( ThemeManager.current.textColor, ThemeManager.current.menuTitleBackgroundColor );
             */
 
@@ -141,7 +152,7 @@ class BaseMenu extends CustomMenu {
                 
                 // Depending on screen shape we use a different factor to calculate the center of the title
                 var centerY;
-                if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
+                if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
                     centerY = clipHeight * 0.5;
                 } else {
                     centerY = clipHeight * 0.625;

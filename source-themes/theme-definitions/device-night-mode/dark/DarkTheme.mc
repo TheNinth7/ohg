@@ -17,6 +17,7 @@ class DarkTheme extends DefaultTheme {
     //public var textColor as ColorType = 0xFFFBFF;
     public var backgroundColor as ColorType = 0x31353A;
     public var menuTitleBackgroundColor as ColorType = 0x212429;
+    public var menuTitleDividerColor as ColorType = 0xC5C2C5;
 
     public function initialize() {
         DefaultTheme.initialize();
