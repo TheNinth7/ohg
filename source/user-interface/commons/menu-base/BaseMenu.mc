@@ -142,7 +142,7 @@ class BaseMenu extends CustomMenu {
                 // Depending on screen shape we use a different factor to calculate the center of the title
                 var centerY;
                 if( System.getDeviceSettings().screenShape == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
-                    centerY = clipHeight * 0.575;
+                    centerY = clipHeight * 0.5;
                 } else {
                     centerY = clipHeight * 0.625;
                 }

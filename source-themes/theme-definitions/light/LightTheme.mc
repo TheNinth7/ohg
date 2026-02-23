@@ -18,7 +18,7 @@ class LightTheme extends BaseTheme {
 
     public var backgroundColor as ColorType = Graphics.COLOR_WHITE;
 
-    public var menuTitleBackgroundColor as ColorType = 0xEFEFEF;
+    public var menuTitleBackgroundColor as ColorType = 0xEEEAEE;
 
     public var logoOpenhabText as ResourceId = Rez.Drawables.logoOpenhabTextBlack;
 
