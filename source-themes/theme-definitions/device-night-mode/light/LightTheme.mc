@@ -20,6 +20,7 @@ class LightTheme extends BaseTheme {
 
     public var menuTitleBackgroundColor as ColorType = 0xEEEAEE;
     public var menuTitleDividerColor as ColorType = 0xC5C2C5;
+    public var menuItemDividerColor as ColorType = 0xDEDFDE;
 
     public var logoOpenhabText as ResourceId = Rez.Drawables.logoOpenhabTextBlack;
 

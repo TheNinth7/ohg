@@ -21,8 +21,10 @@ class DefaultTheme extends BaseTheme {
     public var backgroundColor as ColorType = Graphics.COLOR_BLACK;
 
     public var menuTitleBackgroundColor as ColorType = 0x212021;
-    // The divider is not used on devices that use the default theme.
+    
+    // The dividers are not used on devices that use the default theme.
     public var menuTitleDividerColor as ColorType = Graphics.COLOR_TRANSPARENT;
+    public var menuItemDividerColor as ColorType = Graphics.COLOR_TRANSPARENT;
 
     public var logoOpenhabText as ResourceId = Rez.Drawables.logoOpenhabTextWhite;
 

@@ -12,6 +12,8 @@ import Toybox.System;
 class DefaultConstants {
     protected function initialize() {}
 
+    /******* SITEMAP REQUEST *******/ 
+
     // Timer in seconds after which a state is considered stale
     // The app repeatedly polls the sitemap. If no new sitemap has been
     // received from the state expiration time, it will either go into
@@ -20,6 +22,12 @@ class DefaultConstants {
     // was possible
     public static const STATE_EXPIRATION_TIME as Number = 10;
 
+
+    /******* SCREEN INFO *******/ 
+
+    // These constants store information on the screen,
+    // for quick access everywhere in our code.
+
     // Screen dimensions, used in calculation of other constants
     public static const UI_SCREEN_HEIGHT as Number = System.getDeviceSettings().screenHeight;
     public static const UI_SCREEN_WIDTH as Number = System.getDeviceSettings().screenWidth;
@@ -27,7 +35,10 @@ class DefaultConstants {
     // Screen shape, rectangular or round
     public static const UI_SCREEN_SHAPE = System.getDeviceSettings().screenShape;
 
-    // Positions of the keys, for drawing input hints
+    
+    /******* INPUT HINTS *******/ 
+
+    // Positions of the device buttons, for drawing input hints
     // Corresponds to CustomView.InputHints enumeration
     // 0=ENTER
     // 1=BACK
@@ -44,6 +55,19 @@ class DefaultConstants {
         -( UI_SCREEN_HEIGHT * 0.4 ).toNumber(), 
         -( UI_SCREEN_HEIGHT * 0.7 ).toNumber() 
     ];
+
+
+    /******* RENDERING *******/ 
+
+    // If true, anti-aliasing is used when drawing primitives (lines, circles, rectangulars)
+    // This for example is used for the toggle switch and the input hints
+    public static const UI_USE_ANTI_ALIASING as Boolean = true;
+
+
+    /******* MENU *******/ 
+
+    // These constants control different parameters of the
+    // menu implementation
 
     // Height of menu title and footer
     // If set to -1, the default height will be applied
@@ -67,10 +91,13 @@ class DefaultConstants {
     public static const UI_SETTINGS_ITEM_HEIGHT as Number = 
         ( UI_SCREEN_HEIGHT * 0.3 ).toNumber();
 
-
     // List of fonts available for menu item labels and state text.
     // An appropriate font size is chosen based on available space and text length.
     public static const UI_MENU_ITEM_FONTS as Array<FontDefinition> = [Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
+
+    // If set to true, a divider will be rendered at the bottom of each 
+    // menu item. The color of the divider is set in Theme.menuItemDividerColor
+    public static const UI_MENU_ITEM_SHOW_DIVIDER as Boolean = false;
 
     /*
     * These factors determine the spacing of menu item components 
@@ -108,22 +135,25 @@ class DefaultConstants {
     // Positive means the label is shifted down, negative means up
     public static const UI_MENU_ITEM_LABEL_OFFSET as Number = 0;
 
+    // Height and width of the toggle switch relative to the menu item height
+    public static const UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT as Number = ( UI_MENU_ITEM_HEIGHT * 0.8 ).toNumber();
+    public static const UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH as Number = ( UI_MENU_ITEM_HEIGHT * 0.45 ).toNumber();
+
     // This offset in pixel is applied to the positioning of the label
     // and sublabel in the SettingsMenuTextItem.
     // Positive means the label is shifted down, negative means up
     public static const UI_MENU_SETTINGS_TEXT_ITEM_LABEL_OFFSET as Number = 0;
 
-    // Height and width of the toggle switch relative to the menu item height
-    public static const UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT as Number = ( UI_MENU_ITEM_HEIGHT * 0.8 ).toNumber();
-    public static const UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH as Number = ( UI_MENU_ITEM_HEIGHT * 0.45 ).toNumber();
-
-    // List of fonts to be used by the error view
-    public static const UI_ERROR_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
+    
+    /******* CONTROL VIEWS *******/ 
 
     // List of fonts to be used by the picker for the title
     public static const UI_PICKER_TITLE_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
 
-    // If true, anti-aliasing is used when drawing primitives (lines, circles, rectangulars)
-    // This for example is used for the toggle switch and the input hints
-    public static const UI_USE_ANTI_ALIASING as Boolean = true;
+
+    /******* ERROR VIEW *******/ 
+
+    // List of fonts to be used by the error view
+    public static const UI_ERROR_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
+
 }

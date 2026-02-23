@@ -123,7 +123,9 @@ class BaseMenu extends CustomMenu {
             dc.clearClip();
 
             // On rectangular screens, we draw a divider between menu title and menu items
-            if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
+            if( Constants.UI_MENU_ITEM_SHOW_DIVIDER 
+                && Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE 
+            ) {
                 dc.setPenWidth( 2 );
                 var lineY = dcHeight - 1;
                 dc.setColor( ThemeManager.current.menuTitleDividerColor, ThemeManager.current.menuTitleBackgroundColor );

@@ -8,7 +8,10 @@ import Toybox.System;
 class Constants extends EdgeDefaultConstants {
     protected function initialize() { EdgeDefaultConstants.initialize(); }
 
-    // Padding is increased, due to the rounded rectangle focus indicator
+    // Show menu item dividers
+    public static const UI_MENU_ITEM_SHOW_DIVIDER as Boolean = true;
+
+    // Menu item padding is increased, due to the rounded rectangle focus indicator
     public static const UI_MENU_ITEM_PADDING_LEFT_FACTOR as Float = 0.05;
     public static const UI_MENU_ITEM_PADDING_RIGHT_FACTOR as Float = 0.05;
 

@@ -34,15 +34,18 @@ class BaseMenuItem extends CustomMenuItem {
                 onLayout( dc );
             }
 
-            // We apply the focus color
-            if( isFocused() ) {
-                // Logger.debug( "BaseMenuItem.draw: " + getId() + " is focused" );
-                dc.setColor( ThemeManager.focused.textColor, ThemeManager.focused.menuItemBackgroundColor );
-            } else {
-                dc.setColor( ThemeManager.current.textColor, ThemeManager.current.menuItemBackgroundColor );
-            }
+            var theme = isFocused() ? ThemeManager.focused : ThemeManager.current;
             
+            dc.setColor( theme.textColor, theme.menuItemBackgroundColor );
             dc.clear();
+
+            if( Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE ) {
+                dc.setPenWidth( 2 );
+                var lineY = dc.getHeight() - 1;
+                dc.setColor( ThemeManager.current.menuItemDividerColor, ThemeManager.current.menuItemBackgroundColor );
+                dc.drawLine( 0, lineY, dc.getWidth(), lineY );
+                dc.setColor( theme.textColor, theme.menuItemBackgroundColor );
+            }
 
             onUpdate( dc );
 
