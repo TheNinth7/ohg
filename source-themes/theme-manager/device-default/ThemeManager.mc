@@ -6,14 +6,23 @@ import Toybox.Graphics;
  * On devices that support multiple themes, it also handles
  * switching between them.
  *
- * This implementation is based on BaseThemeManager,
- * which always uses the dark theme and does not provide
- * any switching logic.
+ * This implementation always uses the default theme 
+ * and does not provide any switching logic.
  */
-class ThemeManager extends BaseThemeManager {
+class ThemeManager {
+
+    // The main theme
+    public static var current as Theme = new DefaultTheme();
     
-    private function initialize() {
-        BaseThemeManager.initialize();
-    }
+    // The theme used for focused menu items
+    public static var focused as Theme = current;
+
+    // Called by the OhApp when the conditions for
+    // choosing the theme shall be re-evaluated
+    public static function update() as Void {}
+
+    // Constructor
+    // Declared private to prevent instantiation of this class
+    private function initialize() {}
 
 }

@@ -114,8 +114,10 @@ srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source-constants/device-edge/w
 # Theme definitions specify the source directories that contain
 # the color theme implementations.
 srcThemeDefinitionsBase=source-themes/theme-definitions/base
-srcThemeDefinitionsDark=source-themes/theme-definitions/dark
-srcThemeDefinitionsLight=source-themes/theme-definitions/light
+srcThemeDefinitionsDefault=source-themes/theme-definitions/device-default
+# The dark theme for night mode is based on the default theme
+srcThemeDefinitionsNightModeDark=$(srcThemeDefinitionsDefault);source-themes/theme-definitions/device-night-mode/dark
+srcThemeDefinitionsNightModeLight=source-themes/theme-definitions/device-night-mode/light
 
 # Edge devices that use buttons for control (for example 540, 840,
 # 550, 850, MTB) require a focus indicator in the menu to show
@@ -127,7 +129,7 @@ srcThemeDefinitionsLight=source-themes/theme-definitions/light
 #
 # This behavior is not available in the simulator. Therefore,
 # a blue background is used there as the menu item focus indicator.
-srcThemeDefinitionsFocusBlue=source-themes/theme-definitions/focus-blue
+srcThemeDefinitionsNightModeFocusBlue=source-themes/theme-definitions/device-night-mode/focus-blue
 
 # Edge x50 button-based devices display a rounded frame in the
 # background color for the focused menu item. The app must therefore
@@ -135,13 +137,9 @@ srcThemeDefinitionsFocusBlue=source-themes/theme-definitions/focus-blue
 # These devices use the light theme for day mode and the dark theme
 # for night mode. For the focused menu item, the opposite theme
 # is applied to ensure proper contrast.
-srcThemeDefinitionsFocusInverted=source-themes/theme-definitions/focus-inverted
+srcThemeDefinitionsNightModeFocusInverted=source-themes/theme-definitions/device-night-mode/focus-inverted
 
 # SOURCE PATH - THEMES - THEME MANAGER
-
-# The theme manager provides access to the themes at runtime and
-# handles switching themes dynamically.
-srcThemeManagerBase=source-themes/theme-manager/base
 
 # For devices that use only the dark theme.
 srcThemeManagerDefault=source-themes/theme-manager/device-default
@@ -164,13 +162,13 @@ srcThemeManagerNightModeFocusIndicator=$(srcThemeManagerNightModeBase);source-th
 # SOURCE PATH - THEMES - ASSEMBLY
 
 # Now the theme-related portion of the source path can be assembled.
-srcThemesBase=$(srcThemeDefinitionsBase);$(srcThemeManagerBase)
+srcThemesBase=$(srcThemeDefinitionsBase)
 
 # Default configuration applied to most devices (no night mode).
-srcThemesDefault=$(srcThemesBase);$(srcThemeDefinitionsDark);$(srcThemeManagerDefault)
+srcThemesDefault=$(srcThemesBase);$(srcThemeDefinitionsDefault);$(srcThemeManagerDefault)
 
 # Configuration for devices that support night mode.
-srcThemesNightModeBase=$(srcThemesBase);$(srcThemeDefinitionsDark);$(srcThemeDefinitionsLight)
+srcThemesNightModeBase=$(srcThemesBase);$(srcThemeDefinitionsNightModeDark);$(srcThemeDefinitionsNightModeLight)
 
 # Device without focus indicator
 srcThemesNightModeDefault=$(srcThemesNightModeBase);$(srcThemeManagerNightModeDefault)
@@ -178,8 +176,8 @@ srcThemesNightModeDefault=$(srcThemesNightModeBase);$(srcThemeManagerNightModeDe
 # Devices with a focus indicator.
 # Here, the two different focus indicator types for x40 and x50
 # generation devices are applied.
-srcThemesNightModeEdgeX40Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsFocusBlue);$(srcThemeManagerNightModeFocusIndicator)
-srcThemesNightModeEdgeX50Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsFocusInverted);$(srcThemeManagerNightModeFocusIndicator)
+srcThemesNightModeEdgeX40Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsNightModeFocusBlue);$(srcThemeManagerNightModeFocusIndicator)
+srcThemesNightModeEdgeX50Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsNightModeFocusInverted);$(srcThemeManagerNightModeFocusIndicator)
 
 # SOURCE PATH - ASSEMBLY
 

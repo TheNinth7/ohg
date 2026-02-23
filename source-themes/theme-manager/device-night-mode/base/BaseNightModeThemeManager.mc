@@ -10,9 +10,10 @@ import Toybox.Graphics;
  * support switches between the light theme (standard)
  * and the dark theme (night mode).
  */
-class BaseNightModeThemeManager extends BaseThemeManager {
+class BaseNightModeThemeManager {
 
-    // Light theme is instantiated here and reused
+    // Themes are instantiated here and reused
+    public static var dark as Theme = new DarkTheme();
     public static var light as Theme = new LightTheme();
 
     // Override the current and focus theme
@@ -22,14 +23,11 @@ class BaseNightModeThemeManager extends BaseThemeManager {
     // Internal function to determine the current theme
     // Used when defining the member above and in onUpdate below
     private static function getCurrent() as Theme {
-        return NightModeTracker.get().isNightModeEnabled()
-               ? BaseThemeManager.dark
-               : light;
+        return NightModeTracker.get().isNightModeEnabled() ? dark : light;
     }
 
     // Public function that updates the current theme
     public static function update() as Void {
-        BaseThemeManager.update();
         current = getCurrent();
         focused = current;
     }
@@ -40,8 +38,6 @@ class BaseNightModeThemeManager extends BaseThemeManager {
     // The base class constructor is protected so that subclasses
     // can invoke it. The constructors of the concrete subclasses
     // are private to prevent external instantiation.
-    protected function initialize() {
-        BaseThemeManager.initialize();
-    }
+    protected function initialize() {}
 
 }

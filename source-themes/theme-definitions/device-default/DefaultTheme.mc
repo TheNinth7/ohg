@@ -1,5 +1,6 @@
 import Toybox.Lang;
 import Toybox.Graphics;
+import Rez.Styles;
 
 /*
  * Themes define the color schemes used in the app and can
@@ -11,13 +12,14 @@ import Toybox.Graphics;
  * night mode (currently all Edge cycling computers), it is
  * used when night mode is active.
  */
-class DarkTheme extends BaseTheme {
+class DefaultTheme extends BaseTheme {
 
     public var textColor as ColorType = Graphics.COLOR_WHITE;
 
     public var stateColor as ColorType = Graphics.COLOR_LT_GRAY;
 
-    public var backgroundColor as ColorType = Graphics.COLOR_BLACK;
+    public var backgroundColor as ColorType = system_color_dark__background.color;
+    //Graphics.COLOR_BLACK;
 
     public var menuTitleBackgroundColor as ColorType = 0x212021;
 

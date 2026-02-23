@@ -17,6 +17,8 @@ import Toybox.Graphics;
  */
 class DarkThemeFocus extends LightTheme {
 
+    public var textColor as ColorType = 0x31353A;
+
     public var menuItemBackgroundColor as ColorType = backgroundColor;
 
     public function initialize() {
