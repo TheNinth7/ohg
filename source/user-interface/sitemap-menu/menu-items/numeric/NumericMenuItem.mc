@@ -97,19 +97,24 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     // It stores the new state and sends a command
     // request to change it on the server
     public function updateState( newState as Float ) as Void {
+        
         if( _commandRequest == null ) {
             throw new GeneralException( "NumericMenuItem: state update not possible because command support is not active" );
         }
-        // Store the new state in the sitemap object
-        _sitemapNumeric.updateState( newState );
-        
-        // Update the state
-        _stateText.setText( _sitemapNumeric.getDisplayState() );
+
+        if( ConnectionHandler.get().isBluetoothConnected() ) {
+            // Store the new state in the sitemap object
+            _sitemapNumeric.updateState( newState );
+            
+            // Update the state
+            _stateText.setText( _sitemapNumeric.getDisplayState() );
+        }
         
         // And send the command
         ( _commandRequest as BaseCommandRequest ).sendCommand( 
-            _sitemapNumeric.getNumericItem().getState() 
+            newState.toString()
         );
+
     }
 
     // Updates the menu item
