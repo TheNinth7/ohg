@@ -154,7 +154,15 @@ class BaseSyncDelegate extends SyncDelegate {
         // beforeSyncEnds();
         
         _lastSyncState[1] = ex;
-        Communications.notifySyncComplete( ex.getErrorMessage() );
+
+        // There is not much space for the error message presented by
+        // the Garmin sync screens, therefore if we can, we shorten it
+        Communications.notifySyncComplete( 
+            ex instanceof CommunicationException
+            ? "Comm Error " + ex.getToastMessage()
+            : ex.getErrorMessage() 
+        );
+
         // Logger.debug( "BaseSyncDelegate: onException end" );
     }
 
