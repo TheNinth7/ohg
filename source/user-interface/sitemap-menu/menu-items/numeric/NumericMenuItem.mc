@@ -96,7 +96,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     // The Picker uses this function to update the state
     // It stores the new state and sends a command
     // request to change it on the server
-    public function updateState( newState as Number ) as Void {
+    public function updateState( newState as Float ) as Void {
         if( _commandRequest == null ) {
             throw new GeneralException( "NumericMenuItem: state update not possible because command support is not active" );
         }

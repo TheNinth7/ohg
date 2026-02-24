@@ -50,7 +50,7 @@ class Item {
         } else if( _type.equals( "Rollershutter" ) ) {
             _unit = "%";
         } else {
-            _unit = json.getOptionalString( "unit" );
+            _unit = json.getOptionalString( "unitSymbol" );
         }
     }
 

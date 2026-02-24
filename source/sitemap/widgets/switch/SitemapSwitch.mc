@@ -151,9 +151,14 @@ class SitemapSwitch extends SitemapWidget {
             if( _switchItem.hasState() ) {
                 switchDisplayState = _switchItem.getState();
                 // If the display state is numeric, then we
-                // add the unit
-                if( switchDisplayState.toFloat() != null ) {
-                    switchDisplayState += _switchItem.getUnit();
+                // format it and add the unit
+                var numericState = switchDisplayState.toFloat();
+                if( numericState != null ) {
+                    // Normal Float to String conversion would include
+                    // the maximum number of decimal places, even if they
+                    // are zero. Therefore we determine the actual number
+                    // of decimal places and format to that precision.
+                    switchDisplayState = SitemapNumeric.formatStateWithUnitShortCustom( numericState, _switchItem.getUnit() );
                 }
             } else {
                 switchDisplayState = NO_DISPLAY_STATE;

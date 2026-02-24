@@ -10,7 +10,7 @@ import Toybox.WatchUi;
  */
 class NumericItem extends Item {
 
-    private var _numericState as Number = 0;
+    private var _numericState as Float = 0.0;
 
     // Constructor
     public function initialize( json as JsonAdapter, isSitemapFresh as Boolean ) {
@@ -20,7 +20,7 @@ class NumericItem extends Item {
         // state at 0, analogue to how the 
         // openHAB Main UI handles it
         if( hasState() ) {
-            var numericState = getState().toNumber();
+            var numericState = getState().toFloat();
             if( numericState != null ) {
                 _numericState = numericState;
             } else {
@@ -30,11 +30,22 @@ class NumericItem extends Item {
     }
 
     // Returns the numeric state
-    public function getNumericState() as Number { return _numericState; }
+    public function getNumericState() as Float { return _numericState; }
+
+    // Rounds the state to a given number of decimal places
+    public function roundState( decimalPlaces as Number ) as Void { 
+        // If there is no state, leave it unchanged.
+        // When no state is present, the numeric value is still zero.
+        // Calling updateNumericState would therefore overwrite the
+        // "no state" string with "0", which must be avoided.
+        if( hasState() ) {
+            updateNumericState( CustomMath.round( _numericState, decimalPlaces ).toFloat() );
+        }
+    }
 
     // Updates the numeric state as well as the
     // string state of the base class
-    public function updateNumericState( numericState as Number ) as Void {
+    public function updateNumericState( numericState as Float ) as Void {
         _numericState = numericState;
         updateState( numericState.toString() );
     }

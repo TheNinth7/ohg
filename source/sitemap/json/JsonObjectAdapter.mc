@@ -26,26 +26,52 @@ class JsonAdapter {
         _jsonObject = jsonObject;
     }
 
-    // Returns a String from a given JsonObject, 
+    // Returns a JsonArray from a given JsonObject, 
     // or an error message if the value is not present
-    public function getString( id as String, errorMessage as String ) as String {
-        var value = getOptionalString( id );
-        if( value.equals( "" ) ) {
+    public function getArray( id as String, errorMessage as String ) as JsonAdapterArray {
+        var value = getOptionalArray( id );
+        if( value == null ) {
             throw new JsonParsingException( errorMessage );
         }
         return value;
     }
 
-    // Returns a String from a given JsonObject, 
-    // allowing empty strings, and also returning an empty string
-    // if the field is not present
-    public function getOptionalString( id as String ) as String {
+    // Returns a Boolean from a given JsonObject, 
+    // defaults to false if the value is not present
+    public function getBoolean( id as String ) as Boolean {
         var value = _jsonObject[id];
-        if( value != null && ! ( value instanceof String ) ) {
-            throw new JsonParsingException( "'" + id + "' is not a String" );
+        if( value != null && ! ( value instanceof Boolean ) ) {
+            throw new JsonParsingException( "'" + id + "' is not a Boolean" );
         }
-        return value == null ? "" : value;
+        return value == null ? false : value;
     }
+    
+    // Returns a Float from a given JsonObject, 
+    // or defaults to the passed in def value if the value is not present
+    // When reading the value from the JSON, all types of numerics are
+    // accepted and converted to Float.
+    public function getFloat( id as String, def as Float ) as Float {
+        
+        var value = _jsonObject[id];
+
+        if( value == null ) {
+            return def;
+        } else if( value instanceof Float ) {
+            return value;
+        } else if( value instanceof Number || value instanceof Long || value instanceof Double ) {
+            return value.toFloat();
+        } else if( value instanceof String ) {
+            value = value.toFloat();
+            if( value != null ) {
+                return value;
+            }
+        }
+        throw new JsonParsingException( "'" + id + "' is not numeric" );
+        
+    }
+
+    /* getNumber is currently not needed, since Setpoint and Slider
+       widgets were updated to support floats.
 
     // Returns a Number from a given JsonObject, 
     // or defaults to the passed in def value if the value is not present
@@ -69,67 +95,13 @@ class JsonAdapter {
         }
         throw new JsonParsingException( "'" + id + "' is not numeric" );
         
-        /* Code for debugging issue ä209
-        var value = _jsonObject[id];
-        if( value == null ) {
-            return def;
-        } else if( value instanceof Number ) {
-            return value;
-        } 
-
-        var type = "Unknown";
-
-        if( value instanceof Long ) {
-            type = "Long";
-        } else if( value instanceof Float ) {
-            type = "Float";
-        } else if( value instanceof Double ) {
-            type = "Double";
-        } else if( value instanceof String ) {
-            type = "String";
-        }
-        throw new JsonParsingException( "'" + id + "' is not Number but " + type );
-        */
     }
-    
-    // Returns a Boolean from a given JsonObject, 
-    // defaults to false if the value is not present
-    public function getBoolean( id as String ) as Boolean {
-        var value = _jsonObject[id];
-        if( value != null && ! ( value instanceof Boolean ) ) {
-            throw new JsonParsingException( "'" + id + "' is not a Boolean" );
-        }
-        return value == null ? false : value;
-    }
-    
+    */
+
     // Returns another JsonObject from a given JsonObject, 
     // or an error message if the value is not present
     public function getObject( id as String, errorMessage as String ) as JsonAdapter {
         var value = getOptionalObject( id );
-        if( value == null ) {
-            throw new JsonParsingException( errorMessage );
-        }
-        return value;
-    }
-
-    // Returns another JsonObject from a given JsonObject, 
-    // or an error message if the value is not present
-    public function getOptionalObject( id as String ) as JsonAdapter? {
-        var value = _jsonObject[id];
-        if( value != null ) {
-            if( ! ( value instanceof Dictionary ) ) {
-                throw new JsonParsingException( "'" + id + "' is not a Dictionary" );
-            }
-            return new JsonAdapter( value as JsonObject );
-        } else {
-            return null;
-        }
-    }
-
-    // Returns a JsonArray from a given JsonObject, 
-    // or an error message if the value is not present
-    public function getArray( id as String, errorMessage as String ) as JsonAdapterArray {
-        var value = getOptionalArray( id );
         if( value == null ) {
             throw new JsonParsingException( errorMessage );
         }
@@ -153,4 +125,40 @@ class JsonAdapter {
         }
         return result;
     }
+
+    // Returns another JsonObject from a given JsonObject, 
+    // or an error message if the value is not present
+    public function getOptionalObject( id as String ) as JsonAdapter? {
+        var value = _jsonObject[id];
+        if( value != null ) {
+            if( ! ( value instanceof Dictionary ) ) {
+                throw new JsonParsingException( "'" + id + "' is not a Dictionary" );
+            }
+            return new JsonAdapter( value as JsonObject );
+        } else {
+            return null;
+        }
+    }
+
+    // Returns a String from a given JsonObject, 
+    // allowing empty strings, and also returning an empty string
+    // if the field is not present
+    public function getOptionalString( id as String ) as String {
+        var value = _jsonObject[id];
+        if( value != null && ! ( value instanceof String ) ) {
+            throw new JsonParsingException( "'" + id + "' is not a String" );
+        }
+        return value == null ? "" : value;
+    }
+
+    // Returns a String from a given JsonObject, 
+    // or an error message if the value is not present
+    public function getString( id as String, errorMessage as String ) as String {
+        var value = getOptionalString( id );
+        if( value.equals( "" ) ) {
+            throw new JsonParsingException( errorMessage );
+        }
+        return value;
+    }
+
 }

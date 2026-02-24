@@ -30,8 +30,6 @@ class NumericPickerFactory extends CustomPickerFactory {
         var sitemapNumeric = menuItem.getSitemapNumeric();
         var numericItem = sitemapNumeric.getNumericItem();
 
-        var unit = numericItem.getUnit();
-
         // Start at minValue and increment by step
         // until the next value would exceed maxValue.
         // If maxValue is not an exact multiple of the step,
@@ -45,7 +43,7 @@ class NumericPickerFactory extends CustomPickerFactory {
         var currentValue = 
             numericItem.hasState()
             ? numericItem.getNumericState()
-            : ( minValue + Math.round( ( maxValue-minValue ) / ( 2*step ) ) * step ).toNumber();
+            : ( minValue + Math.round( ( maxValue-minValue ) / ( 2*step ) ) * step ).toFloat();
 
         for( var i = minValue; i <= maxValue; i += step ) {
             // If the index for the current value has not been set yet,
@@ -56,11 +54,11 @@ class NumericPickerFactory extends CustomPickerFactory {
                 // steps, we create a "non-conforming" element. This also covers
                 // the case where the current value is lower than the minValue
                 if( i != currentValue ) {
-                    _nonConforming = new NumericPickable( currentValue, unit );
+                    _nonConforming = new NumericPickable( currentValue, sitemapNumeric );
                     _pickables.add( _nonConforming );
                 }
             }
-            _pickables.add( new NumericPickable( i, unit ) );
+            _pickables.add( new NumericPickable( i, sitemapNumeric ) );
         }
 
         // If at the end of the loop _currentIndex is still not set
@@ -68,7 +66,7 @@ class NumericPickerFactory extends CustomPickerFactory {
         // we add a "non-conforming" element on top
         if( _currentIndex == -1 ) {
             _currentIndex = _pickables.size();
-            _nonConforming = new NumericPickable( currentValue, unit );
+            _nonConforming = new NumericPickable( currentValue, sitemapNumeric );
             _pickables.add( _nonConforming );
         }
     }

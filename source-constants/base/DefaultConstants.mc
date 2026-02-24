@@ -152,7 +152,7 @@ class DefaultConstants {
     // Positive means the label is shifted down, negative means up
     public static const UI_MENU_SETTINGS_TEXT_ITEM_LABEL_OFFSET as Number = 0;
 
-    
+
     /******* CONTROL VIEWS *******/ 
 
     // List of fonts to be used by the picker for the title

@@ -24,7 +24,7 @@ class NumericPickerDelegate extends CustomPickerDelegate {
 
     // The state with which the CustomPicker was entered,
     // in case we need to reset on cancellation
-    private var _previousState as Number;
+    private var _previousState as Float;
 
     // Constructor
     public function initialize( menuItem as NumericMenuItem ) {
@@ -40,7 +40,7 @@ class NumericPickerDelegate extends CustomPickerDelegate {
     public function onAccept( newState as Object ) as Boolean {
         // Logger.debug "NumericPickerDelegate.onAccept" );
         if( _menuItem.getSitemapNumeric().isReleaseOnly() ) {
-            if( ! ( newState instanceof Number ) ) {
+            if( ! ( newState instanceof Float ) ) {
                 throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_STATE_TYPE );
             }
             // Logger.debug "NumericPickerDelegate.onAccept: new state=" + newState.toString() );
@@ -80,7 +80,7 @@ class NumericPickerDelegate extends CustomPickerDelegate {
     }
     private function updateState( state as Object ) as Void {
         // Logger.debug "NumericPickerDelegate.updateState=" + state );
-        if( ! ( state instanceof Number ) ) {
+        if( ! ( state instanceof Float ) ) {
             throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_STATE_TYPE );
         }
         // Update only if releaseOnly is false
