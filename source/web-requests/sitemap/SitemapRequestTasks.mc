@@ -216,7 +216,7 @@ class RefreshUiTask extends BaseSitemapProcessorTask {
         if( ! SettingsMenuHandler.isShowingSettings() ) {
             // If the structure is not valid anymore or an error view
             // view is shown, we reset the view to the homepage
-            var currentView = ViewHandler.getCurrentViewSafe()[0];
+            var currentView = ViewHandler.getCurrentView()[0];
             if(    ( ! homepage.structureRemainsValid() 
                      && ! ( currentView instanceof HomepageMenu ) )
                 || ( ! HomepageMenu.isSitemapShowing() 

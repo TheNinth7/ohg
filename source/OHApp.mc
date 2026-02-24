@@ -61,16 +61,27 @@ class OHApp extends Application.AppBase {
             // other cases returns an errorView for display.
             var errorView = ExceptionHandler.consumeStartupException( hasMenu );
             
+            var view;
+            var delegate = null;
+
             if( errorView != null ) {
                 // If there is an error view, display it
-                return [errorView];
-            } else if( hasMenu ) {
+                view = errorView;
+            } else if( menu != null ) {
                 // If there is HomepageMenu, display it
-                return [ menu as View, HomepageMenuDelegate.get() ];
+                view = menu;
+                delegate = HomepageMenuDelegate.get();
             } else {
                 // Otherwise show the loading view
-                return [ new LoadingView() ];
+                view = new LoadingView();
             }
+
+            ViewHandler.registerInitialView( view, delegate );
+
+            return delegate != null
+                   ? [view, delegate]
+                   : [view];
+
         } catch( ex ) {
             // Any exceptions occuring in this function are 
             // also displayed as error view

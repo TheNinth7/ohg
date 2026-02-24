@@ -2,83 +2,70 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 /*
- * The `ViewHandler` must be used throughout the app for switching views 
- * or pushing/popping them from the stack.
+ * The `ViewHandler` must be used throughout the app for switching views
+ * or pushing and popping them from the stack.
  *
- * Its main purpose is to track how many views are currently on the stack, 
- * so that in case of an update or error, all views can be popped and 
- * replaced with the homepage or an error view.
+ * It maintains its own view stack, independent of the system API stack.
+ * This allows the app to track how many views are currently active so that,
+ * in case of an update or an error, all views can be removed and replaced
+ * with the home view or an error view.
+ *
+ * The initial implementation only tracked the number of active views.
+ * Due to bugs in the WatchUi.getCurrentView() implementation on some
+ * newer Garmin devices, this was replaced with a fully managed
+ * parallel view stack.
+ *
+ * For details about the underlying issue, see:
+ * https://github.com/openhab/openhab-garmin/issues/215
  */
-class ViewHandler {
-    // Counter for views above the base view.
-    // 0 = only the base view is on the stack.
-    // 1 = two views are on the stack, and so on.
-    private static var _stackSize as Number = 0;
+ class ViewHandler {
+    
+    // Tuple used to store each view/delegate layer in the view stack
+    typedef ViewInputPair as [ WatchUi.Views?, WatchUi.InputDelegates? ];
 
-    // Push/pop a view on/from the stack
-    public static function pushView( view as Views, delegate as InputDelegates or Null, transition as SlideType ) as Void {
-        WatchUi.pushView( view, delegate, transition );
-        _stackSize++;
-        // Logger.debug( "ViewHandler.pushView: new stack size=" + _stackSize );
+    // The view stack
+    private static var _viewStack as Array<ViewInputPair> = [];
+
+    // Returns the current view and delegate, replacing WatchUi.getCurrentView().
+    // Replacing that API was the primary reason for introducing our own view stack. 
+    // See the class-level comment above for details.
+    public static function getCurrentView() as [ WatchUi.Views?, WatchUi.InputDelegates? ] {
+        return _viewStack.size() > 0 
+               ? _viewStack[_viewStack.size()-1]
+               : [null, null];
     }
+    
+    // Pops a view from the stack, replacing WatchUi.popView().
     public static function popView( transition as SlideType ) as Void {
-        // Logger.debug( "ViewHandler.popView: previous stack size=" + _stackSize );
-        if( _stackSize < 1 ) {
-            throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_POP_VIEW_ON_EMPTY_STACK );
-        }
-        _stackSize--;
         WatchUi.popView( transition );
-        // Logger.debug( "ViewHandler.popView: new stack size=" + _stackSize );
+        _viewStack = _viewStack.slice( 0, _viewStack.size() - 1 );
+        Logger.debug( "ViewHandler.popView: new stack size=" + _viewStack.size() );
     }
 
-    // Removes all views from the stack except the base view,
-    // and replaces the base view with the provided view.
-    public static function popToBottomAndSwitch( view as Views, delegate as InputDelegates or Null ) as Void {
-        // Logger.debug( "ViewHandler.popToBottomAndSwitch: previous stack size=" + _stackSize );
-        while( _stackSize > 0 ) {
-            WatchUi.popView( WatchUi.SLIDE_IMMEDIATE );
-            _stackSize--;
+    // Pushes a view onto the stack, replacing WatchUi.pushView().
+    public static function pushView( view as Views, delegate as InputDelegates?, transition as SlideType ) as Void {
+        WatchUi.pushView( view, delegate, transition );
+        _viewStack.add( [ view, delegate ] );
+        Logger.debug( "ViewHandler.pushView: new stack size=" + _viewStack.size() );
+    }
+
+    // Removes all views from the stack except the base view
+    // and replaces the base view with the specified view.
+    public static function popToBottomAndSwitch( view as Views, delegate as InputDelegates? ) as Void {
+        Logger.debug( "ViewHandler.popToBottomAndSwitch: previous stack size=" + _viewStack.size() );
+        while( _viewStack.size() > 1 ) {
+            popView( WatchUi.SLIDE_IMMEDIATE );
         }
-        // Logger.debug( "ViewHandler.popToBottomAndSwitch: new stack size=" + _stackSize );
+        Logger.debug( "ViewHandler.popToBottomAndSwitch: new stack size=" + _viewStack.size() );
         WatchUi.switchToView( view, delegate, WatchUi.SLIDE_BLINK );
     }
 
-    // In the ERA viewer, we encountered several crashes caused by Invalid Value or
-    // Unexpected Type errors, apparently originating from getCurrentView() calls.
-    // To address this, we introduced a safe accessor that validates the expected
-    // types and throws specific, catchable errors when they do not match the
-    // declared contract.
-    public static function getCurrentViewSafe() as [ WatchUi.View or Null, WatchUi.InputDelegates or Null ] {
-        var cwArray = WatchUi.getCurrentView() as Object;
-
-        if( ! (cwArray instanceof Array ) ) {
-            throw new GeneralException( "cwArray not an Array" );
-        } 
-        if( cwArray.size() != 2 ) {
-            throw new GeneralException( "cwArray.size = " + cwArray.size() );
-        }
-        
-        var view = cwArray[0];
-        if( view != null && ! ( view instanceof WatchUi.View ) ) {
-            throw new GeneralException( "cwArray[0] not a View" );
-        } 
-
-        var delegate = cwArray[1];
-        if( delegate != null && 
-                ! ( delegate instanceof WatchUi.BehaviorDelegate
-                    || delegate instanceof WatchUi.InputDelegate
-                    || delegate instanceof WatchUi.ConfirmationDelegate
-                    || delegate instanceof WatchUi.MenuInputDelegate
-                    // || delegate instanceof WatchUi.NumberPickerDelegate
-                    || delegate instanceof WatchUi.PickerDelegate
-                    || delegate instanceof WatchUi.TextPickerDelegate
-                    || delegate instanceof WatchUi.WatchFaceDelegate
-                    || delegate instanceof WatchUi.Menu2InputDelegate
-                    || delegate instanceof WatchUi.ViewLoopDelegate ) 
-        ) {
-            throw new GeneralException( "cwArray[1] not an input delegate" );
-        }
-
-        return cwArray as [ WatchUi.View or Null, WatchUi.InputDelegates or Null ];
+    // This function must be called in OHApp.getInitialView() to store the initial view.
+    // The initial view only needs to be stored, since the API automatically
+    // pushes it onto the stack when it is returned from getInitialView().
+    public static function registerInitialView( view as Views, delegate as InputDelegates? ) as Void {
+        _viewStack.add( [ view, delegate ] );
+        Logger.debug( "ViewHandler.registerInitialView: new stack size=" + _viewStack.size() );
     }
+
 }

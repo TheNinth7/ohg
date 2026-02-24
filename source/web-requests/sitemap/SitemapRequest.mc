@@ -170,7 +170,7 @@ class SitemapRequest extends BaseRequest {
         // - and there is no pending request
         if( ( _stopCount <= 0 || singleRequest ) && ! _hasPendingRequest ) {
             _requestCount++;
-            Logger.debug( "SitemapRequest.makeRequestInternal (#" + _requestCount + ")" );
+            // Logger.debug( "SitemapRequest.makeRequestInternal (#" + _requestCount + ")" );
             // Logger.debugMemory( null );
             
             // _hasPendingRequest has to be set to true BEFORE makeWebRequest
@@ -222,7 +222,7 @@ class SitemapRequest extends BaseRequest {
     ) as Void {
         _hasPendingRequest = false;
         _responseCount++;
-        Logger.debug( "SitemapRequest.onReceive: start (#" + _responseCount + ")" );
+        // Logger.debug( "SitemapRequest.onReceive: start (#" + _responseCount + ")" );
 
         // When stop() is called, and there is a pending request, then
         // _ignoreNextResponse is set true. onReceive() acts on this,

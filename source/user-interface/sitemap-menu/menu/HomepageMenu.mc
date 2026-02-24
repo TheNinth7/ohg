@@ -106,7 +106,7 @@ class HomepageMenu extends BasePageMenu {
     // - Any `CustomMenu` implementations, exception the `SettingsMenu`
     // - Any `CustomView`
     public static function isSitemapShowing() as Boolean {
-        var currentView = ViewHandler.getCurrentViewSafe()[0];
+        var currentView = ViewHandler.getCurrentView()[0];
         return  ( currentView instanceof CustomMenu && ! ( currentView instanceof SettingsMenu ) )
                 || currentView instanceof CustomView;
     }

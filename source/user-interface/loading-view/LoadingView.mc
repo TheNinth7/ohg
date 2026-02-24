@@ -17,7 +17,7 @@ class LoadingView extends WatchUi.View {
 
     // True if the loading view is currently showing
     public static function isShowing() as Boolean {
-        return ViewHandler.getCurrentViewSafe()[0] instanceof LoadingView;
+        return ViewHandler.getCurrentView()[0] instanceof LoadingView;
     }
 
     // Called when the view is shown.
