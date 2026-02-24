@@ -76,6 +76,9 @@ class OHApp extends Application.AppBase {
                 view = new LoadingView();
             }
 
+            // For the reasons outlined in the ViewHandler inline documentation,
+            // we maintain our own view stack and therefore need to
+            // register the initial view.
             ViewHandler.registerInitialView( view, delegate );
 
             return delegate != null
