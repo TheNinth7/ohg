@@ -54,7 +54,7 @@ class LoadingView extends WatchUi.View {
                 if( syncEx == null ) {
                     // If the sync was successful, we switch to the HomepageMenu
                     if( HomepageMenu.exists() ) {
-                        WatchUi.switchToView( 
+                        ViewHandler.switchToView( 
                             HomepageMenu.get(), 
                             HomepageMenuDelegate.get(), 
                             WatchUi.SLIDE_BLINK 

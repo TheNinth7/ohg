@@ -139,7 +139,7 @@ class SwitchToHomepageTask extends BaseSitemapProcessorTask {
         if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
         } else {
-            WatchUi.switchToView( 
+            ViewHandler.switchToView( 
                 _homepageMenu, 
                 HomepageMenuDelegate.get(), 
                 WatchUi.SLIDE_BLINK 
@@ -223,7 +223,7 @@ class RefreshUiTask extends BaseSitemapProcessorTask {
                      && ! SettingsMenuHandler.isShowingSettings() )
             ) {
                 // Logger.debug( "SitemapRequest.onReceive: resetting to homepage" );
-                ViewHandler.popToBottomAndSwitch( homepage, HomepageMenuDelegate.get() );
+                ViewHandler.resetTo( homepage, HomepageMenuDelegate.get() );
             } else {
                 // If the structure is still valid and no error is shown,
                 // then we update the screen, showing the changes in the

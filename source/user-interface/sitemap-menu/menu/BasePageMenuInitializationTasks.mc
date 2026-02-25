@@ -91,7 +91,7 @@ class SwitchViewIfVisibleTask extends BaseSitemapProcessorTask {
             // Logger.debug( "SwitchViewIfVisibleTask.invoke: switching the view!" );
             
             // ... we do the switch to itself
-            WatchUi.switchToView(
+            ViewHandler.switchToView(
                 currentView,
                 ViewHandler.getCurrentView()[1],
                 WatchUi.SLIDE_IMMEDIATE

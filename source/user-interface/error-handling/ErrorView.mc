@@ -62,7 +62,7 @@ import Toybox.System;
         var errorView = createOrUpdate( ex );
         if( ! alreadyShowsErrorView ) {
             // Logger.debug( "ErrorView.showOrUpdate: switching to error view" );
-            ViewHandler.popToBottomAndSwitch( errorView, null );
+            ViewHandler.resetTo( errorView, null );
         }
     }
 
