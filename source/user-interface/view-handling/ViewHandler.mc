@@ -49,6 +49,14 @@ import Toybox.WatchUi;
         Logger.debug( "ViewHandler.pushView: new stack size=" + _viewStack.size() );
     }
 
+    // This function must be called in OHApp.getInitialView() to store the initial view.
+    // The initial view only needs to be stored, since the API automatically
+    // pushes it onto the stack when it is returned from getInitialView().
+    public static function registerInitialView( view as Views, delegate as InputDelegates? ) as Void {
+        _viewStack.add( [ view, delegate ] );
+        Logger.debug( "ViewHandler.registerInitialView: new stack size=" + _viewStack.size() );
+    }
+
     // Removes all views from the stack except the base view
     // and replaces the base view with the specified view.
     public static function resetTo( view as Views, delegate as InputDelegates? ) as Void {
@@ -58,14 +66,6 @@ import Toybox.WatchUi;
         }
         Logger.debug( "ViewHandler.resetTo: new stack size=" + _viewStack.size() );
         switchToView( view, delegate, WatchUi.SLIDE_BLINK );
-    }
-
-    // This function must be called in OHApp.getInitialView() to store the initial view.
-    // The initial view only needs to be stored, since the API automatically
-    // pushes it onto the stack when it is returned from getInitialView().
-    public static function registerInitialView( view as Views, delegate as InputDelegates? ) as Void {
-        _viewStack.add( [ view, delegate ] );
-        Logger.debug( "ViewHandler.registerInitialView: new stack size=" + _viewStack.size() );
     }
 
     // Switches the view on the top of the view stack, replaces ViewHandler.switchToView()
