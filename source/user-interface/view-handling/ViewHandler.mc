@@ -71,7 +71,7 @@ import Toybox.WatchUi;
     // Switches the view on the top of the view stack, replaces ViewHandler.switchToView()
     public static function switchToView( view as Views, delegate as InputDelegates?, transition as SlideType ) as Void {
         Logger.debug( "ViewHandler.switchToView: stack size=" + _viewStack.size() );
-        ViewHandler.switchToView( view, delegate, transition );
+        WatchUi.switchToView( view, delegate, transition );
         _viewStack[_viewStack.size()-1] = [view, delegate];
     }
 
