@@ -11,6 +11,12 @@ import Toybox.Graphics;
  */
 class OnOffStateBitmaps {
     
+    // Height and width of the switch is defined relative to the menu item height
+    // Note: The sizing must be controlled via public member variables,
+    // as only those can be overridden by the SmallOnOffStateBitmaps class.
+    public var HEIGHT as Number = Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT;
+    public var WIDTH as Number = Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH;
+
     // The circles are again defines as a factor to the width (Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH)
     private const OUTER_CIRCLE_FACTOR = 0.8;
     private const INNER_CIRCLE_FACTOR = 0.75;
@@ -46,9 +52,11 @@ class OnOffStateBitmaps {
         switchColor as ColorType
     ) as BufferedBitmapType {
         
+        // Note: The sizing must be controlled via WIDTH and HEIGHT,
+        // as those are overridden by the SmallOnOffStateBitmaps class.
         var bufferedBitmap = BufferedBitmapFactory.createBufferedBitmap( {
-            :width => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_WIDTH,
-            :height => Constants.UI_MENU_ITEM_TOGGLE_SWITCH_HEIGHT,
+            :width => WIDTH,
+            :height => HEIGHT,
         } );
 
         var dc = bufferedBitmap.getDc();
