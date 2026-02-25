@@ -40,7 +40,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     */
     (:exclForTouch)
     public function onNextPage() as Boolean {
-        Logger.debug( "HomepageMenuDelegate.onNextPage" );
+        // Logger.debug( "HomepageMenuDelegate.onNextPage" );
         try {
             SettingsMenuHandler.showSettings( WatchUi.SLIDE_UP );
         } catch( ex ) {
@@ -50,7 +50,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     }
     (:exclForTouch)
     public function onPreviousPage() as Boolean {
-        Logger.debug( "HomepageMenuDelegate.onPreviousPage" );
+        // Logger.debug( "HomepageMenuDelegate.onPreviousPage" );
         try {
             SettingsMenuHandler.showSettings( WatchUi.SLIDE_DOWN );
         } catch( ex ) {
@@ -62,7 +62,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     // For those, tapping the footer should behave the same as scrolling down.
     (:exclForTouch)
     public function onFooter() as Void {
-        Logger.debug( "HomepageMenuDelegate.onNextPage" );
+        // Logger.debug( "HomepageMenuDelegate.onNextPage" );
         onNextPage();
     }
 
@@ -76,7 +76,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     */
     (:exclForCiq510Plus :exclForTouch)
     public function onWrap( key as Key ) as Boolean {
-        Logger.debug( "HomepageMenuDelegate.onWrap" );
+        // Logger.debug( "HomepageMenuDelegate.onWrap" );
         try {
             if( key == KEY_DOWN ) {
                 onNextPage();

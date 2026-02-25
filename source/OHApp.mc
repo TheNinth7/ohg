@@ -111,23 +111,15 @@ class OHApp extends Application.AppBase {
     // to request a sitemap or send a command via WiFi.
     (:typecheck(disableGlanceCheck))
     function getSyncDelegate() as $.Toybox.Communications.SyncDelegate or Null {
-        // Logger.debug( "OHApp.getSyncDelegate" );
+        Logger.debug( "OHApp.getSyncDelegate" );
 
-        var csd = CommandSyncDelegate.get();
+        var syncDelegate = BaseSyncDelegate.getCurrentSyncDelegate();
         
-        // Note: Although the function signature allows null, passing null causes a crash
-        // in the API. Therefore, if the command request delegate does not require a sync,
-        // the sitemap delegate is returned regardless of its current state.
-        //
-        // After a sync, the API appears to request a delegate again without explicitly
-        // requesting another sync. In this case, the sitemap delegate is returned, and its
-        // isSyncNeeded() method returns false, indicating that no further sync should be
-        // initiated.
-        if( csd.isSyncNeeded() ) {
-            // Logger.debug( "OHApp.getSyncDelegate: returning command sync delegate" );
-            return csd;
+        if( syncDelegate != null ) {
+            Logger.debug( "OHApp.getSyncDelegate: returning current sync delegate" );
+            return syncDelegate;
         } else {
-            // Logger.debug( "OHApp.getSyncDelegate: returning sitemap sync delegate" );
+            Logger.debug( "OHApp.getSyncDelegate: no current sync delegate, defaulting to sitemap sync delegate" );
             return SitemapSyncDelegate.get();
         }
     }
@@ -148,7 +140,7 @@ class OHApp extends Application.AppBase {
     // Switching into night mode may change the screen colors
     (:typecheck(disableGlanceCheck))
     public function onNightModeChanged() as Void {
-        Logger.debug( "OHApp.onNightModeChanged" );
+        // Logger.debug( "OHApp.onNightModeChanged" );
         
         // The ThemeManager exists only in the foreground scope.
         // In the glance scope, theme handling is very simple and

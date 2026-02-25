@@ -39,14 +39,14 @@ import Toybox.WatchUi;
     public static function popView( transition as SlideType ) as Void {
         WatchUi.popView( transition );
         _viewStack = _viewStack.slice( 0, _viewStack.size() - 1 );
-        Logger.debug( "ViewHandler.popView: new stack size=" + _viewStack.size() );
+        // Logger.debug( "ViewHandler.popView: new stack size=" + _viewStack.size() );
     }
 
     // Pushes a view onto the stack, replacing WatchUi.pushView().
     public static function pushView( view as Views, delegate as InputDelegates?, transition as SlideType ) as Void {
         WatchUi.pushView( view, delegate, transition );
         _viewStack.add( [ view, delegate ] );
-        Logger.debug( "ViewHandler.pushView: new stack size=" + _viewStack.size() );
+        // Logger.debug( "ViewHandler.pushView: new stack size=" + _viewStack.size() );
     }
 
     // This function must be called in OHApp.getInitialView() to store the initial view.
@@ -54,23 +54,23 @@ import Toybox.WatchUi;
     // pushes it onto the stack when it is returned from getInitialView().
     public static function registerInitialView( view as Views, delegate as InputDelegates? ) as Void {
         _viewStack.add( [ view, delegate ] );
-        Logger.debug( "ViewHandler.registerInitialView: new stack size=" + _viewStack.size() );
+        // Logger.debug( "ViewHandler.registerInitialView: new stack size=" + _viewStack.size() );
     }
 
     // Removes all views from the stack except the base view
     // and replaces the base view with the specified view.
     public static function resetTo( view as Views, delegate as InputDelegates? ) as Void {
-        Logger.debug( "ViewHandler.resetTo: previous stack size=" + _viewStack.size() );
+        // Logger.debug( "ViewHandler.resetTo: previous stack size=" + _viewStack.size() );
         while( _viewStack.size() > 1 ) {
             popView( WatchUi.SLIDE_IMMEDIATE );
         }
-        Logger.debug( "ViewHandler.resetTo: new stack size=" + _viewStack.size() );
+        // Logger.debug( "ViewHandler.resetTo: new stack size=" + _viewStack.size() );
         switchToView( view, delegate, WatchUi.SLIDE_BLINK );
     }
 
     // Switches the view on the top of the view stack, replaces ViewHandler.switchToView()
     public static function switchToView( view as Views, delegate as InputDelegates?, transition as SlideType ) as Void {
-        Logger.debug( "ViewHandler.switchToView: stack size=" + _viewStack.size() );
+        // Logger.debug( "ViewHandler.switchToView: stack size=" + _viewStack.size() );
         WatchUi.switchToView( view, delegate, transition );
         _viewStack[_viewStack.size()-1] = [view, delegate];
     }

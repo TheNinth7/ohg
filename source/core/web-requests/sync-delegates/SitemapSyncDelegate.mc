@@ -34,9 +34,9 @@ class SitemapSyncDelegate extends BaseSyncDelegate {
     // Must not be called from outside. The method is public only due to
     // a Monkey C limitation that prevents overriding protected or
     // private methods.
-    public function beforeSyncEnds() as Void {
-        // Logger.debug( "SitemapSyncDelegate: beforeSyncEnds" );
-        BaseSyncDelegate.beforeSyncEnds();
+    public function onSyncFinished() as Void {
+        // Logger.debug( "SitemapSyncDelegate: onSyncFinished" );
+        BaseSyncDelegate.onSyncFinished();
         SitemapRequest.resetSyncInstance();
     }
 

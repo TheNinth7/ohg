@@ -33,8 +33,8 @@ class AppSettings {
     // The constructor stores all settings in the following
     // variables. They need to be public, because otherwise
     // the static accessors cannot access them
-    public var url as String = "http://net-nas-1:8080/";
-    public var sitemap as String = "garmin_test";
+    public var url as String = "http://net-nas-3:8080/";
+    public var sitemap as String = "garmin_live";
     public var vSupportsRESTAPI as Boolean = true;
     public var vSuppressEmtpyResponses as Boolean = false;
     public var vSupportsWebHook as Boolean = false;

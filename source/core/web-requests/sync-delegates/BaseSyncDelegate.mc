@@ -14,6 +14,14 @@ import Toybox.WatchUi;
  *
  * - startSync()
  *   Called by the app to request entering sync mode.
+ *   Stores the delegate that initiated the sync in the static
+ *   member _currentSyncDelegate.
+ *
+ * - getCurrentSyncDelegate()
+ *   The CIQ API calls OHApp.getSyncDelegate() to retrieve the
+ *   active sync delegate. OHApp.getSyncDelegate() in turn
+ *   uses this function, which returns the value stored in
+ *   _currentSyncDelegate.
  *
  * - onStartSync()
  *   Invoked by the CIQ API once a Wi-Fi connection has been established.
@@ -32,7 +40,26 @@ import Toybox.WatchUi;
  *   Exits sync mode and displays an error message to the user.
  *
  * - onStopSync()
- *   Called by the CIQ API if the user interrupts the sync.
+ *   Invoked by the CIQ API.
+ *   The behavior of the API regarding onStopSync differs across devices and 
+ *   the simulator. According to the documentation, it should only be invoked 
+ *   when the user cancels an active sync, which is also how the simulator behaves.
+ *
+ *   However, on an Epix Pro Gen 2, onStopSync is additionally called when
+ *   Communication.notifySyncComplete() is invoked with a non-null parameter
+ *   (i.e. an error message). On an Edge 850, it is even called after a
+ *   successful sync, once the user has confirmed the success screen.
+ *
+ *   To handle these inconsistencies, we invoke onSyncFinished() from
+ *   onException(), finishSync(), and onStopSync(). The implementation of
+ *   onSyncFinished() is designed to tolerate multiple invocations and
+ *   guarantees that its actions are executed exactly once.
+ * 
+ * - onSyncFinished()
+ *   Internal helper that performs the finalization steps of the sync.
+ *   It may be invoked multiple times and uses the _hasSyncFinished flag
+ *   to ensure that all associated actions, especially task scheduling,
+ *   are executed exactly once. 
  *
  * See the following link for API documentation:
  * https://forums.garmin.com/developer/connect-iq/b/news-announcements/posts/connect-iq-3-1-connects-you-to-the-world
@@ -52,6 +79,10 @@ class BaseSyncDelegate extends SyncDelegate {
     // Wi-Fi availablity. See consumeWifiCheckRequest() for details.
     private static var _wifiCheckRequest as Boolean = false;
 
+    // Stores the instance of the sync delegate which was used last
+    // See getCurrentSyncDelegate() for details.
+    private static var _currentSyncDelegate as BaseSyncDelegate?;
+
     // Returns true if any sync delegate requests confirmation of Wi-Fi availability.
     //
     // If Bluetooth is not connected, Wi-Fi availability is checked only once.
@@ -68,44 +99,56 @@ class BaseSyncDelegate extends SyncDelegate {
     //
     // Therefore, as a precaution, we always request a Wi-Fi check whenever
     // onStopSync() is invoked.
+    //
+    // Note: On the physical Edge 850 (and possibly other devices),
+    // onStopSync() is invoked even after a successful sync.
+    // As a result, the Wi-Fi check is performed after every sync,
+    // regardless of whether it succeeded, failed, or was cancelled.
     public static function consumeWifiCheckRequest() as Boolean {
         var wifiCheckRequest = _wifiCheckRequest;
         _wifiCheckRequest = false;
         return wifiCheckRequest;
     }
 
+    // Returns the currently active sync delegate.
+    // Used by OHApp.getSyncDelegate().
+    //
+    // _currentSyncDelegate is set by startSync() and remains valid until the
+    // next sync is triggered.
+    //
+    // There is no reliable point at which we can assume that the Connect IQ
+    // runtime no longer needs the sync delegate, so it cannot be cleared
+    // immediately after sync completion.
+    //
+    // Background: The CIQ API calls OHApp.getSyncDelegate() multiple times
+    // during a sync. Even after Communication.notifySyncComplete() has been
+    // invoked, the runtime may still call OHApp.getSyncDelegate() in order to
+    // trigger onStopSync(). This behavior occurs only on some devices
+    // (see lifecycle notes at the beginning of this file).
+    //
+    // Because of this, there is no safe moment to clear _currentSyncDelegate
+    // after a sync has finished. Therefore, it remains in place until the
+    // next sync starts.
+    public static function getCurrentSyncDelegate() as BaseSyncDelegate? {
+        return _currentSyncDelegate;
+    }
+
+
     /******* INSTANCE *******/ 
+
+    // Set to true once a sync has concluded
+    // See onSyncFinished() for details
+    private var _hasSyncFinished as Boolean = false;
 
     // Set to true while the sync is in progress
     private var _isSyncInProgress as Boolean = false;
 
-    // Set to true if a sync was requested, indicating
-    // to OHApp.getSyncDelegate which of the two delegates
-    // requires a sync
-    private var _isSyncNeeded as Boolean = false;
-    
     // Holds the result of the last sync
     private var _lastSyncState as WifiSyncResult = RESET_SYNC_STATE;
 
     // Constructor
     public function initialize() {
         SyncDelegate.initialize();
-    }
-
-    // Helper function used by all code paths that stop the sync.
-    // Resets internal state and schedules the task that restarts the
-    // sitemap request.
-    //
-    // Note: The sitemap request must not be started directly from the
-    // sync delegate. At that point it may still run on the Wi-Fi
-    // connection, which is likely to be closed before the request
-    // completes.
-    public function beforeSyncEnds() as Void {
-        // Logger.debug( "BaseSyncDelegate: beforeSyncEnds" );
-        _isSyncNeeded = false;
-        _isSyncInProgress = false;
-        _lastSyncState[0] = true;
-        AsyncTaskQueue.get().add( new PostSyncTask() );
     }
 
     // Returns the result of the last sync and resets the stored result
@@ -120,10 +163,10 @@ class BaseSyncDelegate extends SyncDelegate {
     // Exits sync mode. Subclasses must call this method when their sync
     // operation has completed successfully.
     public function finishSync() as Void {
-        // Logger.debug( "BaseSyncDelegate: finishSync" );
-        beforeSyncEnds();
+        Logger.debug( "BaseSyncDelegate.finishSync" );
+        onSyncFinished();
         Communications.notifySyncComplete( null );
-        // Logger.debug( "BaseSyncDelegate: finishSync end" );
+        // Logger.debug( "BaseSyncDelegate.finishSync end" );
     }
 
     // Can be used by other classes to adjust their behavior depending on
@@ -133,25 +176,25 @@ class BaseSyncDelegate extends SyncDelegate {
     // ATTENTION: See the note on SafeSitemapSyncDelegate in this class description
     // before using this function.
     public function isSyncInProgress() as Boolean {
-        // Logger.debug( "BaseSyncDelegate: isSyncInProgress=" + _isSyncInProgress );
+        // Logger.debug( "BaseSyncDelegate.isSyncInProgress=" + _isSyncInProgress );
         return _isSyncInProgress;
     }
 
     // Called by the API to determine whether a sync is required.
-    // Must return true if a sync should be initiated.
+    // In our case, a sync is only initiated when it is actually needed,
+    // so there is no scenario where it should be skipped.
+    // Therefore, we always return true.
     public function isSyncNeeded() as Boolean {
-        // Logger.debug( "BaseSyncDelegate: isSyncNeeded=" + _isSyncNeeded );
-        return _isSyncNeeded;
+        Logger.debug( "BaseSyncDelegate.isSyncNeeded" );
+        return true;
     }
 
     // Subclasses must call this method when their sync operation fails.
     // It exits sync mode and displays an error message to the user.
     public function onException( ex as Exception ) as Void {
-        // Logger.debug( "BaseSyncDelegate: onException" );
+        Logger.debug( "BaseSyncDelegate.onException" );
         
-        // Not needed here, since notifySyncComplete with an error message
-        // also triggers onStopSync(), which in turn calls beforeSyncEnds().
-        // beforeSyncEnds();
+        onSyncFinished();
         
         _lastSyncState[1] = ex;
 
@@ -163,7 +206,7 @@ class BaseSyncDelegate extends SyncDelegate {
             : ex.getErrorMessage() 
         );
 
-        // Logger.debug( "BaseSyncDelegate: onException end" );
+        // Logger.debug( "BaseSyncDelegate.onException end" );
     }
 
     // Called by the API to start the sync.
@@ -172,7 +215,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // is handled here, so performSync implementation may throw 
     // exceptions and expect them to be handled.
     public function onStartSync() as Void {
-        // Logger.debug( "BaseSyncDelegate: onStartSync" );
+        Logger.debug( "BaseSyncDelegate.onStartSync" );
         try {
             // Logger.debugConnectionInfo();
 
@@ -186,7 +229,7 @@ class BaseSyncDelegate extends SyncDelegate {
         } catch( ex ) {
             onException( ex );
         }
-        // Logger.debug( "BaseSyncDelegate: onStartSync end" );
+        // Logger.debug( "BaseSyncDelegate.onStartSync end" );
     }
 
     // Called by the API when the user interrupts the sync
@@ -194,15 +237,45 @@ class BaseSyncDelegate extends SyncDelegate {
     // with an error message.
     // Cancels all pending requests and exits sync mode.
     public function onStopSync() as Void {
-        // Logger.debug( "BaseSyncDelegate: onStopSync" );
+        Logger.debug( "BaseSyncDelegate.onStopSync" );
         
         // See consumeWifiCheckRequest() for details
         _wifiCheckRequest = true;
         
         BaseRequest.cancelAllRequests();
-        beforeSyncEnds();
+        onSyncFinished();
         
-        // Logger.debug( "BaseSyncDelegate: onStopSync end" );
+        // Logger.debug( "BaseSyncDelegate.onStopSync end" );
+    }
+
+    // Function used by all code paths that stop the sync.
+    // Resets internal state and schedules the task that restarts the
+    // sitemap request.
+    // 
+    // This function may be invoked multiple times (see the lifecycle and
+    // onStopSync notes at the top of this file). The _hasSyncFinished flag
+    // ensures that all associated actions, especially task scheduling,
+    // are executed exactly once.
+    //
+    // Note: The sitemap request must not be started directly from the
+    // sync delegate. At that point it may still run on the Wi-Fi
+    // connection, which is likely to be closed before the request
+    // completes.
+    public function onSyncFinished() as Void {
+        Logger.debug( "BaseSyncDelegate.onSyncFinished: _hasSyncFinished=" + _hasSyncFinished );
+        if( ! _hasSyncFinished ) {
+            Logger.debug( "BaseSyncDelegate.onSyncFinished: cleaning up!" );
+ 
+            _isSyncInProgress = false;
+            _lastSyncState[0] = true;
+ 
+            AsyncTaskQueue.get().add( new PostSyncTask() );
+ 
+            _hasSyncFinished = true;
+            Logger.debug( "BaseSyncDelegate.onSyncFinished: now _hasSyncFinished=" + _hasSyncFinished );
+        } else {
+            Logger.debug( "BaseSyncDelegate.onSyncFinished: was called already, doing nothing!" );
+        }
     }
 
     // To be implemented by subclasses to perform the actual sync logic.
@@ -216,11 +289,14 @@ class BaseSyncDelegate extends SyncDelegate {
     // Marks this instance as needing a sync, stops the sitemap request timer,
     // and requests sync mode from the CIQ API.
     public function startSync( msg as String ) as Void {
-        // Logger.debug( "BaseSyncDelegate: startSync" );
+        Logger.debug( "BaseSyncDelegate.startSync" );
         try {
             // Logger.debugConnectionInfo();
-            _isSyncNeeded = true;
+            
+            _hasSyncFinished = false;
+            _currentSyncDelegate = self;
             SitemapRequest.get().stop();
+
             // Newer API versions support displaying a custom message in the sync view
             if( Communications has :startSync2 ) {
                 Communications.startSync2( { :message => msg } );
@@ -228,7 +304,8 @@ class BaseSyncDelegate extends SyncDelegate {
                 Communications.startSync();
             }
         } catch( ex ) {
-            _isSyncNeeded = false;
+            _hasSyncFinished = true;
+            Logger.debug( "BaseSyncDelegate.startSync: exception, restarting sitemap request" );
             SitemapRequest.get().start();
             throw ex;
         }

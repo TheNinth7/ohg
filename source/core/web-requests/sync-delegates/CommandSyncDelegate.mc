@@ -34,6 +34,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     
     // Constructor
     private function initialize() {
+        Logger.debug( "CommandSyncDelegate.initialize" );
         BaseSyncDelegate.initialize();
     }
 
@@ -41,10 +42,10 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     // Must not be called from outside. The method is public only due to
     // a Monkey C limitation that prevents overriding protected or
     // private methods.
-    public function beforeSyncEnds() as Void {
-        // Logger.debug( "CommandSyncDelegate: beforeSyncEnds" );
+    public function onSyncFinished() as Void {
+        // Logger.debug( "CommandSyncDelegate: onSyncFinished" );
         _cmd = null;
-        BaseSyncDelegate.beforeSyncEnds();
+        BaseSyncDelegate.onSyncFinished();
     }
 
     // Helper function that can be used to access the command,
