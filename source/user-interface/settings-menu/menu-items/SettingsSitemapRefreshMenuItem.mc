@@ -34,11 +34,13 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
 
     // Called by the base class to render the menu item.
     public function onUpdate( dc as Dc ) as Void {
+        var theme = isFocused() ? ThemeManager.focused : ThemeManager.current;
+
         if( ConnectionHandler.get().isWifiConnected() ) {
-            BaseSitemapMenuItem.setLabelColor( ThemeManager.current.textColor );
+            BaseSitemapMenuItem.setLabelColor( theme.textColor );
             BaseSitemapMenuItem.setActionIcon( ACTION_ICON_COMMAND );
         } else {
-            BaseSitemapMenuItem.setLabelColor( ThemeManager.current.stateColor );
+            BaseSitemapMenuItem.setLabelColor( theme.stateColor );
             BaseSitemapMenuItem.setActionIcon( null );
         }
         BaseSitemapMenuItem.onUpdate( dc );
