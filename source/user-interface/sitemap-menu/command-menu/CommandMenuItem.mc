@@ -51,8 +51,6 @@ class CommandMenuItem extends BaseMenuItem {
             :locX => locX,
             :locY => yCenter,
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :color => ThemeManager.current.textColor,
-            :backgroundColor => ThemeManager.current.menuItemBackgroundColor,
             :width => width,
             :height => dcHeight
         } );
@@ -63,6 +61,11 @@ class CommandMenuItem extends BaseMenuItem {
     * This event handler is responsible for rendering the content.
     */
     public function onUpdate( dc as Dc ) as Void {
-        ( _labelTextArea as TextArea ).draw( dc );
+        if( _labelTextArea != null ) {
+            var theme = isFocused() ? ThemeManager.focused : ThemeManager.current;
+            _labelTextArea.setColor( theme.textColor );
+            _labelTextArea.setBackgroundColor( theme.menuItemBackgroundColor );
+            _labelTextArea.draw( dc );
+        }
     }
 }
