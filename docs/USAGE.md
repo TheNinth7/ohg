@@ -620,6 +620,7 @@ The only behavioral difference between the two is the `Slider` widget’s suppor
   - **Without `releaseOnly`:** Values are sent immediately as the slider is moved. Confirming keeps the current value; cancelling reverts to the value before the dialog was opened.
 
 **Notes and Limitations**
+
 - Floating point values are supported with a maximum of four decimal places, for example 1.2345.
 - A maximum of 100 steps is supported, for example:
   - minValue=0, maxValue=100, step=1
