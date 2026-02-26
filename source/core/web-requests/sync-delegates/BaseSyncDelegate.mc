@@ -143,6 +143,9 @@ class BaseSyncDelegate extends SyncDelegate {
     // Set to true while the sync is in progress
     private var _isSyncInProgress as Boolean = false;
 
+    // See isSyncNeeded()
+    private var _isSyncNeeded as Boolean = false;
+
     // Holds the result of the last sync
     private var _lastSyncState as WifiSyncResult = RESET_SYNC_STATE;
 
@@ -181,12 +184,15 @@ class BaseSyncDelegate extends SyncDelegate {
     }
 
     // Called by the API to determine whether a sync is required.
-    // In our case, a sync is only initiated when it is actually needed,
-    // so there is no scenario where it should be skipped.
-    // Therefore, we always return true.
+    // In the simulator, after a sync has completed, the CIQ API
+    // may retrieve the sync delegate again and call isSyncNeeded().
+    // If it returns true, another sync is started immediately.
+    //
+    // To prevent this, we set _isSyncNeeded to true when a sync
+    // starts and reset it to false once the sync has finished.
     public function isSyncNeeded() as Boolean {
-        Logger.debug( "BaseSyncDelegate.isSyncNeeded" );
-        return true;
+        Logger.debug( "BaseSyncDelegate.isSyncNeeded=" + _isSyncNeeded );
+        return _isSyncNeeded;
     }
 
     // Subclasses must call this method when their sync operation fails.
@@ -262,17 +268,22 @@ class BaseSyncDelegate extends SyncDelegate {
     // connection, which is likely to be closed before the request
     // completes.
     public function onSyncFinished() as Void {
-        Logger.debug( "BaseSyncDelegate.onSyncFinished: _hasSyncFinished=" + _hasSyncFinished );
+        Logger.debug( "BaseSyncDelegate.onSyncFinished" );
         if( ! _hasSyncFinished ) {
             Logger.debug( "BaseSyncDelegate.onSyncFinished: cleaning up!" );
  
+            // See isSyncNeeded() for details.
+            _isSyncNeeded = false;
+            
+            // The sync is no longer in progress, and the last sync state
+            // is updated to indicate that a sync has completed.
             _isSyncInProgress = false;
             _lastSyncState[0] = true;
  
             AsyncTaskQueue.get().add( new PostSyncTask() );
  
+            // See the class-level comment on onStopSync() for details.
             _hasSyncFinished = true;
-            Logger.debug( "BaseSyncDelegate.onSyncFinished: now _hasSyncFinished=" + _hasSyncFinished );
         } else {
             Logger.debug( "BaseSyncDelegate.onSyncFinished: was called already, doing nothing!" );
         }
@@ -293,7 +304,6 @@ class BaseSyncDelegate extends SyncDelegate {
         try {
             // Logger.debugConnectionInfo();
             
-            _hasSyncFinished = false;
             _currentSyncDelegate = self;
             SitemapRequest.get().stop();
 
@@ -303,8 +313,12 @@ class BaseSyncDelegate extends SyncDelegate {
             } else {
                 Communications.startSync();
             }
+            
+            // Flags are set at the end so that if the code above throws an
+            // exception, they remain at their previous values.
+            _isSyncNeeded = true;
+            _hasSyncFinished = false;
         } catch( ex ) {
-            _hasSyncFinished = true;
             Logger.debug( "BaseSyncDelegate.startSync: exception, restarting sitemap request" );
             SitemapRequest.get().start();
             throw ex;

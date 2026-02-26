@@ -43,7 +43,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     // a Monkey C limitation that prevents overriding protected or
     // private methods.
     public function onSyncFinished() as Void {
-        // Logger.debug( "CommandSyncDelegate: onSyncFinished" );
+        // Logger.debug( "CommandSyncDelegate.onSyncFinished" );
         _cmd = null;
         BaseSyncDelegate.onSyncFinished();
     }
@@ -54,6 +54,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
         if( _cmd != null ) {
             return _cmd;
         } else {
+            Logger.debug( "CommandSyncDelegate.ensureCommand: command is missing" );
             throw new GeneralException( "CommandSyncDelegate: command is missing" );
         }
     }
@@ -61,7 +62,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     // Provides the item name to the command request
     // Part of the CommandRequestDelegate interface
     public function getItemName() as String {
-        // Logger.debug( "CommandSyncDelegate: getItemName" );
+        Logger.debug( "CommandSyncDelegate.getItemName" );
         return ensureCommand()[0];
     }
 
@@ -79,7 +80,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     // a Monkey C limitation that prevents overriding protected or
     // private methods.
     public function performSync() as Void {
-        // Logger.debug( "CommandSyncDelegate: performSync" );
+        Logger.debug( "CommandSyncDelegate.performSync" );
         
         // Create the command request with self as dummy-item and 
         // true indicating that it should be in sync mode
@@ -95,7 +96,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
 
     // Triggers the sync mode and sends the given command
     public function sendCommand( cmd as WifiSyncCommand ) as Void {
-        // Logger.debug( "CommandSyncDelegate: sendCommand" );
+        // Logger.debug( "CommandSyncDelegate.sendCommand" );
         _cmd = cmd;
         startSync( "Sending command over Wi-Fi ..." );
     }
