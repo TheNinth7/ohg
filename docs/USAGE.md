@@ -150,6 +150,12 @@ Only if no cached sitemap is available at startup, for example after settings ch
   <img src="images/app/12-settings-sitemap-update.png"/>
 </div>
 
+**If you encounter a -402 error:**
+
+On devices with limited memory, the size limit for sitemaps can be lower in Wi-Fi mode than over a BLE connection. In such cases, retrieving the sitemap via Wi-Fi may result in a -402 communication error. 
+
+If this occurs, try updating the sitemap over BLE before reducing the sitemap size.
+
 ##### Sending Commands
 
 Because current item states are not available in Wi-Fi mode, sending commands cannot rely on existing state information. For toggle switches, this means the user must explicitly choose whether the item should be switched on or off via an action menu.
