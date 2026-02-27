@@ -26,11 +26,19 @@ class ThemeManager extends BaseNightModeThemeManager {
     public static var focused as Theme = getFocused();
 
     // Internal function to determine the current focus theme
-    // Used when defining the member above and in onUpdate below
+    // Used when defining the member above and in update() below
     private static function getFocused() as Theme {
-        return NightModeTracker.get().isNightModeEnabled()
-               ? darkFocus
-               : lightFocus;
+        // If the Edge x50 focus indicator workaround is active,
+        // the focused menu item is rendered the same way as other menu items.
+        // Otherwise, the focus theme is applied.
+        // See the Constants class for details about the Edge x50 devices.
+        return Constants.UI_MENU_FOCUS_EDGEX50_WORKAROUND
+               ? NightModeTracker.get().isNightModeEnabled()
+                 ? BaseNightModeThemeManager.dark
+                 : BaseNightModeThemeManager.light
+               : NightModeTracker.get().isNightModeEnabled()
+                    ? darkFocus
+                    : lightFocus;
     }
 
     // Public function to update the current theme

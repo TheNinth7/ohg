@@ -8,6 +8,23 @@ import Toybox.System;
 class Constants extends EdgeDefaultConstants {
     protected function initialize() { EdgeDefaultConstants.initialize(); }
 
+    // If set to true, a vertical strip is rendered on the left side
+    // of the menu item. This serves as a workaround for a firmware bug on the
+    // Edge 550 and 850 that prevents the focus indicator from being rendered properly.
+    //
+    // On these devices, the native focus indicator is a frame drawn on top of the
+    // menu item in the system-defined background color (which cannot be changed
+    // from the CIQ app). The frame adapts to the system’s dark and light display modes.
+    //
+    // The intended behavior is that the CIQ app fills the menu item with a contrasting
+    // color to highlight the focused item. However, CustomMenuItem.isFocused() is
+    // faulty on these devices, so this mechanism does not work as expected.
+    //
+    // See also:
+    // Bug report: https://github.com/openhab/openhab-garmin/issues/267
+    // Workaround implementation: https://github.com/openhab/openhab-garmin/issues/268
+    public static const UI_MENU_FOCUS_EDGEX50_WORKAROUND as Boolean = true;
+
     // Positions of the keys, for drawing input hints
     // Corresponds to CustomView.InputHints enumeration
     // 0=ENTER

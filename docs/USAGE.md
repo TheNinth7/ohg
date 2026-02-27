@@ -825,3 +825,16 @@ If you encounter a **UI:** error code, please report it to the development team,
 | `S:0` or `C:0` | When in [Wi-Fi mode](#wi-fi), this error occurs if a sitemap request or command fails because the server is not reachable, for example due to an incorrect URL in the configuration. |
 | `C:415`   | HTTP response code **415** means _Unsupported Media Type_. This usually occurs when **Native REST API Support** is enabled in the [Configuration](#configuration), but your openHAB instance doesn’t support it. If you're using the backport (see [Sending Commands](#sending-commands) and have recently updated openHAB to a newer version or installed a new binding, you may need to re-install the backport to restore compatibility.                                                       |
 | `S:EMRES` | myopenHAB currently experiences an intermittent issue ([details here](https://github.com/openhab/openhab-cloud/issues/496)) where sitemap requests may return empty responses. When this happens, the app displays a non-fatal `S:EMRES` notification. Typically, the next request succeeds, so the issue doesn't escalate into a fatal error. To avoid seeing these notifications, you can enable the **Suppress empty response errors** option in the [Configuration](#configuration) settings. |
+
+### Edge 550 / 850 Menu Focus Indicator Workaround
+
+On the Edge 550 and 850, a firmware bug prevents the menu focus indicator, which shows the currently selected item, from being rendered correctly.
+
+The nature of the issue also limits the available workarounds. Rendering a thin vertical line on the left side of each non-selected menu item was the only reliable solution. While this indicator is subtle and not highly visible, it becomes usable once the user understands the visual logic.
+
+The following screenshots demonstrate this behavior in day and night mode. The second item, “Fenster,” is selected.
+
+<div class="garmin-screenshot-container">
+  <img src="images/app/13-edgex50-menu-workaround-light.png">
+  <img src="images/app/13-edgex50-menu-workaround-dark.png">
+</div>

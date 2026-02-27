@@ -43,13 +43,22 @@ class BaseMenuItem extends CustomMenuItem {
             dc.setColor( theme.textColor, theme.menuItemBackgroundColor );
             dc.clear();
 
-            if( Constants.UI_MENU_ITEM_SHOW_DIVIDER
-                && Constants.UI_SCREEN_SHAPE == Toybox.System.SCREEN_SHAPE_RECTANGLE 
-            ) {
+            // Draw the menu item divider
+            if( Constants.UI_MENU_ITEM_SHOW_DIVIDER ) {
                 dc.setPenWidth( 2 );
                 var lineY = dc.getHeight() - 1;
                 dc.setColor( ThemeManager.current.menuItemDividerColor, ThemeManager.current.menuItemBackgroundColor );
                 dc.drawLine( 0, lineY, dc.getWidth(), lineY );
+                dc.setColor( theme.textColor, theme.menuItemBackgroundColor );
+            }
+
+            // Draw a vertical line on the left side of the menu item
+            // as a workaround for a firmware bug on button-based Edge x50 devices.
+            // See the Constants class for details about those devices.
+            if( Constants.UI_MENU_FOCUS_EDGEX50_WORKAROUND ) {
+                dc.setPenWidth( Constants.UI_SCREEN_WIDTH * 0.02 );
+                dc.setColor( ThemeManager.current.stateColor, ThemeManager.current.menuItemBackgroundColor );
+                dc.drawLine( 0, 0, 0, dc.getHeight() );
                 dc.setColor( theme.textColor, theme.menuItemBackgroundColor );
             }
 
