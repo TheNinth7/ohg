@@ -39,7 +39,7 @@ class DefaultConstants {
     /******* INPUT HINTS *******/ 
 
     // Positions of the device buttons, for drawing input hints
-    // Corresponds to CustomView.InputHints enumeration
+    // Corresponds to BaseControlView.InputHints enumeration
     // 0=ENTER
     // 1=BACK
     // 2=UP

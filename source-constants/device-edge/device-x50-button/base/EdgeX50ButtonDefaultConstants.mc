@@ -9,7 +9,7 @@ class EdgeX50ButtonDefaultConstants extends EdgeDefaultConstants {
     protected function initialize() { EdgeDefaultConstants.initialize(); }
 
     // Positions of the keys, for drawing input hints
-    // Corresponds to CustomView.InputHints enumeration
+    // Corresponds to BaseControlView.InputHints enumeration
     // 0=ENTER
     // 1=BACK
     // 2=UP
