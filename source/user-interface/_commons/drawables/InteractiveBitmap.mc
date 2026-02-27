@@ -15,7 +15,7 @@ import Toybox.System;
  * Additionally, this class supports defining a touch area for the bitmap,
  * enabling CustomBehaviorDelegate to handle touch events on it.
  */
-class CustomBitmap extends Bitmap {
+class InteractiveBitmap extends Bitmap {
 
     // The standard Bitmap options are extended by
     // an optional id for the touch area for this Bitmap    

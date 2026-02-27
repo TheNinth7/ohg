@@ -110,13 +110,13 @@ class PlayerView extends CustomView {
         addDrawable( _playPauseIcon );
 
         // The next/previous buttons
-        addDrawable( new CustomBitmap( {
+        addDrawable( new InteractiveBitmap( {
             :rezId => ThemeManager.current.iconPrevious,
             :locX => 0.2,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER,
             :touchId => :touchPrevious
         } ) );
-        addDrawable( new CustomBitmap( {
+        addDrawable( new InteractiveBitmap( {
             :rezId => ThemeManager.current.iconNext,
             :locX => 0.8,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER,

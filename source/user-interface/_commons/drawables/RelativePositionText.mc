@@ -9,7 +9,7 @@ import Toybox.Graphics;
  * percentage of the view's width and height. Any float value ≤ 1.0
  * is interpreted as a percentage, and locX/locY will be adjusted accordingly.
  */
-class CustomText extends Text {
+class RelativePositionText extends Text {
     typedef Options as { 
         :text as Lang.String or Lang.ResourceId, 
         :color as Graphics.ColorType, 

@@ -12,7 +12,7 @@ import Toybox.Lang;
  * Usage:
  * - Create a view that extends CustomView.
  * - Add instances of touch areas via addTouchArea().
- * - Alternatively, use CustomBitmap drawables with a defined touch identifier.
+ * - Alternatively, use InteractiveBitmap drawables with a defined touch identifier.
  * - Handle touch events by implementing CustomBehaviorDelegate.onAreaTap().
  */
 class TouchArea {
