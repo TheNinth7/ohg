@@ -45,6 +45,9 @@ typedef Theme as interface {
     // openHAB logo for the menu footer
     var logoOpenhabText as ResourceId;
 
+    // The icon shown for the settings menu item
+    var menuSettings as ResourceId;
+
     // The icon shown on the loading screen
     var iconHourglass as ResourceId;
 

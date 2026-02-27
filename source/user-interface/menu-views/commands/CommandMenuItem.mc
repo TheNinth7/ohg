@@ -61,8 +61,8 @@ class CommandMenuItem extends BaseMenuItem {
     * This event handler is responsible for rendering the content.
     */
     public function onUpdate( dc as Dc ) as Void {
+        var theme = getCurrentTheme();
         if( _labelTextArea != null ) {
-            var theme = isFocused() ? ThemeManager.focused : ThemeManager.current;
             _labelTextArea.setColor( theme.textColor );
             _labelTextArea.setBackgroundColor( theme.menuItemBackgroundColor );
             _labelTextArea.draw( dc );

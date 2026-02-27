@@ -1,5 +1,6 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
+import Toybox.Graphics;
 
 /*
  * This menu item implementation represents the settings menu.
@@ -27,10 +28,18 @@ class SettingsMenuItem extends BaseSitemapMenuItem {
         // the font is colored in light grey
         BaseSitemapMenuItem.initialize( { 
             :id => "__settings__",
-            :icon => Rez.Drawables.menuSettings,
             :label => "Settings",
-            :labelColor => ThemeManager.current.stateColor
+            :actionIcon => ACTION_ICON_PAGE
         } );
+    }
+
+    // Sets the color dynamically to accommodate
+    // night mode and focus changes.
+    public function onUpdate( dc as Dc ) {
+        var theme = getCurrentTheme();
+        setLabelColor( theme.textColor );
+        setIcon( theme.menuSettings );
+        BaseSitemapMenuItem.onUpdate( dc );
     }
 
     // On select, show the settings

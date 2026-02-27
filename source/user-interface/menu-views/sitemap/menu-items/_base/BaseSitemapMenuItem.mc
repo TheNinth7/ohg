@@ -431,9 +431,7 @@ class BaseSitemapMenuItem extends BaseMenuItem {
         _labelTextArea.setColor(
             _labelColor != null 
             ? _labelColor 
-            : isFocused()
-              ? ThemeManager.focused.textColor
-              : ThemeManager.current.textColor
+            : getCurrentTheme().textColor
         );
     }
 
@@ -452,9 +450,7 @@ class BaseSitemapMenuItem extends BaseMenuItem {
     private function updateStateDrawablesColor() as Void {
         var stateColor = _stateColor != null 
                          ? _stateColor 
-                         : isFocused()
-                           ? ThemeManager.focused.stateColor
-                           : ThemeManager.current.stateColor;
+                         : getCurrentTheme().stateColor;
 
         if( _stateDrawable instanceof StateText ) {
             _stateDrawable.setColor( stateColor );

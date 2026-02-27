@@ -87,7 +87,7 @@
     <bitmap id="menuScreenOff" scaleY="11%" filename="screen-off.svg" dithering="none"/>
     <bitmap id="menuScreenOn" scaleY="11%" filename="screen-on.svg" dithering="none"/>
 
-    <bitmap id="menuSettings" scaleY="10%" filename="settings.svg" dithering="none" />
+    <bitmap id="menuSettingsLightGray" scaleY="10%" filename="settings-lt-gray.svg" dithering="none" />
 
     <bitmap id="menuSoundVolume00" scaleY="12%" filename="soundvolume-00.svg" dithering="none"/>
     <bitmap id="menuSoundVolume04" scaleY="12%" filename="soundvolume-04.svg" dithering="none"/>

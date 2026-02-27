@@ -67,15 +67,17 @@ class SettingsTextMenuItem extends BaseMenuItem {
         // Colors need to be updated on every draw, since switch
         // focus change and switch between standard and night mode 
         // could happen anytime
-        var color = isFocused()
-                    ? ThemeManager.focused.textColor
-                    : ThemeManager.current.textColor;
-        ( _labelTextArea as TextArea ).setColor( color );
-        ( _subLabelTextArea as TextArea ).setColor( color );
+        var color = getCurrentTheme().textColor;
 
-        // Draw the text fields
-        ( _labelTextArea as TextArea ).draw( dc );
-        (_subLabelTextArea as TextArea ).draw( dc );
+        if( _labelTextArea != null ) {
+            _labelTextArea.setColor( color );
+            _labelTextArea.draw( dc );
+        }
+
+        if( _subLabelTextArea != null ) {
+            _subLabelTextArea.setColor( color );
+            _subLabelTextArea.draw( dc );
+        }
     }
 
     // Set the sub label

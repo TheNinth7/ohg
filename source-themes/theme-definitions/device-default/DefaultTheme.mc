@@ -28,6 +28,8 @@ class DefaultTheme extends BaseTheme {
 
     public var logoOpenhabText as ResourceId = Rez.Drawables.logoOpenhabTextWhite;
 
+    public var menuSettings as ResourceId = Rez.Drawables.menuSettingsLightGray;
+
     public var iconHourglass as ResourceId = Rez.Drawables.iconHourglassWhite;
 
     public var iconPlayButton as ResourceId = Rez.Drawables.iconPlayButtonLightGrey;

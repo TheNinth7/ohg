@@ -30,12 +30,6 @@ annotCiq510Plus=exclForCiq510Plus;exclForCiq400Plus
 # - Button-based: all devices with buttons for up/down/enter/back,
 #                 even if they also have a touch screen. Such 
 #                 devices include: Fenix, Epix, Forerunner, Edge 540/840
-# Note: Although the Edge 850 is button-based,
-# they are affected by two firmware bugs: one prevents the delegate
-# functions required to reach the settings menu from working
-# correctly, and another causes the menu focus to be displayed
-# incorrectly. Therefore, these two devices are treated as touch
-# devices.
 annotTouch=exclForTouch;exclForSettingsMenuItem
 annotButton=exclForButton;exclForSettingsFooter
 
@@ -44,7 +38,9 @@ annotButton=exclForButton;exclForSettingsFooter
 # menu boundaries from working correctly.
 # Therefore, on these devices, the settings are shown as a regular
 # menu item instead. All other button-based controls remain unchanged.
-# This applies to Edge 540, Edge MTB, and Edge 550.
+# This applies to Edge 540 / 840, Edge MTB, and Edge 550 / 850.
+# https://github.com/openhab/openhab-garmin/issues/253
+# https://github.com/openhab/openhab-garmin/issues/260
 annotButtonWithSettingsMenuItem=exclForButton;exclForSettingsMenuItem
 
 # Either on of these should be assigned, depending
@@ -361,21 +357,11 @@ edgemtb.resourcePath=$(resEdgeShort);$(resLauncherIcons)/36x36-dark
 edgemtb.excludeAnnotations = $(edge540.excludeAnnotations)
 edgemtb.sourcePath = $(srcEdgeButtonX40)
 edge550.resourcePath=$(resEdgeShort);$(resLauncherIcons)/56x56-dark
-edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
+edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButtonWithSettingsMenuItem);$(annotScreenRectangular);$(annotFullMenu)
 edge550.sourcePath = $(srcEdgeButtonX50)
 edge850.resourcePath=$(edge550.resourcePath)
-
-# The Edge 850 is a button-based device, with touch,
-# However Garmin bugs prevent the button control to work
-# properly, so we treat them as touch devices 
-# https://github.com/openhab/openhab-garmin/issues/260
-# https://github.com/openhab/openhab-garmin/issues/267
-
-# edge850.excludeAnnotations = $(edge550.excludeAnnotations)
-# edge850.sourcePath = $(srcEdgeButtonX50)
-edge850.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
-edge850.sourcePath = $(srcEdgeX50Touch)
-
+edge850.excludeAnnotations = $(edge550.excludeAnnotations)
+edge850.sourcePath = $(srcEdgeButtonX50)
 
 # Touch-based, CIQ >= 5.1.0
 edge1040.resourcePath=$(resEdgeTall);$(resLauncherIcons)/40x40-dark

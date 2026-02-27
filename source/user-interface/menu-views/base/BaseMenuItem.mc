@@ -27,6 +27,10 @@ class BaseMenuItem extends CustomMenuItem {
         CustomMenuItem.initialize( id, {} );
     }
 
+    // Draw the menu item.
+    //
+    // This method draws the divider and delegates further layout 
+    // and drawing to subclass implementations.
     public function draw( dc as Dc ) as Void {
         try {
             if( ! _hasLayout ) {
@@ -34,7 +38,7 @@ class BaseMenuItem extends CustomMenuItem {
                 onLayout( dc );
             }
 
-            var theme = isFocused() ? ThemeManager.focused : ThemeManager.current;
+            var theme = getCurrentTheme();
             
             dc.setColor( theme.textColor, theme.menuItemBackgroundColor );
             dc.clear();
@@ -54,6 +58,16 @@ class BaseMenuItem extends CustomMenuItem {
         } catch( ex ) {
             ExceptionHandler.handleBackgroundException( ex );
         }
+    }
+
+    // Returns the theme to apply when drawing.
+    //
+    // Subclasses should use this method to retrieve the theme and
+    // apply colors on every onUpdate() call, as the theme may change at any time.
+    public function getCurrentTheme() as Theme {
+        return isFocused()
+               ? ThemeManager.focused
+               : ThemeManager.current;
     }
 
     // May be implemented by subclasses to perform layout calculations
