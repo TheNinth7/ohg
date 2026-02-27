@@ -38,8 +38,7 @@ class BaseSitemapMenuItem extends BaseMenuItem {
     // The types allowed for the state `Drawable`
     typedef StateDrawable as 
         BufferedBitmapDrawable 
-        or Bitmap
-        or StateText;
+        or Bitmap;
 
     // The options accepted in the constructor
     typedef Options as {
@@ -214,7 +213,7 @@ class BaseSitemapMenuItem extends BaseMenuItem {
                 );
             }
 
-            rightX -= LittleHelpers.getDrawableWidth( rightSideDrawable );
+            rightX -= rightSideDrawable.width.toNumber();
 
             // Calculate the locY coordinate.
             // Elements are normally vertically centered. However, on some devices
@@ -226,12 +225,12 @@ class BaseSitemapMenuItem extends BaseMenuItem {
             // WatchUi.LAYOUT_VALIGN_CENTER.
             var rightSideDrawableLocY;
             if( Constants.UI_MENU_ITEM_LABEL_OFFSET != 0
-                && ( rightSideDrawable instanceof StateText
+                && ( rightSideDrawable instanceof Text
                      || rightSideDrawable instanceof TextArea )
             ) {
                 rightSideDrawableLocY = 
                     yCenter 
-                    - LittleHelpers.getDrawableHeight( rightSideDrawable )/2 
+                    - rightSideDrawable.height.toNumber() / 2 
                     + Constants.UI_MENU_ITEM_LABEL_OFFSET;
             } else {
                 rightSideDrawableLocY = WatchUi.LAYOUT_VALIGN_CENTER;
@@ -452,9 +451,6 @@ class BaseSitemapMenuItem extends BaseMenuItem {
                          ? _stateColor 
                          : getCurrentTheme().stateColor;
 
-        if( _stateDrawable instanceof StateText ) {
-            _stateDrawable.setColor( stateColor );
-        }
         if( _stateTextResponsive != null ) {
             _stateTextResponsive[1].setColor( stateColor );
         }

@@ -26,9 +26,6 @@ class RollershutterMenuItem extends BaseWidgetMenuItem {
     // to the full-screen view when it is opened
     private var _sitemapSwitch as SitemapSwitch;
 
-    // The Drawable for the state
-    private var _stateDrawable as StateText;
-
     // Constructor
     // Initializes the BaseCommandRequest used for changing the state,
     // the Drawable for the displayed state and the superclass
@@ -41,12 +38,9 @@ class RollershutterMenuItem extends BaseWidgetMenuItem {
         
         _commandRequest = BaseCommandRequest.get( self, false );
 
-        // The state shown in the menu item
-        _stateDrawable = new StateText( sitemapSwitch.getDisplayState() );
-        
         BaseWidgetMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
-                :stateDrawable => _stateDrawable,
+                :stateTextResponsive => sitemapSwitch.getDisplayState(),
                 :isActionable => true,
                 :parent => parent,
                 :processingMode => processingMode
@@ -119,8 +113,8 @@ class RollershutterMenuItem extends BaseWidgetMenuItem {
         // Store the new widget
         _sitemapSwitch = sitemapWidget;
         
-        // Update the state drawable
-        _stateDrawable.setText( sitemapWidget.getDisplayState() );
+        // Update the display state
+        setStateTextResponsive( sitemapWidget.getDisplayState() );
         
         // If the view is currently open, we update it as well      
         if( _rollershutterView != null ) {

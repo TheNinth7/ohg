@@ -26,9 +26,6 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     // we just keep the SitemapNumeric
     private var _sitemapNumeric as SitemapNumeric;
 
-    // The text state Drawable
-    private var _stateText as Text;
-
     // Constructor
     // Initializes the BaseCommandRequest used for changing the state,
     // the Drawable for the displayed state and the superclass
@@ -40,13 +37,9 @@ class NumericMenuItem extends BaseWidgetMenuItem {
         _sitemapNumeric = sitemapNumeric;
         _commandRequest = BaseCommandRequest.get( self, false );
 
-        // The state shown in the menu item
-        //var item = sitemapNumeric.getNumericItem();
-        _stateText = new StateText( sitemapNumeric.getDisplayState() );
-        
         BaseWidgetMenuItem.initialize( {
                 :sitemapWidget => sitemapNumeric,
-                :stateDrawable => _stateText,
+                :stateTextResponsive => sitemapNumeric.getDisplayState(),
                 :isActionable => true,
                 :parent => parent,
                 :processingMode => processingMode
@@ -106,7 +99,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
             _sitemapNumeric.updateState( newState );
             
             // Update the state
-            _stateText.setText( _sitemapNumeric.getDisplayState() );
+            setStateTextResponsive( _sitemapNumeric.getDisplayState() );
         }
         
         // And send the command
@@ -126,7 +119,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
             throw new GeneralException( "Sitemap element '" + sitemapWidget.getLabel() + "' was passed into NumericMenuItem but is of a different type" );
         }
         _sitemapNumeric = sitemapWidget;
-        _stateText.setText( sitemapWidget.getDisplayState() );
+        setStateTextResponsive( sitemapWidget.getDisplayState() );
         // If the item has changed, we need to create a new command request
         if( ! _sitemapNumeric.getNumericItem().getName().equals( previousItemName ) ) {
             _commandRequest = BaseCommandRequest.get( self, false );
