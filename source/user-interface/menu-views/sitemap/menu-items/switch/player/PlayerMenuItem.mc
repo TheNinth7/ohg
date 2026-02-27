@@ -95,7 +95,6 @@ class PlayerMenuItem extends BaseWidgetMenuItem {
     // over to the ExceptionHandler
     function onException( ex as Exception ) as Void {
         _newState = null;
-        ExceptionHandler.handleBackgroundException( ex );
     }
 
     // Called by the delegate when the view is exited

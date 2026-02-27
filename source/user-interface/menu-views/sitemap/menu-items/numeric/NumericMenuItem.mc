@@ -65,15 +65,14 @@ class NumericMenuItem extends BaseWidgetMenuItem {
         return _sitemapNumeric;
     }
 
-    // Nothing to be done, but needed to fullfil the delegate interface
-    function onCommandComplete( syncMode as Boolean ) as Void {
-    }
-
-    // Exceptions from the command request are handed
-    // over to the ExceptionHandler
-    function onException( ex as Exception ) as Void {
-        ExceptionHandler.handleBackgroundException( ex );
-    }
+    // Nothing to do here, but required to fulfill the delegate interface.
+    //
+    // Currently, the new state is displayed immediately in updateState()
+    // when the command is sent. At some point, this should be aligned with
+    // BaseSwitchMenuItem, which applies the new state only when the command
+    // was confirmed in onCommandComplete().
+    function onCommandComplete( syncMode as Boolean ) as Void {}
+    function onException( ex as Exception ) as Void {}
 
     // When the menu item is selected, the CustomPicker is initialized
     // and pushed to the view stack
