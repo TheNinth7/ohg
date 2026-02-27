@@ -38,7 +38,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     * - Scrolling up past the first item triggers `onPreviousPage()`: the settings menu slides in from the top, 
     *   and the last settings item is focused.
     */
-    (:exclForTouch)
+    (:exclForSettingsMenuItem)
     public function onNextPage() as Boolean {
         // Logger.debug( "HomepageMenuDelegate.onNextPage" );
         try {
@@ -48,7 +48,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
         }
         return true;
     }
-    (:exclForTouch)
+    (:exclForSettingsMenuItem)
     public function onPreviousPage() as Boolean {
         // Logger.debug( "HomepageMenuDelegate.onPreviousPage" );
         try {
@@ -60,7 +60,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     }
     // Button-based devices may also have touch screens. 
     // For those, tapping the footer should behave the same as scrolling down.
-    (:exclForTouch)
+    (:exclForSettingsMenuItem)
     public function onFooter() as Void {
         // Logger.debug( "HomepageMenuDelegate.onNextPage" );
         onNextPage();
@@ -74,7 +74,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     * using `onPreviousPage()` and `onNextPage()` is preferred when supported,
     * as they also work with swipe gestures.
     */
-    (:exclForCiq510Plus :exclForTouch)
+    (:exclForCiq510Plus :exclForSettingsMenuItem)
     public function onWrap( key as Key ) as Boolean {
         // Logger.debug( "HomepageMenuDelegate.onWrap" );
         try {

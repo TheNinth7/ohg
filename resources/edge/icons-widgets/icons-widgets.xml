@@ -94,7 +94,7 @@
     <bitmap id="menuScreenOff" scaleX="13%" filename="../../icons-widgets/screen-off.svg" dithering="none"/>
     <bitmap id="menuScreenOn" scaleX="13%" filename="../../icons-widgets/screen-on.svg" dithering="none"/>
 
-    <bitmap id="menuSettings" scaleX="12%" filename="../../icons-widgets/settings.svg" dithering="none" />
+    <bitmap id="menuSettings" scaleX="11%" filename="../../icons-widgets/settings.svg" dithering="none" />
 
     <bitmap id="menuSoundVolume00" scaleX="13%" filename="../../icons-widgets/soundvolume-00.svg" dithering="none"/>
     <bitmap id="menuSoundVolume04" scaleX="13%" filename="../../icons-widgets/soundvolume-04.svg" dithering="none"/>

@@ -36,7 +36,7 @@ class EdgeDefaultConstants extends DefaultConstants {
     // If an icon is present, the amount of space defined below will be reserved,
     // to allow alignment of labels that have icons of different widths.
     public static const UI_MENU_ITEM_ICON_WIDTH as Number = 
-        ( DefaultConstants.UI_SCREEN_WIDTH * 0.13 ).toNumber();
+        ( DefaultConstants.UI_SCREEN_WIDTH * 0.11 ).toNumber();
 
     // This offset in pixel is applied to the positioning of the menu item label
     // Positive means the label is shifted down, negative means up

@@ -8,7 +8,7 @@ import Toybox.WatchUi;
  *
  * In this setup, the input delegate only needs to implement the `onBack()` behavior.
  */
-(:exclForButton)
+(:exclForSettingsFooter)
 class TouchSettingsMenuDelegate extends BaseSettingsMenuDelegate {
     public function initialize() {
         BaseSettingsMenuDelegate.initialize();

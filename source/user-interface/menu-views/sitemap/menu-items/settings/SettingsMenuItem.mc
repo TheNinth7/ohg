@@ -9,7 +9,7 @@ import Toybox.WatchUi;
  * within the homepage menu, using this menu item class.
  */
 
-(:exclForButton)
+(:exclForSettingsFooter)
 class SettingsMenuItem extends BaseSitemapMenuItem {
 
     // Singleton accessor

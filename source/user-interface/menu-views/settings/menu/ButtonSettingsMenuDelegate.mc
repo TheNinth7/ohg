@@ -20,7 +20,7 @@ import Toybox.WatchUi;
  *
  * This delegate manages those transitions from the settings menu back to the homepage menu.
  */
-(:exclForTouch)
+(:exclForSettingsMenuItem)
 class ButtonSettingsMenuDelegate extends BaseSettingsMenuDelegate {
     public function initialize() {
         BaseSettingsMenuDelegate.initialize();

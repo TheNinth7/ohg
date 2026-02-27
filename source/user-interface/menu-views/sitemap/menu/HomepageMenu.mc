@@ -149,7 +149,7 @@ class HomepageMenu extends BasePageMenu {
     // The syncTopLevel parameter indicates that the HomepageMenu
     // should add its menu items synchronously, with only the lower levels
     // initialized asynchronously.
-    (:exclForTouch)
+    (:exclForSettingsMenuItem)
     private function initialize(
         sitemapHomepage as SitemapHomepage,
         syncTopLevel as Boolean
@@ -173,7 +173,7 @@ class HomepageMenu extends BasePageMenu {
     // For touch-based devices there is a dedicated menu item for
     // showing the settings menu
     // This member tracks whether the settings menu has been added
-    (:exclForButton)
+    (:exclForSettingsFooter)
     private var _hasSettingsMenu as Boolean = false;
 
     // Constructor for touched-based devices. On these devices,
@@ -181,7 +181,7 @@ class HomepageMenu extends BasePageMenu {
     // The syncTopLevel parameter indicates that the HomepageMenu
     // should add its menu items synchronously, with only the lower levels
     // initialized asynchronously.
-    (:exclForButton)
+    (:exclForSettingsFooter)
     private function initialize(
         sitemapHomepage as SitemapHomepage,
         syncTopLevel as Boolean
@@ -201,7 +201,7 @@ class HomepageMenu extends BasePageMenu {
     // The following two functions are overriden to "hide" the last
     // entry, the settings menu item, from the update procedure
     // We pretent to have one menu item less ...
-    (:exclForButton) 
+    (:exclForSettingsFooter) 
     public function getItemCount() as Number {
         return 
             _hasSettingsMenu
@@ -211,7 +211,7 @@ class HomepageMenu extends BasePageMenu {
     // And if a menu item is added, we first remove the settings,
     // then add the new menu item, and then add the settings again
     // in the end
-    (:exclForButton) 
+    (:exclForSettingsFooter) 
     public function addItem( menuItem as CustomMenuItem ) as Void {
         var accountForSettingsMenu = _hasSettingsMenu;
         if( accountForSettingsMenu ) {

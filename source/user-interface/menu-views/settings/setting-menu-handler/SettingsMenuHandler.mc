@@ -12,9 +12,9 @@ class SettingsMenuHandler {
     * button-based or touch-based input.
     */
     private static var _settingsMenu as SettingsMenu = new SettingsMenu();
-    (:exclForTouch)
+    (:exclForSettingsMenuItem)
     private static var _settingsMenuDelegate as ButtonSettingsMenuDelegate = new ButtonSettingsMenuDelegate();
-    (:exclForButton)
+    (:exclForSettingsFooter)
     private static var _settingsMenuDelegate as TouchSettingsMenuDelegate = new TouchSettingsMenuDelegate();
 
     // Are we currently showing the settings?

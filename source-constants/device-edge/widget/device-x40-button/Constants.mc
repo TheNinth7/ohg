@@ -13,7 +13,9 @@ class Constants extends EdgeDefaultConstants {
     public static const UI_MENU_TITLE_TEXT_POSITION as Float = 0.27;
 
     // Show menu item dividers
-    public static const UI_MENU_ITEM_SHOW_DIVIDER as Boolean = true;
+    // On the button-based x40 devices, there is a native focus indicator
+    // that overlaps the divider, therefore we do not show it.
+    public static const UI_MENU_ITEM_SHOW_DIVIDER as Boolean = false;
 
     // Menu item padding is increased, due to the rounded rectangle focus indicator
     public static const UI_MENU_ITEM_PADDING_LEFT_FACTOR as Float = 0.05;

@@ -25,13 +25,27 @@ annotCiq510Plus=exclForCiq510Plus;exclForCiq400Plus
 # Either one of these should be assigned, depending
 # whether the device is primarily button-controlled
 # or touch-controlled.
+# - Touch-based:  all devices without the above-mentioned buttons, such
+#                 as: Vivoactive, Venu, Edge 1040 and Edge 1050
 # - Button-based: all devices with buttons for up/down/enter/back,
 #                 even if they also have a touch screen. Such 
 #                 devices include: Fenix, Epix, Forerunner, Edge 540/840
-# - Touch-based:  all devices without the above-mentioned buttons, such
-#                 as: Vivoactive, Venu, Edge 1040 and Edge 1050
-annotTouch=exclForTouch
-annotButton=exclForButton
+# Note: Although the Edge 850 is button-based,
+# they are affected by two firmware bugs: one prevents the delegate
+# functions required to reach the settings menu from working
+# correctly, and another causes the menu focus to be displayed
+# incorrectly. Therefore, these two devices are treated as touch
+# devices.
+annotTouch=exclForTouch;exclForSettingsMenuItem
+annotButton=exclForButton;exclForSettingsFooter
+
+# On button-based Edge devices, a firmware bug prevents the delegate
+# functions required to open the settings menu by scrolling past the
+# menu boundaries from working correctly.
+# Therefore, on these devices, the settings are shown as a regular
+# menu item instead. All other button-based controls remain unchanged.
+# This applies to Edge 540, Edge MTB, and Edge 550.
+annotButtonWithSettingsMenuItem=exclForButton;exclForSettingsMenuItem
 
 # Either on of these should be assigned, depending
 # whether the device has a round or rectangular screen
@@ -338,7 +352,7 @@ edgeexplore2.sourcePath = $(srcEdgeX40Touch)
 
 # Button-based, CIQ >= 5.1.0
 edge540.resourcePath=$(resEdgeShort);$(resLauncherIcons)/35x35-dark
-edge540.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
+edge540.excludeAnnotations = $(annotCiq510Plus);$(annotButtonWithSettingsMenuItem);$(annotScreenRectangular);$(annotFullMenu)
 edge540.sourcePath = $(srcEdgeButtonX40)
 edge840.resourcePath=$(edge540.resourcePath)
 edge840.excludeAnnotations = $(edge540.excludeAnnotations)
@@ -350,8 +364,17 @@ edge550.resourcePath=$(resEdgeShort);$(resLauncherIcons)/56x56-dark
 edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
 edge550.sourcePath = $(srcEdgeButtonX50)
 edge850.resourcePath=$(edge550.resourcePath)
-edge850.excludeAnnotations = $(edge550.excludeAnnotations)
-edge850.sourcePath = $(srcEdgeButtonX50)
+
+# The Edge 850 is a button-based device, with touch,
+# However Garmin bugs prevent the button control to work
+# properly, so we treat them as touch devices 
+# https://github.com/openhab/openhab-garmin/issues/260
+# https://github.com/openhab/openhab-garmin/issues/267
+
+# edge850.excludeAnnotations = $(edge550.excludeAnnotations)
+# edge850.sourcePath = $(srcEdgeButtonX50)
+edge850.excludeAnnotations = $(annotCiq510Plus);$(annotButton);$(annotScreenRectangular);$(annotFullMenu)
+edge850.sourcePath = $(srcEdgeX50Touch)
 
 
 # Touch-based, CIQ >= 5.1.0
