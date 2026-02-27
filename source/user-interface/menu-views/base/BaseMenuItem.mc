@@ -55,7 +55,7 @@ class BaseMenuItem extends CustomMenuItem {
             // Draw a vertical line on the left side of the menu item
             // as a workaround for a firmware bug on button-based Edge x50 devices.
             // See the Constants class for details about those devices.
-            if( Constants.UI_MENU_FOCUS_EDGEX50_WORKAROUND ) {
+            if( Constants.UI_MENU_FOCUS_EDGEX50_SHOW_ALTERNATE_FOCUS_INDICATOR ) {
                 dc.setPenWidth( Constants.UI_SCREEN_WIDTH * 0.02 );
                 dc.setColor( ThemeManager.current.stateColor, ThemeManager.current.menuItemBackgroundColor );
                 dc.drawLine( 0, 0, 0, dc.getHeight() );

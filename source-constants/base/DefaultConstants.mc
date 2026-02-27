@@ -107,10 +107,22 @@ class DefaultConstants {
     // menu item. The color of the divider is set in Theme.menuItemDividerColor
     public static const UI_MENU_ITEM_SHOW_DIVIDER as Boolean = false;
 
-    // If set to true, a vertical strip is rendered on the left side
-    // of the menu item. This serves as a workaround for a firmware bug on the
-    // Edge 550 and 850 (see ../device-edge/widget/device-x50-button for details).
-    public static const UI_MENU_FOCUS_EDGEX50_WORKAROUND as Boolean = false;
+    // UI_MENU_FOCUS_EDGEX50_SHOW_ALTERNATE_FOCUS_INDICATOR
+    // If true, a vertical strip is rendered on the left side of the focused
+    // menu item.
+    //
+    // UI_MENU_FOCUS_EDGEX50_SUPPRESS_FOCUS_INDICATOR
+    // If true, the standard focus indicator theme is suppressed and the
+    // focused menu item is rendered like a regular, unfocused item.
+    //
+    // These options provide a workaround for a firmware bug on the
+    // Edge 550 and 850.
+    //
+    // See the following files for implementation details:
+    // ../device-edge/widget/device-x50-button/device-550/Constants.mc
+    // ../device-edge/widget/device-x50-button/device-850/Constants.mc
+    public static const UI_MENU_FOCUS_EDGEX50_SHOW_ALTERNATE_FOCUS_INDICATOR as Boolean = false;
+    public static const UI_MENU_FOCUS_EDGEX50_SUPRESS_FOCUS_INDICATOR as Boolean = false;
 
     /*
     * These factors determine the spacing of menu item components 

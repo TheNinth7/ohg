@@ -32,7 +32,7 @@ class ThemeManager extends BaseNightModeThemeManager {
         // the focused menu item is rendered the same way as other menu items.
         // Otherwise, the focus theme is applied.
         // See the Constants class for details about the Edge x50 devices.
-        return Constants.UI_MENU_FOCUS_EDGEX50_WORKAROUND
+        return Constants.UI_MENU_FOCUS_EDGEX50_SUPRESS_FOCUS_INDICATOR
                ? NightModeTracker.get().isNightModeEnabled()
                  ? BaseNightModeThemeManager.dark
                  : BaseNightModeThemeManager.light

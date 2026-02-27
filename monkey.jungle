@@ -109,15 +109,15 @@ srcConstantsVenux1=$(srcConstantsBase);source-constants/device-venux1
 
 # Edge devices
 # Base path for all Edge devices
-srcConstantsEdgeBase=$(srcConstantsBase);source-constants/device-edge/widget/base;source-constants/device-edge/glance
+srcConstantsEdgeBase=$(srcConstantsBase);source-constants/device-edge/base;source-constants/device-edge/glance
 # Edge x40 touch-based devices
-srcConstantsEdgeX40Touch=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x40-touch
+srcConstantsEdgeX40Touch=$(srcConstantsEdgeBase);source-constants/device-edge/device-x40-touch
 # Edge x40 button-based devices
-srcConstantsEdgeX40Button=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x40-button
+srcConstantsEdgeX40Button=$(srcConstantsEdgeBase);source-constants/device-edge/device-x40-button
 # Edge x50 touch-based devices
-srcConstantsEdgeX50Touch=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x50-touch
+srcConstantsEdgeX50Touch=$(srcConstantsEdgeBase);source-constants/device-edge/device-x50-touch
 # Edge x50 button-based devices
-srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source-constants/device-edge/widget/device-x50-button
+srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source-constants/device-edge/device-x50-button/base
 
 # SOURCE PATH - THEMES
 
@@ -358,10 +358,10 @@ edgemtb.excludeAnnotations = $(edge540.excludeAnnotations)
 edgemtb.sourcePath = $(srcEdgeButtonX40)
 edge550.resourcePath=$(resEdgeShort);$(resLauncherIcons)/56x56-dark
 edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButtonWithSettingsMenuItem);$(annotScreenRectangular);$(annotFullMenu)
-edge550.sourcePath = $(srcEdgeButtonX50)
+edge550.sourcePath = $(srcEdgeButtonX50);source-constants/device-edge/device-x50-button/device-550
 edge850.resourcePath=$(edge550.resourcePath)
 edge850.excludeAnnotations = $(edge550.excludeAnnotations)
-edge850.sourcePath = $(srcEdgeButtonX50)
+edge850.sourcePath = $(srcEdgeButtonX50);source-constants/device-edge/device-x50-button/device-850
 
 # Touch-based, CIQ >= 5.1.0
 edge1040.resourcePath=$(resEdgeTall);$(resLauncherIcons)/40x40-dark
