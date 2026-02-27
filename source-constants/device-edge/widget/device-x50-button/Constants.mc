@@ -23,6 +23,9 @@ class Constants extends EdgeDefaultConstants {
     // See also:
     // Bug report: https://github.com/openhab/openhab-garmin/issues/267
     // Workaround implementation: https://github.com/openhab/openhab-garmin/issues/268
+    (:debug)
+    public static const UI_MENU_FOCUS_EDGEX50_WORKAROUND as Boolean = true;
+    (:release)
     public static const UI_MENU_FOCUS_EDGEX50_WORKAROUND as Boolean = true;
 
     // Positions of the keys, for drawing input hints
