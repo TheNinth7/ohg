@@ -92,7 +92,7 @@ class BaseCommandRequest extends BaseRequest {
         // Note that isWifiConnected()=true indicates only that Wi-Fi is available,
         // but the app still needs to switch into sync mode to connect to it. If _syncMode
         // is true, then we are already in sync mode and can send the command.
-        if( ! ConnectionHandler.get().isWifiConnected() || _syncMode ) {
+        if( ! ConnectionManager.get().isWifiConnected() || _syncMode ) {
             // Logger.debug( "BaseCommandRequest: sending command" );
             makeWebRequest( cmd );
         } else {

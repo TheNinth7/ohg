@@ -25,7 +25,7 @@ class CommunicationException extends CommunicationBaseException {
         var errorMsg;
         // For some errors we return specific messages,
         // for all others a generic one
-        if( isNoPhone() && ConnectionHandler.get().isWifiConnected() ) {
+        if( isNoPhone() && ConnectionManager.get().isWifiConnected() ) {
             return "Wi-Fi connection lost";
         } else if( isNoPhone() ) {
             return "No phone\n(" + _responseCode + ")";
@@ -50,7 +50,7 @@ class CommunicationException extends CommunicationBaseException {
         var errorMsg;
         // For some errors we return specific toast messages,
         // for all others a generic one
-        if( isNoPhone() && ConnectionHandler.get().isWifiConnected() ) {
+        if( isNoPhone() && ConnectionManager.get().isWifiConnected() ) {
             return "No Wi-Fi";
         } else if( isNoPhone() ) {
             return "No phone";

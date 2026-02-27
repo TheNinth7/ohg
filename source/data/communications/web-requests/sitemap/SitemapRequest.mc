@@ -144,11 +144,11 @@ class SitemapRequest extends BaseRequest {
             // still return a BLE error, for example if the connection was lost
             // between the check and the actual request.
             if( ex instanceof CommunicationException && ex.isNoPhone() ) {
-                ConnectionHandler.get().tryWifiConnectionAndTriggerNextRequest();
+                ConnectionManager.get().tryWifiConnectionAndTriggerNextRequest();
             } else {
                 // Logger.debug( "ExceptionHandler: confirming successful connection." );
                 
-                ConnectionHandler.get().confirmPhoneConnection();
+                ConnectionManager.get().confirmPhoneConnection();
 
                 ExceptionHandler.handleBackgroundException( ex );
                 
@@ -195,12 +195,12 @@ class SitemapRequest extends BaseRequest {
     // connectivity check is initiated instead.
     public function makeRequestPeriodic() as Void {
         // Logger.debug( "SitemapRequest.onTimerMakeRequest" );
-        if( ConnectionHandler.get().isPhoneConnectedAccordingToSettings() ) {
+        if( ConnectionManager.get().isPhoneConnectedAccordingToSettings() ) {
             // Logger.debug( "SitemapRequest.onTimerMakeRequest: is on phone according to settings" );
             makeRequestInternal( false );
         } else {
             // Logger.debug( "SitemapRequest.onTimerMakeRequest: not on phone, trying Wi-Fi" );
-            ConnectionHandler.get().tryWifiConnectionAndTriggerNextRequest();
+            ConnectionManager.get().tryWifiConnectionAndTriggerNextRequest();
         }
     }
 
@@ -246,7 +246,7 @@ class SitemapRequest extends BaseRequest {
                     // for all errors except no-phone errors.
                     if( ! SafeSitemapSyncDelegate.isSyncInProgress() ) {
                         // Logger.debug( "SitemapRequest.onReceive: confirming successful connection." );
-                        ConnectionHandler.get().confirmPhoneConnection();
+                        ConnectionManager.get().confirmPhoneConnection();
                     }
                     
                     // The JSON is processed by processIncomingJson()

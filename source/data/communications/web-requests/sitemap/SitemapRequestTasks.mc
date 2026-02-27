@@ -139,7 +139,7 @@ class SwitchToHomepageTask extends BaseSitemapProcessorTask {
         if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
         } else {
-            ViewHandler.switchToView( 
+            ViewStack.switchToView( 
                 _homepageMenu, 
                 HomepageMenuDelegate.get(), 
                 WatchUi.SLIDE_BLINK 
@@ -216,14 +216,14 @@ class RefreshUiTask extends BaseSitemapProcessorTask {
         if( ! SettingsMenuHandler.isShowingSettings() ) {
             // If the structure is not valid anymore or an error view
             // view is shown, we reset the view to the homepage
-            var currentView = ViewHandler.getCurrentView()[0];
+            var currentView = ViewStack.getCurrentView()[0];
             if(    ( ! homepage.structureRemainsValid() 
                      && ! ( currentView instanceof HomepageMenu ) )
                 || ( ! HomepageMenu.isSitemapShowing() 
                      && ! SettingsMenuHandler.isShowingSettings() )
             ) {
                 // Logger.debug( "SitemapRequest.onReceive: resetting to homepage" );
-                ViewHandler.resetTo( homepage, HomepageMenuDelegate.get() );
+                ViewStack.resetTo( homepage, HomepageMenuDelegate.get() );
             } else {
                 // If the structure is still valid and no error is shown,
                 // then we update the screen, showing the changes in the
