@@ -1,0 +1,61 @@
+# Folder `themes`
+
+Themes define the color schemes used in the app and can change dynamically at runtime. This also includes icons whose colors must be adapted to the active theme. Themes are used to implement the light and dark mode on Edge devices.
+
+### Structure and Usage
+
+Themes use a slightly technical approach than [device-specific configuration](../config/#folder-config).
+
+For themes, the `Theme` interface declares only the available variables and does not define any default values. All values are provided by concrete theme implementations. This reflects the fact that themes usually differ across most, if not all, variables, making shared defaults less practical than in device-specific configuration.
+
+These implementations may also use inheritance to derive variants from an existing theme, allowing shared styling definitions to be reused and selectively refined.
+
+To support runtime theme changes, themes are accessed through the `ThemeManager` class. Multiple `ThemeManager` implementations are available, depending on the capabilities of the target device.
+
+Each device is assigned a specific `ThemeManager` implementation via its source path configuration in the [`monkey.jungle`](../../README.md#root-folder-) build file. The corresponding theme definitions required by that manager are included in the same device-specific source path.
+
+### Key Files and Directories
+
+- `definitions/`  
+  Contains the concrete theme definitions, including colors and icons.
+
+  - `base/Theme.mc`  
+    Declares the `Theme` interface that must be implemented by all themes. All theme variables are defined and documented here.
+
+  - `base/BaseTheme.mc`  
+    Provides a minimal base implementation with a small set of shared theme values.
+
+  - `device-default/DefaultTheme.mc`  
+    Defines the default dark theme used on devices that do not support switching between light and dark modes.
+
+  - `device-night-mode/`  
+    Contains theme implementations for devices that support light and dark mode, as well as dedicated focus themes.
+
+    On button-based watches, menus scroll with each up or down button press and the focused item remains centered. On Edge devices, the focus can change without the visible menu items moving. In this case, a dedicated visual focus indicator is required.
+
+    - `dark/`  
+      The dark theme.
+
+    - `light/`  
+      The light theme.
+
+    - `focus-blue/`  
+      Used primarily in the simulator for button-based Edge x40 devices. These devices provide a native focus indicator on the physical device, but this is not reflected in the simulator. Therefore, the `focus-blue` theme adds a visible focus style for simulation purposes.
+
+    - `focus-inverted/`  
+      Used for button-based Edge x50 devices. These devices provide a native focus indicator that requires the menu item implementation to use contrasting colors for the focused item.
+
+- `manager/`  
+  Contains the `ThemeManager` implementations responsible for selecting and providing the active theme at runtime.
+
+  - `device-default/ThemeManager.mc`  
+    Implements the `ThemeManager` for devices that do not support light and dark mode switching.
+
+  - `device-night-mode/base/BaseNightModeThemeManager.mc`  
+    A base class for `ThemeManager` implementations on devices that support light and dark mode, such as Edge devices. Two concrete implementations build on this base class.
+
+  - `device-night-mode/device-default/ThemeManager.mc`  
+    Implementation for devices that do not require a focus indicator, typically touch-based devices such as the Edge 1040 or 1050.
+
+  - `device-night-mode/device-focus-indicator/ThemeManager.mc`  
+    Implementation for devices that require a focus indicator, typically button-based devices such as the Edge 540 or 550.

@@ -1,4 +1,4 @@
-# Folder `/source`
+# Folder `main`
 
 This folder contains the source code of the app, written in **Monkey C**, Garmin’s programming language. It uses the Connect IQ SDK for user interface components, application settings, persistent storage, and HTTP communication with the openHAB server.
 
