@@ -17,10 +17,9 @@ This README covers the following topics:
 - [Introduction](#introduction)
 - [Project Structure](#project-structure)
   - [Root Folder `/`](#root-folder-)
-  - [Folder `/docs`](#folder-docs)
-  - [Folder `/resources`](#folder-resources)
-  - [Folder `/source`](#folder-source)
-  - [Folder `/source-constants`](#folder-source-constants)
+  - [Folder `/docs`](#subfolder-docs)
+  - [Folder `/resources`](#subfolder-resources)
+  - [Folder `/source`](#subfolder-source)
 - [Build Instructions](#build-instructions)
   - [To Run the App in the Garmin Simulator](#to-run-the-app-in-the-garmin-simulator)
   - [To Compile for a Single Device](#to-compile-for-a-single-device)
@@ -58,7 +57,7 @@ The _Glance_:
 - Displays the sitemap label.
 - If sufficient memory is available, it also requests the sitemap at the same interval as the _Widget_ and caches it in storage, allowing the _Widget_ to start with a fresh state.
 
-**Further reading:**
+#### Further reading:
 
 - [openHAB for Garmin User Manual](https://next.openhab.org/docs/apps/garmin/)
 - [Connect IQ for Developers](https://developer.garmin.com/connect-iq)
@@ -74,13 +73,13 @@ The project is organised into the following directories:
 
 The root directory contains essential project files.
 
-**Key files:**
+#### Key files
 
 - `README.md`: This file
 - `manifest.xml`: Defines the app's structure, supported devices, and required permissions (e.g., storage, background tasks)
 - `monkey.jungle`: The build script that determines available features per device. It includes extensive documentation in the file itself.
 
-**Further reading:**
+#### Further reading
 
 - [Connect IQ SDK Core Topics - Manifest and Permissions](https://developer.garmin.com/connect-iq/core-topics/manifest-and-permissions/)  
 - [Connect IQ SDK Core Topics - Build Configuration](https://developer.garmin.com/connect-iq/core-topics/build-configuration/)
@@ -103,7 +102,7 @@ In the Connect IQ SDK, resources define:
 - **Drawables**: Image assets used by the app
 - **Strings**: Text values like app name and version
 
-**Folder breakdown:**
+#### Folder breakdown
 
 - `/resources/base`: Contains resources shared across all device types.
   - `/resources/base/settings.xml`: Specifies the app’s configuration settings, including default values, types, and user-facing descriptions.
@@ -113,7 +112,7 @@ In the Connect IQ SDK, resources define:
 - `/resources/icons-launcher`: Contains one subdirectory per launcher icon size. Each subdirectory includes a resource definition for that specific size. The correct icon is selected via the resource path in the `monkey.jungle` build file, depending on the target device.
 - `/resources/icons-interface`: Contains the `_drawables.xml` file defining the openHAB icons that can be assigned to widgets, along with their corresponding SVG files.
 
-**Further reading:**
+#### Further reading
 
 - [Connect IQ SDK Core Topics - Resources](https://developer.garmin.com/connect-iq/core-topics/resources/)
 
@@ -185,7 +184,7 @@ To support a new device:
 1. Test in the simulator (see [above](#to-run-the-app-in-the-garmin-simulator))
 1. Export the project (`CTRL+SHIFT+P` → `Monkey C: Export Project`) and upload the `.iq` file to the Connect IQ Store
 
-**Further reading:**
+#### Further reading
 
 - [Connect IQ SDK - Compatible Devices](https://developer.garmin.com/connect-iq/compatible-devices/)
 - [Connect IQ SDK - Device Reference](https://developer.garmin.com/connect-iq/device-reference/)

@@ -36,7 +36,7 @@ Contains the `AppSettings` class, which reads, validates, and exposes applicatio
 
 When sideloading the app directly onto a device, application settings are not available through the standard mechanism. For this scenario, the folder also includes an alternative implementation that can be activated by renaming the file. This fallback implementation provides hardcoded settings to allow the app to run in sideloaded environments.
 
-**Related Resources:**
+#### Further Reading
 
 - [Connect IQ SDK Core Topics – Resources](https://developer.garmin.com/connect-iq/core-topics/resources/)
 - [Connect IQ API Docs – `Toybox.Application.Properties`](https://developer.garmin.com/connect-iq/api-docs/Toybox/Application/Properties.html)

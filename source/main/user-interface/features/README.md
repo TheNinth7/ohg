@@ -23,7 +23,7 @@ Sitemap widgets are implemented as `CustomMenuItem` instances. These display the
 
 The _Settings_ menu is also implemented using `CustomMenu`.
 
-**Further Reading**
+### Further Reading
 
 - [Connect IQ Core Topics – Native UI Controls](https://developer.garmin.com/connect-iq/core-topics/native-controls/)  
 - [Connect IQ API Docs – `Toybox.WatchUi.CustomMenu`](https://developer.garmin.com/connect-iq/api-docs/Toybox/WatchUi/CustomMenu.html)

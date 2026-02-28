@@ -4,9 +4,7 @@ Defines the data model used to parse and represent sitemap content received from
 
 The classes in this folder convert the JSON representation delivered by openHAB into a structured object model. This model serves as the foundation for building and rendering the user interface.
 
-**Further Reading**
-
-- [User Manual – Sitemap Setup](https://next.openhab.org/docs/apps/garmin/#sitemap-setup)  
+See the user manual for details: [User Manual – Sitemap Setup](https://next.openhab.org/docs/apps/garmin/#sitemap-setup)  
 
 ---
 
