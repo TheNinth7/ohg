@@ -135,7 +135,7 @@ In the Connect IQ SDK, resources define:
 
 The app is written in **Monkey C**, Garmin's programming language, using the Connect IQ SDK API for UI, settings, persistent storage, and HTTP requests to openHAB.
 
-For more details, continue reading the folder’s [README](./source#folder-source).
+For more details, continue reading the folder’s [README](source/README.md#folder-source).
 
 <br>
 
