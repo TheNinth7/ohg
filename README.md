@@ -139,14 +139,6 @@ For more details, continue reading the folder’s [README](https://github.com/Th
 
 <br>
 
-## Folder `/source-constants`
-
-This folder defines device-specific configuration using code-based _Constants_, which replace Garmin SDK _Properties_ due to their limitations. Unlike _Properties_, _Constants_ are embedded in the code, update automatically with new app versions, and benefit from compiler validation.
-
-For more details, continue reading the folder’s [README](https://github.com/TheNinth7/ohg/tree/main/source-constants#folder-source-constants).
-
-<br>
-
 # Build Instructions
 
 Follow the steps below to build, run, and test the app using the Connect IQ SDK and Garmin simulator.
