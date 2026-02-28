@@ -6,6 +6,8 @@ An app that connects your Garmin wearable to your [openHAB](https://www.openhab.
   <img alt="Get it on Connect IQ Store" src="docs/images/connect_iq_badge.svg" width="240px">
 </a>
 
+<br>
+
 The user manual is available in the openHAB documentation at <https://next.openhab.org/docs/apps/garmin/>.
 
 ---
@@ -105,7 +107,7 @@ Contains the user manual, published at <https://next.openhab.org/docs/apps/garmi
 
 In the Connect IQ SDK, resources define:
 
-- **Properties**: Parameters stored outside the app and not visible to the user. These are currently _not_ used by the app; instead, more flexible **Constants** are used. See [Folder `source-constants`](#folder-source-constants) for details.
+- **Properties**: Parameters stored outside the app and not visible to the user. These are currently _not_ used by the app; instead, more flexible **Constants** are used. See [Folder `source/config`](source/config/README.md) for details.
 
 - **Settings**: User-facing configurations
 - **Drawables**: Image assets used by the app
@@ -131,7 +133,7 @@ In the Connect IQ SDK, resources define:
 
 The app is written in **Monkey C**, Garmin's programming language, using the Connect IQ SDK API for UI, settings, persistent storage, and HTTP requests to openHAB.
 
-For more details, continue reading the folder’s [README](source/README.md#folder-source).
+For more details, continue reading the folder’s [README](source/README.md).
 
 <br>
 
