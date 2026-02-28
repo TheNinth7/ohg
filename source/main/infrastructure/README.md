@@ -8,7 +8,7 @@ It contains the main `OHApp` class responsible for managing the application life
 
 ## Subfolder Structure
 
-### Folder `appbase/`
+### Subfolder `appbase/`
 
 Contains the `OHApp` class, the main entry point for the app. It handles:
 
@@ -16,29 +16,21 @@ Contains the `OHApp` class, the main entry point for the app. It handles:
 - Startup and shutdown logic
 - Reactions to app updates and settings changes
 
-<br>
-
-### Folder `exceptions/`
+### Subfolder `exceptions/`
 
 Defines all custom exception types used by the app. Most exception classes extend the base class `GeneralException`.
 
-<br>
-
-### Folder `logging/`
+### Subfolder `logging/`
 
 Contains the `Logger` class, which provides utility methods to output debug statements and exceptions to the system log.
 
-<br>
-
-### Folder `memory/`
+### Subfolder `memory/`
 
 Contains the `MemoryManager` class.
 
 The `MemoryManager` allows callers to validate available memory before performing memory-intensive operations. If the available memory is below a safe threshold, it throws a controlled exception, enabling the application to react appropriately and avoid an out-of-memory crash.
 
-<br>
-
-### Folder `settings/`
+### Subfolder `settings/`
 
 Contains the `AppSettings` class, which reads, validates, and exposes application settings through static accessor methods.
 

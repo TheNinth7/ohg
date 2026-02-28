@@ -4,9 +4,9 @@ This folder contains the source code of the app, written in **Monkey C**, Garmin
 
 ---
 
-# Key Concepts
+## Key Concepts
 
-## Tailoring
+### Tailoring
 
 Two mechanisms are used to tailor the source code for different target devices:
 
@@ -15,28 +15,28 @@ Two mechanisms are used to tailor the source code for different target devices:
 
 <br>
 
-## Other Annotations
+### Other Annotations
 
 - `(:glance)` marks code that must be included in the _Glance_ view.
 
 <br>
 
-## **Inline Documentation**
+### **Inline Documentation**
 
 All `.mc` files include inline comments and documentation describing the purpose and internal workings of each class.
 
 <br>
 
-## **Further Reading**
+### **Further Reading**
 
 - [Connect IQ Core Topics](https://developer.garmin.com/connect-iq/core-topics/)
 - [Connect IQ API Docs](https://developer.garmin.com/connect-iq/api-docs/)
 
 ---
 
-# Folder Structure
+## Folder Structure
 
-## Subfolder `config`
+### Subfolder `config`
 
 This folder defines device-specific configuration using code-based _Constants_, which replace Garmin SDK _Properties_ due to their limitations. Unlike _Properties_, _Constants_ are embedded in the code, update automatically with new app versions, and benefit from compiler validation.
 
@@ -44,7 +44,7 @@ For more details, continue reading the folder’s [README](config/README.md).
 
 <br>
 
-## Subfolder `main`
+### Subfolder `main`
 
 Contains the core application source code that is shared across all target devices. This includes the data layer, infrastructure and service components, as well as the user interface logic and views.
 
@@ -54,7 +54,7 @@ For additional details, refer to the folder’s [README](main/README.md).
 
 <br>
 
-## Subfolder `themes`
+### Subfolder `themes`
 
 Themes define the color schemes used in the app and can change dynamically at runtime. This also includes icons whose colors must be adapted to the active theme. Themes are used to implement the light and dark mode on Edge devices.
 

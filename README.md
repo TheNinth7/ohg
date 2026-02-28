@@ -6,8 +6,6 @@ An app that connects your Garmin wearable to your [openHAB](https://www.openhab.
   <img alt="Get it on Connect IQ Store" src="docs/images/connect_iq_badge.svg" width="240px">
 </a>
 
-<br>
-
 The user manual is available in the openHAB documentation at <https://next.openhab.org/docs/apps/garmin/>.
 
 ---
@@ -43,8 +41,6 @@ It includes two application types:
 - _**Glance**_: A lightweight, quick-access entry point.
 - _**Widget**_: The main, full-screen interface for interacting with the sitemap.
 
-<br>
-
 ### _Widget_ Overview
 
 The _Widget_:
@@ -54,8 +50,6 @@ The _Widget_:
 - Updates the menu whenever a new response is received.
 - Caches the latest sitemap response in persistent storage.
 - Renders sitemap *Widget*s using specific `CustomMenuItem` implementations, which may also send commands to items.
-
-<br>
 
 ### _Glance_ Overview
 
@@ -91,21 +85,15 @@ The root directory contains essential project files.
 - [Connect IQ SDK Core Topics - Manifest and Permissions](https://developer.garmin.com/connect-iq/core-topics/manifest-and-permissions/)  
 - [Connect IQ SDK Core Topics - Build Configuration](https://developer.garmin.com/connect-iq/core-topics/build-configuration/)
 
-<br>
-
-### Folder `/.vscode/`
+### Subfolder `/.vscode/`
 
 Contains VS Code customizations.
 
-<br>
-
-### Folder `/docs/`
+### Subfolder `/docs/`
 
 Contains the user manual, published at <https://next.openhab.org/docs/apps/garmin/>.
 
-<br>
-
-### Folder `/resources/`
+### Subfolder `/resources/`
 
 In the Connect IQ SDK, resources define:
 
@@ -129,20 +117,17 @@ In the Connect IQ SDK, resources define:
 
 - [Connect IQ SDK Core Topics - Resources](https://developer.garmin.com/connect-iq/core-topics/resources/)
 
-<br>
-
-### Folder `/source/`
+### Subfolder `/source/`
 
 The app is written in **Monkey C**, Garmin's programming language, using the Connect IQ SDK API for UI, settings, persistent storage, and HTTP requests to openHAB.
 
 For more details, continue reading the folder’s [README](source/README.md).
 
-<br>
+---
 
 ## Build Instructions
 
 Follow the steps below to build, run, and test the app using the Connect IQ SDK and Garmin simulator.
-<br>
 
 ### To Run the App in the Garmin Simulator
 
@@ -158,13 +143,9 @@ Follow the steps below to build, run, and test the app using the Connect IQ SDK 
 1. Go to `File` → `Edit Persistent Storage` → `Edit Application.Properties` and configure as needed  
    - To allow HTTP URLs, uncheck `Settings > Use Device HTTPS Requirements`
 
-<br>
-
 ### To Compile for a Single Device
 
 1. Press `CTRL+SHIFT+P` → `Monkey C: Build Current Project`
-
-<br>
 
 ### Generating the `.iq` File for Garmin Connect IQ Store Upload
 
@@ -194,8 +175,6 @@ Follow these steps to prepare and export your app for upload to the Garmin Conne
    `CTRL + SHIFT + P` → `Monkey C: Export Project`
    This will generate the `.iq` file used for uploading.
 
-<br>
-
 ### To Add a New Device
 
 To support a new device:
@@ -211,7 +190,7 @@ To support a new device:
 - [Connect IQ SDK - Compatible Devices](https://developer.garmin.com/connect-iq/compatible-devices/)
 - [Connect IQ SDK - Device Reference](https://developer.garmin.com/connect-iq/device-reference/)
 
-<br>
+---
 
 ## Helpful Tips and Notes
 
@@ -235,6 +214,8 @@ To deactivate the debug statements, replace them with:
 
 This will comment them out without affecting any lines that are already commented.
 
+---
+
 ## Copyright Notice
 
 ```text
@@ -246,6 +227,8 @@ http://www.eclipse.org/legal/epl-2.0
 
 SPDX-License-Identifier: EPL-2.0
 ```
+
+---
 
 ## Attributions
 
