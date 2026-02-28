@@ -85,15 +85,15 @@ The root directory contains essential project files.
 - [Connect IQ SDK Core Topics - Manifest and Permissions](https://developer.garmin.com/connect-iq/core-topics/manifest-and-permissions/)  
 - [Connect IQ SDK Core Topics - Build Configuration](https://developer.garmin.com/connect-iq/core-topics/build-configuration/)
 
-### Subfolder `/.vscode/`
+### Subfolder `.vscode/`
 
 Contains VS Code customizations.
 
-### Subfolder `/docs/`
+### Subfolder `docs/`
 
 Contains the user manual, published at <https://next.openhab.org/docs/apps/garmin/>.
 
-### Subfolder `/resources/`
+### Subfolder `resources/`
 
 In the Connect IQ SDK, resources define:
 
@@ -117,7 +117,7 @@ In the Connect IQ SDK, resources define:
 
 - [Connect IQ SDK Core Topics - Resources](https://developer.garmin.com/connect-iq/core-topics/resources/)
 
-### Subfolder `/source/`
+### Subfolder `source/`
 
 The app is written in **Monkey C**, Garmin's programming language, using the Connect IQ SDK API for UI, settings, persistent storage, and HTTP requests to openHAB.
 
