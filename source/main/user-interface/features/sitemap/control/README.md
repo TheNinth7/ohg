@@ -52,7 +52,7 @@ The custom implementation (`DynamicPicker`) allows scrolling through and selecti
 
 ---
 
-## `player/`
+## Subfolder `player/`
 
 Implements `PlayerView`, which enables interaction with media players (play/pause, next/previous) and displays the current playback state.
 
@@ -60,7 +60,7 @@ See the [Player section](https://next.openhab.org/docs/apps/garmin/#player) for 
 
 ---
 
-## `rollershutter/`
+## Subfolder `rollershutter/`
 
 Implements `RollershutterView`, which allows control of a rollershutter (up/down/stop) and displays the current state.
 

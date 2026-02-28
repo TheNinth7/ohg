@@ -8,7 +8,7 @@ This folder contains the connection management logic, HTTP request handling and 
 
 ## Subfolder Structure
 
-### `connection/`
+### Subfolder `connection/`
 
 Contains the `ConnectionManager`, which tracks the currently available connection type (BLE vs. Wi-Fi) and manages transitions between normal, degraded (Wi-Fi), and offline modes.
 
@@ -16,7 +16,7 @@ For more details on connection behavior, see the [Network Access](https://next.o
 
 ---
 
-### `sync-delegates/`
+### Subfolder `sync-delegates/`
 
 Implements Wi-Fi-based synchronization used when no BLE connection is available.
 
@@ -29,9 +29,7 @@ Sync delegates are responsible for sending commands and updating the sitemap ove
   Introduces SyncDelegate support and provides basic guidance on implementing Wi-Fi synchronization.
 - [Connect IQ API Docs – `Toybox.Communications.SyncDelegate`](https://developer.garmin.com/connect-iq/api-docs/Toybox/Communications/SyncDelegate.html)  
   
-<br>
-
-### `web-requests/`
+### Subfolder `web-requests/`
 
 Implements communication with the openHAB server using the Connect IQ SDK’s `Toybox.Communications` module.
 

@@ -9,7 +9,7 @@ While most code in this directory is shared, certain parts are conditionally inc
 
 ## Subfolder Structure
 
-### `data/`
+### Subfolder `data/`
 
 Implements the data layer of the application.
 
@@ -24,7 +24,7 @@ For more details, see the folder’s [README](data/README.md).
 
 ---
 
-### `infrastructure/`
+### Subfolder `infrastructure/`
 
 Provides the technical foundation of the application.
 
@@ -34,7 +34,7 @@ For more details, see the folder’s [README](infrastructure/README.md).
 
 ---
 
-### `user-interface/`
+### Subfolder `user-interface/`
 
 Contains all presentation-layer code.
 

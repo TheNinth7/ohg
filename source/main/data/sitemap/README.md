@@ -12,7 +12,7 @@ The classes in this folder convert the JSON representation delivered by openHAB 
 
 ## Subfolder Structure
 
-### `base/`
+### Subfolder `base/`
 
 Contains `SitemapElement.mc`, the abstract base class for all sitemap elements.
 
@@ -20,7 +20,7 @@ It defines shared properties and common parsing logic used by all concrete sitem
 
 ---
 
-### `json/`
+### Subfolder `json/`
 
 The Connect IQ API delivers JSON data as a dictionary.  
 `JsonObjectAdapter` provides type-safe accessors for retrieving objects, arrays, strings, numbers, and booleans from the JSON structure.
@@ -29,7 +29,7 @@ This layer isolates JSON handling details from the higher-level sitemap model.
 
 ---
 
-### `pages/`
+### Subfolder `pages/`
 
 Contains classes representing the **content** of container-type sitemap elements (e.g., frames or groups).
 
@@ -39,7 +39,7 @@ To keep the UI responsive and avoid limitations such as the Watchdog timeout for
 
 ---
 
-### `widgets/`
+### Subfolder `widgets/`
 
 Contains `SitemapElement` subclasses representing concrete sitemap widgets, such as switches, sliders, text labels, and container elements.
 

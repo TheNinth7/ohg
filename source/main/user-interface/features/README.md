@@ -71,17 +71,17 @@ Device-specific behavior is defined in the `monkey.jungle` build file. Exclusion
 
 ### Subfolders
 
-#### `manager/`
+#### Subfolder `manager/`
 
 Contains `SettingsMenuManager`, which controls the lifecycle and presentation of the settings menu.
 
 It maintains singleton instances of the menu and its input delegate, tracks whether the menu is currently visible, and coordinates transitions between the homepage and the settings view. It also determines focus behavior based on slide direction and input type, and manages pushing and popping the view on the `ViewStack`.
 
-#### `menu/`
+#### Subfolder `menu/`
 
 Contains the `SettingsMenu` implementation based on `BaseMenu`, along with the corresponding input delegates for handling user interaction.
 
-#### `menu-items/`
+#### Subfolder `menu-items/`
 
 Contains the individual menu items displayed within the _Settings_ menu.
 
