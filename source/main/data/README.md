@@ -24,6 +24,6 @@ For more details, see the folder’s [README](sitemap/README.md).
 
 ### Subfolder `storage/`
 
-Handles reading from and writing to persistent storage. 
+Handles reading from and writing to persistent storage.
 
 For more details, see the folder’s [README](storage/README.md).

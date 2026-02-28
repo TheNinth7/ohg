@@ -56,4 +56,4 @@ For container-type elements (e.g., frames or groups), the widget class describes
   Each directory implements specific sitemap element types.
 
   In some cases, the `SitemapWidgetFactory` maps multiple openHAB sitemap element types to a single implementation.  
-  For example, `numeric/` handles both *Setpoint* and *Slider* elements.
+  For example, `numeric/` handles both _Setpoint_ and _Slider_ elements.
