@@ -99,25 +99,25 @@ resEdgeTall=$(resEdgeBase);resources/edge/icons-interface-tall
 #
 # The remaining variables define the paths for individual device
 # implementations.
-srcConstantsBase=source-constants/base
-srcConstantsDefault=$(srcConstantsBase);source-constants/device-default
+srcConstantsBase=source/config/base
+srcConstantsDefault=$(srcConstantsBase);source/config/device-default
 
 # Watches
-srcConstantsFenix6Pro=$(srcConstantsBase);source-constants/device-fenix6pro
-srcConstantsForerunner=$(srcConstantsBase);source-constants/device-forerunner
-srcConstantsVenux1=$(srcConstantsBase);source-constants/device-venux1
+srcConstantsFenix6Pro=$(srcConstantsBase);source/config/device-fenix6pro
+srcConstantsForerunner=$(srcConstantsBase);source/config/device-forerunner
+srcConstantsVenux1=$(srcConstantsBase);source/config/device-venux1
 
 # Edge devices
 # Base path for all Edge devices
-srcConstantsEdgeBase=$(srcConstantsBase);source-constants/device-edge/base;source-constants/device-edge/glance
+srcConstantsEdgeBase=$(srcConstantsBase);source/config/device-edge/base;source/config/device-edge/glance
 # Edge x40 touch-based devices
-srcConstantsEdgeX40Touch=$(srcConstantsEdgeBase);source-constants/device-edge/device-x40-touch
+srcConstantsEdgeX40Touch=$(srcConstantsEdgeBase);source/config/device-edge/device-x40-touch
 # Edge x40 button-based devices
-srcConstantsEdgeX40Button=$(srcConstantsEdgeBase);source-constants/device-edge/device-x40-button
+srcConstantsEdgeX40Button=$(srcConstantsEdgeBase);source/config/device-edge/device-x40-button
 # Edge x50 touch-based devices
-srcConstantsEdgeX50Touch=$(srcConstantsEdgeBase);source-constants/device-edge/device-x50-touch
+srcConstantsEdgeX50Touch=$(srcConstantsEdgeBase);source/config/device-edge/device-x50-touch
 # Edge x50 button-based devices
-srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source-constants/device-edge/device-x50-button/base
+srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source/config/device-edge/device-x50-button/base
 
 # SOURCE PATH - THEMES
 
@@ -125,11 +125,11 @@ srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source-constants/device-edge/d
 
 # Theme definitions specify the source directories that contain
 # the color theme implementations.
-srcThemeDefinitionsBase=source-themes/theme-definitions/base
-srcThemeDefinitionsDefault=source-themes/theme-definitions/device-default
+srcThemeDefinitionsBase=source/themes/theme-definitions/base
+srcThemeDefinitionsDefault=source/themes/theme-definitions/device-default
 # The dark theme for night mode is based on the default theme
-srcThemeDefinitionsNightModeDark=$(srcThemeDefinitionsDefault);source-themes/theme-definitions/device-night-mode/dark
-srcThemeDefinitionsNightModeLight=source-themes/theme-definitions/device-night-mode/light
+srcThemeDefinitionsNightModeDark=$(srcThemeDefinitionsDefault);source/themes/theme-definitions/device-night-mode/dark
+srcThemeDefinitionsNightModeLight=source/themes/theme-definitions/device-night-mode/light
 
 # Edge devices that use buttons for control (for example 540, 840,
 # 550, 850, MTB) require a focus indicator in the menu to show
@@ -141,7 +141,7 @@ srcThemeDefinitionsNightModeLight=source-themes/theme-definitions/device-night-m
 #
 # This behavior is not available in the simulator. Therefore,
 # a blue background is used there as the menu item focus indicator.
-srcThemeDefinitionsNightModeFocusBlue=source-themes/theme-definitions/device-night-mode/focus-blue
+srcThemeDefinitionsNightModeFocusBlue=source/themes/theme-definitions/device-night-mode/focus-blue
 
 # Edge x50 button-based devices display a rounded frame in the
 # background color for the focused menu item. The app must therefore
@@ -149,27 +149,27 @@ srcThemeDefinitionsNightModeFocusBlue=source-themes/theme-definitions/device-nig
 # These devices use the light theme for day mode and the dark theme
 # for night mode. For the focused menu item, the opposite theme
 # is applied to ensure proper contrast.
-srcThemeDefinitionsNightModeFocusInverted=source-themes/theme-definitions/device-night-mode/focus-inverted
+srcThemeDefinitionsNightModeFocusInverted=source/themes/theme-definitions/device-night-mode/focus-inverted
 
 # SOURCE PATH - THEMES - THEME MANAGER
 
 # For devices that use only the dark theme.
-srcThemeManagerDefault=source-themes/theme-manager/device-default
+srcThemeManagerDefault=source/themes/theme-manager/device-default
 
 # Devices that support night mode use the light theme by default
 # and switch to the dark theme when night mode is active.
-srcThemeManagerNightModeBase=source-themes/theme-manager/device-night-mode/base
+srcThemeManagerNightModeBase=source/themes/theme-manager/device-night-mode/base
 
 # The default implementation switches between day and night mode
 # and does not apply a menu item focus indicator.
 # This applies to touch-based Edge devices (Explore 2, 1040, 1050).
-srcThemeManagerNightModeDefault=$(srcThemeManagerNightModeBase);source-themes/theme-manager/device-night-mode/device-default
+srcThemeManagerNightModeDefault=$(srcThemeManagerNightModeBase);source/themes/theme-manager/device-night-mode/device-default
 
 # Button-based devices use a focus indicator.
 # The implementation for x40 and x50 devices is the same here.
 # They differ only in the source directories included for
 # the actual focus indicator theme implementations.
-srcThemeManagerNightModeFocusIndicator=$(srcThemeManagerNightModeBase);source-themes/theme-manager/device-night-mode/device-focus-indicator
+srcThemeManagerNightModeFocusIndicator=$(srcThemeManagerNightModeBase);source/themes/theme-manager/device-night-mode/device-focus-indicator
 
 # SOURCE PATH - THEMES - ASSEMBLY
 
@@ -198,7 +198,7 @@ srcThemesNightModeEdgeX50Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsN
 # is defined per device in the section below.
 
 # Main source directory
-srcBase=source
+srcBase=source/main
 
 # The default source path used for most devices with round screens.
 srcDefault=$(srcBase);$(srcConstantsDefault);$(srcThemesDefault)
@@ -358,10 +358,10 @@ edgemtb.excludeAnnotations = $(edge540.excludeAnnotations)
 edgemtb.sourcePath = $(srcEdgeButtonX40)
 edge550.resourcePath=$(resEdgeShort);$(resLauncherIcons)/56x56-dark
 edge550.excludeAnnotations = $(annotCiq510Plus);$(annotButtonWithSettingsMenuItem);$(annotScreenRectangular);$(annotFullMenu)
-edge550.sourcePath = $(srcEdgeButtonX50);source-constants/device-edge/device-x50-button/device-550
+edge550.sourcePath = $(srcEdgeButtonX50);source/config/device-edge/device-x50-button/device-550
 edge850.resourcePath=$(edge550.resourcePath)
 edge850.excludeAnnotations = $(edge550.excludeAnnotations)
-edge850.sourcePath = $(srcEdgeButtonX50);source-constants/device-edge/device-x50-button/device-850
+edge850.sourcePath = $(srcEdgeButtonX50);source/config/device-edge/device-x50-button/device-850
 
 # Touch-based, CIQ >= 5.1.0
 edge1040.resourcePath=$(resEdgeTall);$(resLauncherIcons)/40x40-dark
