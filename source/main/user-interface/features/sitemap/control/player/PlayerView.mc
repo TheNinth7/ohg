@@ -110,13 +110,13 @@ class PlayerView extends BaseControlView {
         addDrawable( _playPauseIcon );
 
         // The next/previous buttons
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => ThemeManager.current.iconPrevious,
             :locX => 0.2,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER,
             :touchId => :touchPrevious
         } ) );
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => ThemeManager.current.iconNext,
             :locX => 0.8,
             :locY => WatchUi.LAYOUT_VALIGN_CENTER,

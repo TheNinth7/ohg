@@ -12,7 +12,7 @@ The user manual is available in the openHAB documentation at <https://next.openh
 
 ---
 
-# Table of Contents
+## Table of Contents
 
 This README covers the following topics:
 
@@ -34,7 +34,7 @@ This README covers the following topics:
 
 ---
 
-# Introduction
+## Introduction
 
 This app is built using the Garmin Connect IQ SDK and is based on [openHAB sitemaps](https://www.openhab.org/docs/ui/sitemaps.html).
 
@@ -43,7 +43,9 @@ It includes two application types:
 - _**Glance**_: A lightweight, quick-access entry point.
 - _**Widget**_: The main, full-screen interface for interacting with the sitemap.
 
-## _Widget_ Overview
+<br>
+
+### _Widget_ Overview
 
 The _Widget_:
 
@@ -55,7 +57,7 @@ The _Widget_:
 
 <br>
 
-## _Glance_ Overview
+### _Glance_ Overview
 
 The _Glance_:
 
@@ -70,11 +72,11 @@ The _Glance_:
 
 ---
 
-# Project Structure
+## Project Structure
 
 The project is organised into the following directories:
 
-## Root Folder `/`
+### Root Folder `/`
 
 The root directory contains essential project files.
 
@@ -91,19 +93,19 @@ The root directory contains essential project files.
 
 <br>
 
-## Folder `/.vscode`
+### Folder `/.vscode/`
 
 Contains VS Code customizations.
 
 <br>
 
-## Folder `/docs`
+### Folder `/docs/`
 
 Contains the user manual, published at <https://next.openhab.org/docs/apps/garmin/>.
 
 <br>
 
-## Folder `/resources`
+### Folder `/resources/`
 
 In the Connect IQ SDK, resources define:
 
@@ -129,7 +131,7 @@ In the Connect IQ SDK, resources define:
 
 <br>
 
-## Folder `/source`
+### Folder `/source/`
 
 The app is written in **Monkey C**, Garmin's programming language, using the Connect IQ SDK API for UI, settings, persistent storage, and HTTP requests to openHAB.
 
@@ -137,12 +139,12 @@ For more details, continue reading the folder’s [README](source/README.md).
 
 <br>
 
-# Build Instructions
+## Build Instructions
 
 Follow the steps below to build, run, and test the app using the Connect IQ SDK and Garmin simulator.
 <br>
 
-## To Run the App in the Garmin Simulator
+### To Run the App in the Garmin Simulator
 
 1. Install:
    - Visual Studio Code
@@ -158,13 +160,13 @@ Follow the steps below to build, run, and test the app using the Connect IQ SDK 
 
 <br>
 
-## To Compile for a Single Device
+### To Compile for a Single Device
 
 1. Press `CTRL+SHIFT+P` → `Monkey C: Build Current Project`
 
 <br>
 
-## Generating the `.iq` File for Garmin Connect IQ Store Upload
+### Generating the `.iq` File for Garmin Connect IQ Store Upload
 
 Follow these steps to prepare and export your app for upload to the Garmin Connect IQ Store:
 
@@ -194,7 +196,7 @@ Follow these steps to prepare and export your app for upload to the Garmin Conne
 
 <br>
 
-## To Add a New Device
+### To Add a New Device
 
 To support a new device:
 
@@ -211,11 +213,11 @@ To support a new device:
 
 <br>
 
-# Helpful Tips and Notes
+## Helpful Tips and Notes
 
 A collection of useful information for working on this project.
 
-## Removing Debug Statements
+### Removing Debug Statements
 
 While debug statements are only printed in debug builds, they still occupy code space in release builds. Therefore, when building a release, all debug statements should be commented out.
 
@@ -233,7 +235,7 @@ To deactivate the debug statements, replace them with:
 
 This will comment them out without affecting any lines that are already commented.
 
-# Copyright Notice
+## Copyright Notice
 
 ```text
 Copyright (c) 2025 Contributors to the openHAB project
@@ -245,6 +247,6 @@ http://www.eclipse.org/legal/epl-2.0
 SPDX-License-Identifier: EPL-2.0
 ```
 
-# Attributions
+## Attributions
 
 The [interface icons](resources/icons-interface), except for the openHAB logo, are licensed under CC BY 3.0 by [Adrien Coquet](https://adrien-coquet.com/) from [Noun Project](https://thenounproject.com/creator/coquet_adrien/).

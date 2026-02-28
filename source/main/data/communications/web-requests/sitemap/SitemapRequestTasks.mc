@@ -213,14 +213,14 @@ class RefreshUiTask extends BaseSitemapProcessorTask {
         var homepage = HomepageMenu.get();
 
         // If we are in the settings menu, we do nothing
-        if( ! SettingsMenuHandler.isShowingSettings() ) {
+        if( ! SettingsMenuManager.isShowingSettings() ) {
             // If the structure is not valid anymore or an error view
             // view is shown, we reset the view to the homepage
             var currentView = ViewStack.getCurrentView()[0];
             if(    ( ! homepage.structureRemainsValid() 
                      && ! ( currentView instanceof HomepageMenu ) )
                 || ( ! HomepageMenu.isSitemapShowing() 
-                     && ! SettingsMenuHandler.isShowingSettings() )
+                     && ! SettingsMenuManager.isShowingSettings() )
             ) {
                 // Logger.debug( "SitemapRequest.onReceive: resetting to homepage" );
                 ViewStack.resetTo( homepage, HomepageMenuDelegate.get() );

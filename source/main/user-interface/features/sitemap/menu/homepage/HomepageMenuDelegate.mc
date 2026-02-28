@@ -42,7 +42,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     public function onNextPage() as Boolean {
         // Logger.debug( "HomepageMenuDelegate.onNextPage" );
         try {
-            SettingsMenuHandler.showSettings( WatchUi.SLIDE_UP );
+            SettingsMenuManager.showSettings( WatchUi.SLIDE_UP );
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );
         }
@@ -52,7 +52,7 @@ class HomepageMenuDelegate extends PageMenuDelegate {
     public function onPreviousPage() as Boolean {
         // Logger.debug( "HomepageMenuDelegate.onPreviousPage" );
         try {
-            SettingsMenuHandler.showSettings( WatchUi.SLIDE_DOWN );
+            SettingsMenuManager.showSettings( WatchUi.SLIDE_DOWN );
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );
         }

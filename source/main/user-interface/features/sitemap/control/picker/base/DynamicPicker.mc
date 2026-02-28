@@ -74,7 +74,7 @@ class DynamicPicker extends BaseControlView {
         var yStart = 0.375;
         
         // The text field showing the current value
-        _pickable = new RelativePositionText( {
+        _pickable = new RelativeText( {
             :font => Graphics.FONT_LARGE,
             :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
             :locX => 0.5, // We do not use WatchUi.LAYOUT_HALIGN_CENTER because that would override :justification
@@ -83,12 +83,12 @@ class DynamicPicker extends BaseControlView {
         addDrawable( _pickable );
 
         // The up/down arrows
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => Rez.Drawables.chevronUpGrey,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => yStart
         } ) );
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => Rez.Drawables.chevronDownGrey,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => yStart + 0.5
@@ -134,20 +134,20 @@ class DynamicPicker extends BaseControlView {
 
     // On touch-based devices we place two icons for
     // confirm and cancel
-    // The icons are instantiated as InteractiveBitmap with
+    // The icons are instantiated as InteractiveRelativeBitmap with
     // a touchId defined, which will automatically add
     // their touch area to the BaseControlView
     (:exclForButton)
     private function addInputHints( y as Float ) as Void {
         var xSpace = 0.15;
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => Rez.Drawables.iconCancel,
             :locX => xSpace,
             :locY => y,
             :touchId => :touchCancel
         } ) );
         
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => Rez.Drawables.iconCheck,
             :locX => 1 - xSpace,
             :locY => y,

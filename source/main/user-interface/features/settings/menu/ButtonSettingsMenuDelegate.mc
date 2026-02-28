@@ -28,12 +28,12 @@ class ButtonSettingsMenuDelegate extends BaseSettingsMenuDelegate {
 
     /*
     * When exiting the settings menu by scrolling down, use the `SLIDE_UP` transition.
-    * This transition not only animates the menu but also informs the `SettingsMenuHandler`
+    * This transition not only animates the menu but also informs the `SettingsMenuManager`
     * which menu item should be focused in the homepage menu.
     */
     public function onNextPage() as Boolean {
         try {
-            SettingsMenuHandler.hideSettings( WatchUi.SLIDE_UP );
+            SettingsMenuManager.hideSettings( WatchUi.SLIDE_UP );
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );
         }
@@ -43,7 +43,7 @@ class ButtonSettingsMenuDelegate extends BaseSettingsMenuDelegate {
     // Same as above, but for leaving the settings menu by scrolling up
     public function onPreviousPage() as Boolean {
         try {
-            SettingsMenuHandler.hideSettings( WatchUi.SLIDE_DOWN );
+            SettingsMenuManager.hideSettings( WatchUi.SLIDE_DOWN );
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );
         }

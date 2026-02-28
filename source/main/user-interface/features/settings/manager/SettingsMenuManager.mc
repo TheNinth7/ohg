@@ -5,7 +5,7 @@ import Toybox.WatchUi;
  * The settings menu handler is responsible for managing the settings menu.
  * It provides functions to show and hide the menu as needed.
  */
-class SettingsMenuHandler {
+class SettingsMenuManager {
     /*
     * Both the settings menu and its input delegate are maintained as singletons.
     * The specific delegate implementation depends on whether the device uses 

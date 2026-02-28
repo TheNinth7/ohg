@@ -2,7 +2,9 @@
 
 Themes define the color schemes used in the app and can change dynamically at runtime. This also includes icons whose colors must be adapted to the active theme. Themes are used to implement the light and dark mode on Edge devices.
 
-### Structure and Usage
+---
+
+## Structure and Usage
 
 Themes use a slightly technical approach than [device-specific configuration](../config/#folder-config).
 
@@ -14,7 +16,9 @@ To support runtime theme changes, themes are accessed through the `ThemeManager`
 
 Each device is assigned a specific `ThemeManager` implementation via its source path configuration in the [`monkey.jungle`](../../README.md#root-folder-) build file. The corresponding theme definitions required by that manager are included in the same device-specific source path.
 
-### Key Files and Directories
+---
+
+## Key Files and Directories
 
 - `definitions/`  
   Contains the concrete theme definitions, including colors and icons.

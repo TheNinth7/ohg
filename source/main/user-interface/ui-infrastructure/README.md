@@ -1,0 +1,33 @@
+# Folder `ui-infrastructure`
+
+Contains central, stateful runtime facilities that support the user interface.
+
+These classes are not reusable helper functions or visible UI components. Instead, they provide shared management services that are accessed by all UI modules. They coordinate and maintain global UI behavior, such as navigation flow, resource management, and dynamic UI state tracking.
+
+Unlike `shared`, which provides reusable visual building blocks, `ui-infrastructure` implements the underlying mechanisms that enable and coordinate the UI as a whole.
+
+---
+
+## Subfolder `bitmap-cache/`
+
+In the sitemap, elements can define icons that are displayed by menu items.
+
+To avoid repeatedly instantiating identical bitmap resources, the `BitmapCache` provides centralized caching and reuse. Menu items request icons through this cache, ensuring that bitmap instances are shared where possible, reducing memory usage and improving performance.
+
+---
+
+## Subfolder `night-mode/`
+
+On Edge devices, both light and dark (night) modes are supported, and the mode can change at runtime.
+
+Since querying the API’s night mode state is relatively costly, the `NightModeTracker` stores the current mode internally. The system invokes `OHApp.onNightModeChanged` when the mode changes, which triggers the tracker to update its internal state. Other UI components access this centralized state instead of querying the API directly.
+
+---
+
+## Subfolder `view-stack/`
+
+`ViewStack` is a centralized navigation manager that must be used for switching between views instead of calling `WatchUi` functions directly.
+
+It maintains its own internal view stack in parallel with the Connect IQ API’s view stack. This enables advanced behavior, such as replacing the entire stack with a new base view, and works around a known issue on certain newer devices where calling `WatchUi.getCurrentView()` can lead to crashes.
+
+See GitHub ticket [#274](https://github.com/openhab/openhab-garmin/issues/274) for details.

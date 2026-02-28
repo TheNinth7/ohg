@@ -13,7 +13,7 @@ import Toybox.Graphics;
  * to ensure the Drawables are properly rendered.
  *
  * Use addTouchArea() to define areas that trigger actions when tapped 
- * (see BaseControlViewDelegate). If a InteractiveBitmap with a touch area is added,
+ * (see BaseControlViewDelegate). If a InteractiveRelativeBitmap with a touch area is added,
  * the area is automatically included.
  *
  * Subclasses can also use addInputHint() to display input hints on button-based devices—
@@ -32,9 +32,9 @@ class BaseControlView extends View {
     // Add a Drawable
     public function addDrawable( drawable as Drawable ) as Void {
         _drawables.add( drawable );
-        // If this is a InteractiveBitmap with a defined touch area,
+        // If this is a InteractiveRelativeBitmap with a defined touch area,
         // add its touch area to the list
-        if( drawable instanceof InteractiveBitmap ) {
+        if( drawable instanceof InteractiveRelativeBitmap ) {
             var touchArea = drawable.createTouchArea();
             if( touchArea != null ) {
                 addTouchArea( touchArea );

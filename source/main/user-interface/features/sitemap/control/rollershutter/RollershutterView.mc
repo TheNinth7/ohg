@@ -49,7 +49,7 @@ class RollershutterView extends BaseControlView {
         var yStart = 0.375;
         
         // The text field showing the current value
-        _stateDrawable = new RelativePositionText( {
+        _stateDrawable = new RelativeText( {
             :font => Graphics.FONT_LARGE,
             :justification => Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER,
             :locX => 0.5, // We do not use WatchUi.LAYOUT_HALIGN_CENTER because that would override :justification
@@ -61,12 +61,12 @@ class RollershutterView extends BaseControlView {
         updateStateDrawable();
 
         // The up/down arrows
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => Rez.Drawables.chevronUpGrey,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => yStart
         } ) );
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => Rez.Drawables.chevronDownGrey,
             :locX => WatchUi.LAYOUT_HALIGN_CENTER,
             :locY => yStart + 0.5
@@ -110,13 +110,13 @@ class RollershutterView extends BaseControlView {
     }
 
     // On touch-based devices we place an icon for stop
-    // The icon is instantiated as InteractiveBitmap with
+    // The icon is instantiated as InteractiveRelativeBitmap with
     // a touchId defined, which will automatically add
     // its touch area to the BaseControlView
     (:exclForButton)
     private function addInputHints( y as Float ) as Void {
         var xSpace = 0.15;
-        addDrawable( new InteractiveBitmap( {
+        addDrawable( new InteractiveRelativeBitmap( {
             :rezId => Rez.Drawables.iconStop,
             :locX => 1 - xSpace,
             :locY => y,

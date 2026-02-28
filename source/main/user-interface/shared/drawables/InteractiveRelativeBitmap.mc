@@ -16,7 +16,7 @@ import Toybox.System;
  * as the center of the bitmap, rather than the upper-left corner (which is standard).
  *
  */
-class InteractiveBitmap extends Bitmap {
+class InteractiveRelativeBitmap extends Bitmap {
 
     // The standard Bitmap options are extended by
     // an optional id for the touch area for this Bitmap    

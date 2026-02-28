@@ -6,7 +6,7 @@ import Toybox.Graphics;
  * Bitmap implementation for rendering an play/pause bitmap, based on the item state.
  * This class works both for button- and touch-based devices.
  */
-class PlayPauseBitmap extends InteractiveBitmap {
+class PlayPauseBitmap extends InteractiveRelativeBitmap {
 
     // Options accepted by this class
     typedef Options as { 
@@ -38,10 +38,10 @@ class PlayPauseBitmap extends InteractiveBitmap {
 
     // Constructor
     // Processes the initial state
-    public function initialize( options as InteractiveBitmap.Options ) {
+    public function initialize( options as InteractiveRelativeBitmap.Options ) {
         _currentState = options[:state] as String;
         options[:rezId] = getResourceId( _currentState );
-        InteractiveBitmap.initialize( options );
+        InteractiveRelativeBitmap.initialize( options );
     }
 
     // Returns the ResourceId of the bitmap to be shown for a specific state

@@ -16,7 +16,7 @@ class TouchSettingsMenuDelegate extends BaseSettingsMenuDelegate {
 
     public function onBack() as Void {
         try {
-            SettingsMenuHandler.hideSettings( WatchUi.SLIDE_RIGHT );
+            SettingsMenuManager.hideSettings( WatchUi.SLIDE_RIGHT );
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );
         }
