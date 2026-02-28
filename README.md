@@ -51,6 +51,8 @@ The _Widget_:
 - Caches the latest sitemap response in persistent storage.
 - Renders sitemap *Widget*s using specific `CustomMenuItem` implementations, which may also send commands to items.
 
+<br>
+
 ## _Glance_ Overview
 
 The _Glance_:
@@ -85,13 +87,19 @@ The root directory contains essential project files.
 - [Connect IQ SDK Core Topics - Manifest and Permissions](https://developer.garmin.com/connect-iq/core-topics/manifest-and-permissions/)  
 - [Connect IQ SDK Core Topics - Build Configuration](https://developer.garmin.com/connect-iq/core-topics/build-configuration/)
 
+<br>
+
 ## Folder `/.vscode`
 
 Contains VS Code customizations.
 
+<br>
+
 ## Folder `/docs`
 
 Contains the user manual, published at <https://next.openhab.org/docs/apps/garmin/>.
+
+<br>
 
 ## Folder `/resources`
 
@@ -117,13 +125,15 @@ In the Connect IQ SDK, resources define:
 
 - [Connect IQ SDK Core Topics - Resources](https://developer.garmin.com/connect-iq/core-topics/resources/)
 
+<br>
+
 ## Folder `/source`
 
 The app is written in **Monkey C**, Garmin's programming language, using the Connect IQ SDK API for UI, settings, persistent storage, and HTTP requests to openHAB.
 
 For more details, continue reading the folder’s [README](source/README.md#folder-source).
 
----
+<br>
 
 # Build Instructions
 
