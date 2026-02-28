@@ -6,12 +6,9 @@ An app that connects your Garmin wearable to your [openHAB](https://www.openhab.
   <img alt="Get it on Connect IQ Store" src="docs/images/connect_iq_badge.svg" width="240px">
 </a>
 
-<br>
-<br>
-
 The user manual is available in the openHAB documentation at <https://next.openhab.org/docs/apps/garmin/>.
 
-<br>
+---
 
 # Table of Contents
 
@@ -21,7 +18,6 @@ This README covers the following topics:
 - [Project Structure](#project-structure)
   - [Root Folder `/`](#root-folder-)
   - [Folder `/docs`](#folder-docs)
-  - [Folder `/releases`](#folder-releases)
   - [Folder `/resources`](#folder-resources)
   - [Folder `/source`](#folder-source)
   - [Folder `/source-constants`](#folder-source-constants)
@@ -34,9 +30,9 @@ This README covers the following topics:
 - [Copyright Notice](#copyright-notice)
 - [Attributions](#attributions)
 
-<br>
+---
 
-## Introduction
+# Introduction
 
 This app is built using the Garmin Connect IQ SDK and is based on [openHAB sitemaps](https://www.openhab.org/docs/ui/sitemaps.html).
 
@@ -45,7 +41,7 @@ It includes two application types:
 - _**Glance**_: A lightweight, quick-access entry point.
 - _**Widget**_: The main, full-screen interface for interacting with the sitemap.
 
-### _Widget_ Overview
+## _Widget_ Overview
 
 The _Widget_:
 
@@ -55,7 +51,7 @@ The _Widget_:
 - Caches the latest sitemap response in persistent storage.
 - Renders sitemap *Widget*s using specific `CustomMenuItem` implementations, which may also send commands to items.
 
-### _Glance_ Overview
+## _Glance_ Overview
 
 The _Glance_:
 
@@ -67,6 +63,8 @@ The _Glance_:
 - [openHAB for Garmin User Manual](https://next.openhab.org/docs/apps/garmin/)
 - [Connect IQ for Developers](https://developer.garmin.com/connect-iq)
 - [Connect IQ SDK](https://developer.garmin.com/connect-iq/sdk/)
+
+---
 
 # Project Structure
 
@@ -87,8 +85,6 @@ The root directory contains essential project files.
 - [Connect IQ SDK Core Topics - Manifest and Permissions](https://developer.garmin.com/connect-iq/core-topics/manifest-and-permissions/)  
 - [Connect IQ SDK Core Topics - Build Configuration](https://developer.garmin.com/connect-iq/core-topics/build-configuration/)
 
-<br>
-
 ## Folder `/.vscode`
 
 Contains VS Code customizations.
@@ -96,14 +92,6 @@ Contains VS Code customizations.
 ## Folder `/docs`
 
 Contains the user manual, published at <https://next.openhab.org/docs/apps/garmin/>.
-
-<br>
-
-## Folder `/releases`
-
-This folder contains compiled binary releases of the app, intended for upload to the Garmin Connect IQ Store.
-
-<br>
 
 ## Folder `/resources`
 
@@ -129,15 +117,13 @@ In the Connect IQ SDK, resources define:
 
 - [Connect IQ SDK Core Topics - Resources](https://developer.garmin.com/connect-iq/core-topics/resources/)
 
-<br>
-
 ## Folder `/source`
 
 The app is written in **Monkey C**, Garmin's programming language, using the Connect IQ SDK API for UI, settings, persistent storage, and HTTP requests to openHAB.
 
 For more details, continue reading the folder’s [README](source/README.md#folder-source).
 
-<br>
+---
 
 # Build Instructions
 
