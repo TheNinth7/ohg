@@ -108,7 +108,7 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
             );
         }
 
-        return true;            
+        return true;
     }
 
 }
