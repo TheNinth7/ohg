@@ -9,7 +9,7 @@ class SettingsConnectivityMenuItem extends SettingsTextMenuItem {
 
     /*
     * Constructor.
-    * Initializes the superclass with the label and sublabel.
+    * Initializes the base class with the label and sublabel.
     */
     public function initialize() {
         SettingsTextMenuItem.initialize( 
@@ -19,7 +19,7 @@ class SettingsConnectivityMenuItem extends SettingsTextMenuItem {
     }
 
     /*
-    * Called by the superclass to handle drawing.
+    * Called by the base class to handle drawing.
     * Also updates the connectivity mode.
     */
     public function onUpdate( dc as Dc ) as Void {

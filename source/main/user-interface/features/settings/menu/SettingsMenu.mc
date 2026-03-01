@@ -9,7 +9,7 @@ import Toybox.System;
 class SettingsMenu extends BaseMenu {
 
     public function initialize() {
-        // Initialize the super class
+        // Initialize the base class
         BaseMenu.initialize( {
             :title => "Settings",
             :itemHeight => Config.UI_SETTINGS_ITEM_HEIGHT

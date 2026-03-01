@@ -16,7 +16,7 @@ import Toybox.Graphics;
  *
  * You may also override onKey(), but only for keys other than
  * KEY_ENTER, KEY_UP, and KEY_DOWN. If overridden, calls for these keys
- * must be passed to the superclass to ensure proper handling.
+ * must be passed to the base class to ensure proper handling.
  *
  * Do not override onBack(), as it is used internally for handling cancellation.
  * Similarly, do not override onTap(); all tap events should be handled by this class.

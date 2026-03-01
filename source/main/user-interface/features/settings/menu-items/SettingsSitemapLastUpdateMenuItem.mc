@@ -12,7 +12,7 @@ class SettingsSitemapLastUpdatedMenuItem extends SettingsTextMenuItem {
 
     /*
     * Constructor.
-    * Initializes the superclass with the label and sublabel.
+    * Initializes the base class with the label and sublabel.
     */
     public function initialize() {
         SettingsTextMenuItem.initialize( 
@@ -64,7 +64,7 @@ class SettingsSitemapLastUpdatedMenuItem extends SettingsTextMenuItem {
     */
 
     /*
-    * Called by the superclass to handle drawing.
+    * Called by the base class to handle drawing.
     * Also updates the sitemap age.
     */
     public function onUpdate( dc as Dc ) as Void {

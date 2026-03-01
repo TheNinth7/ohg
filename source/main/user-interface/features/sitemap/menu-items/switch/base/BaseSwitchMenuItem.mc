@@ -19,36 +19,21 @@ typedef BaseSwitchMenuItemOptions as {
     :processingMode as BasePageMenu.ProcessingMode
 };
 
-class BaseSwitchMenuItem extends BaseWidgetMenuItem {
-
-    // The command request for sending commands
-    // Defined as interface, since two types of command requests are supported
-    private var _commandRequest as BaseCommandRequest?;
-
-    // The openHAB item linked to the sitemap element
-    private var _itemName as String;
-
-    // If the state is changed, the new state is stored in `_newState` and 
-    // only applied after the request succeeds.
-    private var _newState as String?;
-
-    // We keep the sitemap element for all the configuration
-    // but will also update the state there if it is changed by the app
-    protected var _sitemapSwitch as SitemapSwitch;
-
+class BaseSwitchMenuItem extends BaseCommandMenuItem {
+    
     // Constructor
     protected function initialize( options as BaseSwitchMenuItemOptions ) {
-        _sitemapSwitch = options[:sitemapWidget] as SitemapSwitch;
-        _itemName = _sitemapSwitch.getSwitchItem().getName();
-        
-        BaseWidgetMenuItem.initialize( options );
-        
-        _commandRequest = BaseCommandRequest.get( self, false );
+        BaseCommandMenuItem.initialize( options );
     }
 
-    // Returns the name of the openHAB item associated with this menu item
-    public function getItemName() as String {
-        return _itemName;
+    // Returns the underlying `SitemapWidget`, ensuring it is a
+    // `SitemapSwitch`. Throws an exception if the type does not match.
+    protected function getSitemapSwitch() as SitemapSwitch {
+        var sitemapWidget = getSitemapWidget();
+        if( ! ( sitemapWidget instanceof SitemapSwitch ) ) {
+            throw new GeneralException( "BaseSwitchMenuItem only supports SitemapSwitch." );
+        }
+        return sitemapWidget;
     }
 
     // Abstract function to be implemented by subclasses.
@@ -61,27 +46,13 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
         throw new AbstractMethodException( "BaseSwitchMenuItem.getNextCommand" );
     }
 
-    // Called by the command request after the command is successfully sent.
-    // Triggers `updateItemState()` for the subclass to update the state `Drawable`,
-    // and then requests a UI redraw.
-    public function onCommandComplete( syncMode as Boolean ) as Void {
-        // Logger.debug( "BaseSwitchMenuItem.onCommandComplete" );
-        if( _newState != null ) {
-            if( ! syncMode ) {
-                WatchUi.requestUpdate();
-                updateItemState( _newState );
-                // Notify the base class that we applied an internal state update
-                notifyInternalStateUpdated();
-            }
-            _newState = null;
-        }
-    }
-
-    // Called by the command request if an error occurred.
-    // The `_newState` will not be applied.
-    public function onException( ex as Exception ) as Void {
-        // Logger.debug( "BaseSwitchMenuItem.onException" );
-        _newState = null;
+    // Called by `BaseWidgetMenuItem` when `updateWidget` is invoked with a
+    // changed state.
+    //
+    // Currently not used in this class, but declared to allow subclasses
+    // to override it. The method is still invoked to preserve the extension
+    // point for potential future use.
+    public function onStateUpdated() as Void {
     }
 
     // `onSelect()` retrieves the command from the subclass and sends it.
@@ -89,57 +60,12 @@ class BaseSwitchMenuItem extends BaseWidgetMenuItem {
     // to an asynchronous process, which is responsible for calling
     // sendCommand() directly.
     public function onSelect() as Boolean {
-        if( ! BaseWidgetMenuItem.onSelect() 
-            && _newState == null 
-            && _commandRequest != null 
-        ) {
+        if( ! BaseCommandMenuItem.onSelect() && ! hasPendingCommand() ) {
             var command = getNextCommand();
             if( command != null ) {
                 sendCommand( command );
             }
         }
         return true;
-    }
-
-    // Send the command via the command request
-    public function sendCommand( command as String ) as Void {
-        // Logger.debug( "BaseSwitchMenuItem: sending command ..." );
-        _newState = command;
-        if( _commandRequest != null ) {
-            _commandRequest.sendCommand( command );
-        }
-    }
-
-    // updateItemState() is called when a state change occurs—either received
-    // from the server or triggered by user interaction. This method centralizes
-    // logic that should apply to both scenarios.
-    //
-    // Subclasses may override this method to implement custom behavior
-    // (e.g., updating Drawables). When doing so, they must call the
-    // superclass implementation to ensure the SitemapSwitch object
-    // is properly updated.
-    public function updateItemState( state as String ) as Void {
-        if( ! _sitemapSwitch.getSwitchItem().getState().equals( state ) ) {
-            _sitemapSwitch.updateState( state );
-            setIcon( _sitemapSwitch.getIcon() );
-        }
-    }
-
-    // Called by the sitemap request when updated state data is received.
-    // Updates the label and delegates state `Drawable` updates to the subclass.
-    public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
-        // BaseSitemapMenuItem.update needs to come before updateItemState,
-        // so that updateItemState can already access the
-        // updated label
-        BaseWidgetMenuItem.updateWidget( sitemapWidget );
-        _sitemapSwitch = sitemapWidget as SitemapSwitch;
-        var updatedItemName = _sitemapSwitch.getSwitchItem().getName();
-        // If the item has changed, we update the name and also
-        // need to create a new command request
-        if( ! _itemName.equals( updatedItemName ) ) {
-            _itemName = updatedItemName;
-            _commandRequest = BaseCommandRequest.get( self, false );
-        }
-        updateItemState( _sitemapSwitch.getSwitchItem().getState() );
     }
 }

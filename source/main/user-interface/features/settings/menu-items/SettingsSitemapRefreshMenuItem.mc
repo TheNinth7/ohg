@@ -11,7 +11,7 @@ class SettingsSitemapRefreshMenuItem extends BaseSitemapMenuItem {
 
     /*
     * Constructor.
-    * Initializes the superclass with the label.
+    * Initializes the base class with the label.
     */
     public function initialize() {
         BaseSitemapMenuItem.initialize( { 

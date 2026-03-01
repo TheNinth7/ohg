@@ -9,7 +9,7 @@ import Toybox.Graphics;
  *
  * Subclasses should use addDrawable() to define their layout—ideally within onLayout().
  *
- * Subclasses can override onUpdate(), but should call the superclass implementation
+ * Subclasses can override onUpdate(), but should call the base class implementation
  * to ensure the Drawables are properly rendered.
  *
  * Use addTouchArea() to define areas that trigger actions when tapped 

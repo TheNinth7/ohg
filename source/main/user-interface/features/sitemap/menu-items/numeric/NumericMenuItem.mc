@@ -28,7 +28,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
 
     // Constructor
     // Initializes the BaseCommandRequest used for changing the state,
-    // the Drawable for the displayed state and the superclass
+    // the Drawable for the displayed state and the base class
     public function initialize( 
         sitemapNumeric as SitemapNumeric,
         parent as BasePageMenu,
@@ -64,8 +64,9 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     // when the command is sent. At some point, this should be aligned with
     // BaseSwitchMenuItem, which applies the new state only when the command
     // was confirmed in onCommandComplete().
-    function onCommandComplete( syncMode as Boolean ) as Void {}
-    function onException( ex as Exception ) as Void {}
+    function onCommandComplete() as Void {}
+    function onCommandException( ex as Exception ) as Void {}
+    function onCommandDeferredToSync() as Void {}
 
     // When the menu item is selected, the DynamicPicker is initialized
     // and pushed to the view stack

@@ -17,7 +17,7 @@ typedef CommandMenuEntries as Array<CommandMenuEntry>;
 // Sending the actual command done by a delegate passed into
 // showCommandSelection, which needs to fullfil this interface
 typedef SendCommandDelegate as interface {
-    function sendCommand( cmd as String ) as Void;
+    function sendCommand( cmd as Item.ItemState ) as Void;
 };
 
 class CommandMenuHandler {

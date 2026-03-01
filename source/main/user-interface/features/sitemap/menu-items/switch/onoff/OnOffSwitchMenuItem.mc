@@ -4,7 +4,8 @@ import Toybox.Graphics;
 
 /*
  * A menu item that displays an on/off switch as its state.
- * Selecting the item toggles the switch state.
+ * Selecting the item toggles the switch state, or displays
+ * a command selection menu if the current state is unknown.
  */
 class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
 
@@ -37,12 +38,12 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
         _smallIcon = sitemapSwitch.getLinkedPage() != null;
         _stateDrawable = new OnOffStateDrawable( _isEnabled, isFocused(), _smallIcon );
         
-        // Initialize the superclass
+        // Initialize the base class
         // For the toggle switch we support the display
         // of a display state, if provided by the server
         BaseSwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
-                :stateTextResponsive => getStateTextResponsive( sitemapSwitch ),
+                :stateTextResponsive => deriveTextState( sitemapSwitch ),
                 :stateDrawable => _stateDrawable,
                 :isActionable => false,
                 :parent => parent,
@@ -51,32 +52,13 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
         );
     }
 
-    // Toggle the state
-    public function getNextCommand() as String? {
-        // If we have a state, then we toggle,
-        // if there is none, we show an command selection menu
-        // with ON/OFF
-        if( _isEnabled != null ) {
-            return _isEnabled 
-                ? SwitchItem.ITEM_STATE_OFF 
-                : SwitchItem.ITEM_STATE_ON;
-        } else {
-            CommandMenuHandler.showCommandSelection( 
-                _sitemapSwitch.getLabel(),
-                [ [SwitchItem.ITEM_STATE_ON, SwitchItem.ITEM_STATE_ON],
-                  [SwitchItem.ITEM_STATE_OFF, SwitchItem.ITEM_STATE_OFF] ], 
-                self 
-            );
-            return null;
-        }
-    }
-
-    // Determines the display state of a toggle switch.
-    // Special handling is applied for Dimmers, which are rendered manually
-    // to ensure consistent appearance throughout the app.
-    private static function getStateTextResponsive( 
-        sitemapSwitch as SitemapSwitch 
-    ) as String? {
+    // Returns the display text for a toggle switch based on the given
+    // `SitemapSwitch` data structure.
+    //
+    // The text is rendered in front of the toggle switch.
+    // Dimmers are handled separately and rendered manually to ensure
+    // consistent appearance across the app.
+    private static function deriveTextState( sitemapSwitch as SitemapSwitch ) as String? {
         var switchItem = sitemapSwitch.getSwitchItem();
         return
             switchItem.getType().equals( "Dimmer" )
@@ -86,8 +68,44 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
             : sitemapSwitch.getRemoteDisplayStateOrNull();
     }
 
-    // Intercept the onUpdate call to update the
-    // focus in the Drawable, then call the parent class' onUpdate
+    // Returns the next state to be used as a command when the menu item
+    // is selected.
+    // If a current state is available, the state is toggled and the
+    // corresponding command is returned.
+    // If no state is available, a command selection menu (ON/OFF) is shown
+    // instead, and `null` is returned since the selection menu will send
+    // the command.
+    public function getNextCommand() as String? {
+        if( _isEnabled != null ) {
+            return _isEnabled 
+                ? SwitchItem.ITEM_STATE_OFF 
+                : SwitchItem.ITEM_STATE_ON;
+        } else {
+            CommandMenuHandler.showCommandSelection( 
+                getSitemapSwitch().getLabel(),
+                [ [SwitchItem.ITEM_STATE_ON, SwitchItem.ITEM_STATE_ON],
+                  [SwitchItem.ITEM_STATE_OFF, SwitchItem.ITEM_STATE_OFF] ], 
+                self 
+            );
+            return null;
+        }
+    }
+
+    // Called by the base class when the state changes, either due to
+    // a sitemap update from the server or a local change after a
+    // command was sent.
+    // Updates the locally stored state and the associated Drawable.
+    // Calling WatchUi.requestUpdate() is handled by the base class.
+    public function onStateUpdated() as Void {
+        BaseSwitchMenuItem.onStateUpdated();
+        _isEnabled = parseItemState( getSitemapSwitch().getSwitchItem().getState() );
+        _stateDrawable.setEnabledAndIconSize( _isEnabled, _smallIcon );
+    }
+
+    // To apply the correct color theme, the Drawable representing the
+    // toggle switch must know whether the menu item is currently selected.
+    // Since the selection state can change at any time, we override
+    // onUpdate() and update the focus state on every call.
     public function onUpdate( dc as Dc ) as Void {
         _stateDrawable.setFocus( isFocused() );
         BaseSwitchMenuItem.onUpdate( dc );
@@ -119,31 +137,17 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
         throw new GeneralException( "OnOffSwitchMenuItem: state '" + itemState + "' is not supported" );
     }
 
-    // Update the member and Drawable
-    public function updateItemState( state as String ) as Void {
-        BaseSwitchMenuItem.updateItemState( state );
-        _isEnabled = parseItemState( state );
-        _stateDrawable.setEnabledAndIconSize( _isEnabled, _smallIcon );
-    }
-
-    /*
-    (:debug)
-    public function debugArbeitszimmer( sitemapWidget as SitemapWidget ) as Void {
-        var switchItem = ( sitemapWidget as SitemapSwitch ).getSwitchItem();
-        var name = switchItem.getName();
-        if( name.equals( "Light_OG_AO_Schreibtisch_Switch" ) || name.equals( "CC_OG_AO_Lichter" ) ) {
-            // Logger.debug( "OnOffSwitchMenuItem.updateWidget: " + name + "=" + switchItem.getState() );
-        }
-    }
-    */
-
-    // Override the update method of the super class
-    // and obtain the updated list of commmand mappings
+    // Overrides the base class update method to refresh the displayed
+    // text state.
+    // This logic is implemented here rather than in onStateUpdated(),
+    // because the display text may change even when the underlying item
+    // state remains the same (e.g., for group items showing the number
+    // of active members).
     public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
-        // debugArbeitszimmer( sitemapWidget );
         BaseSwitchMenuItem.updateWidget( sitemapWidget );
+
         _smallIcon = sitemapWidget.getLinkedPage() != null;
-        // Update the display state
-        setStateTextResponsive( getStateTextResponsive( sitemapWidget as SitemapSwitch ) );
+        
+        setStateTextResponsive( deriveTextState( getSitemapSwitch() ) );
     }
 }

@@ -34,7 +34,7 @@ class BaseMenu extends CustomMenu {
         // Logger.debug( "BaseMenu.initialize: Page=" + ( self instanceof PageMenu ) );
         // Logger.debug( "BaseMenu.initialize: Settings=" + ( self instanceof SettingsMenu ) );
         // A title string is provided as input, and this section creates 
-        // the corresponding `Drawable` required by the `CustomMenu` superclass.
+        // the corresponding `Drawable` required by the `CustomMenu` base class.
         _title = new Text( {
             :text => options[:title] as String,
             :font => Config.UI_MENU_TITLE_FONT
@@ -51,8 +51,8 @@ class BaseMenu extends CustomMenu {
         }
 
         /*
-        * Now we start assembling the options for the superclass, beginning with the footer.
-        * Note that the title is not passed to the superclass here;
+        * Now we start assembling the options for the base class, beginning with the footer.
+        * Note that the title is not passed to the base class here;
         * instead, this class implements `drawTitle` (see further below).
         */
         var parentOptions = {
@@ -61,7 +61,7 @@ class BaseMenu extends CustomMenu {
 
         /*
         * The heights of the title and footer are defined by a constant.
-        * If the constant is set to -1, no height values are passed to the superclass, 
+        * If the constant is set to -1, no height values are passed to the base class, 
         * which causes the device defaults to be used.
         *
         * For most devices, the default values are applied. Currently, only Garmin Edge 
@@ -74,7 +74,7 @@ class BaseMenu extends CustomMenu {
             parentOptions[:footerItemHeight] = Config.UI_MENU_FOOTER_HEIGHT;
         }
 
-        // Initialize the super class
+        // Initialize the base class
         CustomMenu.initialize( 
             options[:itemHeight] as Number,
             ThemeManager.current.backgroundColor, 
@@ -82,7 +82,7 @@ class BaseMenu extends CustomMenu {
         );
     }
 
-    // The superclass already defines setTitle() with a Drawable argument,
+    // The base class already defines setTitle() with a Drawable argument,
     // so a different method name must be used here.
     public function setTitleAsString( title as String ) as Void {
         _title.setText( title );
@@ -90,7 +90,7 @@ class BaseMenu extends CustomMenu {
 
     /*
     * The title needs a background color, which isn't possible when passing 
-    * a Drawable to the superclass. 
+    * a Drawable to the base class. 
     * Instead, we override `drawTitle()`, which provides full access 
     * to draw directly on the title area using a `Dc`.
     */
@@ -175,7 +175,7 @@ class BaseMenu extends CustomMenu {
         }
     }
 
-    // The `CustomMenu` superclass does not expose the number of menu items.
+    // The `CustomMenu` base class does not expose the number of menu items.
     // To track this, we override the `addItem()` and `deleteItem()` methods.
     private var _itemCount as Number = 0;
     public function addItem( item as CustomMenuItem ) as Void {

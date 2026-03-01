@@ -102,7 +102,7 @@ class SitemapRequest extends BaseRequest {
 
     // Constructor
     private function initialize() {
-        // Initialize super class
+        // Initialize base class
         BaseRequest.initialize( Communications.HTTP_REQUEST_METHOD_GET );
         // Set response content type
         setOption( :responseType, Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON );
@@ -132,7 +132,7 @@ class SitemapRequest extends BaseRequest {
 
         // During sync, all errors are handled by the sync delegate
         if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
-            SitemapSyncDelegate.get().onException( ex );
+            SitemapSyncDelegate.get().onSyncException( ex );
         } else {
 
             // If Communications.makeWebRequest() returns an error indicating
@@ -234,7 +234,7 @@ class SitemapRequest extends BaseRequest {
         } else {
             try {
                 // Verify response code and response data (in the call to process)
-                // These functions of the super class throw an exception if the 
+                // These functions of the base class throw an exception if the 
                 // code/data is not OK. Additionally checkResponseCode may return
                 // false in conditions where no error is raised but the response
                 // shall be ignored

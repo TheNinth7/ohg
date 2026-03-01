@@ -56,7 +56,7 @@ class SitemapSwitch extends SitemapWidget {
                 getType() + " '" + getLabel() + "': " + ex.getErrorMessage() );
         }
  
-        // The superclass relies on the item for parsing the icon, 
+        // The base class relies on the item for parsing the icon, 
         // therefore we initialize it after the item was created
         SitemapWidget.initialize( 
             json, 
@@ -173,15 +173,19 @@ class SitemapSwitch extends SitemapWidget {
 
     // To be used to update the state if a change
     // is triggered from within the app
-    public function updateState( state as String ) as Void {
+    public function updateState( state as Item.ItemState ) as Void {
+        if( ! ( state instanceof String ) ) {
+            throw new GeneralException( "SitemapSwitch.updateState supports only Strings." );
+        }
         // If the state in the sitemap is the same as we got passed
         // in there is no need to update. updateState is relatively
         // costly due to the lookup of the description
         if( ! _switchItem.getState().equals( state ) ) {
-            _switchItem.updateState( state );
-            processUpdatedState();
+            // This also updates the item, so we do not need to
+            // do it here
+            SitemapWidget.updateState( state );
             // generateSwitchDisplayState() needs both the 
-            // item and the super class to process the update first
+            // item and the base class to process the update first
             _switchDisplayState = generateSwitchDisplayState();
         }
     }

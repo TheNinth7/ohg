@@ -35,7 +35,7 @@ import Toybox.WatchUi;
  *   Must be called by subclasses when the sync completes successfully.
  *   Exits sync mode.
  *
- * - onException()
+ * - onSyncException()
  *   Should be called by subclasses if an error occurs during syncing.
  *   Exits sync mode and displays an error message to the user.
  *
@@ -51,7 +51,7 @@ import Toybox.WatchUi;
  *   successful sync, once the user has confirmed the success screen.
  *
  *   To handle these inconsistencies, we invoke onSyncFinished() from
- *   onException(), finishSync(), and onStopSync(). The implementation of
+ *   onSyncException(), finishSync(), and onStopSync(). The implementation of
  *   onSyncFinished() is designed to tolerate multiple invocations and
  *   guarantees that its actions are executed exactly once.
  * 
@@ -197,8 +197,8 @@ class BaseSyncDelegate extends SyncDelegate {
 
     // Subclasses must call this method when their sync operation fails.
     // It exits sync mode and displays an error message to the user.
-    public function onException( ex as Exception ) as Void {
-        Logger.debug( "BaseSyncDelegate.onException" );
+    public function onSyncException( ex as Exception ) as Void {
+        Logger.debug( "BaseSyncDelegate.onSyncException" );
         
         onSyncFinished();
         
@@ -212,7 +212,7 @@ class BaseSyncDelegate extends SyncDelegate {
             : ex.getErrorMessage() 
         );
 
-        // Logger.debug( "BaseSyncDelegate.onException end" );
+        // Logger.debug( "BaseSyncDelegate.onSyncException end" );
     }
 
     // Called by the API to start the sync.
@@ -233,7 +233,7 @@ class BaseSyncDelegate extends SyncDelegate {
             performSync();
             
         } catch( ex ) {
-            onException( ex );
+            onSyncException( ex );
         }
         // Logger.debug( "BaseSyncDelegate.onStartSync end" );
     }

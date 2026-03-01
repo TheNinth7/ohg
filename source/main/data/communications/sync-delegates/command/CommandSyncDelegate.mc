@@ -69,8 +69,21 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     // Is called when the command request is successful and terminates
     // the sync mode
     // Part of the CommandRequestDelegate interface
-    public function onCommandComplete( syncMode as Boolean ) as Void {
+    public function onCommandComplete() as Void {
         finishSync();
+    }
+
+    // Part of the CommandRequestDelegate interface
+    // This method is required by the interface, but should never be called,
+    // since we are already in sync mode
+    public function onCommandDeferredToSync() as Void {
+        onSyncException( new GeneralException( "CommandSyncDelegate.onCommandDeferredToSync" ) );
+    }
+
+    // Is called by the command request if there is an exception
+    // Part of the CommandRequestDelegate interface
+    public function onCommandException( ex as Exception ) as Void {
+        onSyncException( ex );
     }
 
     // Called by the base class to perform the actual sync tasks.

@@ -16,7 +16,7 @@ class SettingsTextMenuItem extends BaseMenuItem {
 
     /*
     * Constructor.
-    * Initializes the superclass and stores the label and sublabel.
+    * Initializes the base class and stores the label and sublabel.
     */
     public function initialize( label as String, subLabel as String ) {
         BaseMenuItem.initialize( null );
@@ -60,7 +60,7 @@ class SettingsTextMenuItem extends BaseMenuItem {
     }
 
     /*
-    * Called by the superclass to handle drawing.
+    * Called by the base class to handle drawing.
     * This event handler is responsible for rendering the content.
     */
     public function onUpdate( dc as Dc ) as Void {

@@ -7,7 +7,7 @@ import Toybox.Time;
  * Abstract base class for menu items that display sitemap widgets.
  *
  * This class maps widget-specific properties from the given `SitemapWidget` to the menu item
- * and shares some configuration with its superclass, `BaseSitemapMenuItem`.
+ * and shares some configuration with its base class, `BaseSitemapMenuItem`.
  *
  * In addition to this property mapping, it implements support for nested sitemap elements,
  * such as frames or groups, by enabling submenu navigation.
@@ -49,7 +49,11 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
     // by some menu items directly after a command is sent to immediately reflect
     // the new state. Storing this timestamp is required to apply the post-command
     // hold time configured in the app settings.
-    private var _lastInternalStateUpdate as Moment?;
+    private var lastLocalStateUpdate as Moment?;
+
+    // The sitemap widget is stored, so in updateWidget() we can check if the
+    // state has changed, and if yes call onStateUpdated()
+    private var _sitemapWidget as SitemapWidget;
 
     // Constructor
     protected function initialize( 
@@ -61,18 +65,25 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         var isActionable = options[:isActionable] as Boolean?;
         _isActionable = isActionable != null && isActionable;
 
+        _sitemapWidget = options[:sitemapWidget] as SitemapWidget;
+
         // And initialize the base class, partly with data from
         // the SitemapWidget, partly with other options
         BaseSitemapMenuItem.initialize( {
-            :label => ( options[:sitemapWidget] as SitemapWidget ).getLabel(),
+            :label => _sitemapWidget.getLabel(),
             :stateDrawable => options[:stateDrawable],
             :stateTextResponsive => options[:stateTextResponsive]
         } );
 
         processWidget( 
-            options[:sitemapWidget] as SitemapWidget,
+            _sitemapWidget,
             options[:processingMode] as BasePageMenu.ProcessingMode
         );
+    }
+
+    // Returns the current sitemap widget
+    protected function getSitemapWidget() as SitemapWidget {
+        return _sitemapWidget;
     }
 
     // Returns true if the widget is linked to a page (sub menu)
@@ -84,8 +95,8 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
     // since the last internal state update.
     public function isInHoldTime() as Boolean {
         var postCommandHoldTime = AppSettings.getPostCommandHoldTime();
-        if( _lastInternalStateUpdate != null && postCommandHoldTime.value() > 0 ) {
-            return Time.now().lessThan( _lastInternalStateUpdate.add( postCommandHoldTime ) );
+        if( lastLocalStateUpdate != null && postCommandHoldTime.value() > 0 ) {
+            return Time.now().lessThan( lastLocalStateUpdate.add( postCommandHoldTime ) );
         } else {
             return false;
         }
@@ -101,10 +112,19 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
     // Some menu items use internal updates to immediately reflect the new state
     // after a command is sent. This notification stores the time of the update,
     // which is required to apply the configured post-command hold time.
-    protected function notifyInternalStateUpdated() as Void {
-        _lastInternalStateUpdate = Time.now();
+    protected function notifyStateUpdatedLocally() as Void {
+        lastLocalStateUpdate = Time.now();
     }
 
+    /*
+     * Subclasses need to override this method to process state updates.
+     * Note: updateWidget() can be overriden if other widget properties have an 
+     * effect on the 
+     */
+    public function onStateUpdated() as Void {
+        //throw new AbstractMethodException( "BaseWidgetMenuItem.onStateUpdated" );
+    }
+    
     // Handles selection of the menu item.
     //
     // If a submenu is present, it is opened on selection. This typically takes precedence
@@ -134,19 +154,6 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         }
     }
 
-    /*
-     * Updates the menu item with new data received from the server.
-     * The provided `SitemapWidget` contains the updated information.
-     *
-     * Subclasses may override this method if they need to process additional
-     * parts of the update, but they must also call the base class’s
-     * updateWidget() to ensure core functionality is preserved.
-     */
-    public function updateWidget( sitemapWidget as SitemapWidget ) as Void { 
-        // When creating a PageMenu during an update, we always
-        // use the async task queue
-        processWidget( sitemapWidget, BasePageMenu.PROCESSING_ASYNC );
-    }
 
     /*
      * Internal function used to process data both during initialization and
@@ -177,5 +184,44 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
             _page = null;
             setActionIcon( ACTION_ICON_COMMAND );
         }
+    }
+
+
+    /*
+     * Updates the menu item with new data received from the server.
+     * The provided `SitemapWidget` contains the updated information.
+     *
+     * Subclasses may override this method if they need to process additional
+     * parts of the update, but they must also call the base class’s
+     * updateWidget() to ensure core functionality is preserved.
+     *
+     * To process state updates subclasses SHOULD NOT use this function, but
+     * instead override onStateUpdated(). This method is only called
+     * if the state has changed, subclasses may use that implementation also
+     * to process local updates.
+     */
+    public function updateWidget( sitemapWidget as SitemapWidget ) as Void { 
+        // Store the new widget instance
+        var previousSitemapWidget = _sitemapWidget;
+        _sitemapWidget = sitemapWidget;
+
+        // Update the label and formatting in the base class
+        // during an update, we always use the async task queue
+        processWidget( sitemapWidget, BasePageMenu.PROCESSING_ASYNC );
+
+        // Determine if the state as changed and if
+        // yes, call onStateUpdated()
+        var previousItem = previousSitemapWidget.getItem();
+        var newItem = sitemapWidget.getItem();
+        var hasStateChanged =
+            ( previousItem == null ) != ( newItem == null ) 
+            || ( previousItem != null 
+                 && newItem != null
+                 && ! previousItem.getState().equals( newItem.getState() ) );
+        if( hasStateChanged ) {
+            onStateUpdated();
+        }
+
+        WatchUi.requestUpdate();
     }
 }

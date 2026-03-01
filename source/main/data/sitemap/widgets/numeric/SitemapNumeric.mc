@@ -50,7 +50,7 @@ class SitemapNumeric extends SitemapWidget {
                 getType() + " '" + getLabel() + "': " + ex.getErrorMessage() );
         }
 
-        // The superclass relies on the item for parsing the icon, 
+        // The base class relies on the item for parsing the icon, 
         // therefore we initialize it after the item was created
         SitemapWidget.initialize( 
             json, 
@@ -178,14 +178,18 @@ class SitemapNumeric extends SitemapWidget {
 
     // To be used to update the state if a change
     // is triggered from within the app
-    public function updateState( numericState as Float ) as Void {
+    public function updateState( numericState as Item.ItemState ) as Void {
+        if( ! ( numericState instanceof Float ) ) {
+            throw new GeneralException( "SitemapNumeric.updateState supports only Float arguments." );
+        }
         // If the state in the sitemap is the same as we got passed
         // in there is no need to update.
         if( _numericItem.getNumericState() != numericState ) {
-            _numericItem.updateNumericState( numericState );
+            // This also updates the item, so we do not need to
+            // do it here
+            SitemapWidget.updateState( numericState );
             // We use the short format, see constructor for details
             _numericDisplayState = formatStateWithUnitShort( numericState );
-            processUpdatedState();
             // Without a state, we always operate in release only
             // mode. See constructor for details.
             if( ! _numericItem.hasState() ) {

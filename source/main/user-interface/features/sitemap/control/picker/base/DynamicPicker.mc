@@ -156,7 +156,7 @@ class DynamicPicker extends BaseControlView {
     }
 
     // onUpdate we just get the current value and
-    // let the superclass draw all the Drawables
+    // let the base class draw all the Drawables
     public function onUpdate( dc as Dc ) as Void {
         if( _pickable != null ) {
             _pickable.setText( _factory.getCurrent().getLabel() );

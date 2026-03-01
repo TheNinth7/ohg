@@ -30,7 +30,7 @@ class BufferedBitmapDrawable extends Drawable {
 
     // Constructor
     // We fill width and height from the buffered bitmap,
-    // and pass it with the other options to the Drawable super class.
+    // and pass it with the other options to the Drawable base class.
     public function initialize( options as BufferedBitmapDrawableOptions ) {
         _bufferedBitmap = options[:bufferedBitmap] as BufferedBitmapType;
         options[:width] = _bufferedBitmap.getWidth();
@@ -39,7 +39,7 @@ class BufferedBitmapDrawable extends Drawable {
     }
 
     // When the bitmap is updated, we update the size
-    // in the Drawable super class
+    // in the Drawable base class
     public function setBufferedBitmap( 
         bufferedBitmap as BufferedBitmapType 
     ) as Void {

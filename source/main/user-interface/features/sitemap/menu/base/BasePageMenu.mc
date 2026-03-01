@@ -64,7 +64,7 @@ class BasePageMenu extends BaseMenu {
     ) {
         _title = sitemapContainer.title;
         
-        // Initialize the super class
+        // Initialize the base class
         BaseMenu.initialize( {
                 :title => _title,
                 :itemHeight => Config.UI_MENU_ITEM_HEIGHT,

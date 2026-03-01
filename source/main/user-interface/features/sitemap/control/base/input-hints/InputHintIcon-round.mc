@@ -26,7 +26,7 @@ class InputHintIcon extends Bitmap {
         angle as Number, 
         lineWidth as Number ) 
     {
-        // Initialize the superclass
+        // Initialize the base class
         Bitmap.initialize( {
             :rezId => icon
         } );

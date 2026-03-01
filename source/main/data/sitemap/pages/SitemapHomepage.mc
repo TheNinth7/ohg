@@ -28,7 +28,7 @@ class SitemapHomepage extends SitemapPage {
             : new SyncTaskQueue();
 
         // We extract the homepage element and pass 
-        // it on to the super class
+        // it on to the base class
         SitemapPage.initialize( 
             json.getObject( "homepage", "Homepage: homepage element missing" ),
             isSitemapFresh,

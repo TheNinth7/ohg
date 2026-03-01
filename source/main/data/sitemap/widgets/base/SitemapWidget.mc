@@ -18,6 +18,7 @@ class SitemapWidget extends SitemapElement {
     private var _displayState as String;
     private var _icon as ResourceId?;
     private var _iconType as String;
+    private var _staticIcon as Boolean;
     private var _item as Item?;
     private var _label as String;
     private var _labelColor as ColorType?;
@@ -80,20 +81,9 @@ class SitemapWidget extends SitemapElement {
         // use the default presentation of the
         // dynamic icons 
         _iconType = json.getOptionalString( "icon" );
-        _icon = IconParser.parse( 
-            _iconType, 
-            json.getBoolean( "staticIcon" )
-                ? null
-                : _item           
-        );
+        _staticIcon = json.getBoolean( "staticIcon" );
 
-        /*
-        if( ! _iconType.equals( "" ) ) {
-        } else {
-            _iconType = json.getOptionalString( "staticIcon" );
-            _icon = IconParser.parse( _iconType, null );
-        }
-        */
+        _icon = getCurrentIcon();
 
         _labelColor = ColorParser.parse( json, "labelcolor", "Widget '" + _label + "': invalid label color" );
         _valueColor = ColorParser.parse( json, "valuecolor", "Widget '" + _label + "': invalid value color" );
@@ -106,6 +96,17 @@ class SitemapWidget extends SitemapElement {
                 _linkedPage = new SitemapPage( jsonLinkedPage, isSitemapFresh, taskQueue );
             }
         }
+    }
+
+    // Returns the current icon, based on the icon type
+    // and the item state if the icon is not static
+    private function getCurrentIcon() as ResourceId? {
+        return IconParser.parse( 
+            _iconType, 
+            _staticIcon
+                ? null
+                : _item           
+        );
     }
 
     // The display state is initialized with the remote display state; 
@@ -175,12 +176,17 @@ class SitemapWidget extends SitemapElement {
     }
 
     // To be used to update the state if a change
-    // is triggered from within the app
-    public function processUpdatedState() as Void {
-        _icon = IconParser.parse( _iconType, _item );
+    // is triggered from within the app ("internal update")
+    public function updateState( state as Item.ItemState ) as Void {
         _remoteDisplayState = NO_DISPLAY_STATE;
-        _displayState = _item != null
-                            ? _item.getState()
-                            : NO_DISPLAY_STATE;
+        if( _item != null ) {
+            var item = _item;
+            item.updateState( state );
+            _displayState = item.getState();
+        } else {
+            _displayState = NO_DISPLAY_STATE;
+        }
+        // Needs to be called after we updated the item
+        _icon = getCurrentIcon();
     }
 }

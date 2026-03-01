@@ -6,7 +6,7 @@ import Toybox.Graphics;
  * Drawable for rendering an on/off toggle switch.
  *
  * Uses the two bitmaps provided by OnOffStateBitmaps and updates
- * the BufferedBitmap in its superclass based on the current toggle state.
+ * the BufferedBitmap in its base class based on the current toggle state.
  */
 class OnOffStateDrawable extends BufferedBitmapDrawable {
 

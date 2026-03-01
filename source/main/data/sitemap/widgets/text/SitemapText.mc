@@ -18,7 +18,7 @@ class SitemapText extends SitemapWidget {
     ) {
         _item = new Item( json.getObject( "item", "Text '" + getLabel() + "' has no item" ), isSitemapFresh );
 
-        // The superclass relies on the item for parsing the icon, 
+        // The base class relies on the item for parsing the icon, 
         // therefore we initialize it after the item was created
         SitemapWidget.initialize( 
             json, 

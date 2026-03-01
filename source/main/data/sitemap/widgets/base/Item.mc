@@ -8,6 +8,12 @@ import Toybox.WatchUi;
  * Subclasses, such as `SwitchItem`, add properties specific to their respective types.
  */
 class Item {
+
+    // Data types accepted for item state updates.
+    // This class's updateState() method supports only String arguments values.
+    // Subclasses may override it to handle additional data types.
+    typedef ItemState as String or Float;
+    
     // If state is missing, NULL or UNDEF it will be set to this constant.
     public static const NO_STATE = "NULL";
 
@@ -76,7 +82,12 @@ class Item {
     }
 
     //! Updates the item state
-    public function updateState( state as String ) as Void {
+    //! This class's updateState() method supports only String arguments values.
+    //! Subclasses may override it to handle additional data types.
+    public function updateState( state as ItemState ) as Void {
+        if( ! ( state instanceof String ) ) {
+            throw new GeneralException( "Item.updateState supports only Strings." );
+        }
         _state = state;
     }
 }

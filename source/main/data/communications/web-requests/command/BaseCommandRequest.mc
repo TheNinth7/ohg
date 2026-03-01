@@ -31,8 +31,9 @@ import Toybox.WatchUi;
 // of the command request with the menu item.
 typedef CommandRequestDelegate as interface {
     function getItemName() as String;
-    function onCommandComplete( syncMode as Boolean ) as Void;
-    function onException( ex as Exception ) as Void;
+    function onCommandComplete() as Void;
+    function onCommandDeferredToSync() as Void;
+    function onCommandException( ex as Exception ) as Void;
 };
 
 class BaseCommandRequest extends BaseRequest {
@@ -105,11 +106,11 @@ class BaseCommandRequest extends BaseRequest {
                 
                 // Logger.debug( "BaseCommandRequest: starting sync mode ..." );
                 
-                // We assume already now that the command is completed. true indicates to the item that
-                // command is done in sync mode. The item therefore does not need to (and should not) update
+                // We inform the item that the command has been deferred to sync mode
+                // The item therefore does not need to (and should not) update
                 // the state, since that is not displayed when on WiFi. Also the item must not call 
                 // WatchUi.requestUpdate, which would interrupt the display of the sync mode.
-                item.onCommandComplete( true );
+                item.onCommandDeferredToSync();
 
                 // Now we send the command via the sync delegate
                 CommandSyncDelegate.get().sendCommand( [ item.getItemName(), cmd ] );
@@ -170,7 +171,7 @@ class BaseCommandRequest extends BaseRequest {
 
     // Processes the response to the web request
     // If the request was successful, onCommandComplete() is called
-    // If there was an error, onException() is being called
+    // If there was an error, onCommandException() is being called
     public function onReceive( responseCode as Number, data as Dictionary<String,Object?> or String or PersistedContent.Iterator or Null ) as Void {
         var item = _weakItem.get() as CommandRequestDelegate?;
         
@@ -191,10 +192,10 @@ class BaseCommandRequest extends BaseRequest {
                 }
 
                 if( checkResponseCode( responseCode, CommunicationException.EX_SOURCE_COMMAND ) ) {
-                    item.onCommandComplete( false );
+                    item.onCommandComplete();
                 }
             } catch( ex ) {
-                item.onException( ex );
+                item.onCommandException( ex );
                 // If we are in Wifi sync mode, we only report the exception to the
                 // item (i.e. the CommandSyncDelegate)
                 if( ! _syncMode ) {

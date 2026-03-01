@@ -11,9 +11,9 @@ import Toybox.Graphics;
  *
  * Behavior on selection:
  * - If only one command is defined, it is sent immediately.
- * - If two commands are defined and the current state matches one of them,
- *   the other command is sent (toggling behavior).
- * - In all other cases, an action menu is shown, allowing the user to
+ * - If two commands are defined and the current state is known and 
+ *   matches one of them, the other command is sent (toggling behavior).
+ * - In all other cases, an command selection menu is shown, allowing the user to
  *   manually select a command to send.
  */
 class GenericSwitchMenuItem extends BaseSwitchMenuItem {
@@ -34,7 +34,7 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
         parent as BasePageMenu,
         processingMode as BasePageMenu.ProcessingMode
     ) {
-        // Initialize the superclass
+        // Initialize the base class
         BaseSwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
                 :stateTextResponsive => sitemapSwitch.getDisplayState(),
@@ -45,25 +45,28 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
         );
     }
 
-    // Called by the superclass if the state changes
-    // Updates the member and Drawable
-    // This is called by update() of the superclass, and thus
-    // at the end of the update() function above
-    // It is also called after a command was sent to immediately
-    // show the new state, even before the next sitemap update
-    // arrives
-    public function updateItemState( state as String ) as Void {
-        BaseSwitchMenuItem.updateItemState( state );
-        setStateTextResponsive( _sitemapSwitch.getDisplayState() );
+    // Called by the base class when the state changes, either due to
+    // a sitemap update from the server or a local change after a
+    // command was sent.
+    // Updates the locally stored state and the associated Drawable.
+    // Calling WatchUi.requestUpdate() is handled by the base class.
+    public function onStateUpdated() as Void {
+        BaseSwitchMenuItem.onStateUpdated();
+        setStateTextResponsive( getSitemapSwitch().getDisplayState() );
     }
 
-    // Called by the superclass to determine the command
-    // that shell be sent when the menu item is selected
+    // Returns the next state to be used as a command when the menu item
+    // is selected.
+    //
+    // See the class-level comment for details on the applied logic.
+    // If a command selection menu is displayed, `null` is returned here,
+    // as the command will be sent by the selection menu instead.
     public function getNextCommand() as String? {
-        var switchItem = _sitemapSwitch.getSwitchItem();
+        var sitemapSwitch = getSitemapSwitch();
+        var switchItem = sitemapSwitch.getSwitchItem();
         var hasState = switchItem.hasState(); 
         var itemState = switchItem.getState();
-        var commandDescriptions = _sitemapSwitch.getCommandDescriptions();
+        var commandDescriptions = sitemapSwitch.getCommandDescriptions();
         if( commandDescriptions.size() == 1 ) {
             // For one mapping, we just send that command
             return commandDescriptions.getCommandDescription( 0 ).getCommand();
@@ -97,12 +100,12 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
         
         // ... and show the menu
         CommandMenuHandler.showCommandSelection( 
-            _sitemapSwitch.getLabel(), 
+            getSitemapSwitch().getLabel(), 
             menuEntries, 
             self 
         );
 
-        // Returning null tells the super class to not
+        // Returning null tells the base class to not
         // send any command and instead wait for the
         // action menu delegate to trigger the sending
         // of the command

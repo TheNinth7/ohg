@@ -39,14 +39,17 @@ class NumericItem extends Item {
         // Calling updateNumericState would therefore overwrite the
         // "no state" string with "0", which must be avoided.
         if( hasState() ) {
-            updateNumericState( CustomMath.round( _numericState, decimalPlaces ).toFloat() );
+            updateState( CustomMath.round( _numericState, decimalPlaces ).toFloat() );
         }
     }
 
     // Updates the numeric state as well as the
     // string state of the base class
-    public function updateNumericState( numericState as Float ) as Void {
+    public function updateState( numericState as Item.ItemState ) as Void {
+        if( ! ( numericState instanceof Float ) ) {
+            throw new GeneralException( "NumericItem.updateState supports only Float arguments." );
+        }
         _numericState = numericState;
-        updateState( numericState.toString() );
+        Item.updateState( numericState.toString() );
     }
 }
