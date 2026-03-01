@@ -7,7 +7,7 @@ While most code in this directory is shared, certain parts are conditionally inc
 
 ---
 
-## Subfolder Structure
+## Folder Structure
 
 ### Subfolder `data/`
 
@@ -22,8 +22,6 @@ This includes:
 
 For more details, see the folder’s [README](data/README.md).
 
----
-
 ### Subfolder `infrastructure/`
 
 Provides the technical foundation of the application.
@@ -31,8 +29,6 @@ Provides the technical foundation of the application.
 It contains the main `OHApp` class responsible for managing the application lifecycle, along with cross-cutting services such as logging, memory management, task coordination, and other shared technical utilities.
 
 For more details, see the folder’s [README](infrastructure/README.md).
-
----
 
 ### Subfolder `user-interface/`
 

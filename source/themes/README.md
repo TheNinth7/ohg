@@ -4,7 +4,7 @@ Themes define the color schemes used in the app and can change dynamically at ru
 
 ---
 
-## Structure and Usage
+## Key Concepts
 
 Themes use a slightly technical approach than [device-specific configuration](../config/#folder-config).
 
@@ -18,7 +18,7 @@ Each device is assigned a specific `ThemeManager` implementation via its source 
 
 ---
 
-## Key Files and Directories
+## Folder Structure
 
 - `definitions/`  
   Contains the concrete theme definitions, including colors and icons.

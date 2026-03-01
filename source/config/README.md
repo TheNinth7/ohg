@@ -14,7 +14,7 @@ The Garmin SDK’s _Properties_ are stored externally from the app and persist a
 
 ---
 
-## Structure and Usage
+## Key Concepts
 
 All devices inherit default values from `BaseConfig` and `GlanceBaseConfig`, which define all configuration values used in the _Widget_ and _Glance_, respectively.
 
@@ -24,7 +24,7 @@ Additional base classes can be introduced for specific device families. For exam
 
 ---
 
-## Key Files and Directories
+## Folder Structure
 
 - `base/`:
   Contains `BaseConfig` and `GlanceBaseConfig`, which define the baseline values for all devices.

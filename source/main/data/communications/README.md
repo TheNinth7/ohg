@@ -6,15 +6,39 @@ This folder contains the connection management logic, HTTP request handling and 
 
 ---
 
-## Subfolder Structure
+## Key Concepts
+
+### Connection Mode
+
+The app supports two connection modes: Bluetooth Low Energy (BLE) via the paired phone and direct Wi-Fi.
+
+The BLE connection is effectively always on and allows regular polling of the sitemap, including state updates. In contrast, using Wi-Fi requires entering a dedicated Garmin sync mode. During this process, native Garmin system views are shown to indicate sync progress and completion.
+
+Because of this limitation, no item states are displayed while operating in Wi-Fi mode. Commands can still be sent, but they are executed within the sync workflow. A manual sitemap refresh can also be triggered from the settings menu, though this updates only the sitemap structure and does not display live states.
+
+The decision not to display states in Wi-Fi mode is intentional. State accuracy is critical, and showing potentially outdated or inconsistent information would be misleading. In particular, after sending a command there is no reliable way to predict possible side effects on related items. For example, switching on a light could affect a nearby group item. Without real-time updates, the UI might display inconsistent states. In such cases, it is preferable to show no state at all rather than an incorrect one.
+
+See also the user manual’s [Network Access](https://next.openhab.org/docs/apps/garmin/#network-access) section for a user-facing explanation of this behavior.
+
+### Sitemap Updates
+
+Connect IQ does not support subscribing to sitemap updates from openHAB. Therefore, the app periodically polls the complete sitemap via a web request and rebuilds the menu structure based on the response.
+
+The polling interval can be configured by the user in the app settings.
+
+### Commands
+
+Commands are sent using a dedicated command web request. This request is triggered by the menu items representing the corresponding sitemap elements.
+
+---
+
+## Folder Structure
 
 ### Subfolder `connection/`
 
 Contains the `ConnectionManager`, which tracks the currently available connection type (BLE vs. Wi-Fi) and manages transitions between normal, degraded (Wi-Fi), and offline modes.
 
 For more details on connection behavior, see the [Network Access](https://next.openhab.org/docs/apps/garmin/#network-access) section of the user manual.
-
----
 
 ### Subfolder `sync-delegates/`
 
@@ -35,7 +59,7 @@ Implements communication with the openHAB server using the Connect IQ SDK’s `T
 
 These requests are used for both BLE communication and Wi-Fi mode. In addition to sending and receiving data, this layer is responsible for processing server responses—for example, initializing a new sitemap and forwarding it to the user interface.
 
-#### Subfolders
+#### Folder Structure
 
 - **`web-requests/base/`**  
   Contains `BaseRequest`, the abstract base class for all HTTP requests.  

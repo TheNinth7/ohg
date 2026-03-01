@@ -6,7 +6,9 @@ This directory defines how the app is rendered and how users interact with it. I
 
 ---
 
-## Subfolder `base/`
+## Folder Structure
+
+### Subfolder `base/`
 
 Provides abstract and shared base classes for menu implementations:
 
@@ -20,9 +22,7 @@ Provides abstract and shared base classes for menu implementations:
 Additional sitemap-specific styling logic is implemented in  
 `features/sitemap/menu-items/base/BaseSitemapMenuItem`.
 
----
-
-## Subfolder `fallbacks/`
+### Subfolder `fallbacks/`
 
 Contains components responsible for fallback behavior, such as error handling and the loading view.
 
@@ -30,9 +30,7 @@ These classes are used when normal feature rendering cannot proceed (e.g., due t
 
 For more details, see the folder’s [README](fallbacks/README.md).
 
----
-
-## Subfolder `features/`
+### Subfolder `features/`
 
 Implements the main user-facing features of the application.
 
@@ -44,9 +42,7 @@ The current feature categories are:
 
 For more details, see the folder’s [README](features/README.md).
 
----
-
-## Subfolder `shared/`
+### Subfolder `shared/`
 
 Contains reusable UI components that are used across multiple features.
 
@@ -54,9 +50,7 @@ These classes represent visible UI elements or composable building blocks that c
 
 For more details, see the folder’s [README](shared/README.md).
 
----
-
-## Subfolder `ui-infrastructure/`
+### Subfolder `ui-infrastructure/`
 
 Contains central, stateful runtime facilities that support the user interface.
 

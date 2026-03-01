@@ -52,7 +52,7 @@ The initial menu structure is created from the sitemap stored in persistent stor
 
 Updates apply not only to item states but also to structural changes, such as adding or removing menu items when the sitemap definition changes.
 
-### Subfolders
+### Folder Structure
 
 - **`menu/base/`**  
   Contains `BasePageMenu`, which extends `BaseMenu` and provides the logic for displaying a list of sitemap elements at a specific hierarchy level.
@@ -94,7 +94,7 @@ Apart from the label, all elements are optional and can be combined depending on
 In addition to visual representation, menu items handle user input and execute commands using a `CommandRequest`.  
 If a full-screen control view is opened, that view delegates command execution back to the associated menu item.
 
-### Subfolders
+### Folder Structure
 
 - **`menu-items/base/`**  
   - `BaseSitemapMenuItem` – Implements shared visual structure and layout logic  

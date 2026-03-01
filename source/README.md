@@ -28,7 +28,7 @@ All `.mc` files include inline comments and documentation describing the purpose
 
 ---
 
-## Subfolders
+## Folder Structure
 
 ### Subfolder `config/`
 

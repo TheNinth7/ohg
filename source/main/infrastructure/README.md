@@ -6,7 +6,7 @@ It contains the main `OHApp` class responsible for managing the application life
 
 ---
 
-## Subfolder Structure
+## Folder Structure
 
 ### Subfolder `appbase/`
 

@@ -4,7 +4,9 @@ Contains components responsible for fallback behavior, including error handling 
 
 ---
 
-## Subfolder `error-handling/`
+## Folder Structure
+
+### Subfolder `error-handling/`
 
 Manages the detection, handling, and presentation of exceptions within the app.
 
@@ -17,9 +19,7 @@ Manages the detection, handling, and presentation of exceptions within the app.
 - `WarningToastHandler`  
   Determines whether a non-fatal error should be displayed as a toast notification and provides the functionality to show these notifications.
 
----
-
-## Subfolder `loading-view/`
+### Subfolder `loading-view/`
 
 Implements a full-screen loading indicator that signals data is being retrieved.
 

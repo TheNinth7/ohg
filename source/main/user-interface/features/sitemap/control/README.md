@@ -20,7 +20,7 @@ It contains the base mechanisms for:
 - Displaying input hints  
 - Routing user input  
 
-### Subfolders
+### Folder Structure
 
 - **`base/input-hints/`**  
   Contains classes responsible for rendering input hints—visual indicators that map physical device buttons to actions.
@@ -39,7 +39,7 @@ Implements a custom replacement for the Garmin SDK’s `Picker`.
 
 The custom implementation (`DynamicPicker`) allows scrolling through and selecting values while overcoming limitations of the native SDK picker (e.g., dynamic option handling and improved interaction behavior).
 
-### Subfolders
+### Folder Structure
 
 - **`picker/base/`**  
   Contains the base implementation, including `DynamicPicker` and its supporting classes.
