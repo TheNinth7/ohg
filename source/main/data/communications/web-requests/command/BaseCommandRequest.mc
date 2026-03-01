@@ -89,7 +89,13 @@ class BaseCommandRequest extends BaseRequest {
     // If not on Wifi connection or if in sync mode, the command will be sent immediately
     // If on Wifi connection, the command will be handed over to the sync delegate and
     // sync mode will be started.
-    public function sendCommand( cmd as String ) as Void {
+    public function sendCommand( cmd as Item.ItemState ) as Void {
+
+        // Non-string commands are converted to a string
+        if( ! ( cmd instanceof String ) ) {
+            cmd = cmd.toString();
+        }
+        
         // Note that isWifiConnected()=true indicates only that Wi-Fi is available,
         // but the app still needs to switch into sync mode to connect to it. If _syncMode
         // is true, then we are already in sync mode and can send the command.

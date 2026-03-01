@@ -44,7 +44,7 @@ class NumericPickerDelegate extends BaseDynamicPickerDelegate {
                 throw new NonFatalUserInterfaceException( NonFatalUserInterfaceException.EX_INVALID_STATE_TYPE );
             }
             // Logger.debug "NumericPickerDelegate.onAccept: new state=" + newState.toString() );
-            _menuItem.updateState( newState );
+            _menuItem.sendCommand( newState );
         }
         ViewStack.popView( WatchUi.SLIDE_RIGHT );
         return true;
@@ -58,7 +58,7 @@ class NumericPickerDelegate extends BaseDynamicPickerDelegate {
         if( ! _menuItem.getSitemapNumeric().isReleaseOnly() ) {
             if( _menuItem.getSitemapNumeric().getNumericItem().getNumericState() != _previousState ) {
                 // Logger.debug "NumericPickerDelegate.onCancel: reverting to state=" + _previousState.toString() );
-                _menuItem.updateState( _previousState );
+                _menuItem.sendCommand( _previousState );
             } else {
                 // Logger.debug "NumericPickerDelegate.onCancel: state did not change" );
             }
@@ -85,7 +85,7 @@ class NumericPickerDelegate extends BaseDynamicPickerDelegate {
         }
         // Update only if releaseOnly is false
         if( ! _menuItem.getSitemapNumeric().isReleaseOnly() ) {
-            _menuItem.updateState( state );
+            _menuItem.sendCommand( state );
         }
     }     
 }

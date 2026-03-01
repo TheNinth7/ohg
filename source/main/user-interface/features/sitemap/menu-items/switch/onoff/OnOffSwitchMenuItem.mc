@@ -68,27 +68,28 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
             : sitemapSwitch.getRemoteDisplayStateOrNull();
     }
 
-    // Returns the next state to be used as a command when the menu item
-    // is selected.
     // If a current state is available, the state is toggled and the
     // corresponding command is returned.
     // If no state is available, a command selection menu (ON/OFF) is shown
-    // instead, and `null` is returned since the selection menu will send
-    // the command.
-    public function getNextCommand() as String? {
-        if( _isEnabled != null ) {
-            return _isEnabled 
-                ? SwitchItem.ITEM_STATE_OFF 
-                : SwitchItem.ITEM_STATE_ON;
-        } else {
-            CommandMenuHandler.showCommandSelection( 
-                getSitemapSwitch().getLabel(),
-                [ [SwitchItem.ITEM_STATE_ON, SwitchItem.ITEM_STATE_ON],
-                  [SwitchItem.ITEM_STATE_OFF, SwitchItem.ITEM_STATE_OFF] ], 
-                self 
-            );
-            return null;
+    // instead.
+    public function onSelect() as Boolean {
+        if( ! BaseSwitchMenuItem.onSelect() && ! hasPendingCommand() ) {
+            if( _isEnabled != null ) {
+                sendCommand( 
+                    _isEnabled 
+                    ? SwitchItem.ITEM_STATE_OFF 
+                    : SwitchItem.ITEM_STATE_ON 
+                );
+            } else {
+                CommandMenuHandler.showCommandSelection( 
+                    getSitemapSwitch().getLabel(),
+                    [ [SwitchItem.ITEM_STATE_ON, SwitchItem.ITEM_STATE_ON],
+                    [SwitchItem.ITEM_STATE_OFF, SwitchItem.ITEM_STATE_OFF] ], 
+                    self 
+                );
+            }
         }
+        return true;
     }
 
     // Called by the base class when the state changes, either due to
@@ -96,8 +97,8 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
     // command was sent.
     // Updates the locally stored state and the associated Drawable.
     // Calling WatchUi.requestUpdate() is handled by the base class.
-    public function onStateUpdated() as Void {
-        BaseSwitchMenuItem.onStateUpdated();
+    public function onStateChanged() as Void {
+        BaseSwitchMenuItem.onStateChanged();
         _isEnabled = parseItemState( getSitemapSwitch().getSwitchItem().getState() );
         _stateDrawable.setEnabledAndIconSize( _isEnabled, _smallIcon );
     }
@@ -139,7 +140,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
 
     // Overrides the base class update method to refresh the displayed
     // text state.
-    // This logic is implemented here rather than in onStateUpdated(),
+    // This logic is implemented here rather than in onStateChanged(),
     // because the display text may change even when the underlying item
     // state remains the same (e.g., for group items showing the number
     // of active members).

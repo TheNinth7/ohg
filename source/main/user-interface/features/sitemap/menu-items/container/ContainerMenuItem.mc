@@ -30,12 +30,9 @@ class ContainerMenuItem extends BaseWidgetMenuItem {
         } );
     }
 
-    // Updates the menu item
-    public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
-        BaseWidgetMenuItem.updateWidget( sitemapWidget );
-        if( ! ( sitemapWidget instanceof SitemapFrame || sitemapWidget instanceof SitemapGroup ) ) {
-            throw new GeneralException( "Sitemap element '" + sitemapWidget.getLabel() + "' was passed into ContainerMenuItem but is of a different type" );
-        }
-        setStateTextResponsive( sitemapWidget.getDisplayStateOrNull() );
+    // When the state changes, change the displayed state text
+    public function onStateChanged() as Void {
+        setStateTextResponsive( getSitemapWidget().getDisplayStateOrNull() );
     }
+
 }

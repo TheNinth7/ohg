@@ -30,12 +30,9 @@ class TextMenuItem extends BaseWidgetMenuItem {
         } );
     }
 
-    // Updates the menu item
-    public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
-        BaseWidgetMenuItem.updateWidget( sitemapWidget );
-        if( ! ( sitemapWidget instanceof SitemapText ) ) {
-            throw new GeneralException( "Sitemap element '" + sitemapWidget.getLabel() + "' was passed into TextMenuItem but is of a different type" );
-        }
-        setStateTextResponsive( sitemapWidget.getDisplayState() );
+    // When the state changes, change the displayed state text
+    public function onStateChanged() as Void {
+        setStateTextResponsive( getSitemapWidget().getDisplayState() );
     }
+
 }

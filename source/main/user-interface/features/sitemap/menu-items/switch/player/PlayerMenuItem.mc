@@ -7,7 +7,7 @@ import Toybox.WatchUi;
  * When selected, opens a dedicated full-screen view with controls 
  * for "Play"/"Pause", "Next" and "Previous".
  */
-class PlayerMenuItem extends BaseCommandMenuItem {
+class PlayerMenuItem extends BaseSwitchMenuItem {
 
     // Returns true if the given widget matches the type handled by this menu item.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean {
@@ -28,7 +28,7 @@ class PlayerMenuItem extends BaseCommandMenuItem {
         parent as BasePageMenu,
         processingMode as BasePageMenu.ProcessingMode
     ) {
-        BaseCommandMenuItem.initialize( {
+        BaseSwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
                 :isActionable => true,
                 :parent => parent,
@@ -36,17 +36,7 @@ class PlayerMenuItem extends BaseCommandMenuItem {
             }
         );
 
-        onStateUpdated();
-    }
-
-    // Returns the underlying `SitemapWidget`, ensuring it is a
-    // `SitemapSwitch`. Throws an exception if the type does not match.
-    protected function getSitemapSwitch() as SitemapSwitch {
-        var sitemapWidget = getSitemapWidget();
-        if( ! ( sitemapWidget instanceof SitemapSwitch ) ) {
-            throw new GeneralException( "PlayerMenuItem only supports SitemapSwitch." );
-        }
-        return sitemapWidget;
+        onStateChanged();
     }
 
     // Called by the delegate when the view is exited
@@ -106,7 +96,7 @@ class PlayerMenuItem extends BaseCommandMenuItem {
     * For all other states (typically NO_STATE), the state is shown
     * using the base class’s responsive state text.
     */
-    public function onStateUpdated() as Void {
+    public function onStateChanged() as Void {
         var sitemapSwitch = getSitemapSwitch();
 
         // If the view is currently open, we update it as well   

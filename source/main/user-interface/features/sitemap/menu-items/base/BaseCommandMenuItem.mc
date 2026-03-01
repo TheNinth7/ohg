@@ -6,6 +6,13 @@ import Toybox.Time;
 class BaseCommandMenuItem extends BaseWidgetMenuItem {
 
     private var _commandRequest as BaseCommandRequest?;
+
+    // The last time an internal update was applied. Internal updates are applied
+    // by some menu items directly after a command is sent to immediately reflect
+    // the new state. Storing this timestamp is required to apply the post-command
+    // hold time configured in the app settings.
+    private var _lastLocalStateUpdate as Moment?;
+
     private var _pendingCommand as Item.ItemState?;
 
     // Constructor
@@ -44,19 +51,29 @@ class BaseCommandMenuItem extends BaseWidgetMenuItem {
         return _pendingCommand != null;
     }
 
+    // Returns true if the item is still within the configured post-command hold time
+    // since the last internal state update.
+    public function isInHoldTime() as Boolean {
+        var postCommandHoldTime = AppSettings.getPostCommandHoldTime();
+        if( _lastLocalStateUpdate != null && postCommandHoldTime.value() > 0 ) {
+            return Time.now().lessThan( _lastLocalStateUpdate.add( postCommandHoldTime ) );
+        } else {
+            return false;
+        }
+    }
+
     public function onCommandComplete() as Void {
         if( _pendingCommand != null ) {
             // Perform an internal update of the state in the SitemapSwitch
             getSitemapWidget().updateState( _pendingCommand as Item.ItemState );
             _pendingCommand = null;
             
-            // Notify the base class that an internal state update was performed.
-            // This triggers the post-command hold time for state updates,
+            // This is used to apply the post-command hold time for state updates,
             // if configured in the app settings.
-            notifyStateUpdatedLocally();
+            _lastLocalStateUpdate = Time.now();
 
             // Update state displayed by the menu item
-            onStateUpdatedLocally();
+            onStateChangedLocally();
  
             WatchUi.requestUpdate();
        }
@@ -73,22 +90,23 @@ class BaseCommandMenuItem extends BaseWidgetMenuItem {
         _pendingCommand = null;
     }
 
-    public function onStateUpdatedLocally() as Void {
+    public function onStateChangedLocally() as Void {
         setIcon( getSitemapWidget().getIcon() );
-        onStateUpdated();
+        onStateChanged();
     }
 
-    public function onStateUpdated() as Void {
+    public function onStateChanged() as Void {
     }
 
-    // Send the command via the command request
+    // Sends the command via the CommandRequest.
+    // This method allows a command to be sent even if another command
+    // is currently pending. In that case, the pending command is replaced
+    // and the underlying request cancels the previous one.
+    // Subclasses that want to prevent sending a new command while one
+    // is pending should call hasPendingCommand() before invoking
+    // sendCommand().
     public function sendCommand( command as Item.ItemState ) as Void {
-
-        if( ! ( command instanceof String ) ) {
-            throw new GeneralException( "BaseCommandMenuItem.sendCommand supports only String arguments." );
-        }
-
-        if( ! hasPendingCommand() && _commandRequest != null ) {
+        if( _commandRequest != null ) {
             _pendingCommand = command;
             _commandRequest.sendCommand( command );
         }

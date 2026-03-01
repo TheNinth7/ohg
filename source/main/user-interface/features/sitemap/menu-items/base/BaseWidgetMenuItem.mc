@@ -30,30 +30,23 @@ typedef BaseWidgetMenuItemOptions as {
 
 class BaseWidgetMenuItem extends BaseSitemapMenuItem {
 
+    // Store whether the subclass indicated that an action icon should be shown
+    // This information is passed into the constructor as option, but needed 
+    // also during updates
+    private var _isActionable as Boolean;
+
     // The submenu representing the nested elements, if there are any
     private var _page as PageMenu?;
-    
+
+    // The current sitemap widget associated with this menu item
+    private var _sitemapWidget as SitemapWidget;
+
     // Reference to the parent menu is required so that submenus
     // can navigate back. Submenus may be created not only in the
     // constructor, but also dynamically in updateWidget(), so we
     // store the parent menu as a member variable and use a weak
     // reference to avoid memory leaks due to circular references.
     private var _weakParent as WeakReference;
-
-    // Store whether the subclass indicated that an action icon should be shown
-    // This information is passed into the constructor as option, but needed 
-    // also during updates
-    private var _isActionable as Boolean;
-
-    // The last time an internal update was applied. Internal updates are applied
-    // by some menu items directly after a command is sent to immediately reflect
-    // the new state. Storing this timestamp is required to apply the post-command
-    // hold time configured in the app settings.
-    private var lastLocalStateUpdate as Moment?;
-
-    // The sitemap widget is stored, so in updateWidget() we can check if the
-    // state has changed, and if yes call onStateUpdated()
-    private var _sitemapWidget as SitemapWidget;
 
     // Constructor
     protected function initialize( 
@@ -81,26 +74,18 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         );
     }
 
+
     // Returns the current sitemap widget
     protected function getSitemapWidget() as SitemapWidget {
         return _sitemapWidget;
     }
+
 
     // Returns true if the widget is linked to a page (sub menu)
     public function hasPage() as Boolean {
         return _page != null;
     }
     
-    // Returns true if the item is still within the configured post-command hold time
-    // since the last internal state update.
-    public function isInHoldTime() as Boolean {
-        var postCommandHoldTime = AppSettings.getPostCommandHoldTime();
-        if( lastLocalStateUpdate != null && postCommandHoldTime.value() > 0 ) {
-            return Time.now().lessThan( lastLocalStateUpdate.add( postCommandHoldTime ) );
-        } else {
-            return false;
-        }
-    }
 
     // Subclasses must override this method to determine whether the given
     // `SitemapWidget` instance is compatible with this menu item type.
@@ -108,23 +93,16 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         throw new AbstractMethodException( "BaseSitemapMenuItem.getItemType" );
     }
 
-    // Must be called by subclasses when they perform an internal state update.
-    // Some menu items use internal updates to immediately reflect the new state
-    // after a command is sent. This notification stores the time of the update,
-    // which is required to apply the configured post-command hold time.
-    protected function notifyStateUpdatedLocally() as Void {
-        lastLocalStateUpdate = Time.now();
-    }
 
     /*
-     * Subclasses need to override this method to process state updates.
-     * Note: updateWidget() can be overriden if other widget properties have an 
-     * effect on the 
+     * Subclasses can to override this method to process state changes.
+     * Note: this is triggered only when the state has changed. If updates
+     * to other widget data elements should be processed independent of a
+     * state change, then updateWidget() should be overriden to process those.
      */
-    public function onStateUpdated() as Void {
-        //throw new AbstractMethodException( "BaseWidgetMenuItem.onStateUpdated" );
-    }
-    
+    public function onStateChanged() as Void {}
+
+
     // Handles selection of the menu item.
     //
     // If a submenu is present, it is opened on selection. This typically takes precedence
@@ -195,10 +173,10 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
      * parts of the update, but they must also call the base class’s
      * updateWidget() to ensure core functionality is preserved.
      *
-     * To process state updates subclasses SHOULD NOT use this function, but
-     * instead override onStateUpdated(). This method is only called
+     * To process state changes subclasses SHOULD NOT use this function, but
+     * instead override onStateChanged(). This method is only called
      * if the state has changed, subclasses may use that implementation also
-     * to process local updates.
+     * to process local changes.
      */
     public function updateWidget( sitemapWidget as SitemapWidget ) as Void { 
         // Store the new widget instance
@@ -209,17 +187,19 @@ class BaseWidgetMenuItem extends BaseSitemapMenuItem {
         // during an update, we always use the async task queue
         processWidget( sitemapWidget, BasePageMenu.PROCESSING_ASYNC );
 
-        // Determine if the state as changed and if
-        // yes, call onStateUpdated()
+        // Determine if the display state or state as changed and if
+        // yes, call onStateChanged()
         var previousItem = previousSitemapWidget.getItem();
         var newItem = sitemapWidget.getItem();
         var hasStateChanged =
-            ( previousItem == null ) != ( newItem == null ) 
+            ! previousSitemapWidget.getDisplayState().equals( sitemapWidget.getDisplayState() )
+            || ( previousItem == null ) != ( newItem == null ) 
             || ( previousItem != null 
                  && newItem != null
                  && ! previousItem.getState().equals( newItem.getState() ) );
+
         if( hasStateChanged ) {
-            onStateUpdated();
+            onStateChanged();
         }
 
         WatchUi.requestUpdate();

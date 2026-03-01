@@ -6,7 +6,7 @@ import Toybox.WatchUi;
  * Displays the current state as text, applying any available mappings and state descriptions.
  * When selected, opens a dedicated full-screen view with controls for "Up", "Down", and "Stop".
  */
-class RollershutterMenuItem extends BaseCommandMenuItem {
+class RollershutterMenuItem extends BaseSwitchMenuItem {
 
     // Returns true if the given widget matches the type handled by this menu item.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean {
@@ -27,7 +27,7 @@ class RollershutterMenuItem extends BaseCommandMenuItem {
         parent as BasePageMenu,
         processingMode as BasePageMenu.ProcessingMode
     ) {
-        BaseCommandMenuItem.initialize( {
+        BaseSwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
                 :stateTextResponsive => sitemapSwitch.getDisplayState(),
                 :isActionable => true,
@@ -35,16 +35,6 @@ class RollershutterMenuItem extends BaseCommandMenuItem {
                 :processingMode => processingMode
             }
         );
-    }
-
-    // Returns the underlying `SitemapWidget`, ensuring it is a
-    // `SitemapSwitch`. Throws an exception if the type does not match.
-    private function getSitemapSwitch() as SitemapSwitch {
-        var sitemapWidget = getSitemapWidget();
-        if( ! ( sitemapWidget instanceof SitemapSwitch ) ) {
-            throw new GeneralException( "RollershutterMenuItem only supports SitemapSwitch." );
-        }
-        return sitemapWidget;
     }
 
     // Called by the delegate when the view is exited
@@ -56,7 +46,7 @@ class RollershutterMenuItem extends BaseCommandMenuItem {
     // view is initialized and pushed to the view stack
     public function onSelect() as Boolean {
         // First we see if the base class handles the event ...
-        if( ! BaseCommandMenuItem.onSelect() ) {
+        if( ! BaseSwitchMenuItem.onSelect() ) {
             // ... if not, and we do have a command request, then we
             // initialize a new full-screen view and display it
             if( hasCommandsEnabled() ) {
@@ -73,7 +63,7 @@ class RollershutterMenuItem extends BaseCommandMenuItem {
 
     // Overrides the base class update method to refresh the displayed
     // text state.
-    // We intentionally do not implement onStateUpdated(), since this
+    // We intentionally do not implement onStateChanged(), since this
     // menu item only reacts to display state updates originating from
     // the server.
     // For Rollershutter, the commands sent (UP/DOWN/STOP) are not

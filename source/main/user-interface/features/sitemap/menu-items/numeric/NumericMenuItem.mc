@@ -12,19 +12,12 @@ import Toybox.WatchUi;
  * only after the user confirms their selection. If disabled, the state updates
  * continuously as the user scrolls through values.
  */
-class NumericMenuItem extends BaseWidgetMenuItem {
+class NumericMenuItem extends BaseCommandMenuItem {
 
     // Returns true if the given widget matches the type handled by this menu item.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean {
         return sitemapWidget instanceof SitemapNumeric;
     }
-
-    // For changing the state of the item
-    private var _commandRequest as BaseCommandRequest?;
-
-    // Since we need a bunch of values from the sitemap configuration,
-    // we just keep the SitemapNumeric
-    private var _sitemapNumeric as SitemapNumeric;
 
     // Constructor
     // Initializes the BaseCommandRequest used for changing the state,
@@ -34,10 +27,7 @@ class NumericMenuItem extends BaseWidgetMenuItem {
         parent as BasePageMenu,
         processingMode as BasePageMenu.ProcessingMode
     ) {
-        _sitemapNumeric = sitemapNumeric;
-        _commandRequest = BaseCommandRequest.get( self, false );
-
-        BaseWidgetMenuItem.initialize( {
+        BaseCommandMenuItem.initialize( {
                 :sitemapWidget => sitemapNumeric,
                 :stateTextResponsive => sitemapNumeric.getDisplayState(),
                 :isActionable => true,
@@ -50,29 +40,24 @@ class NumericMenuItem extends BaseWidgetMenuItem {
     // This function is called during a command request to identify
     // the target item that the command should be sent to.
     public function getItemName() as String {
-        return _sitemapNumeric.getNumericItem().getName();
+        return getSitemapNumeric().getNumericItem().getName();
     }
 
-    // Returns the SitemapNumeric widget associated with this menu item
+    // Returns the underlying `SitemapWidget`, ensuring it is a
+    // `SitemapNumeric`. Throws an exception if the type does not match.
     public function getSitemapNumeric() as SitemapNumeric {
-        return _sitemapNumeric;
+        var sitemapWidget = getSitemapWidget();
+        if( ! ( sitemapWidget instanceof SitemapNumeric ) ) {
+            throw new GeneralException( "NumericMenuItem supports only SitemapNumeric." );
+        }
+        return sitemapWidget;
     }
-
-    // Nothing to do here, but required to fulfill the delegate interface.
-    //
-    // Currently, the new state is displayed immediately in updateState()
-    // when the command is sent. At some point, this should be aligned with
-    // BaseSwitchMenuItem, which applies the new state only when the command
-    // was confirmed in onCommandComplete().
-    function onCommandComplete() as Void {}
-    function onCommandException( ex as Exception ) as Void {}
-    function onCommandDeferredToSync() as Void {}
 
     // When the menu item is selected, the DynamicPicker is initialized
     // and pushed to the view stack
     public function onSelect() as Boolean {
-        if( ! BaseWidgetMenuItem.onSelect() ) {
-            if( _commandRequest != null ) {
+        if( ! BaseCommandMenuItem.onSelect() ) {
+            if( hasCommandsEnabled() ) {
                 ViewStack.pushView(
                     new DynamicPicker( 
                         getLabel(),
@@ -86,44 +71,13 @@ class NumericMenuItem extends BaseWidgetMenuItem {
         return true;
     }
 
-    // The Picker uses this function to update the state
-    // It stores the new state and sends a command
-    // request to change it on the server
-    public function updateState( newState as Float ) as Void {
-        
-        if( _commandRequest == null ) {
-            throw new GeneralException( "NumericMenuItem: state update not possible because command support is not active" );
-        }
-
-        if( ConnectionManager.get().isBluetoothConnected() ) {
-            // Store the new state in the sitemap object
-            _sitemapNumeric.updateState( newState );
-            
-            // Update the state
-            setStateTextResponsive( _sitemapNumeric.getDisplayState() );
-        }
-        
-        // And send the command
-        ( _commandRequest as BaseCommandRequest ).sendCommand( 
-            newState.toString()
-        );
-
+    // Called by the base class when the state changes, either due to
+    // a sitemap update from the server or a local change after a
+    // command was sent.
+    // Updates the state text.
+    // Calling WatchUi.requestUpdate() is handled by the base class.
+    public function onStateChanged() as Void {
+        setStateTextResponsive( getSitemapNumeric().getDisplayState() );
     }
 
-    // Updates the menu item
-    // This function is called when new data comes in from the
-    // sitemap polling
-    public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
-        BaseWidgetMenuItem.updateWidget( sitemapWidget );
-        var previousItemName = _sitemapNumeric.getNumericItem().getName();
-        if( ! ( sitemapWidget instanceof SitemapNumeric ) ) {
-            throw new GeneralException( "Sitemap element '" + sitemapWidget.getLabel() + "' was passed into NumericMenuItem but is of a different type" );
-        }
-        _sitemapNumeric = sitemapWidget;
-        setStateTextResponsive( sitemapWidget.getDisplayState() );
-        // If the item has changed, we need to create a new command request
-        if( ! _sitemapNumeric.getNumericItem().getName().equals( previousItemName ) ) {
-            _commandRequest = BaseCommandRequest.get( self, false );
-        }
-    }
 }

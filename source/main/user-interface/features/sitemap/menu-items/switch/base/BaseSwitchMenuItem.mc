@@ -36,36 +36,4 @@ class BaseSwitchMenuItem extends BaseCommandMenuItem {
         return sitemapWidget;
     }
 
-    // Abstract function to be implemented by subclasses.
-    // getNextCommand() should return the command to be triggered
-    // when the menu item is selected.
-    // If it returns null, the menu item delegates command selection
-    // to an asynchronous process, which is responsible for calling
-    // sendCommand() directly.
-    public function getNextCommand() as String? {
-        throw new AbstractMethodException( "BaseSwitchMenuItem.getNextCommand" );
-    }
-
-    // Called by `BaseWidgetMenuItem` when `updateWidget` is invoked with a
-    // changed state.
-    //
-    // Currently not used in this class, but declared to allow subclasses
-    // to override it. The method is still invoked to preserve the extension
-    // point for potential future use.
-    public function onStateUpdated() as Void {
-    }
-
-    // `onSelect()` retrieves the command from the subclass and sends it.
-    // If getNextCommand() returns null, the menu item delegates command selection
-    // to an asynchronous process, which is responsible for calling
-    // sendCommand() directly.
-    public function onSelect() as Boolean {
-        if( ! BaseCommandMenuItem.onSelect() && ! hasPendingCommand() ) {
-            var command = getNextCommand();
-            if( command != null ) {
-                sendCommand( command );
-            }
-        }
-        return true;
-    }
 }

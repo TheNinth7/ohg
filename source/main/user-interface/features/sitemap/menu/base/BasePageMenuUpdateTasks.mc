@@ -75,7 +75,7 @@ class AddOrUpdateMenuItemTask extends BaseSitemapProcessorTask {
                 // still return the old state. To avoid this, the post-command hold time
                 // configured in the app settings locks the item against updates for a
                 // defined period after sending a command.
-                if( ! item.isInHoldTime() ) {
+                if( ! ( item instanceof BaseCommandMenuItem && item.isInHoldTime() ) ) {
                     item.updateWidget( _sitemapWidget );
                 }
             } else {
