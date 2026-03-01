@@ -16,24 +16,24 @@ class SettingsMenu extends BaseMenu {
         } );
 
         // Add entry for app version
-        addItem( new SettingsTextMenuItem(
+        addItem( new LabelMenuItem(
             "App Version",
             Application.loadResource( Rez.Strings.AppVersion ) as String
         ) );
 
         // Add entry for server URL
-        addItem( new SettingsTextMenuItem(
+        addItem( new LabelMenuItem(
             "Server",
             AppSettings.getUrl()
         ) );
 
         // Add entry for connectivity mode
-        addItem( new SettingsConnectivityMenuItem() );
+        addItem( new ConnectionModeMenuItem() );
         
         // Add entry for sitemap age
-        addItem( new SettingsSitemapLastUpdatedMenuItem() );
+        addItem( new SitemapLastUpdatedMenuItem() );
         
         // Add entry for Wi-Fi sitemap refresh
-        addItem( new SettingsSitemapRefreshMenuItem() );
+        addItem( new SitemapRefreshMenuItem() );
     }
 }

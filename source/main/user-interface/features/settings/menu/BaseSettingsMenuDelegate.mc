@@ -23,7 +23,7 @@ class BaseSettingsMenuDelegate extends PageMenuDelegate {
     public function onSelect( item as MenuItem ) as Void {
         try{
             // Actionable items are using the base sitemap menu item
-            if( item instanceof BaseSitemapMenuItem ) {
+            if( item instanceof StructuredMenuItem ) {
                 item.onSelect();
             }
         } catch( ex ) {

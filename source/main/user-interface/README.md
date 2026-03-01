@@ -8,20 +8,6 @@ This directory defines how the app is rendered and how users interact with it. I
 
 ## Folder Structure
 
-### Subfolder `base/`
-
-Provides abstract and shared base classes for menu implementations:
-
-- `BaseMenu`  
-  Extends `CustomMenu` and applies consistent styling across all menus in the app.
-
-- `BaseMenuItem`  
-  Extends `CustomMenuItem` to provide consistent behavior and styling support across the app.  
-  Its current primary responsibility is enabling the focus indicator used on Garmin Edge devices.
-
-Additional sitemap-specific styling logic is implemented in  
-`features/sitemap/menu-items/base/BaseSitemapMenuItem`.
-
 ### Subfolder `fallbacks/`
 
 Contains components responsible for fallback behavior, such as error handling and the loading view.

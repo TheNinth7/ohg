@@ -32,6 +32,24 @@ The _Settings_ menu is also implemented using `CustomMenu`.
 
 ## Folder Structure
 
+### Subfolder `base/`
+
+Provides abstract and shared base classes for menu implementations:
+
+- `BaseMenu`  
+  Extends `CustomMenu` and applies consistent styling across all menus in the app.
+
+- `BaseMenuItem`
+  Extends `CustomMenuItem` to provide consistent behavior and styling support across the app.  
+  Its current primary responsibility is enabling the focus indicator used on Garmin Edge devices.
+
+- `LabelMenuItem`  
+  Extends `CustomMenuItem` to provide a simple, non-interactive menu entry consisting of a label and a sub-label. This is primarily used in the settings menu for informational entries.
+
+- `StructuredMenuItem`  
+  Extends `CustomMenuItem` to provide a structured menu entry composed of an icon, label, textual state, bitmap state, and an optional action icon. Not all elements need to be used in every instance.  
+  This class serves as the foundation for all sitemap widgets and is also used in the settings menu for interactive entries.
+  
 ### Subfolder `glance/`
 
 Implements the Glance feature.
