@@ -115,6 +115,7 @@ class BaseDynamicPickerDelegate extends BaseControlViewDelegate {
     // Internal functions to be used in key
     // and touch events
     private function onUpInternal() as Boolean {
+        // Logger.debug( "BaseDynamicPickerDelegate.onUpInternal: start" );
         getFactory().up();
         try{
             onUp( getCurrentValue() );
@@ -124,9 +125,11 @@ class BaseDynamicPickerDelegate extends BaseControlViewDelegate {
             getFactory().down();
             throw ex;
         }
-        return false;
+        // Logger.debug( "BaseDynamicPickerDelegate.onUpInternal: end" );
+        return true;
     }
     private function onDownInternal() as Boolean {
+        // Logger.debug( "BaseDynamicPickerDelegate.onDownInternal: start" );
         getFactory().down();
         try{
             onDown( getCurrentValue() );
@@ -136,6 +139,7 @@ class BaseDynamicPickerDelegate extends BaseControlViewDelegate {
             getFactory().up();
             throw ex;
         }
-        return false;
+        // Logger.debug( "BaseDynamicPickerDelegate.onDownInternal: end" );
+        return true;
     }
 }
