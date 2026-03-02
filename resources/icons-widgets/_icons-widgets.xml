@@ -94,6 +94,9 @@
     <bitmap id="menuSoundVolume07" scaleY="12%" filename="soundvolume-07.svg" dithering="none"/>
     <bitmap id="menuSoundVolume10" scaleY="12%" filename="soundvolume-10.svg" dithering="none"/>
 
+    <bitmap id="menuSoundVolumeMuteOn" scaleY="12%" filename="soundvolume-mute-on.svg" dithering="none"/>
+    <bitmap id="menuSoundVolumeMuteOff" scaleY="12%" filename="soundvolume-mute-off.svg" dithering="none"/>
+
     <bitmap id="menuTemperature" scaleY="12%" filename="temperature.svg" dithering="none"/>
 
     <bitmap id="menuWindowClosed" scaleY="11%" filename="window-closed.svg" dithering="none"/>

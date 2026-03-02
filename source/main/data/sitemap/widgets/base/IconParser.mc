@@ -278,6 +278,14 @@ class IconParser {
                     }
                 }
 
+                case "soundvolume_mute": {
+                    if( itemState.equals( SwitchItem.ITEM_STATE_ON ) ) {
+                        return Rez.Drawables.menuSoundVolumeMuteOn;
+                    } else {
+                        return Rez.Drawables.menuSoundVolumeMuteOff;
+                    }
+                }
+
                 case "motion": return Rez.Drawables.menuMotion;
 
                 case "heating": {
