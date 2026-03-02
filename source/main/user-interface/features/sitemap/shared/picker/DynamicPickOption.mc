@@ -5,7 +5,7 @@ import Toybox.Lang;
  *
  * Each DynamicPickOption stores:
  * - A label (String) for display in the picker UI.
- * - A value object that is passed to the BaseDynamicPickerDelegate's
+ * - A value object that is passed to the DynamicPickerDelegate's
  *   onUp(), onDown(), and onAccept() callbacks.
  */
 class DynamicPickOption {

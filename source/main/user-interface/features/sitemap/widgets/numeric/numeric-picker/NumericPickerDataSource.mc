@@ -11,7 +11,7 @@ import Toybox.WatchUi;
  * between the two nearest steps to represent the current value. 
  * Once the user scrolls away from the additional Drawable, it will be removed.
  */
-class NumericPickerDataSource extends BaseDynamicPickerDataSource {
+class NumericPickerDataSource extends DynamicPickerDataSource {
     // The list of Drawables that are shown by the Picker
     private var _pickables as Array<DynamicPickOption> = [];
     
@@ -24,7 +24,7 @@ class NumericPickerDataSource extends BaseDynamicPickerDataSource {
     // Constructor
     // Builds the list of drawables
     public function initialize( menuItem as NumericMenuItem ) {
-        BaseDynamicPickerDataSource.initialize();
+        DynamicPickerDataSource.initialize();
 
         // Get the data we need for building the list
         var sitemapNumeric = menuItem.getSitemapNumeric();

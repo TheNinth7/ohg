@@ -6,7 +6,7 @@ import Toybox.Graphics;
  * Abstract class for supplying options to a DynamicPicker.
  *
  * This class must be implemented when using a DynamicPicker. It defines
- * the methods used by the BaseDynamicPickerDelegate to navigate through
+ * the methods used by the DynamicPickerDelegate to navigate through
  * the available picker options.
  *
  * Implementations must provide:
@@ -14,17 +14,17 @@ import Toybox.Graphics;
  * - down(): Move to the next option.
  * - getCurrent(): Return the currently selected DynamicPickOption.
  */
-class BaseDynamicPickerDataSource {
+class DynamicPickerDataSource {
     // Move up to the (higher) value
     function up() as Void {
-        throw new AbstractMethodException( "BaseDynamicPickerDataSource.up" );
+        throw new AbstractMethodException( "DynamicPickerDataSource.up" );
     }
     // Move down to the (lower) value
     function down() as Void {
-        throw new AbstractMethodException( "BaseDynamicPickerDataSource.down" );
+        throw new AbstractMethodException( "DynamicPickerDataSource.down" );
     }
     // Get the current value
     function getCurrent() as DynamicPickOption {
-        throw new AbstractMethodException( "BaseDynamicPickerDataSource.getCurrent" );
+        throw new AbstractMethodException( "DynamicPickerDataSource.getCurrent" );
     }
 }

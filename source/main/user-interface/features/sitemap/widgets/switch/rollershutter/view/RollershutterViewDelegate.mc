@@ -20,7 +20,7 @@ class RollershutterViewDelegate extends ControlViewDelegate {
 
     // React to touch area events defined in `RollershutterView`
     public function onAreaTap( area as Symbol, clickEvent as ClickEvent ) as Boolean {
-        // Logger.debug "BaseDynamicPickerDelegate.onAreaTap" );
+        // Logger.debug "DynamicPickerDelegate.onAreaTap" );
         if( area == :touchUp ) {
             return onUp();
         } else if( area == :touchDown ) {
@@ -52,7 +52,7 @@ class RollershutterViewDelegate extends ControlViewDelegate {
 
     // React to key presses
     public function onKey( keyEvent as KeyEvent ) as Boolean {
-        // Logger.debug( "BaseDynamicPickerDelegate.onKey: start" );
+        // Logger.debug( "DynamicPickerDelegate.onKey: start" );
         try {
             var key = keyEvent.getKey();
             if( key == KEY_ENTER ) {
@@ -62,7 +62,7 @@ class RollershutterViewDelegate extends ControlViewDelegate {
             } else if( key == KEY_DOWN ) {
                 return onDown();
             }
-            // Logger.debug( "BaseDynamicPickerDelegate.onKey: end" );
+            // Logger.debug( "DynamicPickerDelegate.onKey: end" );
             return false;
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );

@@ -21,7 +21,7 @@ import Toybox.Graphics;
  * Do not override onBack(), as it is used internally for handling cancellation.
  * Similarly, do not override onTap(); all tap events should be handled by this class.
  */
-class BaseDynamicPickerDelegate extends ControlViewDelegate {
+class DynamicPickerDelegate extends ControlViewDelegate {
 
     // Constructor
     public function initialize() {
@@ -45,7 +45,7 @@ class BaseDynamicPickerDelegate extends ControlViewDelegate {
 
     // React to key presses
     public function onKey( keyEvent as KeyEvent ) as Boolean {
-        // Logger.debug( "BaseDynamicPickerDelegate.onKey: start" );
+        // Logger.debug( "DynamicPickerDelegate.onKey: start" );
         try {
             var key = keyEvent.getKey();
             if( key == KEY_ENTER ) {
@@ -55,7 +55,7 @@ class BaseDynamicPickerDelegate extends ControlViewDelegate {
             } else if( key == KEY_DOWN ) {
                 return onDownInternal();
             }
-            // Logger.debug( "BaseDynamicPickerDelegate.onKey: end" );
+            // Logger.debug( "DynamicPickerDelegate.onKey: end" );
             return false;
         } catch( ex ) {
             ExceptionHandler.handleUserInterfaceException( ex );
@@ -77,7 +77,7 @@ class BaseDynamicPickerDelegate extends ControlViewDelegate {
     // Here we react to the touch areas defined
     // in DynamicPicker.
     public function onAreaTap( area as Symbol, clickEvent as ClickEvent ) as Boolean {
-        // Logger.debug "BaseDynamicPickerDelegate.onAreaTap" );
+        // Logger.debug "DynamicPickerDelegate.onAreaTap" );
         if( area == :touchUp ) {
             return onUpInternal();
         } else if( area == :touchDown ) {
@@ -95,17 +95,17 @@ class BaseDynamicPickerDelegate extends ControlViewDelegate {
     // the current view. This way we also ensure
     // that this delegate is only used in combination
     // with a DynamicPicker view.
-    private var _factory as BaseDynamicPickerDataSource?;
-    private function getFactory() as BaseDynamicPickerDataSource {
+    private var _factory as DynamicPickerDataSource?;
+    private function getFactory() as DynamicPickerDataSource {
         if( _factory == null ) {
             var view = ViewStack.getCurrentView()[0];
             if( view instanceof DynamicPicker ) {
                 _factory = view.getFactory();
             } else {
-                throw new GeneralException( "BaseDynamicPickerDelegate must be used with DynamicPicker view" );
+                throw new GeneralException( "DynamicPickerDelegate must be used with DynamicPicker view" );
             }
         }
-        return _factory as BaseDynamicPickerDataSource;
+        return _factory as DynamicPickerDataSource;
     }
 
     private function getCurrentValue() as Object {
@@ -115,7 +115,7 @@ class BaseDynamicPickerDelegate extends ControlViewDelegate {
     // Internal functions to be used in key
     // and touch events
     private function onUpInternal() as Boolean {
-        // Logger.debug( "BaseDynamicPickerDelegate.onUpInternal: start" );
+        // Logger.debug( "DynamicPickerDelegate.onUpInternal: start" );
         getFactory().up();
         try{
             onUp( getCurrentValue() );
@@ -125,11 +125,11 @@ class BaseDynamicPickerDelegate extends ControlViewDelegate {
             getFactory().down();
             throw ex;
         }
-        // Logger.debug( "BaseDynamicPickerDelegate.onUpInternal: end" );
+        // Logger.debug( "DynamicPickerDelegate.onUpInternal: end" );
         return true;
     }
     private function onDownInternal() as Boolean {
-        // Logger.debug( "BaseDynamicPickerDelegate.onDownInternal: start" );
+        // Logger.debug( "DynamicPickerDelegate.onDownInternal: start" );
         getFactory().down();
         try{
             onDown( getCurrentValue() );
@@ -139,7 +139,7 @@ class BaseDynamicPickerDelegate extends ControlViewDelegate {
             getFactory().up();
             throw ex;
         }
-        // Logger.debug( "BaseDynamicPickerDelegate.onDownInternal: end" );
+        // Logger.debug( "DynamicPickerDelegate.onDownInternal: end" );
         return true;
     }
 }

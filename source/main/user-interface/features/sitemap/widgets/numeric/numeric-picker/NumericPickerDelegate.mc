@@ -16,7 +16,7 @@ import Toybox.WatchUi;
  *   - The value is only updated when the user confirms (via accept).
  *   - Cancel leaves the value unchanged from when the DynamicPicker was opened.
  */
-class NumericPickerDelegate extends BaseDynamicPickerDelegate {
+class NumericPickerDelegate extends DynamicPickerDelegate {
 
     // Reference to the menu item is needed for sending
     // commands
@@ -28,7 +28,7 @@ class NumericPickerDelegate extends BaseDynamicPickerDelegate {
 
     // Constructor
     public function initialize( menuItem as NumericMenuItem ) {
-        BaseDynamicPickerDelegate.initialize();
+        DynamicPickerDelegate.initialize();
         _menuItem = menuItem;
         _previousState = 
             menuItem.getSitemapNumeric().getNumericItem().getNumericState();

@@ -27,19 +27,19 @@ import Toybox.Graphics;
  * for the title and pickable options.
  *
  * - Pickable options must provided using DynamicPickOption, or a subclass.
- * - The BaseDynamicPickerDataSource must be implemented to supply the values and manage the index.
+ * - The DynamicPickerDataSource must be implemented to supply the values and manage the index.
  *   It provides up(), down(), and getCurrent() methods, allowing dynamic addition/removal of items.
- * - The BaseDynamicPickerDelegate defines callbacks for onUp() and onDown(), 
+ * - The DynamicPickerDelegate defines callbacks for onUp() and onDown(), 
  *   in addition to the standard onAccept() and onCancel().
  *
  * See the Numeric menu item and control view implementation for an example of how to 
- * implement a BaseDynamicPickerDataSource and BaseDynamicPickerDelegate.
+ * implement a DynamicPickerDataSource and DynamicPickerDelegate.
  */
 class DynamicPicker extends ControlView {
 
-    // The BaseDynamicPickerDataSource implementation
-    private var _factory as BaseDynamicPickerDataSource;
-    public function getFactory() as BaseDynamicPickerDataSource {
+    // The DynamicPickerDataSource implementation
+    private var _factory as DynamicPickerDataSource;
+    public function getFactory() as DynamicPickerDataSource {
         return _factory;
     }
 
@@ -49,8 +49,8 @@ class DynamicPicker extends ControlView {
     private var _pickable as Text?;
 
     // The constructor takes the display title as String,
-    // and the implementation of the BaseDynamicPickerDataSource
-    public function initialize( title as String, factory as BaseDynamicPickerDataSource ) {
+    // and the implementation of the DynamicPickerDataSource
+    public function initialize( title as String, factory as DynamicPickerDataSource ) {
         ControlView.initialize();
         _title = title;
         _factory = factory;
