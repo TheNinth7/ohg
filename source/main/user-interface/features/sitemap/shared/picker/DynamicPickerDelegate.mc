@@ -77,7 +77,7 @@ class DynamicPickerDelegate extends ControlViewDelegate {
     // Here we react to the touch areas defined
     // in DynamicPicker.
     public function onAreaTap( area as Symbol, clickEvent as ClickEvent ) as Boolean {
-        // Logger.debug "DynamicPickerDelegate.onAreaTap" );
+        // Logger.debug( "DynamicPickerDelegate.onAreaTap: start" );
         if( area == :touchUp ) {
             return onUpInternal();
         } else if( area == :touchDown ) {
@@ -87,6 +87,7 @@ class DynamicPickerDelegate extends ControlViewDelegate {
         } else if( area == :touchCancel ) {
             return onCancel();
         }
+        // Logger.debug( "DynamicPickerDelegate.onAreaTap: end" );
         return false;
     }
 
