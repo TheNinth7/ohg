@@ -50,7 +50,7 @@ class CommandMenuHandler {
         var menu = new CommandMenu( label );
         for( var i = 0; i < menuEntries.size(); i++ ) {
             menu.addItem( 
-                new CommandMenuItem( 
+                new CommandOptionMenuItem( 
                     menuEntries[i][0], 
                     menuEntries[i][1] 
             ) );

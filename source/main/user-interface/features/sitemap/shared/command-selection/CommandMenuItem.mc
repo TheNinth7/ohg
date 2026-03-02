@@ -8,7 +8,7 @@ import Toybox.Graphics;
  * It used only on Edge devices, where the `ActionMenu` is not available.
  */
 (:exclForActionMenu)
-class CommandMenuItem extends BaseMenuItem {
+class CommandOptionMenuItem extends BaseMenuItem {
 
     // The values and Drawable
     private var _label as String;

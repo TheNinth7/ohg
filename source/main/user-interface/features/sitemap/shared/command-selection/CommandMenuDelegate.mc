@@ -26,7 +26,7 @@ class CommandMenuDelegate extends Menu2InputDelegate {
         try {
             // The action menu items have the command as Id
             // var command = item.getId();
-            var command = ( item as CommandMenuItem ).getCommand();
+            var command = ( item as CommandOptionMenuItem ).getCommand();
             if( command instanceof String ) {
                 _delegate.sendCommand( command );
             } else {
