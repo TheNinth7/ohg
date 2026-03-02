@@ -3,13 +3,13 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 
 /*
- * Full-screen view based on BaseControlView to display a rollershutter switch.
+ * Full-screen view based on ControlView to display a rollershutter switch.
  * Provides "Up", "Down", and "Stop" functions, along with the current numeric state.
  *
  * This class handles display only. User input is managed by `RollershutterViewDelegate`,
  * and commands are sent via `RollershutterMenuItem`.
  */
-class RollershutterView extends BaseControlView {
+class RollershutterView extends ControlView {
 
     // The sitemap element associated with this view
     private var _sitemapSwitch as SitemapSwitch;
@@ -23,7 +23,7 @@ class RollershutterView extends BaseControlView {
 
     // Constructor
     public function initialize( sitemapSwitch as SitemapSwitch ) {
-        BaseControlView.initialize();
+        ControlView.initialize();
         _sitemapSwitch = sitemapSwitch;
     }
 
@@ -103,7 +103,7 @@ class RollershutterView extends BaseControlView {
     }
 
     // On button-based devices we use the input hints
-    // feature of the BaseControlView
+    // feature of the ControlView
     (:exclForTouch)
     private function addInputHints( y as Float ) as Void {
         addInputHint( InputHint.HINT_KEY_ENTER, InputHint.HINT_TYPE_STOP, :touchCheck );
@@ -112,7 +112,7 @@ class RollershutterView extends BaseControlView {
     // On touch-based devices we place an icon for stop
     // The icon is instantiated as InteractiveRelativeBitmap with
     // a touchId defined, which will automatically add
-    // its touch area to the BaseControlView
+    // its touch area to the ControlView
     (:exclForButton)
     private function addInputHints( y as Float ) as Void {
         var xSpace = 0.15;

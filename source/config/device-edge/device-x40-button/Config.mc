@@ -5,8 +5,8 @@ import Toybox.System;
 /*
 * Config specific to button-based Edge devices.
 */
-class Config extends EdgeBaseConfig {
-    protected function initialize() { EdgeBaseConfig.initialize(); }
+class Config extends EdgeConfig {
+    protected function initialize() { EdgeConfig.initialize(); }
 
     // On Edge devices, the connection mode indicator is displayed below
     // the title text, so the title text is positioned higher

@@ -5,9 +5,9 @@ import Toybox.System;
 /*
 * Config for touch-based Edge devices.
 */
-class Config extends EdgeBaseConfig {
+class Config extends EdgeConfig {
 
-    protected function initialize() { EdgeBaseConfig.initialize(); }
+    protected function initialize() { EdgeConfig.initialize(); }
 
     // Show menu item dividers
     public static const UI_MENU_ITEM_SHOW_DIVIDER as Boolean = true;

@@ -7,14 +7,14 @@ import Toybox.Graphics;
  * `PlayerView`. Maintains a reference to the associated
  * `PlayerMenuItem`, which it uses to send commands and update the view.
  */
-class PlayerViewDelegate extends BaseControlViewDelegate {
+class PlayerViewDelegate extends ControlViewDelegate {
 
     // The menu item that opened this view
     private var _menuItem as PlayerMenuItem;
 
     // Constructor
     public function initialize( menuItem as PlayerMenuItem ) {
-        BaseControlViewDelegate.initialize();
+        ControlViewDelegate.initialize();
         _menuItem = menuItem;
     }
 

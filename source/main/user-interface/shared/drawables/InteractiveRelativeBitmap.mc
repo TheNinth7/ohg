@@ -7,7 +7,7 @@ import Toybox.System;
  * Custom Bitmap Drawable, extending the standard Bitmap.
  *
  * This class supports defining a touch area for the bitmap,
- * enabling BaseControlViewDelegate to handle touch events on it.
+ * enabling ControlViewDelegate to handle touch events on it.
  *
  * Additionally it allows locX and locY to be specified as a
  * percentage of the view's width and height. Any float value ≤ 1.0

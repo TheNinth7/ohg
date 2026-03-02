@@ -15,8 +15,8 @@ class MenuItemFactory {
     ) as WidgetMenuItem {
         
         // Check if there is still sufficent memory, otherwise
-        // ensureMemory() will throw an exception
-        MemoryManager.ensureMemory();
+        // ensureSufficientMemory() will throw an exception
+        MemoryManager.ensureSufficientMemory();
 
         if( ContainerMenuItem.isMyType( sitemapWidget ) ) {
             return new ContainerMenuItem( 

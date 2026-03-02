@@ -5,8 +5,8 @@ import Toybox.System;
 /*
 * Config specific to button-based Edge devices.
 */
-class Config extends EdgeX50ButtonBaseConfig {
-    protected function initialize() { EdgeX50ButtonBaseConfig.initialize(); }
+class Config extends EdgeX50ButtonConfig {
+    protected function initialize() { EdgeX50ButtonConfig.initialize(); }
 
     // The following two constants control the workaround for a firmware bug on the
     // Edge 550 and 850 that prevents the focus indicator from being rendered properly.

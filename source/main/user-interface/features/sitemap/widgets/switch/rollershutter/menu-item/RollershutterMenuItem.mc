@@ -6,7 +6,7 @@ import Toybox.WatchUi;
  * Displays the current state as text, applying any available mappings and state descriptions.
  * When selected, opens a dedicated full-screen view with controls for "Up", "Down", and "Stop".
  */
-class RollershutterMenuItem extends BaseSwitchMenuItem {
+class RollershutterMenuItem extends SwitchMenuItem {
 
     // Returns true if the given widget matches the type handled by this menu item.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean {
@@ -27,7 +27,7 @@ class RollershutterMenuItem extends BaseSwitchMenuItem {
         parent as BasePageMenu,
         processingMode as BasePageMenu.ProcessingMode
     ) {
-        BaseSwitchMenuItem.initialize( {
+        SwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
                 :stateTextResponsive => sitemapSwitch.getDisplayState(),
                 :isActionable => true,
@@ -46,7 +46,7 @@ class RollershutterMenuItem extends BaseSwitchMenuItem {
     // view is initialized and pushed to the view stack
     public function onSelect() as Boolean {
         // First we see if the base class handles the event ...
-        if( ! BaseSwitchMenuItem.onSelect() ) {
+        if( ! SwitchMenuItem.onSelect() ) {
             // ... if not, and we do have a command request, then we
             // initialize a new full-screen view and display it
             if( hasCommandsEnabled() ) {

@@ -7,14 +7,14 @@ import Toybox.Graphics;
  * `RollershutterView`. Maintains a reference to the associated
  * `RollershutterMenuItem`, which it uses to send commands and update the view.
  */
-class RollershutterViewDelegate extends BaseControlViewDelegate {
+class RollershutterViewDelegate extends ControlViewDelegate {
 
     // The menu item that opened this view
     private var _menuItem as RollershutterMenuItem;
 
     // Constructor
     public function initialize( menuItem as RollershutterMenuItem ) {
-        BaseControlViewDelegate.initialize();
+        ControlViewDelegate.initialize();
         _menuItem = menuItem;
     }
 

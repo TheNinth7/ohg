@@ -21,11 +21,11 @@ import Toybox.Graphics;
  * Do not override onBack(), as it is used internally for handling cancellation.
  * Similarly, do not override onTap(); all tap events should be handled by this class.
  */
-class BaseDynamicPickerDelegate extends BaseControlViewDelegate {
+class BaseDynamicPickerDelegate extends ControlViewDelegate {
 
     // Constructor
     public function initialize() {
-        BaseControlViewDelegate.initialize();
+        ControlViewDelegate.initialize();
     }
 
     // The delegate functions to be implemented by

@@ -39,7 +39,7 @@ class BaseConfig {
     /******* INPUT HINTS *******/ 
 
     // Positions of the device buttons, for drawing input hints
-    // Corresponds to BaseControlView.InputHints enumeration
+    // Corresponds to ControlView.InputHints enumeration
     // 0=ENTER
     // 1=BACK
     // 2=UP

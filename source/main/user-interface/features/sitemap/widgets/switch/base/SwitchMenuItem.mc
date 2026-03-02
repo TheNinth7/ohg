@@ -19,7 +19,7 @@ typedef BaseSwitchMenuItemOptions as {
     :processingMode as BasePageMenu.ProcessingMode
 };
 
-class BaseSwitchMenuItem extends CommandMenuItem {
+class SwitchMenuItem extends CommandMenuItem {
     
     // Constructor
     protected function initialize( options as BaseSwitchMenuItemOptions ) {
@@ -31,7 +31,7 @@ class BaseSwitchMenuItem extends CommandMenuItem {
     protected function getSitemapSwitch() as SitemapSwitch {
         var sitemapWidget = getSitemapWidget();
         if( ! ( sitemapWidget instanceof SitemapSwitch ) ) {
-            throw new GeneralException( "BaseSwitchMenuItem only supports SitemapSwitch." );
+            throw new GeneralException( "SwitchMenuItem only supports SitemapSwitch." );
         }
         return sitemapWidget;
     }

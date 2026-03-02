@@ -3,7 +3,7 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 
 /*
- * Base class for delegates used with BaseControlView.
+ * Base class for delegates used with ControlView.
  *
  * The onSelect() method is triggered by a screen tap, which can conflict
  * with using onTap() for handling touch events on specific areas.
@@ -12,12 +12,12 @@ import Toybox.Graphics;
  *
  * For touch input, subclasses can implement onAreaTap() to receive taps
  * along with the identifier of the touched area. This identifier corresponds
- * to the one used when defining the area in BaseControlView.
+ * to the one used when defining the area in ControlView.
  *
  * If touch areas are not being used, subclasses may override onTap()
  * to define a single behavior for all screen taps.
  */
-class BaseControlViewDelegate extends BehaviorDelegate {
+class ControlViewDelegate extends BehaviorDelegate {
 
     // Constructor
     public function initialize() {
@@ -32,11 +32,11 @@ class BaseControlViewDelegate extends BehaviorDelegate {
     // The onTap() implementation checks which touch area has
     // been tapped and then calls onTapArea() with its identifier
     public function onTap( clickEvent as ClickEvent ) as Boolean {
-        // Logger.debug "BaseControlViewDelegate.onTap" );
+        // Logger.debug "ControlViewDelegate.onTap" );
         try {
-            // Only do this if the view is a BaseControlView
+            // Only do this if the view is a ControlView
             var currentView = ViewStack.getCurrentView()[0];
-            if( currentView instanceof BaseControlView ) {
+            if( currentView instanceof ControlView ) {
                 var touchAreas = currentView.getTouchAreas();
                 var coordinates = clickEvent.getCoordinates();
                 for( var i = touchAreas.size() - 1; i >= 0; i-- ) {
@@ -56,7 +56,7 @@ class BaseControlViewDelegate extends BehaviorDelegate {
     // Subclasses should override this and implement
     // behaviors for the individual tap areas
     public function onAreaTap( area as Symbol, clickEvent as ClickEvent ) as Boolean {
-        // Logger.debug "BaseControlViewDelegate.onAreaTap" );
+        // Logger.debug "ControlViewDelegate.onAreaTap" );
         return false;
     }
 }

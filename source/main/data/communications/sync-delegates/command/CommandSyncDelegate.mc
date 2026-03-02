@@ -50,11 +50,11 @@ class CommandSyncDelegate extends BaseSyncDelegate {
 
     // Helper function that can be used to access the command,
     // while ensuring that a command is present.
-    private function ensureCommand() as WifiSyncCommand {
+    private function getCommand() as WifiSyncCommand {
         if( _cmd != null ) {
             return _cmd;
         } else {
-            // Logger.debug( "CommandSyncDelegate.ensureCommand: command is missing" );
+            // Logger.debug( "CommandSyncDelegate.getCommand: command is missing" );
             throw new GeneralException( "CommandSyncDelegate: command is missing" );
         }
     }
@@ -63,7 +63,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
     // Part of the CommandRequestDelegate interface
     public function getItemName() as String {
         // Logger.debug( "CommandSyncDelegate.getItemName" );
-        return ensureCommand()[0];
+        return getCommand()[0];
     }
 
     // Is called when the command request is successful and terminates
@@ -101,7 +101,7 @@ class CommandSyncDelegate extends BaseSyncDelegate {
             
         // Send the command
         if( commandRequest != null ) {
-            commandRequest.sendCommand( ensureCommand()[1] );
+            commandRequest.sendCommand( getCommand()[1] );
         } else {
             throw new GeneralException( "CommandSyncDelegate: neither REST API nor Webhook are available" );
         }

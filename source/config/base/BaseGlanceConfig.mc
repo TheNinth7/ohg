@@ -10,7 +10,7 @@ import Toybox.System;
  * subclasses can override individual constants as needed.
  */
 (:glance)
-class GlanceBaseConfig {
+class BaseGlanceConfig {
     protected function initialize() {}
     
     // The fonts available for the glance

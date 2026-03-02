@@ -7,7 +7,7 @@ import Toybox.WatchUi;
  * When selected, opens a dedicated full-screen view with controls 
  * for "Play"/"Pause", "Next" and "Previous".
  */
-class PlayerMenuItem extends BaseSwitchMenuItem {
+class PlayerMenuItem extends SwitchMenuItem {
 
     // Returns true if the given widget matches the type handled by this menu item.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean {
@@ -28,7 +28,7 @@ class PlayerMenuItem extends BaseSwitchMenuItem {
         parent as BasePageMenu,
         processingMode as BasePageMenu.ProcessingMode
     ) {
-        BaseSwitchMenuItem.initialize( {
+        SwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
                 :isActionable => true,
                 :parent => parent,

@@ -16,7 +16,7 @@ import Toybox.Graphics;
  * - In all other cases, an command selection menu is shown, allowing the user to
  *   manually select a command to send.
  */
-class GenericSwitchMenuItem extends BaseSwitchMenuItem {
+class GenericSwitchMenuItem extends SwitchMenuItem {
     
     // Returns true if the given widget matches the type handled by this menu item.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean {
@@ -35,7 +35,7 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
         processingMode as BasePageMenu.ProcessingMode
     ) {
         // Initialize the base class
-        BaseSwitchMenuItem.initialize( {
+        SwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
                 :stateTextResponsive => sitemapSwitch.getDisplayState(),
                 :isActionable => true,
@@ -51,7 +51,7 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
     // Updates the locally stored state and the associated Drawable.
     // Calling WatchUi.requestUpdate() is handled by the base class.
     public function onStateChanged() as Void {
-        BaseSwitchMenuItem.onStateChanged();
+        SwitchMenuItem.onStateChanged();
         setStateTextResponsive( getSitemapSwitch().getDisplayState() );
     }
 
@@ -59,7 +59,7 @@ class GenericSwitchMenuItem extends BaseSwitchMenuItem {
     // command selection menu. 
     // See the class-level comment for details on the applied logic.
     public function onSelect() as Boolean {
-        if( ! BaseSwitchMenuItem.onSelect() && ! hasPendingCommand() ) {
+        if( ! SwitchMenuItem.onSelect() && ! hasPendingCommand() ) {
             var sitemapSwitch = getSitemapSwitch();
             var switchItem = sitemapSwitch.getSwitchItem();
             var hasState = switchItem.hasState(); 

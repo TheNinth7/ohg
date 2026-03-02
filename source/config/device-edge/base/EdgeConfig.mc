@@ -6,7 +6,7 @@ import Toybox.System;
 * Default values for all Edge devices.
 * Config implementations vary between button-based and touch-based devices.
 */
-class EdgeBaseConfig extends BaseConfig {
+class EdgeConfig extends BaseConfig {
     protected function initialize() { BaseConfig.initialize(); }
 
     // Heights of menu elements

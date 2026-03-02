@@ -3,13 +3,13 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 
 /*
- * Full-screen view based on BaseControlView to display a player switch.
+ * Full-screen view based on ControlView to display a player switch.
  * Provides "Play"/"Pause", "Next", and "Previous" functions.
  *
  * This class handles display only. User input is managed by `PlayerViewDelegate`,
  * and commands are sent via `PlayerMenuItem`.
  */
-class PlayerView extends BaseControlView {
+class PlayerView extends ControlView {
 
     // The sitemap element associated with this view
     private var _sitemapSwitch as SitemapSwitch;
@@ -27,7 +27,7 @@ class PlayerView extends BaseControlView {
 
     // Constructor
     public function initialize( sitemapSwitch as SitemapSwitch ) {
-        BaseControlView.initialize();
+        ControlView.initialize();
         _sitemapSwitch = sitemapSwitch;
     }
 

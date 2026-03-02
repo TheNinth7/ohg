@@ -13,13 +13,13 @@ import Toybox.Graphics;
  * to ensure the Drawables are properly rendered.
  *
  * Use addTouchArea() to define areas that trigger actions when tapped 
- * (see BaseControlViewDelegate). If a InteractiveRelativeBitmap with a touch area is added,
+ * (see ControlViewDelegate). If a InteractiveRelativeBitmap with a touch area is added,
  * the area is automatically included.
  *
  * Subclasses can also use addInputHint() to display input hints on button-based devices—
  * indicators showing which buttons perform which actions.
  */
-class BaseControlView extends View {
+class ControlView extends View {
 
     // Constructor
     public function initialize() {
@@ -85,7 +85,7 @@ class BaseControlView extends View {
     
     // Clear the Dc and draw all Drawables    
     public function onUpdate( dc as Dc ) as Void {
-        // Logger.debug( "BaseControlView.onUpdate: start" );
+        // Logger.debug( "ControlView.onUpdate: start" );
 
         // We need to clear the clip, because there is bug in Garmin SDK,
         // with a clip in the menu title setting a clip in subsequent views
@@ -97,7 +97,7 @@ class BaseControlView extends View {
         dc.clear();
 
         draw( dc );
-        // Logger.debug( "BaseControlView.onUpdate: end" );
+        // Logger.debug( "ControlView.onUpdate: end" );
     }
 
     // Touch areas with accessors

@@ -9,7 +9,7 @@ import Toybox.WatchUi;
  *
  * This class also accepts a touch area identifier. If provided,
  * it will create a corresponding touch area, which is automatically
- * added by BaseControlView.
+ * added by ControlView.
  */
 (:exclForTouch :exclForScreenRectangular)
 class InputHintIcon extends Bitmap {

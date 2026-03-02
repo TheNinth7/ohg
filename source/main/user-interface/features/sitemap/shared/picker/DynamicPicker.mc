@@ -35,7 +35,7 @@ import Toybox.Graphics;
  * See the Numeric menu item and control view implementation for an example of how to 
  * implement a BaseDynamicPickerDataSource and BaseDynamicPickerDelegate.
  */
-class DynamicPicker extends BaseControlView {
+class DynamicPicker extends ControlView {
 
     // The BaseDynamicPickerDataSource implementation
     private var _factory as BaseDynamicPickerDataSource;
@@ -51,7 +51,7 @@ class DynamicPicker extends BaseControlView {
     // The constructor takes the display title as String,
     // and the implementation of the BaseDynamicPickerDataSource
     public function initialize( title as String, factory as BaseDynamicPickerDataSource ) {
-        BaseControlView.initialize();
+        ControlView.initialize();
         _title = title;
         _factory = factory;
     }
@@ -125,7 +125,7 @@ class DynamicPicker extends BaseControlView {
     }
 
     // On button-based devices we use the input hints
-    // feature of the BaseControlView
+    // feature of the ControlView
     (:exclForTouch)
     private function addInputHints( y as Float ) as Void {
         addInputHint( InputHint.HINT_KEY_ENTER, InputHint.HINT_TYPE_CHECK, :touchCheck );
@@ -136,7 +136,7 @@ class DynamicPicker extends BaseControlView {
     // confirm and cancel
     // The icons are instantiated as InteractiveRelativeBitmap with
     // a touchId defined, which will automatically add
-    // their touch area to the BaseControlView
+    // their touch area to the ControlView
     (:exclForButton)
     private function addInputHints( y as Float ) as Void {
         var xSpace = 0.15;
@@ -161,6 +161,6 @@ class DynamicPicker extends BaseControlView {
         if( _pickable != null ) {
             _pickable.setText( _factory.getCurrent().getLabel() );
         }
-        BaseControlView.onUpdate( dc );
+        ControlView.onUpdate( dc );
     }
 }

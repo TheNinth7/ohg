@@ -6,6 +6,6 @@ import Toybox.Graphics;
 * No changes to the default values are required.
 */
 (:glance)
-class GlanceConfig extends GlanceBaseConfig {
-    protected function initialize() { GlanceBaseConfig.initialize(); }
+class GlanceConfig extends BaseGlanceConfig {
+    protected function initialize() { BaseGlanceConfig.initialize(); }
 }

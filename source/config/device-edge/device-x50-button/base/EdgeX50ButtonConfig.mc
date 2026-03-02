@@ -5,11 +5,11 @@ import Toybox.System;
 /*
 * Config specific to button-based Edge devices.
 */
-class EdgeX50ButtonBaseConfig extends EdgeBaseConfig {
-    protected function initialize() { EdgeBaseConfig.initialize(); }
+class EdgeX50ButtonConfig extends EdgeConfig {
+    protected function initialize() { EdgeConfig.initialize(); }
 
     // Positions of the keys, for drawing input hints
-    // Corresponds to BaseControlView.InputHints enumeration
+    // Corresponds to ControlView.InputHints enumeration
     // 0=ENTER
     // 1=BACK
     // 2=UP

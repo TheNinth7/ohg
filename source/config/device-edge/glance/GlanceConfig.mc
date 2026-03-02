@@ -6,8 +6,8 @@ import Toybox.System;
 * `GlanceConfig` uses a single implementation for all Edge devices.
 */
 (:glance)
-class GlanceConfig extends GlanceBaseConfig {
-    protected function initialize() { GlanceBaseConfig.initialize(); }
+class GlanceConfig extends BaseGlanceConfig {
+    protected function initialize() { BaseGlanceConfig.initialize(); }
     
     // Edge devices need larger fonts
     public static const UI_GLANCE_FONTS as Array<FontDefinition> = [Graphics.FONT_GLANCE];

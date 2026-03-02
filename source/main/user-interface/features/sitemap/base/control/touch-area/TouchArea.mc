@@ -10,10 +10,10 @@ import Toybox.Lang;
  * lies within the touch area.
  *
  * Usage:
- * - Create a view that extends BaseControlView.
+ * - Create a view that extends ControlView.
  * - Add instances of touch areas via addTouchArea().
  * - Alternatively, use InteractiveRelativeBitmap drawables with a defined touch identifier.
- * - Handle touch events by implementing BaseControlViewDelegate.onAreaTap().
+ * - Handle touch events by implementing ControlViewDelegate.onAreaTap().
  */
 class TouchArea {
     // Handle the identifier

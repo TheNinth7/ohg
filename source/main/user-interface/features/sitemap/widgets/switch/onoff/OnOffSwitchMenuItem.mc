@@ -7,7 +7,7 @@ import Toybox.Graphics;
  * Selecting the item toggles the switch state, or displays
  * a command selection menu if the current state is unknown.
  */
-class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
+class OnOffSwitchMenuItem extends SwitchMenuItem {
 
     // Returns true if the given widget matches the type handled by this menu item.
     public static function isMyType( sitemapWidget as SitemapWidget ) as Boolean {
@@ -41,7 +41,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
         // Initialize the base class
         // For the toggle switch we support the display
         // of a display state, if provided by the server
-        BaseSwitchMenuItem.initialize( {
+        SwitchMenuItem.initialize( {
                 :sitemapWidget => sitemapSwitch,
                 :stateTextResponsive => deriveTextState( sitemapSwitch ),
                 :stateDrawable => _stateDrawable,
@@ -73,7 +73,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
     // If no state is available, a command selection menu (ON/OFF) is shown
     // instead.
     public function onSelect() as Boolean {
-        if( ! BaseSwitchMenuItem.onSelect() && ! hasPendingCommand() ) {
+        if( ! SwitchMenuItem.onSelect() && ! hasPendingCommand() ) {
             if( _isEnabled != null ) {
                 sendCommand( 
                     _isEnabled 
@@ -98,7 +98,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
     // Updates the locally stored state and the associated Drawable.
     // Calling WatchUi.requestUpdate() is handled by the base class.
     public function onStateChanged() as Void {
-        BaseSwitchMenuItem.onStateChanged();
+        SwitchMenuItem.onStateChanged();
         _isEnabled = parseItemState( getSitemapSwitch().getSwitchItem().getState() );
         _stateDrawable.setEnabledAndIconSize( _isEnabled, _smallIcon );
     }
@@ -109,7 +109,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
     // onUpdate() and update the focus state on every call.
     public function onUpdate( dc as Dc ) as Void {
         _stateDrawable.setFocus( isFocused() );
-        BaseSwitchMenuItem.onUpdate( dc );
+        SwitchMenuItem.onUpdate( dc );
     }
 
     // Converts the string state to a nullable Boolean for _isEnabled
@@ -145,7 +145,7 @@ class OnOffSwitchMenuItem extends BaseSwitchMenuItem {
     // state remains the same (e.g., for group items showing the number
     // of active members).
     public function updateWidget( sitemapWidget as SitemapWidget ) as Void {
-        BaseSwitchMenuItem.updateWidget( sitemapWidget );
+        SwitchMenuItem.updateWidget( sitemapWidget );
 
         _smallIcon = sitemapWidget.getLinkedPage() != null;
         
