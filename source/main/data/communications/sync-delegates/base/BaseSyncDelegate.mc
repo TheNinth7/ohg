@@ -166,7 +166,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // Exits sync mode. Subclasses must call this method when their sync
     // operation has completed successfully.
     public function finishSync() as Void {
-        Logger.debug( "BaseSyncDelegate.finishSync" );
+        // Logger.debug( "BaseSyncDelegate.finishSync" );
         onSyncFinished();
         Communications.notifySyncComplete( null );
         // Logger.debug( "BaseSyncDelegate.finishSync end" );
@@ -191,14 +191,14 @@ class BaseSyncDelegate extends SyncDelegate {
     // To prevent this, we set _isSyncNeeded to true when a sync
     // starts and reset it to false once the sync has finished.
     public function isSyncNeeded() as Boolean {
-        Logger.debug( "BaseSyncDelegate.isSyncNeeded=" + _isSyncNeeded );
+        // Logger.debug( "BaseSyncDelegate.isSyncNeeded=" + _isSyncNeeded );
         return _isSyncNeeded;
     }
 
     // Subclasses must call this method when their sync operation fails.
     // It exits sync mode and displays an error message to the user.
     public function onSyncException( ex as Exception ) as Void {
-        Logger.debug( "BaseSyncDelegate.onSyncException" );
+        // Logger.debug( "BaseSyncDelegate.onSyncException" );
         
         onSyncFinished();
         
@@ -221,7 +221,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // is handled here, so performSync implementation may throw 
     // exceptions and expect them to be handled.
     public function onStartSync() as Void {
-        Logger.debug( "BaseSyncDelegate.onStartSync" );
+        // Logger.debug( "BaseSyncDelegate.onStartSync" );
         try {
             // Logger.debugConnectionInfo();
 
@@ -243,7 +243,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // with an error message.
     // Cancels all pending requests and exits sync mode.
     public function onStopSync() as Void {
-        Logger.debug( "BaseSyncDelegate.onStopSync" );
+        // Logger.debug( "BaseSyncDelegate.onStopSync" );
         
         // See consumeWifiCheckRequest() for details
         _wifiCheckRequest = true;
@@ -268,9 +268,9 @@ class BaseSyncDelegate extends SyncDelegate {
     // connection, which is likely to be closed before the request
     // completes.
     public function onSyncFinished() as Void {
-        Logger.debug( "BaseSyncDelegate.onSyncFinished" );
+        // Logger.debug( "BaseSyncDelegate.onSyncFinished" );
         if( ! _hasSyncFinished ) {
-            Logger.debug( "BaseSyncDelegate.onSyncFinished: cleaning up!" );
+            // Logger.debug( "BaseSyncDelegate.onSyncFinished: cleaning up!" );
  
             // See isSyncNeeded() for details.
             _isSyncNeeded = false;
@@ -285,7 +285,7 @@ class BaseSyncDelegate extends SyncDelegate {
             // See the class-level comment on onStopSync() for details.
             _hasSyncFinished = true;
         } else {
-            Logger.debug( "BaseSyncDelegate.onSyncFinished: was called already, doing nothing!" );
+            // Logger.debug( "BaseSyncDelegate.onSyncFinished: was called already, doing nothing!" );
         }
     }
 
@@ -300,7 +300,7 @@ class BaseSyncDelegate extends SyncDelegate {
     // Marks this instance as needing a sync, stops the sitemap request timer,
     // and requests sync mode from the CIQ API.
     public function startSync( msg as String ) as Void {
-        Logger.debug( "BaseSyncDelegate.startSync" );
+        // Logger.debug( "BaseSyncDelegate.startSync" );
         try {
             // Logger.debugConnectionInfo();
             
@@ -319,7 +319,7 @@ class BaseSyncDelegate extends SyncDelegate {
             _isSyncNeeded = true;
             _hasSyncFinished = false;
         } catch( ex ) {
-            Logger.debug( "BaseSyncDelegate.startSync: exception, restarting sitemap request" );
+            // Logger.debug( "BaseSyncDelegate.startSync: exception, restarting sitemap request" );
             SitemapRequest.get().start();
             throw ex;
         }

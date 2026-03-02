@@ -39,7 +39,7 @@ import Toybox.Lang;
     }
 
     public function invoke() as Void {
-        Logger.debug( "PostSyncTask: restarting sitemap request" );
+        // Logger.debug( "PostSyncTask: restarting sitemap request" );
         SitemapRequest.get().start();
     }
 }

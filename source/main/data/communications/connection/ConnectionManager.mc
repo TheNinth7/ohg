@@ -169,7 +169,7 @@ import Toybox.Time;
             // we perform the check only once, or if requested by a sync delegate after
             // a failed sync.
 
-            Logger.debug( "ConnectionManager.tryWifiConnectionAndTriggerNextRequest: checking for Wi-Fi connection" );
+            // Logger.debug( "ConnectionManager.tryWifiConnectionAndTriggerNextRequest: checking for Wi-Fi connection" );
             
             // WIFI_CHECK_PENDING is only used for the transition from
             // BLUETOOTH_CONNECTED to other states
