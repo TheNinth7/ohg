@@ -88,9 +88,8 @@ class SwitchViewIfVisibleTask extends BaseSitemapProcessorTask {
         // ... If this menu is the current view ...
         var currentView = ViewStack.getCurrentView()[0];
         if( currentView != null && _pageMenu.equals( currentView ) ) {
-            // Logger.debug( "SwitchViewIfVisibleTask.invoke: switching the view!" );
-            
             // ... we do the switch to itself
+            Logger.debug( "SwitchViewIfVisibleTask.invoke: switchToView" );
             ViewStack.switchToView(
                 currentView,
                 ViewStack.getCurrentView()[1],

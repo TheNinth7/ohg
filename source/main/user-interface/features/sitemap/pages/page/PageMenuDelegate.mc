@@ -44,11 +44,11 @@ class PageMenuDelegate extends WatchUi.Menu2InputDelegate {
 
     // Override onBack() to use our own popView() implementation
     public function onBack() as Void {
-        // Logger.debug( "PageMenuDelegate.onBack" );
+        Logger.debug( "PageMenuDelegate.onBack" );
         try {
             ViewStack.popView( WatchUi.SLIDE_RIGHT );
         } catch( ex ) {
-            // Logger.debug( "PageMenuDelegate.onBack: exception" );
+            Logger.debug( "PageMenuDelegate.onBack: exception" );
             ExceptionHandler.handleUserInterfaceException( ex );
         }
     }
