@@ -26,6 +26,31 @@ class PageMenu extends BasePageMenu {
         _weakParent = parent.weak();
     }
 
+    // Overrides the base class addItem() to remove the loading
+    // item if present.
+    public function addItem( item as CustomMenuItem ) as Void {
+        Logger.debug( "PageMenu.addItem" );
+        if( getItem( 0 ) instanceof LoadingMenuItem ) {
+            Logger.debug( "PageMenu.addItem: removing loading item" );
+            deleteItem( 0 );
+        }
+        BaseMenu.addItem( item );
+    }
+
+    // Checks if menu items are present and adds the loading menu item
+    // if none exist.
+    // Pushing an empty menu as a view leads to weird side effects,
+    // therefore this is called every time before a page menu is pushed.
+    // The loading menu item is removed when the first real item
+    // is added. See addItem() above.
+    public function ensureItems() as Void {
+        Logger.debug( "PageMenu.ensureItems" );
+        if( getItemCount() < 1 ) {
+            Logger.debug( "PageMenu.ensureItems: adding loading item" );
+            BasePageMenu.addItem( new LoadingMenuItem() );
+        }
+    }
+
     // See BasePageMenu.invalidateStructure for details
     public function invalidateStructure() as Void {
         var parent = _weakParent.get() as BasePageMenu?;

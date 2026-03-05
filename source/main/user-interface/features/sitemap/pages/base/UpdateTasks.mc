@@ -65,8 +65,9 @@ class AddOrUpdateMenuItemTask extends BaseSitemapProcessorTask {
         } else {
             // If the item is found, we check if the type of the menu
             // item is the same or has changed
-            var item = _pageMenu.getItem( _index ) as WidgetMenuItem;
-            if( item.isMyType( _sitemapWidget ) ) {
+            var item = _pageMenu.getItem( _index );
+
+            if( item instanceof WidgetMenuItem && item.isMyType( _sitemapWidget ) ) {
                 // If the type matches, the menu item is updated.
                 // However, if the item was updated internally within the configured
                 // post-command hold time, the update is ignored. Internal updates are used
@@ -79,15 +80,21 @@ class AddOrUpdateMenuItemTask extends BaseSitemapProcessorTask {
                     item.updateWidget( _sitemapWidget );
                 }
             } else {
-                // If the type is not the same, we create a new item
-                // and replace the existing menu item with it
+                // If the item is not a WidgetMenuItem or the widget type
+                // does not match, create a new item and replace the
+                // existing menu item.
                 var newItem = MenuItemFactory.createMenuItem( 
                     _sitemapWidget, 
                     _pageMenu,
                     BasePageMenu.PROCESSING_ASYNC
                 );
 
-                if( item.hasPage() || newItem.hasPage() ) {
+                // If either the previous or the new menu item has sub-pages,
+                // invalidate the structure. This causes the app to jump back
+                // to the homepage menu.
+                if( ( item instanceof WidgetMenuItem && item.hasPage() ) 
+                    || newItem.hasPage() 
+                ) {
                     _pageMenu.invalidateStructure();
                     // Logger.debug( "AddOrUpdateMenuItemTask: page '" + _pageMenu.getTitle() + "' invalid because item '" + item.getLabel() + "' changed type from/to page" );
                 }
