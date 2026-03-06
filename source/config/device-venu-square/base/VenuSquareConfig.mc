@@ -1,11 +1,12 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.System;
+import Toybox.WatchUi;
 
 /*
- * Constant overrides for the Venu x1.
+ * Base config for all Venu devices with rectangular screen.
  */
-class Config extends BaseConfig {
+class VenuSquareConfig extends BaseConfig {
     protected function initialize() { BaseConfig.initialize(); }
 
     // On rectangular screens no gap between title and menu items is
@@ -16,6 +17,10 @@ class Config extends BaseConfig {
     // the title text, so the title text is positioned higher
     public static const UI_MENU_TITLE_TEXT_POSITION as Float = 0.3;
 
-    // Currently only applied for rectangular screens
-    public static const UI_MENU_TITLE_CONNECTION_INDICATOR_POSITION as Float = 0.625;
+    // Same relative position as above.
+    // Vertical position of the connection mode indicator in menus 
+    // on rectangular screens for round screens the positions are 
+    // hardcoded and work well for all devices
+    public static const UI_MENU_TITLE_CMI_POSITION as Float = 0.625;
+
 }

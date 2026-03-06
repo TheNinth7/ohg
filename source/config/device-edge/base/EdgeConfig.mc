@@ -25,7 +25,7 @@ class EdgeConfig extends BaseConfig {
     public static const UI_MENU_TITLE_TEXT_POSITION as Float = 0.29;
 
     // Currently only applied for rectangular screens
-    public static const UI_MENU_TITLE_CONNECTION_INDICATOR_POSITION as Float = 0.525;
+    public static const UI_MENU_TITLE_CMI_POSITION as Float = 0.525;
 
     // Edge devices need larger fonts
     public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_MEDIUM;  

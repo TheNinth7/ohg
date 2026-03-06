@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.Graphics;
 import Toybox.System;
+import Toybox.WatchUi;
 
 /*
  * Defines application constants and their default values.
@@ -90,9 +91,11 @@ class BaseConfig {
     */
     public static const UI_MENU_TITLE_TEXT_POSITION as Float = 0.625;
 
-    // Same as above, currently only applied for rectangular screens,
-    // for round screens the positions are hardcoded and work well for all devices
-    public static const UI_MENU_TITLE_CONNECTION_INDICATOR_POSITION as Float = 0.0;
+    // Same relative position as above.
+    // Vertical position of the connection mode indicator in menus 
+    // on rectangular screens for round screens the positions are 
+    // hardcoded and work well for all devices
+    public static const UI_MENU_TITLE_CMI_POSITION as Float = 0.0;
 
     // Font to be used in the menu title
     public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_SMALL;  
@@ -179,6 +182,9 @@ class BaseConfig {
     // List of fonts to be used by the picker for the title
     public static const UI_PICKER_TITLE_FONTS as Array<FontDefinition> = [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_GLANCE, Graphics.FONT_XTINY];
 
+    // Horizontal position of the connection mode indicator on rectangular screens
+    // If LAYOUT_HALIGN_LEFT is set, a spacing will be applied
+    public static const UI_CONTROL_CMI_RECTANGULAR_HALIGN as Number = WatchUi.LAYOUT_HALIGN_LEFT;
 
     /******* ERROR VIEW *******/ 
 

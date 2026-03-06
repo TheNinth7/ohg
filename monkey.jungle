@@ -80,44 +80,45 @@ resEdgeTall=$(resEdgeBase);resources/edge/icons-interface-tall
 #
 # The following is controlled via source file variables:
 #
-# Constants: Device-specific properties that are static and cannot change at runtime,
-#            for example values used for layout or to enable or disable specific features.
-# Themes:    Runtime-switchable color schemes, for example for day and night mode.
+# Config: Device-specific properties that are static and cannot change at runtime,
+#         for example values used for layout or to enable or disable specific features.
+# Themes: Runtime-switchable color schemes, for example for day and night mode.
 
-# SOURCE PATH - CONSTANTS
+# SOURCE PATH - CONFIG
 
-# The classes DefaultConstants and GlanceDefaultConstants in the base directory
-# define the default values. The derived classes Constants and GlanceConstants
+# The classes DefaultConfig and GlanceDefaultConfig in the base directory
+# define the default values. The derived classes Config and GlanceConfig
 # provide access to these values.
 #
 # Individual devices may use device-specific implementations of
-# Constants and GlanceConstants to override selected default values.
+# Config and GlanceConfig to override selected default values.
 #
-# srcConstantsBase contains the default values.
-# srcConstantsDefault contains the default implementations of
-# Constants and GlanceConstants.
+# srcConfigBase contains the default values.
+# srcConfigDefault contains the default implementations of
+# Config and GlanceConfig.
 #
 # The remaining variables define the paths for individual device
 # implementations.
-srcConstantsBase=source/config/base
-srcConstantsDefault=$(srcConstantsBase);source/config/device-default
+srcConfigBase=source/config/base
+srcConfigDefault=$(srcConfigBase);source/config/device-default
 
 # Watches
-srcConstantsFenix6Pro=$(srcConstantsBase);source/config/device-fenix6pro
-srcConstantsForerunner=$(srcConstantsBase);source/config/device-forerunner
-srcConstantsVenuSquare=$(srcConstantsBase);source/config/device-venu-square
+srcConfigFenix6Pro=$(srcConfigBase);source/config/device-fenix6pro
+srcConfigForerunner=$(srcConfigBase);source/config/device-forerunner
+srcConfigVenu2Sq=$(srcConfigBase);source/config/device-venu-square/base;source/config/device-venu-square/device-venu2sq
+srcConfigVenuX1=$(srcConfigBase);source/config/device-venu-square/base;source/config/device-venu-square/device-venux1
 
 # Edge devices
 # Base path for all Edge devices
-srcConstantsEdgeBase=$(srcConstantsBase);source/config/device-edge/base;source/config/device-edge/glance
+srcConfigEdgeBase=$(srcConfigBase);source/config/device-edge/base;source/config/device-edge/glance
 # Edge x40 touch-based devices
-srcConstantsEdgeX40Touch=$(srcConstantsEdgeBase);source/config/device-edge/device-x40-touch
+srcConfigEdgeX40Touch=$(srcConfigEdgeBase);source/config/device-edge/device-x40-touch
 # Edge x40 button-based devices
-srcConstantsEdgeX40Button=$(srcConstantsEdgeBase);source/config/device-edge/device-x40-button
+srcConfigEdgeX40Button=$(srcConfigEdgeBase);source/config/device-edge/device-x40-button
 # Edge x50 touch-based devices
-srcConstantsEdgeX50Touch=$(srcConstantsEdgeBase);source/config/device-edge/device-x50-touch
+srcConfigEdgeX50Touch=$(srcConfigEdgeBase);source/config/device-edge/device-x50-touch
 # Edge x50 button-based devices
-srcConstantsEdgeX50Button=$(srcConstantsEdgeBase);source/config/device-edge/device-x50-button/base
+srcConfigEdgeX50Button=$(srcConfigEdgeBase);source/config/device-edge/device-x50-button/base
 
 # SOURCE PATH - THEMES
 
@@ -201,23 +202,24 @@ srcThemesNightModeEdgeX50Button=$(srcThemesNightModeBase);$(srcThemeDefinitionsN
 srcBase=source/main
 
 # The default source path used for most devices with round screens.
-srcDefault=$(srcBase);$(srcConstantsDefault);$(srcThemesDefault)
+srcDefault=$(srcBase);$(srcConfigDefault);$(srcThemesDefault)
 
 # Some watch models use device-specific constants.
-srcFenix6Pro=$(srcBase);$(srcConstantsFenix6Pro);$(srcThemesDefault)
-srcForerunner=$(srcBase);$(srcConstantsForerunner);$(srcThemesDefault)
-srcVenuSquare=$(srcBase);$(srcConstantsVenuSquare);$(srcThemesDefault)
+srcFenix6Pro=$(srcBase);$(srcConfigFenix6Pro);$(srcThemesDefault)
+srcForerunner=$(srcBase);$(srcConfigForerunner);$(srcThemesDefault)
+srcVenu2Sq=$(srcBase);$(srcConfigVenu2Sq);$(srcThemesDefault)
+srcVenuX1=$(srcBase);$(srcConfigVenuX1);$(srcThemesDefault)
 
 # Edge devices
 # Touch-based devices (Explore 2, 1040, 1050).
 # These devices do not have physical control buttons.
-srcEdgeX40Touch=$(srcBase);$(srcConstantsEdgeX40Touch);$(srcThemesNightModeDefault)
-srcEdgeX50Touch=$(srcBase);$(srcConstantsEdgeX50Touch);$(srcThemesNightModeDefault)
+srcEdgeX40Touch=$(srcBase);$(srcConfigEdgeX40Touch);$(srcThemesNightModeDefault)
+srcEdgeX50Touch=$(srcBase);$(srcConfigEdgeX50Touch);$(srcThemesNightModeDefault)
 # Button-based devices (540, 840, MTB, 550, 850).
 # These devices have physical control buttons and,
 # in some cases (840, 850), also support touch input.
-srcEdgeButtonX40=$(srcBase);$(srcConstantsEdgeX40Button);$(srcThemesNightModeEdgeX40Button)
-srcEdgeButtonX50=$(srcBase);$(srcConstantsEdgeX50Button);$(srcThemesNightModeEdgeX50Button)
+srcEdgeButtonX40=$(srcBase);$(srcConfigEdgeX40Button);$(srcThemesNightModeEdgeX40Button)
+srcEdgeButtonX50=$(srcBase);$(srcConfigEdgeX50Button);$(srcThemesNightModeEdgeX50Button)
 
 # DEVICES
 
@@ -274,7 +276,7 @@ descentmk343mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 descentmk351mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 
 # For Forerunner devices, the sourcePath must also be set,
-# as they have different button positions defined in Constants.
+# as they have different button positions defined in Config.
 
 # FR945 LTE is the only Forerunner with CIQ 3.4
 fr945lte.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
@@ -318,10 +320,10 @@ venu2plus.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
 venu2plus.excludeAnnotations = $(venu2.excludeAnnotations)
 venusq2.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 venusq2.excludeAnnotations = $(venu2.excludeAnnotations)
-venusq2.sourcePath = $(srcVenuSquare)
+venusq2.sourcePath = $(srcVenu2Sq)
 venusq2m.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 venusq2m.excludeAnnotations = $(venu2.excludeAnnotations)
-venusq2m.sourcePath = $(srcVenuSquare)
+venusq2m.sourcePath = $(srcVenu2Sq)
 
 # Touch devices with CIQ level >= 5.1.0
 venu3.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
@@ -334,7 +336,7 @@ venu445mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 venu445mm.excludeAnnotations = $(venu3.excludeAnnotations)
 venux1.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 venux1.excludeAnnotations = $(venu3.excludeAnnotations)
-venux1.sourcePath = $(srcVenuSquare)
+venux1.sourcePath = $(srcVenuX1)
 vivoactive5.resourcePath=$(resBase);$(resLauncherIcons)/56x56-light
 vivoactive5.excludeAnnotations = $(venu3.excludeAnnotations)
 vivoactive6.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light

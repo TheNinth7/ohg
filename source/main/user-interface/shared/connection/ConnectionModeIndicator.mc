@@ -199,8 +199,11 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
             // Location for menu is set in draw() since Dc is
             // needed for determining the location
             if( location == LOCATION_CUSTOM_VIEW ) {
-                var spacing = ( height * 0.2 ).toNumber();
-                setLocation( spacing, spacing );
+                var vSpacing = ( height * 0.2 ).toNumber();
+                // For LAYOUT_HALIGN_LEFT we apply the same spacing as vertically
+                var hAlign = Config.UI_CONTROL_CMI_RECTANGULAR_HALIGN;
+                hAlign = hAlign == WatchUi.LAYOUT_HALIGN_LEFT ? vSpacing : hAlign;
+                setLocation( hAlign, vSpacing );
             }
         } else {
             var locYFactor = 
@@ -221,7 +224,7 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
     // bitmap instance to ensure the current indicator is drawn.
     public function draw( dc as Dc ) as Void {
         if( locX == 0 && _location == LOCATION_MENU ) {
-            setLocation( WatchUi.LAYOUT_HALIGN_CENTER, dc.getHeight() * Config.UI_MENU_TITLE_CONNECTION_INDICATOR_POSITION );
+            setLocation( WatchUi.LAYOUT_HALIGN_CENTER, dc.getHeight() * Config.UI_MENU_TITLE_CMI_POSITION );
         }
         BufferedBitmapDrawable.setBufferedBitmap( getBufferedBitmap() );
         BufferedBitmapDrawable.draw( dc );       
