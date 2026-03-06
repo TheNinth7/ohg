@@ -135,7 +135,7 @@ class SwitchToHomepageTask extends BaseSitemapProcessorTask {
     }
     
     public function invoke() as Void {
-        Logger.debug( "SwitchToHomepageTask.invoke" );
+        // Logger.debug( "SwitchToHomepageTask.invoke" );
         if( SafeSitemapSyncDelegate.isSyncInProgress() ) {
             AsyncTaskQueue.get().add( new StopSitemapSyncTask() );
         } else {
@@ -221,7 +221,7 @@ class RefreshUiTask extends BaseSitemapProcessorTask {
                 || ( ! HomepageMenu.isSitemapShowing() 
                      && ! SettingsMenuManager.isShowingSettings() )
             ) {
-                Logger.debug( "SitemapRequest.onReceive: resetting to homepage" );
+                // Logger.debug( "SitemapRequest.onReceive: resetting to homepage" );
                 ViewStack.resetTo( homepage, HomepageMenuDelegate.get() );
             } else {
                 // If the structure is still valid and no error is shown,

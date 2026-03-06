@@ -123,7 +123,7 @@ class WidgetMenuItem extends StructuredMenuItem {
     public function onSelect() as Boolean { 
         if( _page != null ) {
             var page = _page;
-            Logger.debug( "WidgetMenuItem.onSelect: pushing page" );
+            // Logger.debug( "WidgetMenuItem.onSelect: pushing page" );
             // Pushing a CustomMenu with no menu items leads to weird behavior.
             // Therefore ensureItems() adds a LoadingMenuItem if no other
             // items are present at this time. See ensureItems() for details.

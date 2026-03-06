@@ -41,7 +41,7 @@ public class ExceptionHandler {
     * those instances should all be migrated to handleUserInterfaceException.
     */
     public static function handleBackgroundException( ex as Exception ) as Void {
-        Logger.debug( "ExceptionHandler.handleBackgroundException" );
+        // Logger.debug( "ExceptionHandler.handleBackgroundException" );
         Logger.debugException( ex );
 
         var isSitemapFresh = SitemapStore.isSitemapFresh();
@@ -122,7 +122,7 @@ public class ExceptionHandler {
     * No additional error handling by the app is required in those cases.
     */
     public static function handleSyncException( ex as Exception ) as Void {
-        Logger.debug( "ExceptionHandler.handleSyncException" );
+        // Logger.debug( "ExceptionHandler.handleSyncException" );
         Logger.debugException( ex );
 
         // If no view is currently active, the exception is stored as a startup exception.
@@ -140,7 +140,7 @@ public class ExceptionHandler {
     * Used for handling errors coming from user interface interactions.
     */
     public static function handleUserInterfaceException( ex as Exception ) as Void {
-        Logger.debug( "ExceptionHandler.handleUserInterfaceException" );
+        // Logger.debug( "ExceptionHandler.handleUserInterfaceException" );
         Logger.debugException( ex );
 
         // While this should not happen, we check if we are in the startup phase,

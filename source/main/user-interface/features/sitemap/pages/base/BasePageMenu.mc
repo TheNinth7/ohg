@@ -78,7 +78,7 @@ class BasePageMenu extends BaseMenu {
 
         // Create a menu item for each widget.
         if( processingMode == PROCESSING_TOP_LEVEL_SYNC ) {
-            Logger.debug( "BasePageMenu.initialize: synchronous processing" );
+            // Logger.debug( "BasePageMenu.initialize: synchronous processing" );
             // In top-level sync mode, menu items are created synchronously.
             // The next level is then initialized in PROCESSING_ASYNC_AFTER_SYNC mode.
             for( var i = 0; i < widgets.size(); i++ ) {

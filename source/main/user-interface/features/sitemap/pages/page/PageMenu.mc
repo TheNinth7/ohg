@@ -44,9 +44,9 @@ class PageMenu extends BasePageMenu {
     // The loading menu item is removed when the first real item
     // is added. See addItem() above.
     public function ensureItems() as Void {
-        Logger.debug( "PageMenu.ensureItems" );
+        // Logger.debug( "PageMenu.ensureItems" );
         if( getItemCount() < 1 ) {
-            Logger.debug( "PageMenu.ensureItems: adding loading item" );
+            // Logger.debug( "PageMenu.ensureItems: adding loading item" );
             BasePageMenu.addItem( new LoadingMenuItem() );
         }
     }
