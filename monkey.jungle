@@ -105,7 +105,7 @@ srcConstantsDefault=$(srcConstantsBase);source/config/device-default
 # Watches
 srcConstantsFenix6Pro=$(srcConstantsBase);source/config/device-fenix6pro
 srcConstantsForerunner=$(srcConstantsBase);source/config/device-forerunner
-srcConstantsVenux1=$(srcConstantsBase);source/config/device-venux1
+srcConstantsVenuSquare=$(srcConstantsBase);source/config/device-venu-square
 
 # Edge devices
 # Base path for all Edge devices
@@ -206,7 +206,7 @@ srcDefault=$(srcBase);$(srcConstantsDefault);$(srcThemesDefault)
 # Some watch models use device-specific constants.
 srcFenix6Pro=$(srcBase);$(srcConstantsFenix6Pro);$(srcThemesDefault)
 srcForerunner=$(srcBase);$(srcConstantsForerunner);$(srcThemesDefault)
-srcVenux1=$(srcBase);$(srcConstantsVenux1);$(srcThemesDefault)
+srcVenuSquare=$(srcBase);$(srcConstantsVenuSquare);$(srcThemesDefault)
 
 # Edge devices
 # Touch-based devices (Explore 2, 1040, 1050).
@@ -318,8 +318,10 @@ venu2plus.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
 venu2plus.excludeAnnotations = $(venu2.excludeAnnotations)
 venusq2.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 venusq2.excludeAnnotations = $(venu2.excludeAnnotations)
+venusq2.sourcePath = $(srcVenuSquare)
 venusq2m.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 venusq2m.excludeAnnotations = $(venu2.excludeAnnotations)
+venusq2m.sourcePath = $(srcVenuSquare)
 
 # Touch devices with CIQ level >= 5.1.0
 venu3.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
@@ -330,10 +332,9 @@ venu441mm.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 venu441mm.excludeAnnotations = $(venu3.excludeAnnotations)
 venu445mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 venu445mm.excludeAnnotations = $(venu3.excludeAnnotations)
-
 venux1.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 venux1.excludeAnnotations = $(venu3.excludeAnnotations)
-venux1.sourcePath = $(srcVenux1)
+venux1.sourcePath = $(srcVenuSquare)
 vivoactive5.resourcePath=$(resBase);$(resLauncherIcons)/56x56-light
 vivoactive5.excludeAnnotations = $(venu3.excludeAnnotations)
 vivoactive6.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light

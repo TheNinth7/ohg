@@ -221,7 +221,7 @@ class ConnectionModeIndicator extends BufferedBitmapDrawable {
     // bitmap instance to ensure the current indicator is drawn.
     public function draw( dc as Dc ) as Void {
         if( locX == 0 && _location == LOCATION_MENU ) {
-            setLocation( WatchUi.LAYOUT_HALIGN_CENTER, dc.getHeight() * 0.525 );
+            setLocation( WatchUi.LAYOUT_HALIGN_CENTER, dc.getHeight() * Config.UI_MENU_TITLE_CONNECTION_INDICATOR_POSITION );
         }
         BufferedBitmapDrawable.setBufferedBitmap( getBufferedBitmap() );
         BufferedBitmapDrawable.draw( dc );       

@@ -29,9 +29,9 @@ class PageMenu extends BasePageMenu {
     // Overrides the base class addItem() to remove the loading
     // item if present.
     public function addItem( item as CustomMenuItem ) as Void {
-        Logger.debug( "PageMenu.addItem" );
+        // Logger.debug( "PageMenu.addItem" );
         if( getItem( 0 ) instanceof LoadingMenuItem ) {
-            Logger.debug( "PageMenu.addItem: removing loading item" );
+            // Logger.debug( "PageMenu.addItem: removing loading item" );
             deleteItem( 0 );
         }
         BaseMenu.addItem( item );

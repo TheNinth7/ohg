@@ -90,6 +90,10 @@ class BaseConfig {
     */
     public static const UI_MENU_TITLE_TEXT_POSITION as Float = 0.625;
 
+    // Same as above, currently only applied for rectangular screens,
+    // for round screens the positions are hardcoded and work well for all devices
+    public static const UI_MENU_TITLE_CONNECTION_INDICATOR_POSITION as Float = 0.0;
+
     // Font to be used in the menu title
     public static const UI_MENU_TITLE_FONT as FontDefinition = Graphics.FONT_SMALL;  
 
