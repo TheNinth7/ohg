@@ -119,9 +119,10 @@ class SitemapSwitch extends SitemapWidget {
     private function generateSwitchDisplayState() as String {
         var switchDisplayState = null;
 
-        if(    ! _switchItem.getType().equals( "Dimmer" )
-            // && ! _switchItem.getType().equals( "Rollershutter" )
-        ) {
+        // First we lookup if there is a mapping or state/command metadata
+        // that fits the state.
+        // For Dimmer we skip that and always use the numeric state.
+        if( ! _switchItem.getType().equals( "Dimmer" ) ) {
             // First priority: lookup the mappings defined for the widget
             switchDisplayState = _mappings.lookup( _switchItem.getState() );
 
@@ -145,7 +146,7 @@ class SitemapSwitch extends SitemapWidget {
             }
         }
 
-        // If all has failed (or the item is a Dimmer or Rollershutter), 
+        // If all has failed (or the item is a Dimmer), 
         // we just use the raw state, and if it is numeric add the unit
         if( switchDisplayState == null ) {
             if( _switchItem.hasState() ) {
