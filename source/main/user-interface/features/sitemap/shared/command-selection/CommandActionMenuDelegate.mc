@@ -19,9 +19,15 @@ class CommandActionMenuDelegate extends ActionMenuDelegate {
         _delegate = delegate;
     }
 
+    /*
+    public function onBack() as Void {
+        Logger.debug( "CommandActionMenuDelegate.onBack" );
+    }
+    */
+
     // on select, send the command
     public function onSelect( item as ActionMenuItem ) as Void {
-        // Logger.debug( "CommandActionMenuDelegate.onSelect" );
+        Logger.debug( "CommandActionMenuDelegate.onSelect" );
         try {
             // The action menu items have the command as Id
             var command = item.getId();
