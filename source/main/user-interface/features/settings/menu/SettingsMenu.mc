@@ -27,6 +27,18 @@ class SettingsMenu extends BaseMenu {
             AppSettings.getUrl()
         ) );
 
+        // Add entry for server URL
+        addItem( new LabelMenuItem(
+            "Sitemap",
+            AppSettings.getSitemap()
+        ) );
+
+        // Add entry for server URL
+        addItem( new LabelMenuItem(
+            "Connect IQ Version",
+            Lang.format( "$1$.$2$.$3$", System.getDeviceSettings().monkeyVersion )
+        ) );
+
         // Add entry for connectivity mode
         addItem( new ConnectionModeMenuItem() );
         
