@@ -19,4 +19,12 @@ class ThemeManager extends BaseNightModeThemeManager {
         BaseNightModeThemeManager.initialize();
     }
 
+    // Public function to update the current theme
+    // Technically, compilation works without overriding
+    // this, by just inheriting update(). However that
+    // is a glitch in the compiler and causes issues at
+    // runtime.
+    public static function update() as Void {
+        BaseNightModeThemeManager.update();
+    }
 }
