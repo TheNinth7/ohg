@@ -76,26 +76,3 @@ class OnOffStateDrawable extends BufferedBitmapDrawable {
                     : bitmaps.off;
     }
 }
-
-/* Simple implementation for rendering the state as text
-class OnOffStateDrawable extends Text {
-    public function initialize( isEnabled as Boolean ) {
-        Text.initialize( {
-            :text => getStateText( isEnabled ),
-            :font => Graphics.FONT_SMALL,
-            :color => getColor( isEnabled ),
-            :justification => Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER
-        } );
-    }
-    public function setEnabled( isEnabled as Boolean ) as Void {
-        setColor( getColor( isEnabled ) );
-        setText( getStateText( isEnabled ) );
-    }
-    private function getStateText( isEnabled as Boolean ) as String {
-        return isEnabled ? "ON" : "OFF";
-    }
-    private function getColor( isEnabled as Boolean ) as ColorType {
-        return isEnabled ? ThemeManager.current.onColor : ThemeManager.current.stateColor;
-    }
-}
-*/
