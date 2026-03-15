@@ -130,15 +130,6 @@ class BaseMenu extends CustomMenu {
                 dc.drawLine( 0, lineY, dcWidth, lineY );
             }
 
-            // As an alternative workaround for the above-mentioned issue, 
-            // we could fill a rectangle with the background color 
-            // instead of clearing the `Dc`.
-            /*
-            dc.setColor( ThemeManager.current.menuTitleBackgroundColor, ThemeManager.current.menuTitleBackgroundColor );
-            dc.fillRectangle( 0, 0, dcWidth, clipHeight );
-            dc.setColor( ThemeManager.current.textColor, ThemeManager.current.menuTitleBackgroundColor );
-            */
-
             /*
             * The first time this function is called, we set the Y-position of the title `Drawable`.
             *
@@ -161,7 +152,6 @@ class BaseMenu extends CustomMenu {
                 _title.setLocation( WatchUi.LAYOUT_HALIGN_CENTER, locY );
             }
 
-            setBackgroundColor( ThemeManager.current.backgroundColor );
             _title.setColor( ThemeManager.current.textColor );
 
             // Draw the title
