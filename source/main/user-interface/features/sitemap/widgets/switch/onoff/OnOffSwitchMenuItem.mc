@@ -108,7 +108,7 @@ class OnOffSwitchMenuItem extends SwitchMenuItem {
     // Since the selection state can change at any time, we override
     // onUpdate() and update the focus state on every call.
     public function onUpdate( dc as Dc ) as Void {
-        _stateDrawable.setFocus( isFocused() );
+        _stateDrawable.updateTheme( isFocused() );
         SwitchMenuItem.onUpdate( dc );
     }
 

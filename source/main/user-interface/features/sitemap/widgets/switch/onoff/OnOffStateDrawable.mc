@@ -14,7 +14,7 @@ class OnOffStateDrawable extends BufferedBitmapDrawable {
     // actual change of state, when setEnabled and setFocus is called.
     private var _isEnabled as Boolean?;
     private var _useSmallIcon as Boolean;
-    private var _isFocused as Boolean;
+    private var _theme as Theme;
 
     // Constructor
     // Processes the initial state
@@ -24,12 +24,20 @@ class OnOffStateDrawable extends BufferedBitmapDrawable {
         useSmallIcon as Boolean 
     ) {
         _isEnabled = isEnabled;
-        _isFocused = isFocused;
         _useSmallIcon = useSmallIcon;
+        _theme = getCurrentTheme( isFocused );
 
         BufferedBitmapDrawable.initialize( {
-            :bufferedBitmap => getOnOffBitmap( isEnabled, isFocused, useSmallIcon )
+            :bufferedBitmap => getOnOffBitmap( isEnabled, useSmallIcon, _theme )
         } );
+    }
+
+
+    // Returns the theme to apply when drawing.
+    private function getCurrentTheme( isFocused as Boolean ) as Theme {
+        return isFocused
+               ? ThemeManager.focused
+               : ThemeManager.current;
     }
 
 
@@ -40,30 +48,28 @@ class OnOffStateDrawable extends BufferedBitmapDrawable {
         if( _isEnabled != isEnabled || _useSmallIcon != useSmallIcon ) {
             _isEnabled = isEnabled;
             _useSmallIcon = useSmallIcon;
-            setBufferedBitmap( getOnOffBitmap( isEnabled, _isFocused, useSmallIcon ) );
+            setBufferedBitmap( getOnOffBitmap( isEnabled, useSmallIcon, _theme ) );
         }
     }
 
-    // setFocus is called with every draw, since the focus can change anytime
+    // updateFocus is called with every draw, since the focus can change anytime,
+    // as can the light/dark mode
     // To improve performance, we only switch the BufferedBitmap
-    // if the state changed
-    public function setFocus( isFocused as Boolean ) as Void {
-        if( _isFocused != isFocused ) {
-            _isFocused = isFocused;
-            setBufferedBitmap( getOnOffBitmap( _isEnabled, isFocused, _useSmallIcon ) );
+    // if the theme actually changed
+    public function updateTheme( isFocused as Boolean ) as Void {
+        var currentTheme = getCurrentTheme( isFocused );
+        if( _theme != currentTheme ) {
+            _theme = currentTheme;
+            setBufferedBitmap( getOnOffBitmap( _isEnabled, _useSmallIcon, _theme ) );
         }
     }
 
     // Returns the right bitmap for a given state
     private function getOnOffBitmap( 
         isEnabled as Boolean?, 
-        isFocused as Boolean, 
-        useSmallIcon as Boolean 
+        useSmallIcon as Boolean,
+        theme as Theme
     ) as BufferedBitmapType {
-        
-        var theme = isFocused
-                    ? ThemeManager.focused
-                    : ThemeManager.current;
 
         var bitmaps = useSmallIcon
                         ? theme.smallOnOffBitmaps
