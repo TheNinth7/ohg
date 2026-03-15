@@ -10,11 +10,13 @@ import Toybox.Graphics;
  */
 class OnOffStateDrawable extends BufferedBitmapDrawable {
 
+
     // Storing the state helps us determining if there was an
     // actual change of state, when setEnabled and setFocus is called.
     private var _isEnabled as Boolean?;
     private var _useSmallIcon as Boolean;
     private var _theme as Theme;
+
 
     // Constructor
     // Processes the initial state
@@ -52,10 +54,12 @@ class OnOffStateDrawable extends BufferedBitmapDrawable {
         }
     }
 
-    // updateFocus is called with every draw, since the focus can change anytime,
-    // as can the light/dark mode
-    // To improve performance, we only switch the BufferedBitmap
-    // if the theme actually changed
+
+    // updateFocus is called on every draw, since both the focus state and
+    // the light/dark mode can change at any time.
+    //
+    // To improve performance, the BufferedBitmap is only switched if the
+    // theme has actually changed.
     public function updateTheme( isFocused as Boolean ) as Void {
         var currentTheme = getCurrentTheme( isFocused );
         if( _theme != currentTheme ) {
@@ -63,6 +67,7 @@ class OnOffStateDrawable extends BufferedBitmapDrawable {
             setBufferedBitmap( getOnOffBitmap( _isEnabled, _useSmallIcon, _theme ) );
         }
     }
+
 
     // Returns the right bitmap for a given state
     private function getOnOffBitmap( 
@@ -81,4 +86,5 @@ class OnOffStateDrawable extends BufferedBitmapDrawable {
                     ? bitmaps.on
                     : bitmaps.off;
     }
+
 }
