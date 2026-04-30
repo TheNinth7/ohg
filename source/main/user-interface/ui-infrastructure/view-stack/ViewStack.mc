@@ -72,7 +72,15 @@ import Toybox.WatchUi;
     public static function switchToView( view as Views, delegate as InputDelegates?, transition as SlideType ) as Void {
         // Logger.debug( "ViewStack.switchToView: stack size=" + _viewStack.size() );
         WatchUi.switchToView( view, delegate, transition );
-        _viewStack[_viewStack.size()-1] = [view, delegate];
+        // This function may also be called on an empty view stack,
+        // and in that case we just add the new view to the view stack
+        var size = _viewStack.size();
+        var entry = [view, delegate];
+        if( size > 0 ) {
+            _viewStack[_viewStack.size()-1] = entry;
+        } else {
+            _viewStack.add( entry );
+        }
     }
 
 }
