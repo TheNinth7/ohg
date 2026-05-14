@@ -243,20 +243,13 @@ base.sourcePath = $(srcDefault)
 
 # WATCHES
 
-# Fenix 6 Pro
-fenix6pro.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fenix6pro.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
-fenix6pro.sourcePath = $(srcFenix6Pro)
-fenix6spro.resourcePath=$(fenix6pro.resourcePath)
-fenix6spro.excludeAnnotations = $(fenix6pro.excludeAnnotations)
-fenix6spro.sourcePath = $(fenix6pro.sourcePath)
-fenix6xpro.resourcePath=$(fenix6pro.resourcePath)
-fenix6xpro.excludeAnnotations = $(fenix6pro.excludeAnnotations)
-fenix6xpro.sourcePath = $(fenix6pro.sourcePath)
+# CIQ >= 5.1.0
 
-# Button-based devices with CIQ >= 5.1.0 are the default,
-# so only resourcePath needs to be defined.
+# Button-based
 d2mach1.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
+descentg2.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
+descentmk343mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
+descentmk351mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 enduro3.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 epix2.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 epix2pro42mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
@@ -276,38 +269,17 @@ fenix8solar47mm.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 fenix8solar51mm.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 fenix8pro47mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 fenixe.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-marq2.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-marq2aviator.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-descentg2.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-descentmk343mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-descentmk351mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-
-# For Forerunner devices, the sourcePath must also be set,
-# as they have different button positions defined in Config.
-
-# FR945 LTE is the only Forerunner with CIQ 3.4
-fr945lte.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr945lte.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
-fr945lte.sourcePath=$(src25DegreeSelect)
-
 fr70.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-fr70.sourcePath=$(srcDefault)
 fr165.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 fr165.sourcePath=$(src27DegreeSelect)
 fr165m.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 fr165m.sourcePath=$(src27DegreeSelect)
 fr170.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-fr170.sourcePath=$(srcDefault)
 fr170m.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-fr170m.sourcePath=$(srcDefault)
 fr255.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255.sourcePath=$(srcDefault)
 fr255m.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255m.sourcePath=$(srcDefault)
 fr255s.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255s.sourcePath=$(srcDefault)
 fr255sm.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255sm.sourcePath=$(srcDefault)
 fr265.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 fr265.sourcePath=$(src27DegreeSelect)
 fr265s.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
@@ -317,13 +289,39 @@ fr57042mm.sourcePath=$(src27DegreeSelect)
 fr57047mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 fr57047mm.sourcePath=$(src25DegreeSelect)
 fr955.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr955.sourcePath=$(srcDefault)
 fr965.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 fr965.sourcePath=$(src25DegreeSelect)
 fr970.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 fr970.sourcePath=$(src25DegreeSelect)
+marq2.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
+marq2aviator.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 
-# Touch devices with CIQ level between 4.0.0 and 5.0.0
+# Touch-based
+approachs50.resourcePath=$(resBase);$(resLauncherIcons)/56x56-light
+approachs50.excludeAnnotations = $(annotCiq510Plus);$(annotTouch);$(annotScreenRound);$(annotActionMenu)
+approachs7042mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
+approachs7042mm.excludeAnnotations = $(approachs50.excludeAnnotations)
+approachs7047mm.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
+approachs7047mm.excludeAnnotations = $(approachs50.excludeAnnotations)
+venu3.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
+venu3.excludeAnnotations = $(approachs50.excludeAnnotations)
+venu3s.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
+venu3s.excludeAnnotations = $(approachs50.excludeAnnotations)
+venu441mm.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
+venu441mm.excludeAnnotations = $(approachs50.excludeAnnotations)
+venu445mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
+venu445mm.excludeAnnotations = $(approachs50.excludeAnnotations)
+venux1.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
+venux1.excludeAnnotations = $(approachs50.excludeAnnotations)
+venux1.sourcePath = $(srcVenuX1)
+vivoactive5.resourcePath=$(resBase);$(resLauncherIcons)/56x56-light
+vivoactive5.excludeAnnotations = $(approachs50.excludeAnnotations)
+vivoactive6.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
+vivoactive6.excludeAnnotations = $(approachs50.excludeAnnotations)
+
+# CIQ 4.0.0 to 5.0.0
+
+# Touch-based
 venu2.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
 venu2.excludeAnnotations = $(annotCiq400Plus);$(annotTouch);$(annotScreenRound);$(annotActionMenu)
 venu2s.resourcePath=$(resBase);$(resLauncherIcons)/61x61-light
@@ -337,22 +335,22 @@ venusq2m.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 venusq2m.excludeAnnotations = $(venu2.excludeAnnotations)
 venusq2m.sourcePath = $(srcVenu2Sq)
 
-# Touch devices with CIQ level >= 5.1.0
-venu3.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
-venu3.excludeAnnotations = $(annotCiq510Plus);$(annotTouch);$(annotScreenRound);$(annotActionMenu)
-venu3s.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
-venu3s.excludeAnnotations = $(venu3.excludeAnnotations)
-venu441mm.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-venu441mm.excludeAnnotations = $(venu3.excludeAnnotations)
-venu445mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
-venu445mm.excludeAnnotations = $(venu3.excludeAnnotations)
-venux1.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
-venux1.excludeAnnotations = $(venu3.excludeAnnotations)
-venux1.sourcePath = $(srcVenuX1)
-vivoactive5.resourcePath=$(resBase);$(resLauncherIcons)/56x56-light
-vivoactive5.excludeAnnotations = $(venu3.excludeAnnotations)
-vivoactive6.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-vivoactive6.excludeAnnotations = $(venu3.excludeAnnotations)
+# CIQ 3.4
+
+# Button-based
+
+fenix6pro.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
+fenix6pro.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
+fenix6pro.sourcePath = $(srcFenix6Pro)
+fenix6spro.resourcePath=$(fenix6pro.resourcePath)
+fenix6spro.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+fenix6spro.sourcePath = $(fenix6pro.sourcePath)
+fenix6xpro.resourcePath=$(fenix6pro.resourcePath)
+fenix6xpro.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+fenix6xpro.sourcePath = $(fenix6pro.sourcePath)
+fr945lte.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
+fr945lte.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
+fr945lte.sourcePath=$(src25DegreeSelect)
 
 # CYCLING COMPUTERS
 
