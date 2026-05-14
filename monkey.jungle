@@ -104,9 +104,12 @@ srcConfigDefault=$(srcConfigBase);source/config/device-default
 
 # Watches
 srcConfigFenix6Pro=$(srcConfigBase);source/config/device-fenix6pro
-srcConfigForerunner=$(srcConfigBase);source/config/device-forerunner
 srcConfigVenu2Sq=$(srcConfigBase);source/config/device-venu-square/base;source/config/device-venu-square/device-venu2sq
 srcConfigVenuX1=$(srcConfigBase);source/config/device-venu-square/base;source/config/device-venu-square/device-venux1
+# Devices whose select button is positioned at other positions than
+# 30 degrees, while otherwise using the default values.
+srcConfig25DegreeSelect=$(srcConfigBase);source/config/device-25deg-select
+srcConfig27DegreeSelect=$(srcConfigBase);source/config/device-27deg-select
 
 # Edge devices
 # Base path for all Edge devices
@@ -206,9 +209,13 @@ srcDefault=$(srcBase);$(srcConfigDefault);$(srcThemesDefault)
 
 # Some watch models use device-specific constants.
 srcFenix6Pro=$(srcBase);$(srcConfigFenix6Pro);$(srcThemesDefault)
-srcForerunner=$(srcBase);$(srcConfigForerunner);$(srcThemesDefault)
 srcVenu2Sq=$(srcBase);$(srcConfigVenu2Sq);$(srcThemesDefault)
 srcVenuX1=$(srcBase);$(srcConfigVenuX1);$(srcThemesDefault)
+
+# Devices whose select button is positioned at other positions
+# than 30 degrees, while otherwise using the default values.
+src25DegreeSelect=$(srcBase);$(srcConfig25DegreeSelect);$(srcThemesDefault)
+src27DegreeSelect=$(srcBase);$(srcConfig27DegreeSelect);$(srcThemesDefault)
 
 # Edge devices
 # Touch-based devices (Explore 2, 1040, 1050).
@@ -281,35 +288,40 @@ descentmk351mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 # FR945 LTE is the only Forerunner with CIQ 3.4
 fr945lte.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 fr945lte.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
-fr945lte.sourcePath=$(srcForerunner)
+fr945lte.sourcePath=$(src25DegreeSelect)
 
+fr70.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
+fr70.sourcePath=$(srcDefault)
 fr165.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-fr165.sourcePath=$(srcForerunner)
+fr165.sourcePath=$(src27DegreeSelect)
 fr165m.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-fr165m.sourcePath=$(srcForerunner)
+fr165m.sourcePath=$(src27DegreeSelect)
+fr170.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
+fr170.sourcePath=$(srcDefault)
+fr170m.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
+fr170m.sourcePath=$(srcDefault)
 fr255.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255.sourcePath=$(srcForerunner)
+fr255.sourcePath=$(srcDefault)
 fr255m.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255m.sourcePath=$(srcForerunner)
+fr255m.sourcePath=$(srcDefault)
 fr255s.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255s.sourcePath=$(srcForerunner)
+fr255s.sourcePath=$(srcDefault)
 fr255sm.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr255sm.sourcePath=$(srcForerunner)
+fr255sm.sourcePath=$(srcDefault)
 fr265.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-fr265.sourcePath=$(srcForerunner)
+fr265.sourcePath=$(src27DegreeSelect)
 fr265s.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
-fr265s.sourcePath=$(srcForerunner)
+fr265s.sourcePath=$(src27DegreeSelect)
 fr57042mm.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
-fr57042mm.sourcePath=$(srcForerunner)
+fr57042mm.sourcePath=$(src27DegreeSelect)
 fr57047mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
-fr57047mm.sourcePath=$(srcForerunner)
-fr955.sourcePath=$(srcForerunner)
+fr57047mm.sourcePath=$(src25DegreeSelect)
 fr955.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr955.sourcePath=$(srcForerunner)
+fr955.sourcePath=$(srcDefault)
 fr965.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
-fr965.sourcePath=$(srcForerunner)
+fr965.sourcePath=$(src25DegreeSelect)
 fr970.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
-fr970.sourcePath=$(srcForerunner)
+fr970.sourcePath=$(src25DegreeSelect)
 
 # Touch devices with CIQ level between 4.0.0 and 5.0.0
 venu2.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
