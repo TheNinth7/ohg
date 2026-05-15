@@ -108,8 +108,8 @@ srcConfigVenu2Sq=$(srcConfigBase);source/config/device-venu-square/base;source/c
 srcConfigVenuX1=$(srcConfigBase);source/config/device-venu-square/base;source/config/device-venu-square/device-venux1
 # Devices whose select button is positioned at other positions than
 # 30 degrees, while otherwise using the default values.
-srcConfig25DegreeSelect=$(srcConfigBase);source/config/device-25deg-select
-srcConfig27DegreeSelect=$(srcConfigBase);source/config/device-27deg-select
+srcConfig25DegreeSelect=$(srcConfigBase);source/config/device-fr-25deg-select
+srcConfig27DegreeSelect=$(srcConfigBase);source/config/device-fr-27deg-select
 
 # Edge devices
 # Base path for all Edge devices
