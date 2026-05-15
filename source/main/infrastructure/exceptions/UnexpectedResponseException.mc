@@ -8,7 +8,6 @@ import Toybox.Lang;
  * report SDK error –400 for unexpected data, while others return 200 with
  * an empty (null) response.
  */
- (:glance)
 class UnexpectedResponseException extends CommunicationBaseException {
 
     private var _data as Object?;

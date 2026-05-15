@@ -4,7 +4,6 @@ import Toybox.Lang;
  * Base exception for all other errors.
  * Used when an exception does not fit into any of the more specific exception classes.
  */
- (:glance)
 class GeneralException extends Exception {
     private var _msg as String;
     function initialize( msg as String ) {

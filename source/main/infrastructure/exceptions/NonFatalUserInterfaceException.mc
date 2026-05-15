@@ -4,7 +4,6 @@ import Toybox.Lang;
  * Class for non-fatal user interface exceptions that should be displayed
  * to the user as a toast notification.
  */
- (:glance)
 class NonFatalUserInterfaceException extends Exception {
 
     // Supported error codes

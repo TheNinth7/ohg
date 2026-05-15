@@ -4,7 +4,6 @@ import Toybox.Lang;
  * Base class for all communication-related exceptions
  * (e.g., errors arising from web requests).
  */
- (:glance)
 class CommunicationBaseException extends Exception {
     /*
     * Communication exceptions originate from either sitemap polling
