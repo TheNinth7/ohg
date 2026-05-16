@@ -247,6 +247,8 @@ base.sourcePath = $(srcDefault)
 
 # Button-based
 d2mach1.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
+d2mach2.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
+d2mach2pro.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 descentg2.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 descentmk343mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 descentmk351mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
@@ -293,10 +295,12 @@ fr965.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 fr965.sourcePath=$(src25DegreeSelect)
 fr970.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 fr970.sourcePath=$(src25DegreeSelect)
+instinct3amoled45mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
+instinct3amoled50mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 marq2.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 marq2aviator.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
 
-# Touch-based
+# Touch-based, round screen
 approachs50.resourcePath=$(resBase);$(resLauncherIcons)/56x56-light
 approachs50.excludeAnnotations = $(annotCiq510Plus);$(annotTouch);$(annotScreenRound);$(annotActionMenu)
 approachs7042mm.resourcePath=$(resBase);$(resLauncherIcons)/60x60-light
@@ -311,34 +315,39 @@ venu441mm.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 venu441mm.excludeAnnotations = $(approachs50.excludeAnnotations)
 venu445mm.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
 venu445mm.excludeAnnotations = $(approachs50.excludeAnnotations)
-venux1.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
-venux1.excludeAnnotations = $(approachs50.excludeAnnotations)
-venux1.sourcePath = $(srcVenuX1)
 vivoactive5.resourcePath=$(resBase);$(resLauncherIcons)/56x56-light
 vivoactive5.excludeAnnotations = $(approachs50.excludeAnnotations)
 vivoactive6.resourcePath=$(resBase);$(resLauncherIcons)/54x54-light
 vivoactive6.excludeAnnotations = $(approachs50.excludeAnnotations)
 
+# Touch-based, rectangular screen
+venux1.resourcePath=$(resBase);$(resLauncherIcons)/65x65-light
+venux1.excludeAnnotations = $(annotCiq510Plus);$(annotTouch);$(annotScreenRectangular);$(annotActionMenu)
+venux1.sourcePath = $(srcVenuX1)
+
 # CIQ 4.0.0 to 5.0.0
 
-# Touch-based
+# Touch-based, round screen
+d2airx10.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
+d2airx10.excludeAnnotations = $(annotCiq400Plus);$(annotTouch);$(annotScreenRound);$(annotActionMenu)
 venu2.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
-venu2.excludeAnnotations = $(annotCiq400Plus);$(annotTouch);$(annotScreenRound);$(annotActionMenu)
+venu2.excludeAnnotations = $(d2airx10.excludeAnnotations)
 venu2s.resourcePath=$(resBase);$(resLauncherIcons)/61x61-light
-venu2s.excludeAnnotations = $(venu2.excludeAnnotations)
+venu2s.excludeAnnotations = $(d2airx10.excludeAnnotations)
 venu2plus.resourcePath=$(resBase);$(resLauncherIcons)/70x70-light
-venu2plus.excludeAnnotations = $(venu2.excludeAnnotations)
+venu2plus.excludeAnnotations = $(d2airx10.excludeAnnotations)
+
+# Touch-based, rectangular screen
 venusq2.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-venusq2.excludeAnnotations = $(venu2.excludeAnnotations)
+venusq2.excludeAnnotations = $(annotCiq400Plus);$(annotTouch);$(annotScreenRectangular);$(annotActionMenu)
 venusq2.sourcePath = $(srcVenu2Sq)
 venusq2m.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-venusq2m.excludeAnnotations = $(venu2.excludeAnnotations)
+venusq2m.excludeAnnotations = $(venusq2.excludeAnnotations)
 venusq2m.sourcePath = $(srcVenu2Sq)
 
 # CIQ 3.4
 
 # Button-based
-
 fenix6pro.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
 fenix6pro.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
 fenix6pro.sourcePath = $(srcFenix6Pro)
@@ -349,8 +358,33 @@ fenix6xpro.resourcePath=$(fenix6pro.resourcePath)
 fenix6xpro.excludeAnnotations = $(fenix6pro.excludeAnnotations)
 fenix6xpro.sourcePath = $(fenix6pro.sourcePath)
 fr945lte.resourcePath=$(resBase);$(resLauncherIcons)/40x40-light
-fr945lte.excludeAnnotations = $(annotCiqPre400);$(annotButton);$(annotScreenRound);$(annotActionMenu)
+fr945lte.excludeAnnotations = $(fenix6pro.excludeAnnotations)
 fr945lte.sourcePath=$(src25DegreeSelect)
+marqadventurer.resourcePath=$(fenix6pro.resourcePath)
+marqadventurer.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqadventurer.sourcePath=$(fenix6pro.sourcePath)
+marqathlete.resourcePath=$(fenix6pro.resourcePath)
+marqathlete.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqathlete.sourcePath=$(fenix6pro.sourcePath)
+marqaviator.resourcePath=$(fenix6pro.resourcePath)
+marqaviator.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqaviator.sourcePath=$(fenix6pro.sourcePath)
+marqcaptain.resourcePath=$(fenix6pro.resourcePath)
+marqcaptain.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqcaptain.sourcePath=$(fenix6pro.sourcePath)
+marqcommander.resourcePath=$(fenix6pro.resourcePath)
+marqcommander.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqcommander.sourcePath=$(fenix6pro.sourcePath)
+marqdriver.resourcePath=$(fenix6pro.resourcePath)
+marqdriver.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqdriver.sourcePath=$(fenix6pro.sourcePath)
+marqexpedition.resourcePath=$(fenix6pro.resourcePath)
+marqexpedition.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqexpedition.sourcePath=$(fenix6pro.sourcePath)
+marqgolfer.resourcePath=$(fenix6pro.resourcePath)
+marqgolfer.excludeAnnotations = $(fenix6pro.excludeAnnotations)
+marqgolfer.sourcePath=$(fenix6pro.sourcePath)
+
 
 # CYCLING COMPUTERS
 
