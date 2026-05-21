@@ -53,6 +53,10 @@ import Toybox.WatchUi;
     // The initial view only needs to be stored, since the API automatically
     // pushes it onto the stack when it is returned from getInitialView().
     public static function registerInitialView( view as Views, delegate as InputDelegates? ) as Void {
+        // Safeguard against registerInitialView being called multiple times
+        if( _viewStack.size() > 0 ) {
+            _viewStack = [];
+        }
         _viewStack.add( [ view, delegate ] );
         // Logger.debug( "ViewStack.registerInitialView: new stack size=" + _viewStack.size() );
     }

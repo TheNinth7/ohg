@@ -88,6 +88,8 @@ class OHApp extends Application.AppBase {
         } catch( ex ) {
             // Any exceptions occuring in this function are 
             // also displayed as error view
+            var errorView = ErrorView.createOrUpdate( ex );
+            ViewStack.registerInitialView( errorView, null );
             return [ ErrorView.createOrUpdate( ex ) ];
         }
     }
