@@ -296,6 +296,8 @@ class IconParser {
                     }
                 }
 
+                case "terrace": return Rez.Drawables.menuTerrace;
+
             }
         }
         return null;

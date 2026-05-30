@@ -99,6 +99,8 @@
 
     <bitmap id="menuTemperature" scaleY="12%" filename="temperature.svg" dithering="none"/>
 
+    <bitmap id="menuTerrace" scaleY="10%" filename="terrace.svg" dithering="none"/>
+
     <bitmap id="menuWindowClosed" scaleY="11%" filename="window-closed.svg" dithering="none"/>
     <bitmap id="menuWindowOpen" scaleY="11%" filename="window-open.svg" dithering="none"/>
 

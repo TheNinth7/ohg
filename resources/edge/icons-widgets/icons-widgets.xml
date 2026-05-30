@@ -107,6 +107,8 @@
 
     <bitmap id="menuTemperature" scaleX="12%" filename="../../icons-widgets/temperature.svg" dithering="none"/>
 
+    <bitmap id="menuTerrace" scaleX="11%" filename="../../icons-widgets/terrace.svg" dithering="none"/>
+
     <bitmap id="menuWindowClosed" scaleX="14%" filename="../../icons-widgets/window-closed.svg" dithering="none"/>
     <bitmap id="menuWindowOpen" scaleX="14%" filename="../../icons-widgets/window-open.svg" dithering="none"/>
 
