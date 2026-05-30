@@ -73,7 +73,7 @@ class OHApp extends Application.AppBase {
                 delegate = HomepageMenuDelegate.get();
             } else {
                 // Otherwise show the loading view
-                view = new LoadingView();
+                view = new LoadingView( false );
             }
 
             // For the reasons outlined in the ViewStack inline documentation,

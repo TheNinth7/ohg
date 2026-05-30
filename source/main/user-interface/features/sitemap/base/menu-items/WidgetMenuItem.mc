@@ -112,9 +112,9 @@ class WidgetMenuItem extends StructuredMenuItem {
     //
     // This function also ensures that a connection is available before sending a command.
     // If no connection is present, it attempts to open the required submenus. If no
-    // submenu exists to establish a connection, it throws an OfflineException.
+    // submenu exists to establish a connection, it throws an OfflineCommandException.
     //
-    // When the OfflineException is passed to
+    // When the OfflineCommandException is passed to
     // ExceptionHandler.handleUserInterfaceException by the delegate, it is shown to the 
     // user as a toast notification.
     //
@@ -132,7 +132,7 @@ class WidgetMenuItem extends StructuredMenuItem {
             return true;
         } else {
             if( ! ConnectionManager.get().isConnected() ) {
-                throw new OfflineException();
+                throw new OfflineCommandException();
             }
             return false;
         }

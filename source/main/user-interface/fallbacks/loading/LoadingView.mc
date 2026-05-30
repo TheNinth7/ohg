@@ -11,7 +11,15 @@ import Toybox.Lang;
  */
 class LoadingView extends WatchUi.View {
 
-    function initialize() {
+    private var _requestSitemapUpdate as Boolean;
+
+    // Constructor
+    // If requestSitemapUpdate is set to true, the loading view will trigger
+    // a sitemap sync via WiFi once the view is shown.
+    // This is used in case we are in an error view and WiFi becomes available
+    // See also ConnectionManager.updateStateAndUi
+    function initialize( requestSitemapUpdate as Boolean ) {
+        _requestSitemapUpdate = requestSitemapUpdate;
         View.initialize();
     }
 
@@ -39,34 +47,43 @@ class LoadingView extends WatchUi.View {
         WarningToastHandler.setUseToasts( false );
         
         // Logger.debug( "WifiCheckView: onShow" );
-
-        // Check whether a sitemap update was run.
-        // As indicated by "consume", this result is returned only once.
-        // A subsequent call to consumeLastSyncResult will only return a value
-        // if another sync has been executed.
-        var lastSyncResult = SafeSitemapSyncDelegate.consumeLastSyncResult();
         
         try {
-            // [0] is true, if a sync was done
-            if( lastSyncResult[0] ) {
-                // [1] contains an exception if the sync resulted in an error
-                var syncEx = lastSyncResult[1];
-                if( syncEx == null ) {
-                    // If the sync was successful, we switch to the HomepageMenu
-                    if( HomepageMenu.exists() ) {
-                        // Logger.debug( "LoadingView.onShow: switchToView" );
-                        ViewStack.switchToView( 
-                            HomepageMenu.get(), 
-                            HomepageMenuDelegate.get(), 
-                            WatchUi.SLIDE_BLINK 
-                        );
+            // First we check if the loading view was started with a WiFi
+            // sync requested
+            if( _requestSitemapUpdate ) {
+                _requestSitemapUpdate = false;
+                SitemapSyncDelegate.get().requestSitemapUpdate();
+            } 
+            // Otherwise we check wheter a sitemap sync was already run
+            else {
+                // Check whether a sitemap update was run.
+                // As indicated by "consume", this result is returned only once.
+                // A subsequent call to consumeLastSyncResult will only return a value
+                // if another sync has been executed.
+                var lastSyncResult = SafeSitemapSyncDelegate.consumeLastSyncResult();
+
+                // [0] is true, if a sync was done
+                if( lastSyncResult[0] ) {
+                    // [1] contains an exception if the sync resulted in an error
+                    var syncEx = lastSyncResult[1];
+                    if( syncEx == null ) {
+                        // If the sync was successful, we switch to the HomepageMenu
+                        if( HomepageMenu.exists() ) {
+                            // Logger.debug( "LoadingView.onShow: switchToView" );
+                            ViewStack.switchToView( 
+                                HomepageMenu.get(), 
+                                HomepageMenuDelegate.get(), 
+                                WatchUi.SLIDE_BLINK 
+                            );
+                        } else {
+                            throw new GeneralException( "No sitemap found in storage, and loading via Wi-Fi failed. Please try again or connect to your phone." );
+                        }
                     } else {
-                        throw new GeneralException( "No sitemap found in storage, and loading via Wi-Fi failed. Please try again or connect to your phone." );
+                        // If the sync was not successful, throw the exception so it can be handled
+                        // in the catch clause below.
+                        throw syncEx;
                     }
-                } else {
-                    // If the sync was not successful, throw the exception so it can be handled
-                    // in the catch clause below.
-                    throw syncEx;
                 }
             }
         } catch( ex ) {

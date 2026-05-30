@@ -222,7 +222,7 @@ import Toybox.Time;
             _state = newState;
 
             // When leaving phone mode and a HomepageMenu is available,
-            // invalidate the current states even if they are still fresh.
+            // i/nvalidate the current states even if they are still fresh.
             // States must not be displayed while in Wi-Fi or offline mode,
             // even when the underlying sitemap is up to date.
             if( oldState == BLUETOOTH_CONNECTED
@@ -239,17 +239,37 @@ import Toybox.Time;
             // no sitemap is stored locally and it must be requested via Wi-Fi
             // using the sync delegate.
             else if( _state == WIFI_CONNECTED && ! HomepageMenu.exists() ) {
-
                 // Logger.debug( "ConnectionManager: on Wi-Fi but no sitemap, requesting an update." );
-                SitemapSyncDelegate.get().requestSitemapUpdate();
+                
+                // If this happens on startup, then OHApp already pushed
+                // the loading view and we just need to request the sitemap
+                // via WiFi
+                if( LoadingView.isShowing() ) {
+                    SitemapSyncDelegate.get().requestSitemapUpdate();
+                } 
+                // If there is no loading view shown, we push the loading view
+                // first and instruct it via the constructor parameter to then
+                // trigger the WiFi sync once it is loaded. It is not possible
+                // to push the loading view AND request the WiFi sync at the same
+                // time, at least in the simulator this will lead to a crash
+                else {
+                    ViewStack.resetTo( new LoadingView( true ), null );
+                }
             }
-
-            // Redraw the connection mode indicators
-            ConnectionModeIndicator.update();
             
-            // Request an immediate UI update
-            // to refresh the connection mode indicators
-            WatchUi.requestUpdate();
+            // As final action we update the screen to reflect the new
+            // state, except if we are offline and there is no HomepageMenu,
+            // in which case we switch to an error view.
+            if( _state == OFFLINE && ! HomepageMenu.exists() ) {
+                ErrorView.showOrUpdate( new OfflineWithoutSitemapException() );
+            } else {
+                // Redraw the connection mode indicators
+                ConnectionModeIndicator.update();
+                
+                // Request an immediate UI update
+                // to refresh the connection mode indicators
+                WatchUi.requestUpdate();
+            }
         }
     }
 }
