@@ -6,6 +6,6 @@ import Toybox.Lang;
  */
 class OfflineWithoutSitemapException extends GeneralException {
     function initialize() {
-        GeneralException.initialize( "Offline and no sitemap is cached. Connect your phone or Wi-Fi." );
+        GeneralException.initialize( "Offline and no sitemap is cached. Move into phone or Wi-Fi range." );
     }
 }
