@@ -97,6 +97,8 @@
     <bitmap id="menuSettingsLightGray" scaleX="11%" filename="../../icons-widgets/settings-lt-gray.svg" dithering="none" />
     <bitmap id="menuSettingsDarkGray" scaleX="11%" filename="../../icons-widgets/settings-dk-gray.svg" dithering="none" />
 
+    <bitmap id="menuSnow" scaleX="12%" filename="../../icons-widgets/snow.svg" dithering="none"/>
+
     <bitmap id="menuSoundVolume00" scaleX="13%" filename="../../icons-widgets/soundvolume-00.svg" dithering="none"/>
     <bitmap id="menuSoundVolume04" scaleX="13%" filename="../../icons-widgets/soundvolume-04.svg" dithering="none"/>
     <bitmap id="menuSoundVolume07" scaleX="13%" filename="../../icons-widgets/soundvolume-07.svg" dithering="none"/>
