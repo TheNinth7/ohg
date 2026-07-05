@@ -89,6 +89,8 @@
 
     <bitmap id="menuSettingsLightGray" scaleY="10%" filename="settings-lt-gray.svg" dithering="none" />
 
+    <bitmap id="menuSnow" scaleY="10%" filename="snow.svg" dithering="none" />
+
     <bitmap id="menuSoundVolume00" scaleY="12%" filename="soundvolume-00.svg" dithering="none"/>
     <bitmap id="menuSoundVolume04" scaleY="12%" filename="soundvolume-04.svg" dithering="none"/>
     <bitmap id="menuSoundVolume07" scaleY="12%" filename="soundvolume-07.svg" dithering="none"/>

@@ -298,6 +298,8 @@ class IconParser {
 
                 case "terrace": return Rez.Drawables.menuTerrace;
 
+                case "snow": return Rez.Drawables.menuSnow;
+
             }
         }
         return null;

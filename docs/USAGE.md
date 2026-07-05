@@ -728,6 +728,7 @@ Currently supported icons are:
 - `rollershutter`
 - `screen`
 - `slider`
+- `snow`
 - `soundvolume`
 - `temperature`
 - `window`
