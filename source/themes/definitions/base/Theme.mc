@@ -34,9 +34,9 @@ typedef Theme as interface {
     // Currently only applied to devices with rectangular screen
     var menuTitleDividerColor as ColorType;
 
-    // Background color of menu items. Some newer devices, such as the Fenix 8 series,
-    // provide a colored background for the focused item. Therefore, the menu item
-    // background color is set to transparent to allow the focus background to show through.
+    // Background color of menu items. Some newer devices, such as the Fenix 8 and
+    // Fenix 9 series, provide a colored background for the focused item. Therefore, the
+    // menu item background color is set to transparent to allow the focus background to show through.
     var menuItemBackgroundColor as ColorType;
 
     // Color of the divider between menu items
